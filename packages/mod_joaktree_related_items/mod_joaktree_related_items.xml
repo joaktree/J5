@@ -50,5 +50,7 @@
 			</fieldset>
 		</fields>
 	</config>
-
+    <updateservers>
+	<server type="extension" name="Joaktree" priority="1">https://raw.githubusercontent.com/joaktree/J5/master/updates/com_joaktree_update.xml</server>
+	</updateservers>
 </extension>
