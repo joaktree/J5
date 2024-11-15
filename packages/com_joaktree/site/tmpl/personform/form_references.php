@@ -13,8 +13,6 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
- */
-
 // no direct access
 defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;

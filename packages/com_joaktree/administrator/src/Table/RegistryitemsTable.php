@@ -13,8 +13,6 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
- */
-
 namespace Joaktree\Component\Joaktree\Administrator\Table;
 
 defined('_JEXEC') or die('Restricted access');
