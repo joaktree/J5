@@ -1,0 +1,462 @@
+/* Styles for Joaktree */
+/* General styles */
+#jt-content, #jt-form {
+	display: block;
+	clear: both;
+	width: 98%;
+}
+
+#bd.contentpane {
+	background: none repeat scroll 0 0 transparent;
+}
+
+.jt-clearfix {
+	clear: both;
+}
+
+.jt-label {
+	float: left;
+	width: 11em;
+}
+
+.jt-iconlabel {
+	float: left;
+	width: 40px;
+}
+
+.jt-valuelabel {
+	float: left;
+	width: 50%;
+}
+
+.jt-buttonbar {
+	padding: 6px 0px 8px 0px;
+}
+
+.jt-left-col-label {
+	float: left;
+	width: 50%;
+}
+
+.jt-right-col-label {
+	float: left;
+	text-align: center;
+	width: 15%;
+}
+
+.jt-detail-col-label {
+	float: left;
+	text-align: left;
+	width: 15%;
+}
+
+.jt-desc-num-label {
+	float: left;
+	text-align: left;
+	width: 4.5em;
+}
+
+/* Index page */
+.jt-index-left, .jt-indexletter-left {
+	float: left; 
+}
+
+.jt-index-right, .jt-indexletter-right {
+	float: right; 
+}
+
+.jt-index-left {
+	width: 10%; 
+}
+
+.jt-indexletter-left {
+	width: 40%; 
+}
+
+div.jt-index-size {
+	min-height: 250px;
+	padding-top: 10px;
+}
+
+/* pagination */
+.list-footer
+{
+	margin:10px 0 ;
+	padding:10px 0 10px 0px;
+	text-align:center
+
+}
+
+.list-footer div.limit {
+	float: left;
+	line-height: 22px;
+	margin: 0 10px;
+}
+
+.list-footer div.limit select#limit {
+	margin-left: 4px;
+	padding: 2px;
+	width: 54px;
+}
+
+#main .list-footer ul, table .list-footer ul, .list-footer ul
+{
+	list-style-type:none;
+	margin:0 !important;
+	padding:0;
+	text-align:left;
+	border:solid 0px #ccc;
+	float:left
+}
+
+#main .list-footer li, .list-footer li
+{
+	display:inline;
+	padding:2px 5px !important;
+	text-align:left;
+	margin:0 2px;
+}
+
+.list-footer  li.pagination-start ,
+.list-footer  li.pagination-start  span {
+	padding:4px
+}
+
+/* tabs */
+#jt-tabbar {
+	padding: 6px 0px 25px 0px;
+	z-index: 1;
+}
+.jt-tablabel-active, .jt-tablabel-inactive, .jt-tabline {
+	padding: 3px 5px 3px 5px;
+}
+
+.jt-tabline {
+	padding-bottom: 4px;
+	z-index: 2;
+}
+
+.jt-tab-active  {
+	position: relative;
+	z-index: 4;
+}
+
+.jt-tab-inactive  {
+	position: relative;
+	z-index: 3;
+}
+
+/* specific content */
+.jt-person-info {
+	float: left; 
+	width: 54%;
+}
+
+.jt-picture {
+	float:right; 
+	width: 44%;
+	margin-bottom: 6px;
+}
+
+.jt-picture-title {
+	font-size: 92%;
+    font-style: italic;
+	color: #333333; 
+}
+
+.jt-stamp {
+	float:right; 
+}
+
+.jt-update {
+	float:left; 
+}
+
+/* toggle notes and sources */
+.jt-hide, .jt-ajax, .jt-table-entry5 {
+	display: none;
+}
+
+.jt-show {
+	display: inline;
+}
+
+.jt-show-block {
+	margin-top: 15px;
+	display: block;
+	width: 100%;
+}
+
+/* logs - change history */
+.jt-logsize {
+	font-size: 83%;
+}
+
+.jt-loglabel-datetime {
+	float: left;
+	width: 16%;
+}
+
+.jt-loglabel-application {
+	float: left;
+	width: 15%;
+}
+
+.jt-loglabel-description {
+	float: left;
+	width: 22%;
+}
+
+.jt-loglabel-changeobject {
+	float: left;
+	width: 22%;
+}
+
+.jt-loglabel-user {
+	float: left;
+	width: 22%;
+}
+
+/* Edit */
+.jt-edit-2 {
+	display: none;
+}
+
+.jt-edit-1 {
+	display: block;
+}
+
+.jt-edit a, .jt-edit a:link, .jt-edit a:visited, 
+.jt-edit a:hover, .jt-edit a:active, .jt-edit a:focus,
+.jt-edit-1 a, .jt-edit-1 a:link, .jt-edit-1 a:visited, 
+.jt-edit-1 a:hover, .jt-edit-1 a:active, .jt-edit-1 a:focus,
+.jt-edit-2 a, .jt-edit-2 a:link, .jt-edit-2 a:visited,
+.jt-edit-2 a:hover, .jt-edit-2 a:active, .jt-edit-2 a:focus {
+	font-size: 85%;
+	color: red;
+	text-decoration: none;
+}
+
+.jt-edit-nolink {
+	font-size: 85%;
+	color: #222222;
+}
+
+.jt-just-changed {
+	font-weight: bold;
+}
+
+
+.jt-btn-close {
+    background: url("../images/closebox.png") no-repeat scroll center center transparent;
+    border: medium none;
+    height: 30px;
+    width: 30px;
+    float: right;
+}
+
+/* Joaktree forms, lists */
+fieldset.joaktreeform {
+	margin: 10px;
+	overflow: hidden;
+}
+
+fieldset.joaktreeform legend {
+	margin: 0px 10px;
+	padding: 0;
+	border: none;
+	width: auto;
+}
+
+ul.joaktreeformlist,
+ul.joaktreeformlist li {
+	margin: 0;
+	padding: 0 0 0 6px;
+	list-style: none;
+}
+
+ul.joaktreeformlist input.input-small {
+	margin-left: 140px;
+	width: 280px;
+}
+
+fieldset label,
+fieldset span.faux-label {
+	float: left;
+	clear: left;
+	display:block;
+	margin: 5px 0;
+	min-width: 140px;
+}
+
+fieldset ul {
+	margin: 0;
+	padding: 0;
+}
+
+form label,
+form span.faux-label {
+	font-size: 1.091em;
+}
+
+fieldset input,
+fieldset textarea,
+fieldset select,
+fieldset img,
+fieldset button {
+	float: left;
+	width: auto;
+	margin: 5px 5px 5px 0px;
+}
+
+fieldset.joaktreeform textarea {
+	width: 355px;
+}
+
+fieldset ul.checklist input {
+	clear:left;
+	margin-right: 10px;
+}
+
+fieldset ul.checklist label,
+fieldset ul.menu-links label,
+fieldset#filter-bar label {
+	clear:none;
+}
+fieldset.joaktreeform ul.checklist li {
+	width: 100%;
+	margin: 0;
+	padding:0;
+}
+fieldset.joaktreeform ul.checklist li label {
+	width: auto;
+}
+
+fieldset.joaktreeform table {
+	width: 96%;
+	margin: 20px 0 0 15px;
+}
+
+input.readonly {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 1.091em;
+	padding-top: 1px;
+	border: 0;
+	font-weight: bold;
+	color: #666;
+}
+
+#jform_id,
+span.readonly {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 1.091em;
+	margin:5px 5px 5px 0;
+	font-weight: bold;
+	float: left;
+	display:block;
+	color: #666;
+}
+
+#jform_params_alt,
+#jform_clickurl {
+	width: 355px;
+}
+
+#jform-imp {
+	width: 70px;
+}
+
+.mod-desc { margin-left: 135px !important; float: none !important;}
+
+input.readonly {
+	background-color: #ffffff;
+}
+
+#jform_params_width,
+#jform_params_height,
+#jform_params_increase,
+#jform_params_shownumber,
+#jform_params_count {
+	width: 50px;
+}
+
+#jform_id {
+	width: 50px;
+	background-color:#FFFFFF;
+	border: 0 none;
+}
+
+input#jform_title,
+input#jform_leveltitle,
+input#jform_grouptitle {
+	font-size: 1.364em;
+}
+
+label#jform_title-lbl,
+label#jform_leveltitle-lbl,
+label#jform_grouptitle-lbl {
+	padding-top: 3px;
+}
+
+div#content-pane fieldset {
+	border: 0;
+	padding: 10px 15px 0 15px;
+}
+
+div.panel fieldset {
+	border: 0;
+}
+
+/* Required elements */
+input.required {
+	background-color: #d5eeff;
+}
+
+.star {
+	color:#EB8207;
+	font-size:1.2em;
+}
+
+/* media */
+iframe#imageframe {
+    height: 150px;
+}
+
+iframe {
+    border: 0 none;
+    margin: 0 10px 0 0.5em;
+    padding: 0;
+    width: 97%;
+}
+
+#jtmap-person, #jtmap-relations, #jtmap-familyname, #jtmap-distance,
+#jtmap-perstart, #jtmap-perend, #jtmap-events {
+	width: 220px;
+}
+
+.media-preview input.input-small {
+	width: 100px;
+}
+.button_search {
+	background-image: url(/media/com_joaktree/images/loupe.png) !important;
+}
+.button_erase {
+	background-image: url(/media/com_joaktree/images/gomme.png) !important;
+}
+.button_search, .button_erase {	
+	width:32px !important;
+	height:32px !important;
+	}
+#jt-content input {
+	background-color:#CCCCCC !important;
+	display:inline-block;
+}
+#jt-content input[type="submit"] {
+	/*background-color:#000 !important;*/
+	background-color:transparent !important;
+}
+
+#adminForm #jt-content tr.jt-table-entry1,
+#adminForm #jt-content tr.jt-table-entry2 {
+    max-width:75%;line-break:anywhere
+}

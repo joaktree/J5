@@ -1,0 +1,519 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE extension>
+<extension version="4.0" type="module" client="site" method="upgrade">
+	<name>Joaktree Today Many Years Ago</name>
+    <author>joaktree.com</author>
+    <creationDate>June 2013</creationDate>
+	<copyright>(C) 2009 - 2013 Joaktree.com</copyright>
+	<license>GNU General Public License version 2 or later</license>
+	<authorEmail>info@joaktree.com</authorEmail>
+	<authorUrl>www.joaktree.com</authorUrl>
+    <new_author>Robert Gastaud</new_author>
+    <new_creationDate>January 2017</new_creationDate>
+	<new_copyright>(C) 2017 JoomXtensions.com</new_copyright>
+	<new_authorEmail>rg-consultant@robertg-conseil.fr</new_authorEmail>
+	<new_authorUrl>www.joomxtensions.com</new_authorUrl>	
+   <version>2.0.2</version>
+	<description>MOD_JOAKTREE_TMYA_XML_DESCRIPTION</description>
+    <namespace path="src">Joaktree\Module\Todaymanyyearsago</namespace>	
+	<!-- user part -->
+	<files>
+   		<folder module="mod_joaktree_todaymanyyearsago">services</folder>
+		<filename>index.html</filename>
+		<folder>src</folder>
+		<folder>tmpl</folder>
+	</files>
+
+	<languages folder="language">
+		<language tag="en-GB">en-GB/mod_joaktree_todaymanyyearsago.ini</language>
+		<language tag="en-GB">en-GB/mod_joaktree_todaymanyyearsago.sys.ini</language>
+		<language tag="fr-FR">fr-FR/mod_joaktree_todaymanyyearsago.ini</language>
+		<language tag="fr-FR">fr-FR/mod_joaktree_todaymanyyearsago.sys.ini</language>
+	</languages>
+    
+	<config>
+		<fields name="params">			
+			<fieldset name="basic" addfieldprefix="Joaktree\Module\Todaymanyyearsago\Site\Field">
+                <field name="version" type="version"  margintop="-3em" extension="mod_joaktree_todaymanyyearsago"/>
+				<field 
+					name="showHeading" 
+					type="list" 
+					default="1" 
+					label="JTMOD_TMYA_SHOWHEADING_LABEL" 
+					description="JTMOD_TMYA_SHOWHEADING_DESC"
+				>
+					<option value="0">JTMOD_TMYA_INTERACTION_OPT0</option>
+					<option value="1">JTMOD_TMYA_INTERACTION_OPT1</option>
+				</field>
+				
+				<field 
+					name="periodType" 
+					type="list" 
+					default="1" 
+					label="JTMOD_TMYA_PERIODTYPE_LABEL" 
+					description="JTMOD_TMYA_PERIODTYPE_DESC"
+				>
+					<option value="0">JTMOD_TMYA_PERIODTYPE_OPT0</option>
+					<option value="1">JTMOD_TMYA_PERIODTYPE_OPT1</option>
+					<option value="2">JTMOD_TMYA_PERIODTYPE_OPT2</option>			
+					<option value="3">JTMOD_TMYA_PERIODTYPE_OPT3</option>			
+					<option value="4">JTMOD_TMYA_PERIODTYPE_OPT4</option>			
+					<option value="5">JTMOD_TMYA_PERIODTYPE_OPT5</option>			
+				</field>
+			
+				<field 
+					name="listofyears" 
+					type="text" 
+					default="50,100,150,200,250,300" 
+					label="JTMOD_TMYA_YEARS_LABEL" 
+					description="JTMOD_TMYA_YEARS_DESC" 
+				/>
+				
+				<field 
+					name="personStatus" 
+					type="list" 
+					default="0" 
+					label="JTMOD_TMYA_PERSONSTATUS_LABEL" 
+					description="JTMOD_TMYA_PERSONSTATUS_DESC"
+				>
+					<option value="0">JTMOD_TMYA_PERSONSTATUS_OPT0</option>
+					<option value="1">JTMOD_TMYA_PERSONSTATUS_OPT1</option>
+					<option value="2">JTMOD_TMYA_PERSONSTATUS_OPT2</option>
+				</field>
+
+				<field 
+					name="sorting" 
+					type="list" 
+					default="0" 
+					label="JTMOD_TMYA_SORTING_LABEL" 
+					description="JTMOD_TMYA_SORTING_DESC"
+				>
+					<option value="0">JTMOD_TMYA_SORTING_OPT0</option>
+					<option value="1">JTMOD_TMYA_SORTING_OPT1</option>
+				</field>
+
+				<field 
+					name="freeChoice" 
+					type="list" 
+					default="1" 
+					label="JTMOD_TMYA_INTERACTION_LABEL" 
+					description="JTMOD_TMYA_INTERACTION_DESC"
+				>
+					<option value="0">JTMOD_TMYA_INTERACTION_OPT0</option>
+					<option value="1">JTMOD_TMYA_INTERACTION_OPT1</option>
+				</field>
+				
+				<field 
+					name="searchlimit" 
+					type="text" 
+					default="10" 
+					label="JTMOD_TMYA_SEARCHLIMIT_LABEL" 
+					description="JTMOD_TMYA_SEARCHLIMIT_DESC" 
+				/>
+				
+				<field
+					name="appId" 
+					type="sql" 
+					multiple="true"
+					label="JTMOD_TMYA_APPLICATION_LABEL" 
+					description="JTMOD_TMYA_APPLICATION_DESC" 
+					query="SELECT id AS value, title AS appId FROM #__joaktree_applications"
+				/>
+
+				<field 
+					name="moduleclass_sfx" 
+					type="text" 
+					default="" 
+					label="JTMOD_TMYA_MODSUFFIX_LABEL" 
+					description="PARAMMODULECLASSSUFFIX" 
+				/>
+				
+			
+			</fieldset>
+			<fieldset name="advanced">
+			
+				<field 
+					name="CAST" 
+					type="list" 
+					default="0" 
+					label="CAST" 
+				>
+					<option value="0">JTMOD_TMYA_GEDCOMEVENT_OPT0</option>
+					<option value="1">JTMOD_TMYA_GEDCOMEVENT_OPT1</option>
+				</field>
+			
+				<field 
+					name="TITL" 
+					type="list" 
+					default="0" 
+					label="TITL" 
+				>
+					<option value="0">JTMOD_TMYA_GEDCOMEVENT_OPT0</option>
+					<option value="1">JTMOD_TMYA_GEDCOMEVENT_OPT1</option>
+				</field>
+			
+				<field 
+					name="BIRT" 
+					type="list" 
+					default="0" 
+					label="BIRT" 
+				>
+					<option value="0">JTMOD_TMYA_GEDCOMEVENT_OPT0</option>
+					<option value="1">JTMOD_TMYA_GEDCOMEVENT_OPT1</option>
+				</field>
+			
+				<field 
+					name="BAPM" 
+					type="list" 
+					default="0" 
+					label="BAPM" 
+				>
+					<option value="0">JTMOD_TMYA_GEDCOMEVENT_OPT0</option>
+					<option value="1">JTMOD_TMYA_GEDCOMEVENT_OPT1</option>
+				</field>
+			
+				<field 
+					name="BRTM" 
+					type="list" 
+					default="0" 
+					label="BRTM" 
+				>
+					<option value="0">JTMOD_TMYA_GEDCOMEVENT_OPT0</option>
+					<option value="1">JTMOD_TMYA_GEDCOMEVENT_OPT1</option>
+				</field>
+
+				<field 
+					name="CHR" 
+					type="list" 
+					default="0" 
+					label="CHR" 
+				>
+					<option value="0">JTMOD_TMYA_GEDCOMEVENT_OPT0</option>
+					<option value="1">JTMOD_TMYA_GEDCOMEVENT_OPT1</option>
+				</field>
+
+				<field 
+					name="BLES" 
+					type="list" 
+					default="0" 
+					label="BLES" 
+				>
+					<option value="0">JTMOD_TMYA_GEDCOMEVENT_OPT0</option>
+					<option value="1">JTMOD_TMYA_GEDCOMEVENT_OPT1</option>
+				</field>
+
+				<field 
+					name="BARM" 
+					type="list" 
+					default="0" 
+					label="BARM" 
+				>
+					<option value="0">JTMOD_TMYA_GEDCOMEVENT_OPT0</option>
+					<option value="1">JTMOD_TMYA_GEDCOMEVENT_OPT1</option>
+				</field>
+
+				<field 
+					name="BASM" 
+					type="list" 
+					default="0" 
+					label="BASM" 
+				>
+					<option value="0">JTMOD_TMYA_GEDCOMEVENT_OPT0</option>
+					<option value="1">JTMOD_TMYA_GEDCOMEVENT_OPT1</option>
+				</field>
+
+				<field 
+					name="CONF" 
+					type="list" 
+					default="0" 
+					label="CONF" 
+				>
+					<option value="0">JTMOD_TMYA_GEDCOMEVENT_OPT0</option>
+					<option value="1">JTMOD_TMYA_GEDCOMEVENT_OPT1</option>
+				</field>
+
+				<field 
+					name="ADOP" 
+					type="list" 
+					default="0" 
+					label="ADOP" 
+				>
+					<option value="0">JTMOD_TMYA_GEDCOMEVENT_OPT0</option>
+					<option value="1">JTMOD_TMYA_GEDCOMEVENT_OPT1</option>
+				</field>
+
+				<field 
+					name="CHRA" 
+					type="list" 
+					default="0" 
+					label="CHRA" 
+				>
+					<option value="0">JTMOD_TMYA_GEDCOMEVENT_OPT0</option>
+					<option value="1">JTMOD_TMYA_GEDCOMEVENT_OPT1</option>
+				</field>
+
+				<field 
+					name="DEAT" 
+					type="list" 
+					default="0" 
+					label="DEAT" 
+				>
+					<option value="0">JTMOD_TMYA_GEDCOMEVENT_OPT0</option>
+					<option value="1">JTMOD_TMYA_GEDCOMEVENT_OPT1</option>
+				</field>
+
+				<field 
+					name="BURI" 
+					type="list" 
+					default="0" 
+					label="BURI" 
+				>
+					<option value="0">JTMOD_TMYA_GEDCOMEVENT_OPT0</option>
+					<option value="1">JTMOD_TMYA_GEDCOMEVENT_OPT1</option>
+				</field>
+
+				<field 
+					name="CREM" 
+					type="list" 
+					default="0" 
+					label="CREM" 
+				>
+					<option value="0">JTMOD_TMYA_GEDCOMEVENT_OPT0</option>
+					<option value="1">JTMOD_TMYA_GEDCOMEVENT_OPT1</option>
+				</field>
+
+				<field 
+					name="YART" 
+					type="list" 
+					default="0" 
+					label="YART" 
+				>
+					<option value="0">JTMOD_TMYA_GEDCOMEVENT_OPT0</option>
+					<option value="1">JTMOD_TMYA_GEDCOMEVENT_OPT1</option>
+				</field>
+
+				<field 
+					name="FCOM" 
+					type="list" 
+					default="0" 
+					label="FCOM" 
+				>
+					<option value="0">JTMOD_TMYA_GEDCOMEVENT_OPT0</option>
+					<option value="1">JTMOD_TMYA_GEDCOMEVENT_OPT1</option>
+				</field>
+
+				<field 
+					name="EDUC" 
+					type="list" 
+					default="0" 
+					label="EDUC" 
+				>
+					<option value="0">JTMOD_TMYA_GEDCOMEVENT_OPT0</option>
+					<option value="1">JTMOD_TMYA_GEDCOMEVENT_OPT1</option>
+				</field>
+
+				<field 
+					name="GRAD" 
+					type="list" 
+					default="0" 
+					label="GRAD" 
+				>
+					<option value="0">JTMOD_TMYA_GEDCOMEVENT_OPT0</option>
+					<option value="1">JTMOD_TMYA_GEDCOMEVENT_OPT1</option>
+				</field>
+
+				<field 
+					name="OCCU" 
+					type="list" 
+					default="0" 
+					label="OCCU" 
+				>
+					<option value="0">JTMOD_TMYA_GEDCOMEVENT_OPT0</option>
+					<option value="1">JTMOD_TMYA_GEDCOMEVENT_OPT1</option>
+				</field>
+
+				<field 
+					name="RETI" 
+					type="list" 
+					default="0" 
+					label="RETI" 
+				>
+					<option value="0">JTMOD_TMYA_GEDCOMEVENT_OPT0</option>
+					<option value="1">JTMOD_TMYA_GEDCOMEVENT_OPT1</option>
+				</field>
+
+				<field 
+					name="EMIG" 
+					type="list" 
+					default="0" 
+					label="EMIG" 
+				>
+					<option value="0">JTMOD_TMYA_GEDCOMEVENT_OPT0</option>
+					<option value="1">JTMOD_TMYA_GEDCOMEVENT_OPT1</option>
+				</field>
+
+				<field 
+					name="IMMI" 
+					type="list" 
+					default="0" 
+					label="IMMI" 
+				>
+					<option value="0">JTMOD_TMYA_GEDCOMEVENT_OPT0</option>
+					<option value="1">JTMOD_TMYA_GEDCOMEVENT_OPT1</option>
+				</field>
+
+				<field 
+					name="NATU" 
+					type="list" 
+					default="0" 
+					label="NATU" 
+				>
+					<option value="0">JTMOD_TMYA_GEDCOMEVENT_OPT0</option>
+					<option value="1">JTMOD_TMYA_GEDCOMEVENT_OPT1</option>
+				</field>
+
+				<field 
+					name="NATI" 
+					type="list" 
+					default="0" 
+					label="NATI" 
+				>
+					<option value="0">JTMOD_TMYA_GEDCOMEVENT_OPT0</option>
+					<option value="1">JTMOD_TMYA_GEDCOMEVENT_OPT1</option>
+				</field>
+
+				<field 
+					name="RESI" 
+					type="list" 
+					default="0" 
+					label="RESI" 
+				>
+					<option value="0">JTMOD_TMYA_GEDCOMEVENT_OPT0</option>
+					<option value="1">JTMOD_TMYA_GEDCOMEVENT_OPT1</option>
+				</field>
+
+				<field 
+					name="RELI" 
+					type="list" 
+					default="0" 
+					label="RELI" 
+				>
+					<option value="0">JTMOD_TMYA_GEDCOMEVENT_OPT0</option>
+					<option value="1">JTMOD_TMYA_GEDCOMEVENT_OPT1</option>
+				</field>
+
+				<field 
+					name="DSCR" 
+					type="list" 
+					default="0" 
+					label="DSCR" 
+				>
+					<option value="0">JTMOD_TMYA_GEDCOMEVENT_OPT0</option>
+					<option value="1">JTMOD_TMYA_GEDCOMEVENT_OPT1</option>
+				</field>
+
+				<field 
+					name="EVEN" 
+					type="list" 
+					default="0" 
+					label="EVEN" 
+				>
+					<option value="0">JTMOD_TMYA_GEDCOMEVENT_OPT0</option>
+					<option value="1">JTMOD_TMYA_GEDCOMEVENT_OPT1</option>
+				</field>
+
+				<field 
+					name="ENGA" 
+					type="list" 
+					default="0" 
+					label="ENGA" 
+				>
+					<option value="0">JTMOD_TMYA_GEDCOMEVENT_OPT0</option>
+					<option value="1">JTMOD_TMYA_GEDCOMEVENT_OPT1</option>
+				</field>
+
+				<field 
+					name="MARB" 
+					type="list" 
+					default="0" 
+					label="MARB" 
+				>
+					<option value="0">JTMOD_TMYA_GEDCOMEVENT_OPT0</option>
+					<option value="1">JTMOD_TMYA_GEDCOMEVENT_OPT1</option>
+				</field>
+
+				<field 
+					name="MARC" 
+					type="list" 
+					default="0" 
+					label="MARC" 
+				>
+					<option value="0">JTMOD_TMYA_GEDCOMEVENT_OPT0</option>
+					<option value="1">JTMOD_TMYA_GEDCOMEVENT_OPT1</option>
+				</field>
+
+				<field 
+					name="MARS" 
+					type="list" 
+					default="0" 
+					label="MARS" 
+				>
+					<option value="0">JTMOD_TMYA_GEDCOMEVENT_OPT0</option>
+					<option value="1">JTMOD_TMYA_GEDCOMEVENT_OPT1</option>
+				</field>
+
+				<field 
+					name="MARL" 
+					type="list" 
+					default="0" 
+					label="MARL" 
+				>
+					<option value="0">JTMOD_TMYA_GEDCOMEVENT_OPT0</option>
+					<option value="1">JTMOD_TMYA_GEDCOMEVENT_OPT1</option>
+				</field>
+
+				<field 
+					name="MARR" 
+					type="list" 
+					default="0" 
+					label="MARR" 
+				>
+					<option value="0">JTMOD_TMYA_GEDCOMEVENT_OPT0</option>
+					<option value="1">JTMOD_TMYA_GEDCOMEVENT_OPT1</option>
+				</field>
+
+				<field 
+					name="ANUL" 
+					type="list" 
+					default="0" 
+					label="ANUL" 
+				>
+					<option value="0">JTMOD_TMYA_GEDCOMEVENT_OPT0</option>
+					<option value="1">JTMOD_TMYA_GEDCOMEVENT_OPT1</option>
+				</field>
+
+				<field 
+					name="DIV" 
+					type="list" 
+					default="0" 
+					label="DIV" 
+				>
+					<option value="0">JTMOD_TMYA_GEDCOMEVENT_OPT0</option>
+					<option value="1">JTMOD_TMYA_GEDCOMEVENT_OPT1</option>
+				</field>
+
+				<field 
+					name="NCHI" 
+					type="list" 
+					default="0" 
+					label="NCHI" 
+				>
+					<option value="0">JTMOD_TMYA_GEDCOMEVENT_OPT0</option>
+					<option value="1">JTMOD_TMYA_GEDCOMEVENT_OPT1</option>
+				</field>
+
+			</fieldset>
+		</fields>
+	</config>
+
+</extension>

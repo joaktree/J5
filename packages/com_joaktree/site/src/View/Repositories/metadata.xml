@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE metadata>
+<metadata>
+	<view title="Repositories">
+		<message>
+			<![CDATA[Choose repository list layout]]>
+		</message>
+	</view>
+</metadata>

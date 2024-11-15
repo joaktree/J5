@@ -1,0 +1,7 @@
+@CHARSET "ISO-8859-1";
+
+ ul.briask-iss {position:relative;list-style:none;list-style-image:none;margin:0px auto;padding:0px;overflow:hidden;border:none;background:none;}
+ ul.briask-iss li {list-style:none;margin:0px;padding:0px;border:none;background:none;}
+ ul.briask-iss li a {margin:0px;padding:0px;border:none;background:none;}
+ ul.briask-iss li a img {display:none;position:absolute;padding:0px;top:0;left:0;border:none;background:none;}
+ ul.briask-iss li img {display:none;position:absolute;top:0;padding:0px;left:0;border:none;background:none;}

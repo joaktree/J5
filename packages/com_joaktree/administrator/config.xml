@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE config>
+<config>
+	<fieldset name="component"
+		label="COM_JOAKTREE"
+		description="">					
+			<field
+				id="siteedit"
+				name="siteedit"
+				type="list"
+				label="COM_JOAKTREE_SITEEDIT_LABEL"
+				description="COM_JOAKTREE_SITEEDIT_DESC"
+				default="1"
+			>
+				<option	value="0">JNO</option>
+				<option	value="1">JYES</option>
+			</field>
+					
+			<field
+				id="indCookies"
+				name="indCookies"
+				type="list"
+				label="COM_JOAKTREE_COOKIES_LABEL"
+				description="COM_JOAKTREE_COOKIES_DESC"
+				default="1"
+			>
+				<option	value="0">JNO</option>
+				<option	value="1">JYES</option>
+			</field>
+					
+			<field
+				id="processStep"
+				name="processStep"
+				type="hidden"
+				label="COM_JOAKTREE_PROCESSSTEP_LABEL"
+				description="COM_JOAKTREE_PROCESSSTEP_DESC"
+				default="1"
+			/>
+					
+			<field
+				id="procStepSize"
+				name="procStepSize"
+				type="text"
+				class="inputbox validate-numeric"
+				label="COM_JOAKTREE_PROCSTEPSIZE_LABEL"
+				description="COM_JOAKTREE_PROCSTEPSIZE_DESC"
+				default="50"
+			/>
+
+			<field
+				id="indArticleLink"
+				name="indArticleLink"
+				type="list"
+				label="COM_JOAKTREE_ARTICLELINKMETHOD_LABEL"
+				description="COM_JOAKTREE_ARTICLELINKMETHOD_DESC"
+				default="9"
+			>
+				<option	value="0">COM_JOAKTREE_ARTICLELINKMETHOD_VALUE_0</option>
+				<option	value="1">COM_JOAKTREE_ARTICLELINKMETHOD_VALUE_1</option>
+				<option value="2">COM_JOAKTREE_ARTICLELINKMETHOD_VALUE_2</option>
+				<option value="3">COM_JOAKTREE_ARTICLELINKMETHOD_VALUE_3</option>
+				<option value="4">COM_JOAKTREE_ARTICLELINKMETHOD_VALUE_4</option>
+				<option value="5">COM_JOAKTREE_ARTICLELINKMETHOD_VALUE_5</option>
+				<option value="9">COM_JOAKTREE_ARTICLELINKMETHOD_VALUE_9</option>
+			</field>
+		
+	</fieldset>
+	
+	<fieldset name="services"
+		label="MBJ_LABEL_SERVICES"
+		description=""
+        addfieldprefix="Joaktree\Component\Joaktree\Administrator\Field"
+	>	
+			<field
+				id="services"
+				name="services"
+				type="services"
+				label="MBJ_LABEL_SERVICES"
+				description="MBJ_DESCR_SERVICES"
+			/>			
+	</fieldset>
+	
+	<fieldset
+		name="permissions"
+		label="JCONFIG_PERMISSIONS_LABEL"
+		description="JCONFIG_PERMISSIONS_DESC"
+		>
+
+		<field
+			name="rules"
+			type="rules"
+			label="JCONFIG_PERMISSIONS_LABEL"
+			class="inputbox"
+			filter="rules"
+			component="com_joaktree"
+			section="component" 
+		/>
+	</fieldset>
+
+		
+</config>

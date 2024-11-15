@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE form>
+<form>
+	<config>         
+		<inlinehelp button="show"/>     
+	</config>
+	<fieldset 
+		name="details">
+		<field 
+			name="id" 
+			type="text" 
+			default="0" 
+			required="true"
+			readonly="true" 
+			class="readonly"
+			label="JGLOBAL_FIELD_ID_LABEL" 	
+			description ="JGLOBAL_FIELD_ID_DESC" 
+		/>
+
+		<field 
+			name="name" 
+			type="text" 
+			class="inputbox"
+			size="50"
+			maxlength="250"
+			label="JTTREE_LABEL_TREENAME"
+			description="JTTREE_TOOLTIP_TREENAME" 
+			required="true"
+		/>
+			
+		<field 
+			name="app_id" 
+			type="sql"
+			class="inputbox"
+			key_field="app_id"
+			value_field="appTitle"
+			onchange=""
+			label="JTTREE_LABEL_APPTITLE"
+			description="JTTREE_TOOLTIP_APPTITLE"
+			query="SELECT id AS app_id, title AS appTitle FROM #__joaktree_applications"
+		/>
+
+		<field
+			name="asset_id"
+			type="hidden"
+			filter="unset"
+		/>
+		
+		<field
+			name="holds"
+			type="list"
+			class="inputbox"
+			label="JTTREE_LABEL_HOLDS"
+			description="JTTREE_TOOLTIP_HOLDS"
+			default="all"
+		>
+			<option	value="all">JTTREE_HOLDS_ALL</option>
+			<option value="descendants">JTTREE_HOLDS_DESCENDANTS</option>
+		</field>
+
+		<field 
+			name="personName"
+			type="text" 
+			class="readonly"
+			size="50"
+			label="JTTREE_LABEL_ROOTPERSON"
+			description=""
+		/>
+
+		<field
+			name="access"
+			type="accesslevel"
+			default="1"
+			label="JT_HEADING_ACCESS"
+			description="JFIELD_ACCESS_DESC"
+			class="inputbox"
+		/>
+
+		<field 
+			name="root_person_id"
+			type="hidden" 
+			class="readonly"
+			size="50"
+			label="JTFAMTREE_HEADING_TREEHOLDERID"
+			description=""
+		/>
+
+		<field 
+			name="theme_id" 
+			type="sql"
+			class="inputbox"
+			label="JT_HEADING_THEME"
+			description="JTTHEME_DESC_THEMES"
+			key_field="value"
+			value_field="theme"
+			query="SELECT id AS value, name AS theme FROM #__joaktree_themes"
+		/>
+	
+		<field 
+			name="indGendex" 
+			type="list"
+			class="inputbox"
+			label="JTTREE_LABEL_GENDEX"
+			description="JTTREE_TOOLTIP_GENDEX"
+			default="1"
+		>
+			<option	value="1">JNO</option>
+			<option value="2">JYES</option>
+		</field>
+
+		<field 
+			name="indPersonCount" 
+			type="list"
+			class="inputbox"
+			label="JTTREE_LABEL_PERSONCOUNT"
+			description="JTTREE_TOOLTIP_PERSONCOUNT"
+			default="0"
+		>
+			<option	value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+
+		<field 
+			name="indMarriageCount" 
+			type="list"
+			class="inputbox"
+			label="JTTREE_LABEL_MARRIAGECOUNT"
+			description="JTTREE_TOOLTIP_MARRIAGECOUNT"
+			default="0"
+		>
+			<option	value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+		<field name="robots"
+			type="list"
+			label="JFIELD_METADATA_ROBOTS_LABEL"
+			description="JFIELD_METADATA_ROBOTS_DESC"
+		>
+			<option value="0">JGLOBAL_USE_GLOBAL</option>
+			<option value="1">index, follow</option>
+			<option value="2">noindex, follow</option>
+			<option value="3">index, nofollow</option>
+			<option value="4">noindex, nofollow</option>
+		</field>
+		
+		<field 
+			name="catid" 
+			type="sql"
+			class="inputbox"
+			label="JCATEGORY"
+			description="JFIELD_CATEGORY_DESC"
+			key_field="value"
+			value_field="category"
+			query="SELECT id AS value, title AS category FROM #__categories WHERE extension = 'com_content'"
+		/>
+
+		<field
+			id="rules"
+			name="rules"
+			type="rules"
+			translate_label="false"
+			filter="rules"
+			validate="rules"
+			class="inputbox"
+			component="com_joaktree"
+			section="tree"
+		/>
+
+	</fieldset>
+
+</form>

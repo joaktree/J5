@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE metadata>
+<metadata>
+	<view title="New person">
+		<message>
+			<![CDATA[Choose a new person form]]>
+		</message>
+	</view>
+</metadata>

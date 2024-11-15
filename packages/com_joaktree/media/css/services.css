@@ -1,0 +1,12 @@
+/**
+ * @package     MapsByJoaktree
+ * @subpackage  Service
+ *
+ * @copyright   Joaktree.com
+ * @license     GNU General Public License version 2 or later; see LICENSE
+ */
+
+#fieldset-services .control-group .control-label {width : auto}
+#fieldset-services .controls .control-group .control-label {width : 150px}
+
+#fieldset-services input {width : 100%}

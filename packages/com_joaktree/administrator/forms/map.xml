@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE form>
+<form>
+	<config>         
+		<inlinehelp button="show"/>     
+	</config>
+	<fieldset name="details" addfieldprefix="Joaktree\Component\Joaktree\Administrator\Field">
+		<field name="id" type="hidden" default="0" required="true"
+			readonly="true" class="readonly"
+			label="JGLOBAL_FIELD_ID_LABEL" 	description ="JGLOBAL_FIELD_ID_DESC" />
+
+		<field name="name" type="text" required="true"
+			size="50" label="JTAPPS_LABEL_TITLE"
+			description="JTAPPS_DESC_TITLE" />
+		<field 
+			name="service" 
+			type="list"
+			size="1" 
+			default="0"
+			label="JT_LABEL_TYPE"
+			description="JT_DESC_TYPE"
+		>
+			<option	value="staticmap">JTMAP_TYPE_STATIC</option>
+			<option	value="interactivemap">JTMAP_TYPE_INTERACTIVE</option>
+		</field>
+		<field 
+			name="selection" 
+			type="list"
+			size="1" 
+			label="JT_LABEL_SELECTION"
+			description="JT_DESC_SELECTION"
+			onchange="toggleMapSetting();"
+		>
+			<option	value="tree">JTMAP_SELECTION_TREE</option>
+			<option	value="person">JTMAP_SELECTION_PERSON</option>
+			<option	value="location">JTMAP_SELECTION_LOCATION</option>
+		</field>
+		<field 
+			name="app_id" 
+			type="hidden" 
+			class="readonly"
+		/>
+
+		<field 
+			name="tree" 
+			type="sql"
+			class="inputbox"
+			key_field="tree_id"
+			value_field="treeName"
+			label="JTFAMTREE_LABEL"
+			description="JTFAMTREE_DESC"
+			query="SELECT id AS tree_id, name AS treeName FROM #__joaktree_trees"
+		/>
+			
+		<field 
+			name="personName"
+			type="text" 
+			class="readonly"
+			size="50"
+			label="JTMAP_LABEL_PERSON"
+			description="JTMAP_DESC_PERSON"
+		/>
+
+		<field 
+			name="root_person_id"
+			type="hidden" 
+			size="50"
+			label="JTMAP_LABEL_PERSON"
+			description="JTMAP_DESC_PERSON"
+		/>
+		
+		<field 
+			name="familyName" 
+			type="text"
+			size="50" 
+			label="JTPERSONS_HEADING_FAMNAME"
+			description="JTPERSONS_HEADING_FAMNAME" 
+		/>
+				
+		<field 
+			name="descendants" 
+			type="list"
+			size="1" 
+			label="JTMAP_LABEL_DESCENDANTS"
+			description="JTMAP_DESC_DESCENDANTS"
+		>
+			<option	value="0">JNO</option>
+			<option	value="2">JYES</option>
+		</field>
+
+		<field 
+			name="person_relations" 
+			type="list"
+			size="1" 
+			label="JTMAP_LABEL_RELATIONS"
+			description="JTMAP_DESC_RELATIONS"
+		>
+			<option	value="0">JNO</option>
+			<option	value="1">JTMAP_VALUE_FIRSTDEGREE</option>
+			<option	value="2">JTMAP_VALUE_DESCENDANTS</option>
+			<option	value="3">JTMAP_VALUE_ANCESTORS</option>
+		</field>
+
+		<field 
+			name="period_start" 
+			type="text"
+			size="4" 
+			maxlength="4"
+			class="inputbox validate-numeric"
+			label="JT_LABEL_PERIODSTART"
+			description="JT_DESC_PERIODSTART" 
+		/>
+			
+		<field 
+			name="period_end" 
+			type="text"
+			size="4" 
+			maxlength="4"
+			class="inputbox validate-numeric"
+			label="JT_LABEL_PERIODEND"
+			description="JT_DESC_PERIODEND" 
+		/>
+		
+		<field 
+			name="events" 
+			type="jtsql"
+			multiple="true"
+			translate="true"
+			size="12"
+			class="inputbox"
+			key_field="code"
+			value_field="value"
+			label="JT_LABEL_INCLUDE_EVENTS"
+            required="true"
+			description=""
+            selected="true"
+            default=""
+			query="(SELECT code, code AS value FROM #__joaktree_display_settings WHERE level = 'person' AND published = true AND code NOT IN ('NOTE', 'ENOT', 'SOUR', 'ESOU') ORDER BY ordering) UNION (SELECT code, code AS value FROM #__joaktree_display_settings WHERE level = 'relation' AND published = true AND code NOT IN ('ENOT', 'ESOU') ORDER BY ordering)"
+            layout="joomla.form.field.list-fancy-select"
+		/>
+	</fieldset>
+
+
+	<fields name="params">
+		<fieldset name="settings">	
+		<field 
+			name="height"
+			type="text" 
+			required="true" 
+			default="400"
+			class="inputbox validate-numeric"
+			size="50"
+			maxlength="10"
+			label="COM_JOAKTREE_PXHEIGHT_LABEL" 	
+			description ="COM_JOAKTREE_PXHEIGHT_DESC" 
+		/>
+		
+		<field 
+			name="width"
+			type="text" 
+			class="inputbox validate-numeric"
+			size="50"
+			maxlength="10"
+			label="COM_JOAKTREE_PXWIDTH_LABEL" 	
+			description ="COM_JOAKTREE_PXWIDTH_DESC" 
+		/>
+		
+		<field 
+			name="maptype"
+			type="list" 
+			class="inputbox"
+			size="1"
+			label="JT_LABEL_MAPTYPE" 	
+			description ="JT_DESC_MAPTYPE" 
+		>
+			<option	value="road">JTMAP_MAPTYPE_ROADMAP</option>
+			<option	value="sat">JTMAP_MAPTYPE_SATELITE</option>
+			<option	value="ter">JTMAP_MAPTYPE_TERRAIN</option>
+			<option	value="hyb">JTMAP_MAPTYPE_HYBRID</option>
+		</field>
+		
+		<field 
+			name="latitude"
+			type="text" 
+			class="inputbox validate-numeric"
+			size="50"
+			maxlength="10"
+			label="JT_LABEL_LATITUDE" 	
+			description ="JT_DESC_LATITUDE" 
+		/>
+		
+		<field 
+			name="longitude"
+			type="text" 
+			class="inputbox validate-numeric"
+			size="50"
+			maxlength="10"
+			label="JT_LABEL_LONGITUDE" 	
+			description ="JT_DESC_LONGITUDE" 
+		/>
+		
+		<field 
+			name="center"
+			type="text" 
+			class="inputbox "
+			size="100"
+			maxlength="100"
+			label="JT_LABEL_CENTER" 	
+			description ="JT_DESC_CENTER" 
+		/>
+		
+		<field 
+			name="distance"
+			type="text" 
+			class="inputbox validate-numeric"
+			size="50"
+			maxlength="3"
+			label="JT_LABEL_DISTANCE" 	
+			description ="JT_DESC_DISTANCE" 
+		/>
+		
+		<field 
+			name="zoomlevel"
+			type="text" 
+			class="inputbox validate-numeric"
+			size="50"
+			maxlength="2"
+			label="JT_LABEL_ZOOMLEVEL" 	
+			description ="JT_DESC_ZOOMLEVEL" 
+		/>
+
+		</fieldset>
+
+		<fieldset name="adv-settings">	
+			<field	name="icon_file"
+					type="media"
+					class="inputbox"
+					size="50"
+					directory=""
+					hide_none="1" 
+					label="JTMAP_LABEL_ICON" 	
+					description ="" 
+			/>
+		
+			<field	name="ui_control"
+					type="list"
+					class="inputbox"
+					size="1"
+					label="JTMAP_LABEL_UICONTROL" 	
+					description ="JTMAP_DESCR_UICONTROL" 
+			>
+				<option	value="0">JNO</option>
+				<option	value="1">JYES</option>
+			</field>
+			
+		</fieldset>
+	</fields>
+
+
+</form>

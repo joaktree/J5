@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE metadata>
+<metadata>
+	<layout title="COM_JOAKTREE_PERSON_VIEW_TITLE">
+		<message>
+			<![CDATA[COM_JOAKTREE_PERSON_VIEW_DESC]]>
+		</message>
+	</layout>
+	
+	<fields name="params">
+
+		<!-- Basic options. -->
+		<fieldset 
+			name="basic" 
+			label="JTSTART_BASIC_FIELDSET_LABEL"
+			addfieldprefix="Joaktree\Component\Joaktree\Administrator\Field"
+		>
+			
+			<field
+				name="personId" 
+				type="person" 
+				default="0"
+				label="JTPERSON_LABEL" 
+				description="JTPERSON_DESC" 
+			/>
+	
+			<field
+				name="treeId" 
+				type="hidden" 
+			/>
+
+		</fieldset>
+	</fields>
+</metadata>

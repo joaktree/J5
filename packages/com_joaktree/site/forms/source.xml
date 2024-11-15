@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE form>
+<form>
+	<fieldset name="source" addfieldprefix="Joaktree\Component\Joaktree\Site\Field">
+		<field
+			name="app_id"
+			type="hidden"
+			filter="unset"
+		/>
+	
+		<field
+			name="id"
+			type="hidden"
+			filter="unset"
+		/>
+
+		<field 
+			name="title" 
+			type="text" 
+			class="inputbox"
+			required="true"
+			size="50"
+			maxlength="250"
+			label="JT_LABEL_NAME" 	
+			description ="JT_DESC_NAME" 
+		/>
+
+		<field 
+			name="author" 
+			type="text" 
+			class="inputbox"
+			size="50"
+			maxlength="250"
+			label="JT_AUTHOR" 	
+			description ="JT_AUTHOR" 
+		/>
+		
+		<field 
+			name="publication" 
+			type="text" 
+			class="inputbox"
+			size="50"
+			maxlength="250"
+			label="JT_PUBLICATION" 	
+			description ="JT_PUBLICATION" 
+		/>
+		
+		<field 
+			name="information" 
+			type="textarea" 
+			class="inputbox"
+			label="JT_INFORMATION" 	
+			description ="JT_INFORMATION" 
+		/>
+		
+		<field 
+			name="app_repo_id" 
+			type="repository" 
+			class="inputbox"
+			size="50"
+			maxlength="50"
+			label="JT_REPOSITORY" 	
+			description ="JT_REPOSITORY" 
+		/>
+		
+	</fieldset>
+		
+</form>	
+	

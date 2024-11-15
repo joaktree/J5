@@ -1,0 +1,103 @@
+/* default page span */
+span.jt-default {
+	float: left; 
+	width: 10em; 
+	font-weight: bold;
+}
+
+.jt-icon {
+	float: left;
+	margin-bottom: 15px;
+	margin-right: 15px;
+	text-align: center;
+}
+.jt-icon a {
+    background-color: #FFFFFF;
+    background-position: -30px center;
+    border: 1px solid #CCCCCC;
+    border-radius: 5px 5px 5px 5px;
+    color: #565656;
+    display: block;
+    float: left;
+    height: 82px;
+    text-decoration: none;
+    transition-duration: 0.8s;
+    transition-property: background-position, -moz-border-radius-bottomleft, -moz-box-shadow;
+    vertical-align: middle;
+    width: 148px;
+    padding-top: 15px;
+}
+
+/* toggle columns */
+.jt-hide-app, .jt-hide-pat, .jt-hide-per, .jt-hide-tree, .jt-hide-rob, .jt-hide-map, .jt-hide {
+	display: none;
+}
+
+.jt-show-app, .jt-show-pat, .jt-show-per, .jt-show-tree, .jt-show-rob, .jt-show-map, .jt-show {
+	display: ;
+}
+
+/* Joaktree icons  */
+.icon-importgedcom, .icon-exportgedcom {
+	background: url('../../com_joaktree/images/icon-16-person.png') no-repeat left;
+}
+
+/* map sprite */
+
+/* Markers are 24 pixels wide by 32 pixels tall. */
+/* 2px horizontal and 2px vertical between markers. */
+/* Therefore horizontal space of 1 marker: 26 x 34 pixels */
+
+.jt-map-sprite-0 {
+	width:275px;
+	height:32px;
+	background:url(../../com_joaktree/images/jt_map_sprite.png) 0 0;	
+}
+
+.jt-map-sprite-1 {
+	width:275px;
+	height:32px;
+	background:url(../../com_joaktree/images/jt_map_sprite.png) 0 -34px;	
+}
+
+.jt-map-sprite-2 {
+	width:275px;
+	height:32px;
+	background:url(../../com_joaktree/images/jt_map_sprite.png) 0 -68px;	
+}
+.jt-map-sprite-3 {
+	width:275px;
+	height:32px;
+	background:url(../../com_joaktree/images/jt_map_sprite.png) 0 -102px;	
+}
+.jt-map-sprite-4 {
+	width:275px;
+	height:32px;
+	background:url(../../com_joaktree/images/jt_map_sprite.png) 0 -136px;	
+}
+.jt-map-sprite-5 {
+	width:275px;
+	height:32px;
+	background:url(../../com_joaktree/images/jt_map_sprite.png) 0 -170px;	
+}
+.jt-map-sprite-6 {
+	width:275px;
+	height:32px;
+	background:url(../../com_joaktree//images/jt_map_sprite.png) 0 -204px;	
+}
+
+.jt-map-sprite-7 {
+	width:275px;
+	height:32px;
+	background:url(../../com_joaktree/images/jt_map_sprite.png) 0 -238px;	
+}
+.view-persons #sidebar .filter-select {display:flex !important}
+.view-persons #sidebar .sidebar-nav {padding: 2rem 0;}
+.view-persons #sidebar .sidebar-nav .chosen-container {width:auto !important;min-width:100px}
+
+#columns-bar .chosen-container {
+    width: auto !important;
+    min-width: 100px;
+}
+
+

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE metadata>
+<metadata>
+        <view title="Location map">
+        	<message>
+				<![CDATA[Choose a location-map layout]]>
+			</message>
+        </view>
+</metadata>

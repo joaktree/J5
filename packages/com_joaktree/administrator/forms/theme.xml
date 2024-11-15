@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE form>
+<form>
+	<config>         
+		<inlinehelp button="show"/>     
+	</config>
+	<fieldset name="details">
+		<field name="id" type="text" default="0" required="true"
+			readonly="true" class="readonly"
+			label="JGLOBAL_FIELD_ID_LABEL" 	description ="JGLOBAL_FIELD_ID_DESC" />
+
+		<field name="name" type="text" class="readonly" readonly="true"
+			size="40" label="JTTHEME_LABEL_NAME"
+			description="JTTHEME_DESC_NAME" />
+
+		<field name="newname" type="text" class="inputbox"
+			size="40" label="JTTHEME_LABEL_NAME"
+			description="JTTHEME_DESC_NAME" required="true" />
+			
+		<field name="theme" type="sql"
+			label="JTTHEME_LABEL_THEMES"
+			description="JTTHEME_DESC_THEMES"
+			query="SELECT id AS value, name AS theme FROM #__joaktree_themes"
+		/>
+		
+		<field
+			name="source"
+			type="editor"
+			editor="codemirror|none"
+			buttons="false"
+			label="JTTHEME_LABEL_SOURCECSS"
+			description="JTTHEME_DESC_SOURCECSS"
+			height="500"
+
+ />
+
+		<field name="sourcepath" type="text" 
+			readonly="true" 
+			class="readonly"
+			size="120" 
+			label="JTTHEME_LABEL_SOURCEPATH"
+			description="JTTHEME_DESC_SOURCEPATH" />
+		
+	</fieldset>
+
+
+	<fields name="params">
+		<fieldset name="settings" 
+        addfieldprefix="Joaktree\Component\Joaktree\Administrator\Field"
+        >		
+			<field
+				id="search_width"
+				name="search_width"
+				type="text"
+				label="COM_JOAKTREE_SEARCHWIDTH_LABEL"
+				description="COM_JOAKTREE_SEARCHWIDTH_DESC"
+				size="6"
+				class="inputbox validate-numeric"
+			/>
+	
+			<field
+				id="show_update"
+				name="show_update"
+				type="list"
+				label="COM_JOAKTREE_SHOWUPDATE_LABEL"
+				description="COM_JOAKTREE_SHOWUPDATE_DESC"
+				default="Y"
+			>
+				<option	value="N">JNO</option>
+				<option value="Y">JYES</option>
+			</field>
+	
+			<field
+				id="columns"
+				name="columns"
+				type="list"
+				label="COM_JOAKTREE_COLUMNS_LABEL"
+				description="COM_JOAKTREE_COLUMNS_DESC"
+				default="3"
+			>
+				<option	value="0">COM_JOAKTREE_VALUE_0</option>
+				<option value="1">COM_JOAKTREE_VALUE_1</option>
+				<option value="2">COM_JOAKTREE_VALUE_2</option>
+				<option value="3">COM_JOAKTREE_VALUE_3</option>
+				<option value="4">COM_JOAKTREE_VALUE_4</option>
+				<option value="5">COM_JOAKTREE_VALUE_5</option>
+				<option value="6">COM_JOAKTREE_VALUE_6</option>
+			</field>
+	
+			<field
+				id="groupCount"
+				name="groupCount"
+				type="list"
+				label="COM_JOAKTREE_GROUPCOUNT_LABEL"
+				description="COM_JOAKTREE_GROUPCOUNT_DESC"
+				default="3"
+			>
+				<option	value="0">COM_JOAKTREE_VALUE_0</option>
+				<option value="1">COM_JOAKTREE_VALUE_1</option>
+				<option value="2">COM_JOAKTREE_VALUE_2</option>
+				<option value="3">COM_JOAKTREE_VALUE_3</option>
+				<option value="4">COM_JOAKTREE_VALUE_4</option>
+				<option value="5">COM_JOAKTREE_VALUE_5</option>
+				<option value="6">COM_JOAKTREE_VALUE_6</option>
+			</field>
+	
+			<field
+				id="abbreviation"
+				name="abbreviation"
+				type="text"
+				label="COM_JOAKTREE_ABBREVIATION_LABEL"
+				description="COM_JOAKTREE_ABBREVIATION_DESC"
+				size="6"
+			/>
+	
+			<field
+				id="lineage"
+				name="lineage"
+				type="list"
+				label="COM_JOAKTREE_LINEAGE_LABEL"
+				description="COM_JOAKTREE_LINEAGE_DESC"
+				default="3"
+			>
+				<option	value="0">COM_JOAKTREE_LINEAGE_VALUE_0</option>
+				<option value="1">COM_JOAKTREE_LINEAGE_VALUE_1</option>
+				<option value="2">COM_JOAKTREE_LINEAGE_VALUE_2</option>
+				<option value="3">COM_JOAKTREE_LINEAGE_VALUE_3</option>
+			</field>
+	
+			<field
+				id="columnsLoc"
+				name="columnsLoc"
+				type="list"
+				label="COM_JOAKTREE_COLUMNSLOC_LABEL"
+				description="COM_JOAKTREE_COLUMNSLOC_DESC"
+				default="3"
+			>
+				<option	value="0">COM_JOAKTREE_VALUE_0</option>
+				<option value="1">COM_JOAKTREE_VALUE_1</option>
+				<option value="2">COM_JOAKTREE_VALUE_2</option>
+				<option value="3">COM_JOAKTREE_VALUE_3</option>
+				<option value="4">COM_JOAKTREE_VALUE_4</option>
+				<option value="5">COM_JOAKTREE_VALUE_5</option>
+				<option value="6">COM_JOAKTREE_VALUE_6</option>
+			</field>
+	
+			<field
+				id="groupCountLoc"
+				name="groupCountLoc"
+				type="list"
+				label="COM_JOAKTREE_GROUPCOUNTLOC_LABEL"
+				description="COM_JOAKTREE_GROUPCOUNTLOC_DESC"
+				default="3"
+			>
+				<option	value="0">COM_JOAKTREE_VALUE_0</option>
+				<option value="1">COM_JOAKTREE_VALUE_1</option>
+				<option value="2">COM_JOAKTREE_VALUE_2</option>
+				<option value="3">COM_JOAKTREE_VALUE_3</option>
+				<option value="4">COM_JOAKTREE_VALUE_4</option>
+				<option value="5">COM_JOAKTREE_VALUE_5</option>
+				<option value="6">COM_JOAKTREE_VALUE_6</option>
+			</field>
+	
+			<field
+				id="Directory"
+				name="Directory"
+				type="text"
+				label="COM_JOAKTREE_DIRECTORY_LABEL"
+				description="COM_JOAKTREE_DIRECTORY_DESC"
+				default = "images/joaktree"
+				class="inputbox"
+			/>
+	
+			<field
+				id="pxHeight"
+				name="pxHeight"
+				type="text"
+				label="COM_JOAKTREE_PXHEIGHT_LABEL"
+				description="COM_JOAKTREE_PXHEIGHT_DESC"
+				default = "135"
+				class="inputbox validate-numeric"
+			/>
+	
+			<field
+				id="pxWidth"
+				name="pxWidth"
+				type="text"
+				label="COM_JOAKTREE_PXWIDTH_LABEL"
+				description="COM_JOAKTREE_PXWIDTH_DESC"
+				default = "325"
+				class="inputbox validate-numeric"		/>
+	
+			<field
+				id="transDelay"
+				name="transDelay"
+				type="text"
+				label="COM_JOAKTREE_TRANSDELAY_LABEL"
+				description="COM_JOAKTREE_TRANSDELAY_DESC"
+				default = "50"
+				class="inputbox validate-numeric"
+			/>
+	
+			<field
+				id="nextDelay"
+				name="nextDelay"
+				type="text"
+				label="COM_JOAKTREE_NEXTDELAY_LABEL"
+				description="COM_JOAKTREE_NEXTDELAY_DESC"
+				default = "5000"
+				class="inputbox validate-numeric"
+			/>
+	
+			<field
+				id="indTitle"
+				name="indTitle"
+				type="list"
+				label="COM_JOAKTREE_INDTITLE_LABEL"
+				description="COM_JOAKTREE_INDTITLE_DESC"
+				default = "0"
+				class="inputbox"
+			>
+				<option	value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+	
+			<field
+				id="TitleSlideshow"
+				name="TitleSlideshow"
+				type="text"
+				label="COM_JOAKTREE_TITLE_LABEL"
+				description="COM_JOAKTREE_TITLE_DESC"
+				default = "A Genealogy Slideshow"
+				class="inputbox"
+			/>
+	
+			<field
+				id="Sequence"
+				name="Sequence"
+				type="list"
+				label="COM_JOAKTREE_SEQUENCE_LABEL"
+				description="COM_JOAKTREE_SEQUENCE_DESC"
+				default="3"
+			>
+				<option	value="0">COM_JOAKTREE_DISABLE</option>
+				<option value="1">COM_JOAKTREE_SEQUENCE_VALUE_1</option>
+				<option value="2">COM_JOAKTREE_SEQUENCE_VALUE_2</option>
+				<option value="3">COM_JOAKTREE_SEQUENCE_VALUE_3</option>
+				<option value="4">COM_JOAKTREE_SEQUENCE_VALUE_4</option>
+			</field>
+	
+			<field
+				id="pxMapWidth"
+				name="pxMapWidth"
+				type="text"
+				label="COM_JOAKTREE_PXMAPWIDTH_LABEL"
+				description="COM_JOAKTREE_PXMAPWIDTH_DESC"
+				default = "700"
+				class="inputbox validate-numeric"		/>
+				
+			<field
+				id="statMarkerColor"
+				name="statMarkerColor"
+				type="color"
+				label="COM_JOAKTREE_MARKERCOLOR_LABEL"
+				description="COM_JOAKTREE_MARKERCOLOR_DESC"
+				size="6" 
+				maxlength="6"
+				class="inputbox"		/>
+				
+			<field
+				id="dynMarkerIcons"
+				name="dynMarkerIcons"
+				type="mapicons"
+				label="COM_JOAKTREE_DYNMARKERS_LABEL"
+				description="COM_JOAKTREE_DYNMARKERS_DESC"
+				size="1" 
+				class="inputbox"		/>
+
+			<field
+				id="descendantchart"
+				name="descendantchart"
+				type="list"
+				label="COM_JOAKTREE_DESCENDANTCHART_LABEL"
+				description="COM_JOAKTREE_DESCENDANTCHART_DESC"
+				default="1"
+			>
+				<option	value="0">COM_JOAKTREE_DISABLE</option>
+				<option value="1">COM_JOAKTREE_ENABLE</option>
+			</field>
+	
+			<field
+				id="descendantlevel"
+				name="descendantlevel"
+				type="text"
+				label="COM_JOAKTREE_DESCENDANTLEVEL_LABEL"
+				description="COM_JOAKTREE_DESCENDANTLEVEL_DESC"
+				default = "20"
+				class="inputbox validate-numeric"
+			/>
+	
+			<field
+				id="ancestorchart"
+				name="ancestorchart"
+				type="list"
+				label="COM_JOAKTREE_ANCESTORCHART_LABEL"
+				description="COM_JOAKTREE_ANCESTORCHART_DESC"
+				default="1"
+			>
+				<option	value="0">COM_JOAKTREE_DISABLE</option>
+				<option value="1">COM_JOAKTREE_ENABLE</option>
+			</field>
+	
+			<field
+				id="ancestorlevel"
+				name="ancestorlevel"
+				type="list"
+				label="COM_JOAKTREE_ANCESTORLEVEL_LABEL"
+				description="COM_JOAKTREE_ANCESTORLEVEL_DESC"
+				default="1"
+			>
+				<option	value="0">COM_JOAKTREE_ANCESTORLEVEL_VALUE_0</option>
+				<option value="1">COM_JOAKTREE_ANCESTORLEVEL_VALUE_1</option>
+				<option value="2">COM_JOAKTREE_ANCESTORLEVEL_VALUE_2</option>
+				<option value="3">COM_JOAKTREE_ANCESTORLEVEL_VALUE_3</option>
+				<option value="4">COM_JOAKTREE_ANCESTORLEVEL_VALUE_4</option>
+				<option value="5">COM_JOAKTREE_ANCESTORLEVEL_VALUE_5</option>
+				<option value="6">COM_JOAKTREE_ANCESTORLEVEL_VALUE_6</option>
+				<option value="7">COM_JOAKTREE_ANCESTORLEVEL_VALUE_7</option>
+				<option value="8">COM_JOAKTREE_ANCESTORLEVEL_VALUE_8</option>
+			</field>
+			
+ 			<field
+				id="ancestordates"
+				name="ancestordates"
+				type="list"
+				label="COM_JOAKTREE_ANCESTORDATES_LABEL"
+				description="COM_JOAKTREE_ANCESTORDATES_DESC"
+				default="1"
+			>
+				<option	value="0">COM_JOAKTREE_DISABLE</option>
+				<option value="1">COM_JOAKTREE_ENABLE</option>
+			</field>			
+			
+			<field
+				id="indTabBehavior"
+				name="indTabBehavior"
+				type="list"
+				label="COM_JOAKTREE_INDTABBEHAVIOR_LABEL"
+				description="COM_JOAKTREE_INDTABBEHAVIOR_DESC"
+				default="1"
+			>
+				<option	value="0">COM_JOAKTREE_INDTABBEHAVIOR_VALUE_0</option>
+				<option value="1">COM_JOAKTREE_INDTABBEHAVIOR_VALUE_1</option>
+			</field>
+			
+			<field
+				id="notetitlelength"
+				name="notetitlelength"
+				type="text"
+				label="COM_JOAKTREE_NOTETITLELENGTH_LABEL"
+				description="COM_JOAKTREE_NOTETITLELENGTH_DESC"
+				default="30"
+				size="2"
+				class="inputbox validate-numeric"
+			/>
+			
+		</fieldset>
+	</fields>
+
+
+</form>

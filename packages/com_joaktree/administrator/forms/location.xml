@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE form>
+<form>
+	<config>         
+		<inlinehelp button="show"/>     
+	</config>
+
+	<fieldset name="location">
+		<field 
+			name="id" 
+			type="text" 
+			readonly="true" 
+			class="readonly"
+			label="JGLOBAL_FIELD_ID_LABEL" 	
+			description ="JGLOBAL_FIELD_ID_DESC" 
+		/>
+
+		<field 
+			name="value" 
+			type="text" 
+			readonly="true" 
+			class="readonly"
+			label="JT_LABEL_LOCATION" 	
+			description ="JT_DESC_LOCATION" 
+		/>
+				
+		<field
+			name="results"
+			type="hidden"
+			filter="unset"
+		/>	
+
+		<field 
+			name="resultValue" 
+			type="text" 
+			size="40" 
+			disabled="true"
+			class="readonly"
+			label="JT_LABEL_GEOCODELOCATION" 	
+			description ="JT_DESC_GEOCODELOCATION" 
+		/>
+				
+		<field 
+			name="latitude" 
+			type="text" 
+			class="inputbox validate-numeric"
+			size="50"
+			maxlength="10"
+			label="JT_LABEL_LATITUDE" 	
+			description ="JT_DESC_LATITUDE" 
+			onchange="clearResultValue();"
+		/>
+		
+		<field 
+			name="longitude" 
+			type="text" 
+			class="inputbox validate-numeric"
+			size="50"
+			maxlength="10"
+			label="JT_LABEL_LONGITUDE" 	
+			description ="JT_DESC_LONGITUDE" 
+			onchange="clearResultValue();"
+		/>
+		
+		<field 
+			name="indDeleted" 
+			type="checkbox" 
+			class="inputbox"
+			value="1"
+			label="JT_LABEL_NOLOCATION" 	
+			description ="JT_DESC_NOLOCATION" 
+			onclick="setDeleteCheckbox();"
+		/>
+	</fieldset>
+
+</form>	
+	

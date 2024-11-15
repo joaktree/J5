@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE form>
+<form>
+	<config>         
+		<inlinehelp button="show"/>     
+	</config>
+
+	<fieldset name="details">
+		<field name="id" type="hidden" default="0" required="true"
+			readonly="true" class="readonly"
+			label="JGLOBAL_FIELD_ID_LABEL" 	description ="JGLOBAL_FIELD_ID_DESC" />
+
+		<field
+			name="asset_id"
+			type="hidden"
+			filter="unset"
+		/>
+		
+		<field name="title" type="text" required="true"
+			size="30" label="JTAPPS_LABEL_TITLE"
+			description="JTAPPS_DESC_TITLE" />
+
+		<field name="description" type="text"
+			size="100" label="JTAPPS_LABEL_DESC"
+			description="JTAPPS_DESC_DESC" />
+
+		<field name="programName" type="text"
+			size="30" label="JTAPPS_LABEL_PROGNAME"
+			description="JTAPPS_DESC_PROGNAME" />
+
+		<field
+			id="rules"
+			name="rules"
+			type="rules"
+			translate_label="false"
+			filter="rules"
+			validate="rules"
+			class="inputbox"
+			component="com_joaktree"
+			section="application"
+		/>
+				
+	</fieldset>
+
+	<fields name="params">
+		<fieldset name="settings">	
+			<field
+				id="gedcomfile_path"
+				name="gedcomfile_path"
+				type="text"
+				label="COM_JOAKTREE_GEDCOM_PATH_LABEL"
+				description="COM_JOAKTREE_GEDCOM_PATH_DESC"
+				default="tmp"
+				size="50"
+				class="inputbox"
+				required="true"
+			/>
+		
+			<field
+				id="gedcomfile_name"
+				name="gedcomfile_name"
+				type="text"
+				label="COM_JOAKTREE_GEDCOM_NAME_LABEL"
+				description="COM_JOAKTREE_GEDCOM_NAME_DESC"
+				default="joaktree.ged"
+				size="50"
+				class="inputbox"
+				required="true"
+			/>
+
+			<field
+				id="unicode2utf"
+				name="unicode2utf"
+				type="list"
+				label="COM_JOAKTREE_CONVERSION_LABEL"
+				description="COM_JOAKTREE_CONVERSION_DESC"
+				default="0"
+			>
+				<option	value="0">COM_JOAKTREE_CONVERSION_VALUE_0</option>
+				<option value="1">COM_JOAKTREE_CONVERSION_VALUE_1</option>
+				<option value="2">COM_JOAKTREE_CONVERSION_VALUE_2</option>
+			</field>
+
+			<field
+				id="familyname"
+				name="familyname"
+				type="list"
+				label="COM_JOAKTREE_FAMILYNAME_LABEL"
+				description="COM_JOAKTREE_FAMILYNAME_DESC"
+				default="0"
+			>
+				<option	value="0">COM_JOAKTREE_FAMILYNAME_VALUE_0</option>
+				<option value="1">COM_JOAKTREE_FAMILYNAME_VALUE_1</option>
+			</field>
+	
+			<field
+				id="patronym"
+				name="patronym"
+				type="list"
+				label="COM_JOAKTREE_PATRONYM_LABEL"
+				description="COM_JOAKTREE_PATRONYM_DESC"
+				default="1"
+			>
+				<option	value="0">COM_JOAKTREE_PATRONYM_VALUE_0</option>
+				<option value="1">COM_JOAKTREE_PATRONYM_VALUE_1</option>
+				<option value="2">COM_JOAKTREE_PATRONYM_VALUE_2</option>
+				<option value="9">COM_JOAKTREE_PATRONYM_VALUE_9</option>
+			</field>
+
+			<field
+				id="patronymSeparation"
+				name="patronymSeparation"
+				type="text"
+				label="COM_JOAKTREE_SEPARATION_LABEL"
+				description="COM_JOAKTREE_SEPARATION_DESC"
+				default="-"
+				size="4"
+				class="inputbox"
+			/>
+
+			<field
+				id="age_no_page"
+				name="age_no_page"
+				type="text"
+				label="COM_JOAKTREE_AGENOPAGE_LABEL"
+				description="COM_JOAKTREE_AGENOPAGE_DESC"
+				default="15"
+				size="2"
+				class="inputbox validate-numeric"
+			/>
+			
+			<field
+				id="removeChar"
+				name="removeChar"
+				type="text"
+				label="COM_JOAKTREE_REMOVECHAR_LABEL"
+				description="COM_JOAKTREE_REMOVECHAR_DESC"
+				default=""
+				size="1"
+				class="inputbox"
+			/>
+	
+			<field
+				id="truncrelations"
+				name="truncrelations"
+				type="list"
+				label="COM_JOAKTREE_TRUNCRELATIONS_LABEL"
+				description="COM_JOAKTREE_TRUNCRELATIONS_DESC"
+				default="0"
+			>
+				<option	value="0">COM_JOAKTREE_TRUNCRELATIONS_VALUE_0</option>
+				<option value="1">COM_JOAKTREE_TRUNCRELATIONS_VALUE_1</option>
+			</field>
+
+			<field
+				id="indDocuments"
+				name="indDocuments"
+				type="list"
+				label="COM_JOAKTREE_INDDOC_LABEL"
+				description="COM_JOAKTREE_INDDOC_DESC"
+				default="1"
+			>
+				<option	value="0">COM_JOAKTREE_INDDOC_VALUE_0</option>
+				<option value="1">JYES</option>
+			</field>
+	
+			<field
+				id="gedcomDocumentRoot"
+				name="gedcomDocumentRoot"
+				type="text"
+				label="COM_JOAKTREE_GEDCOMDOCROOT_LABEL"
+				description="COM_JOAKTREE_GEDCOMDOCROOT_DESC"
+				size="50"
+				class="inputbox"
+			/>
+	
+			<field
+				id="joomlaDocumentRoot"
+				name="joomlaDocumentRoot"
+				type="text"
+				label="COM_JOAKTREE_JOOMLADOCROOT_LABEL"
+				description="COM_JOAKTREE_JOOMLADOCROOT_DESC"
+				size="50"
+				class="inputbox"
+			/>			
+			
+			<field
+				id="colon"
+				name="colon"
+				type="list"
+				label="COM_JOAKTREE_COLON_LABEL"
+				description="COM_JOAKTREE_COLON_DESC"
+				default="0"
+			>
+				<option	value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+	
+			<field
+				id="indLogging"
+				name="indLogging"
+				type="list"
+				label="COM_JOAKTREE_INDLOG_LABEL"
+				description="COM_JOAKTREE_INDLOG_DESC"
+				default="1"
+			>
+				<option	value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+            <field name="map"
+                type="list"
+                label="JT_LABEL_TYPE"
+                description="JT_DESC_TYPE"
+            >
+                <option value="0">JT_FILTER_VAL_NOMAP</option>
+                <option value="1">JT_FILTER_VAL_STATMAP</option>
+                <option value="2">JT_FILTER_VAL_DYNMAP</option>
+            </field>
+
+		</fieldset>
+	</fields>
+
+
+</form>

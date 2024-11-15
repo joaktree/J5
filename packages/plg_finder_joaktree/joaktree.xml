@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE extension>
+<extension version="4.0" type="plugin" group="finder" method="upgrade">
+	<name>plg_finder_joaktree</name>
+    <old_author>joaktree.com</old_author>
+    <old_creationDate>June 2013</old_creationDate>
+	<old_copyright>(C) 2009 - 2013 Joaktree.com</old_copyright>
+	<license>GNU General Public License version 2 or later</license>
+	<old_authorEmail>info@joaktree.com</old_authorEmail>
+	<old_authorUrl>www.joaktree.com</old_authorUrl>
+    <author>Robert Gastaud</author>
+    <creationDate>October 2024</creationDate>
+	<copyright>(C) 2017 - now omXtensions.com</copyright>
+	<authorEmail>rg-consultant@robertg-conseil.fr</authorEmail>
+	<authorUrl>www.joomxtensions.com</authorUrl>	
+   <version>2.0.2</version>
+	<description>PLG_SEARCH_JOAKTREE_XML_DESCRIPTION</description>
+    <namespace path="src">Joaktree\Plugin\Finder\Joaktree</namespace>
+	<files>
+		<folder plugin="joaktree">services</folder>
+        <folder>src</folder>
+		<filename>index.html</filename>
+	</files>
+
+    <languages>
+        <language tag="en-GB">language/en-GB/plg_finder_joaktree.sys.ini</language>
+        <language tag="en-GB">language/en-GB/plg_finder_joaktree.ini</language>
+		<language tag="fr-FR">language/fr-FR/plg_finder_joaktree.sys.ini</language>
+        <language tag="fr-FR">language/fr-FR/plg_finder_joaktree.ini</language>
+    </languages>
+    
+	<config>
+		<fields name="params">			
+
+			<fieldset name="basic">
+				<field 
+					name="search_patronyms" 
+					type="radio" 
+					default="0" 
+					label="JTSRCH_PATR_LABEL" 
+					description="JTSRCH_PATR_DESC"
+				>
+					<option value="0">JOFF</option>
+					<option value="1">JON</option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+
+</extension>

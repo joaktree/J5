@@ -1,0 +1,629 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE form>
+<form>
+	<field 	name="type"
+			type="hidden"
+			filter="unset"
+	/>
+	
+	<field 	name="action"
+			type="hidden"
+			filter="unset"
+	/>
+
+	<field 	name="lineEnd"
+			type="hidden"
+			filter="unset"
+	/>
+
+	<field 	name="counter"
+			type="hidden"
+			filter="unset"
+	/>
+
+	<field	name="asset_id"
+			type="hidden"
+			filter="unset"
+	/>
+
+	<fields name="person">
+		<fieldset name="person" 
+        addfieldprefix="Joaktree\Component\Joaktree\Site\Field">
+			<field	name="status"
+					type="hidden"
+					filter="unset"
+			/>
+			
+			<field 	name="app_id"
+					type="hidden"
+					filter="unset"
+			/>
+		
+			<field	name="appName" 
+					type="text" 
+					label="JTAPPLICATION_LABEL" 
+					description="JTAPPLICATION_DESC" 
+					class="inputbox"
+					size="50"
+					readonly="true"
+			/>
+		
+			<field	name="id"
+					type="hidden"
+					filter="unset"
+			/>
+	
+			<!-- field 	name="default_tree_id"
+					type="text"
+					filter="unset"
+			/ -->
+		
+			<field	name="default_tree_id" 
+					type="sql" 
+					label="JTFAMTREE_LABEL" 
+					description="JTFAMTREE_DESC" 
+					query="SELECT id AS value, name AS default_tree_id FROM #__joaktree_trees"
+					class="inputbox"
+					size="1"
+			/>
+
+			<field	name="living"
+					type="hidden"
+					filter="unset"
+					default="0"
+			/>
+			
+			<field	name="firstName" 
+					type="text" 
+					class="inputbox"
+					size="50"
+					maxlength="50"
+					label="JT_LABEL_FIRSTNAME" 	
+					description ="JT_DESC_FIRSTNAME" 
+			/>
+	
+			<field	name="patronym" 
+					type="text" 
+					class="inputbox"
+					size="50"
+					maxlength="50"
+					label="JT_LABEL_PATRONYM" 	
+					description ="JT_DESC_PATRONYM" 
+			/>
+			
+			<field	name="namePreposition" 
+					type="text" 
+					class="inputbox"
+					size="50"
+					maxlength="15"
+					label="JT_LABEL_PREPOSITION" 	
+					description ="JT_DESC_PREPOSITION" 
+			/>
+	
+			<field	name="rawFamilyName" 
+					type="text" 
+					class="inputbox"
+					size="50"
+					maxlength="50"
+					onchange="setCheckValue();"
+					label="JT_LABEL_FAMILYNAME" 	
+					description ="JT_DESC_FAMILYNAME" 
+			/>
+		
+			<field	name="prefix" 
+					type="text" 
+					class="inputbox"
+					size="50"
+					maxlength="20"
+					onchange="setCheckValue();"
+					label="JT_LABEL_PREFIX" 	
+					description ="JT_DESC_PREFIX" 
+			/>
+
+			<field	name="suffix" 
+					type="text" 
+					class="inputbox"
+					size="50"
+					maxlength="20"
+					onchange="setCheckValue();"
+					label="JT_LABEL_SUFFIX" 	
+					description ="JT_DESC_SUFFIX" 
+			/>
+
+			<field	name="sex" 
+					type="list" 
+					class="inputbox"
+					label="JT_LABEL_SEX" 	
+					description ="JT_DESC_SEX"
+					default=""
+			>
+				<option	value="" >JT_SEX_UNKNOWN</option>
+				<option value="M">JT_SEX_MALE</option>
+				<option value="F">JT_SEX_FEMALE</option>
+			</field>
+
+			<field	name="livingnew" 
+					type="list" 
+					class="inputbox"
+					label="JT_LABEL_LIVING" 	
+					description ="JT_DESC_LIVING"
+					default="0"
+			>
+				<option value="0">JT_NOTLIVING</option>
+				<option value="1">JT_LIVING</option>
+			</field>
+
+			<field	name="published" 
+					type="list" 
+					class="inputbox"
+					label="JT_LABEL_PUBLISHED" 	
+					description ="JT_DESC_PUBLISHED"
+					default="0"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			
+			<field	name="page" 
+					type="list" 
+					class="inputbox"
+					label="JT_LABEL_SHOWLINK" 	
+					description ="JT_DESC_SHOWLINK"
+					default="0"
+			>
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+			
+			<field	name="map" 
+					type="list" 
+					class="inputbox"
+					label="JT_LABEL_MAP" 	
+					description ="JT_DESC_MAP"
+					default="0"
+			>
+				<option value="0">JTMAP_VAL_NOMAP</option>
+				<option value="1">JTMAP_VAL_STATMAP</option>
+				<option value="2">JTMAP_VAL_DYNMAP</option>
+			</field>
+			
+			<fields name="names">
+				<fieldset name="names" addfieldprefix="Joaktree\Component\Joaktree\Site\Field">
+					<field	name="status"
+							multiple="true"
+							type="jtstatus"
+							filter="unset"
+					/>
+					
+					<field	name="orderNumber"
+							multiple="true"
+							type="jthidden"
+							filter="unset"
+					/>
+			
+					<field 	name="code" 
+							multiple="true"
+							type="gedcomList"
+							gedcom="name"
+							class="inputbox"
+							size="1"
+							onchange=""
+							label="JT_LABEL_NAMETYPE" 	
+							description ="JT_DESC_NAMETYPE" 
+					/>
+				
+					<field	name="value" 
+							multiple="true"
+							type="jttext" 
+							class="inputbox"
+							size="40"
+							maxlength="100"
+							label="JT_LABEL_NAME" 	
+							description ="JT_DESC_NAME" 
+					/>
+				
+				</fieldset>
+			</fields>
+			
+			<fields name="events">
+				<fieldset name="events" 
+                    addfieldprefix="Joaktree\Component\Joaktree\Site\Field">
+					<field	name="status"
+							multiple="true"
+							type="jtstatus"
+							filter="unset"
+					/>
+					
+					<field	name="orderNumber"
+							multiple="true"
+							type="jthidden"
+							filter="unset"
+					/>
+			
+					<field 	name="code" 
+							multiple="true"
+							type="gedcomList"
+							gedcom="person"
+							class="inputbox"
+							size="1"
+							onchange=""
+							label="JT_LABEL_EVENTTYPE" 	
+							description ="JT_DESC_EVENTTYPE" 
+					/>
+				
+					<field 	name="relcode" 
+							multiple="true"
+							type="gedcomList"
+							gedcom="relation"
+							class="inputbox"
+							size="1"
+							onchange=""
+							label="JT_LABEL_EVENTTYPE" 	
+							description ="JT_DESC_EVENTTYPE" 
+					/>
+					
+					<field	name="value" 
+							multiple="true"
+							type="jttext" 
+							class="inputbox"
+							size="40"
+							maxlength="100"
+							label="JT_LABEL_EVENTDESC" 	
+							description ="JT_DESC_EVENTDESC" 
+					/>
+					
+					<field	name="type" 
+							multiple="true"
+							type="jttext" 
+							class="inputbox"
+							size="30"
+							maxlength="30"
+							label="JT_LABEL_EVENTSUBTYPE" 	
+							description ="JT_DESC_EVENTSUBTYPE" 
+					/>
+				
+					<field	name="eventDateType" 
+							multiple="true"
+							type="datetype" 
+							class="inputbox"
+							label="JT_LABEL_DATE" 	
+							description ="JT_DESC_DATE"
+							default="simple" 
+					>
+						<option	value="simple">JT_DATE_SHORT</option>
+						<option value="extended">JT_DATE_EXTENDED</option>
+						<option value="description">JT_DATE_DESCRIPTION</option>
+					</field>
+
+					<field	name="eventDate" 
+							multiple="true"
+							type="jttext" 
+							class="inputbox"
+							size="40"
+							maxlength="40"
+							label="JT_LABEL_DATE" 	
+							description ="JT_DESC_DATE" 
+					/>
+
+					<field	name="eventDateLabel1" 
+							multiple="true"
+							type="jtlist" 
+							class="inputbox"
+							label="JT_LABEL_DATE" 	
+							description ="JT_DESC_DATE" 
+							default="0"
+					>
+						<option	value="0">JT_EMPTY</option>
+						<option value="ABT">JT_ABOUT</option>
+						<option value="BEF">JT_BEFORE</option>
+						<option value="AFT">JT_AFTER</option>				
+						<option value="BET">JT_BETWEEN</option>
+						<option value="FROM">JT_FROM</option>									
+					</field>
+					
+					<field	name="eventDateDay1" 
+							multiple="true"
+							type="dayofmonth" 
+							class="inputbox"
+							label="JT_LABEL_DATE" 	
+							description ="JT_DESC_DATE" 
+					/>
+
+					<field	name="eventDateMonth1" 
+							multiple="true"
+							type="month" 
+							class="inputbox"
+							label="JT_LABEL_DATE" 	
+							description ="JT_DESC_DATE" 
+					/>
+					
+					<field	name="eventDateYear1" 
+							multiple="true"
+							type="jttext" 
+							class="inputbox"
+							size="4"
+							maxlength="4"
+							label="JT_LABEL_DATE" 	
+							description ="JT_DESC_DATE" 
+					/>
+					
+					<field	name="eventDateLabel2" 
+							multiple="true"
+							type="jtlist" 
+							class="inputbox"
+							label="JT_LABEL_DATE2" 	
+							description ="JT_DESC_DATE2" 
+							default="0"
+					>
+
+					<field	name="eventDateDay2" 
+							multiple="true"
+							type="dayofmonth" 
+							class="inputbox"
+							label="JT_LABEL_DATE2" 	
+							description ="JT_DESC_DATE2" 
+					/>
+
+					<field	name="eventDateMonth2" 
+							multiple="true"
+							type="month" 
+							class="inputbox"
+							label="JT_LABEL_DATE2" 	
+							description ="JT_DESC_DATE2" 
+					/>
+					
+					<field	name="eventDateYear2" 
+							multiple="true"
+							type="jttext" 
+							class="inputbox"
+							size="4"
+							maxlength="4"
+							label="JT_LABEL_DATE2" 	
+							description ="JT_DESC_DATE2" 
+					/>
+						<option	value="0">JT_EMPTY</option>
+						<option value="AND">JT_AND</option>
+						<option value="TO">JT_TO</option>								
+					</field>
+		
+					<field	name="location" 
+							multiple="true"
+							type="jttext" 
+							class="inputbox"
+							size="40"
+							maxlength="75"
+							label="JT_LABEL_LOCATION" 	
+							description ="JT_DESC_LOCATION" 
+					/>
+		
+				</fieldset>
+			</fields>
+			
+			<fields name="notes">
+				<fieldset name="notes" addfieldprefix="Joaktree\Component\Joaktree\Site\Field">
+					<field	name="status"
+							multiple="true"
+							type="jtstatus"
+							filter="unset"
+					/>
+
+					<field	name="orderNumber"
+							multiple="true"
+							type="jthidden"
+							filter="unset"
+					/>
+							
+					<field	name="objectOrderNumber"
+							multiple="true"
+							type="jthidden"
+							filter="unset"
+					/>
+							
+					<field	name="note_id"
+							multiple="true"
+							type="jthidden"
+							filter="unset"
+					/>
+							
+					<field	name="text" 
+							multiple="true"
+							type="jttextarea" 
+							class="inputbox"
+							width="500"
+							label="JT_LABEL_NOTE" 	
+							description ="JT_DESC_NOTE" 
+					/>
+				
+				</fieldset>
+			</fields>
+			
+			<fields name="references">
+				<fieldset name="references" addfieldprefix="Joaktree\Component\Joaktree\Site\Field">
+					<field	name="status"
+							multiple="true"
+							type="jtstatus"
+							filter="unset"
+					/>
+					
+					<field	name="objectType"
+							multiple="true"
+							type="jthidden"
+							filter="unset"
+					/>
+			
+					<field	name="objectOrderNumber"
+							multiple="true"
+							type="jthidden"
+							filter="unset"
+					/>
+					
+					<field	name="app_source_id" 
+							required="true"
+							multiple="true"
+							type="source" 
+							class="inputbox"
+							size="50"
+							maxlength="50"
+							label="JT_SOURCE" 	
+							description ="JT_SOURCE" 
+					/>
+					
+					<field	name="orderNumber"
+							multiple="true"
+							type="jthidden"
+							filter="unset"
+					/>
+			
+					<field	name="dataQuality" 
+							multiple="true"
+							type="jtlist" 
+							class="inputbox"
+							label="JT_LABEL_QUALITY" 	
+							description ="JT_DESC_QUALITY"
+							default="1"
+					>
+						<option	value="0">JT_QUAL_0_UNRELIABLE</option>
+						<option value="1">JT_QUAL_1_UNCLEAR</option>
+						<option value="2">JT_QUAL_2_RELIABLE</option>
+						<option value="3">JT_QUAL_3_VERYUNRELIABLE</option>				
+					</field>
+					
+					<field	name="page" 
+							multiple="true"
+							type="jttext" 
+							class="inputbox"
+							size="50"
+							maxlength="250"
+							label="JT_LABEL_PAGE" 	
+							description ="JT_DESC_PAGE" 
+					/>
+			
+					<field	name="quotation"
+							multiple="true"
+							type="jttext" 
+							class="inputbox"
+							size="50"
+							maxlength="250"
+							label="JT_LABEL_QUOTE" 	
+							description ="JT_DESC_QUOTE" 
+					/>
+			
+					<field	name="note" 
+							multiple="true"
+							type="jttext" 
+							class="inputbox"
+							size="50"
+							maxlength="250"
+							label="JT_LABEL_NOTE" 	
+							description ="JT_DESC_NOTE" 
+					/>					
+				</fieldset>
+			</fields>
+			
+			<fields name="relations">
+				<fieldset name="relations" addfieldprefix="Joaktree\Component\Joaktree\Site\Field">
+					<field	name="status"
+							multiple="true"
+							type="jtstatus"
+							filter="unset"
+					/>
+		
+					<field	name="id"
+							multiple="true"
+							type="jthidden"
+							filter="unset"
+					/>
+	
+					<field	name="parentid"
+							multiple="true"
+							type="jthidden"
+							filter="unset"
+					/>
+					
+					<field	name="familyid"
+							multiple="true"
+							type="jthidden"
+							filter="unset"
+					/>
+					
+					<field	name="family" 
+							multiple="true"
+							type="familylist" 
+							class="inputbox"
+							size="1"
+							maxlength="50"
+							label="JT_LABEL_FAMILY" 	
+							description ="JT_DESC_FAMILY" 
+					/>
+	
+					<field	name="relationtype" 
+							multiple="true"
+							type="jtlist" 
+							class="inputbox"
+							label="JT_LABEL_RELATIONTYPE" 	
+							description ="JT_DESC_RELATIONTYPE"
+							default="natural"
+					>
+						<option	value="natural">NATURAL</option>
+						<option value="adopted">ADOPTED</option>
+						<option value="step">STEP</option>
+						<option value="foster">FOSTER</option>				
+						<option value="legal">LEGAL</option>				
+					</field>
+					
+					<field	name="partnertype" 
+							multiple="true"
+							type="jtlist" 
+							class="inputbox"
+							label="JT_LABEL_RELATIONTYPE" 	
+							description ="JT_DESC_RELATIONTYPE"
+							default="spouse"
+					>
+						<option	value="spouse">JT_SPOUSE</option>
+						<option value="partner">JT_PARTNER</option>
+					</field>
+				</fieldset>
+			</fields>
+			
+			<fields name="media">
+				<fieldset name="media" addfieldprefix="Joaktree\Component\Joaktree\Site\Field">
+					<field	name="status"
+							type="jtstatus"
+							multiple="true"
+							filter="unset"
+					/>
+					
+					<field	name="id"
+							type="jthidden"
+							multiple="true"
+							filter="unset"
+					/>
+
+					<field	name="title" 
+							type="jttext" 
+							multiple="true"
+							class="inputbox"
+							size="40"
+							maxlength="100"
+							label="JT_LABEL_TITLE" 	
+							description ="JT_DESC_TITLE" 
+					/>
+					
+					<field	name="path_file"
+							type="media"
+							multiple="true"
+							class="inputbox"
+							size="100"
+							directory="joaktree"
+							hide_none="1" 
+							label="JT_LABEL_PICTURE" 	
+							description ="JT_DESC_PICTURE" 
+					/>
+					
+				</fieldset>
+			</fields>
+		</fieldset>
+	</fields>
+	
+</form>	
+	

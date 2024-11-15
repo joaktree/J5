@@ -1,0 +1,38 @@
+@CHARSET "ISO-8859-1";
+
+.jtmap-div-button {
+	padding: 0 10px;
+}
+
+.jtmap-fieldset {
+	border: 1px solid grey; 
+	margin: 10px;
+}
+
+.jtmap-legend {
+	margin: 0 10px;
+}
+
+#jtmap-but-showui {
+	padding: 10px;
+}
+	
+#jtmap-uidisplay p {
+	padding-left: 20px;
+}
+
+#jtmap-uidisplay label {
+    background: url("../images/question-14.png") no-repeat scroll right center transparent;
+    border: medium none;
+    float: left;
+    clear: left;
+    display: block;
+    margin: 5px 20px 5px 0;
+    min-width: 180px;
+}
+
+#jtmap-uidisplay span {
+    border: medium none;
+    margin: 5px 20px 5px 0;
+    float: left;
+}

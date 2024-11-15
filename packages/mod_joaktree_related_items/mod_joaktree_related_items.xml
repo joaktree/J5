@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE extension>
+<extension version="4.0" type="module" client="site" method="upgrade">
+	<name>Joaktree Related Items</name>
+    <old_author>joaktree.com</old_author>
+    <old_creationDate>June 2013</old_creationDate>
+	<old_copyright>(C) 2009 - 2013 Joaktree.com</old_copyright>
+	<license>GNU General Public License version 2 or later</license>
+	<old_authorEmail>info@joaktree.com</old_authorEmail>
+	<old_authorUrl>www.joaktree.com</old_authorUrl>
+    <author>Robert Gastaud</author>
+    <creationDate>January 2017</creationDate>
+	<copyright>(C) 2017 JoomXtensions.com</copyright>
+	<authorEmail>rg-consultant@robertg-conseil.fr</authorEmail>
+	<authorUrl>www.joomxtensions.com</authorUrl>	
+   <version>2.0.2</version>
+	<description>MOD_JOAKTREE_RELITEMS_XML_DESCRIPTION</description>
+    <namespace path="src">Joaktree\Module\Relateditems</namespace>	
+	<!-- user part -->
+	<files>
+   		<folder module="mod_joaktree_related_items">services</folder>
+		<filename>index.html</filename>
+		<folder>tmpl</folder>
+		<folder>src</folder>
+	</files>
+
+	<languages folder="language">
+		<language tag="en-GB">en-GB/mod_joaktree_related_items.ini</language>
+		<language tag="en-GB">en-GB/mod_joaktree_related_items.sys.ini</language>
+		<language tag="fr-FR">fr-FR/mod_joaktree_related_items.ini</language>
+        <language tag="fr-FR">fr-FR/mod_joaktree_related_items.sys.ini</language>
+	</languages>
+    
+	<config>
+		<fields name="params">
+			<fieldset name="basic" 
+                addfieldprefix="Joaktree\Module\Relateditems\Site\Field">			
+                <field name="version" type="version"  margintop="-3em" extension="mod_joaktree_related_items"/>>
+				<field 
+					name="showDate" 
+					type="radio" 
+					default="0" 
+					label="JTRELITEMS_DATE_LABEL" 
+					description="JTRELITEMS_DATE_DESC"
+				>
+					<option value="0">JTRELITEMS_DATE_OPTION1</option>
+					<option value="1">JTRELITEMS_DATE_OPTION2</option>				
+				</field>
+
+			</fieldset>
+		</fields>
+	</config>
+
+</extension>

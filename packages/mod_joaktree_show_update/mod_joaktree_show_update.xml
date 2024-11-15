@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE extension>
+<extension 	type="module" version="3.0" client="site" method="upgrade">
+	<name>Joaktree Show Update</name>
+	<old_author>Jan Suhr, Color Consult AB</old_author>
+    <old_creationDate>June 2013</old_creationDate>
+	<old_copyright>(C) 2009 - 2013 Joaktree.com</old_copyright>
+	<license>GNU General Public License version 2 or later</license>
+	<old_authorEmail>info@joaktree.com</old_authorEmail>
+	<old_authorUrl>www.joaktree.com</old_authorUrl>
+    <author>Robert Gastaud</author>
+    <creationDate>January 2017</creationDate>
+	<copyright>(C) 2017 JoomXtensions.com</copyright>
+	<authorEmail>rg-consultant@robertg-conseil.fr</authorEmail>
+	<authorUrl>www.joomxtensions.com</authorUrl>	
+   <version>2.0.2</version>
+	<description>MOD_JOAKTREE_SHOW_UPDATE_DESC</description>
+
+    <namespace path="src">Joaktree\Module\Showupdate</namespace>	
+	
+	<!-- user part -->
+	<files>
+   		<folder module="mod_joaktree_show_update">services</folder>
+		<filename>index.html</filename>
+		<folder>tmpl</folder>
+        <folder>src</folder>
+	</files>
+
+	<languages folder="language">
+        <language tag="en-GB">en-GB/mod_joaktree_show_update.sys.ini</language>
+        <language tag="en-GB">en-GB/mod_joaktree_show_update.ini</language>        
+		<language tag="fr-FR">fr-FR/mod_joaktree_show_update.sys.ini</language>
+        <language tag="fr-FR">fr-FR/mod_joaktree_show_update.ini</language>
+	</languages>
+	
+	<config>
+		<fields name="params">
+			<fieldset name="basic" addfieldprefix="Joaktree\Module\Showupdate\Site\Field">
+                <field name="version" type="version"  margintop="-3em" extension="mod_joaktree_show_update"/>
+				<field 
+					name="moduleclass_sfx" 
+					type="text" 
+					label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL" 
+					description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" 
+				/>
+				<field 
+					name="cache" 
+					type="list" 
+					default="0" 
+					label="COM_MODULES_FIELD_CACHING_LABEL" 
+					description="COM_MODULES_FIELD_CACHING_DESC"
+				>
+                    <option value="1">JGLOBAL_USE_GLOBAL</option>
+                    <option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+                </field>
+                <field 
+                	name="cache_time" 
+                	type="text" 
+                	default="900" 
+                	label="COM_MODULES_FIELD_CACHE_TIME_LABEL" 
+                	description="COM_MODULES_FIELD_CACHE_TIME_DESC" 
+                />
+			</fieldset>	
+		</fields>
+	</config>
+</extension>

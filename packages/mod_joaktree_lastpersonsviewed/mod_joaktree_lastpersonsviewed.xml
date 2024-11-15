@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE extension>
+<extension version="4.0" type="module" client="site" method="upgrade">
+	<name>Joaktree Last Persons Viewed</name>
+    <old_author>joaktree.com</old_author>
+    <old_creationDate>June 2013</old_creationDate>
+	<old_copyright>(C) 2009 - 2013 Joaktree.com</old_copyright>
+	<license>GNU General Public License version 2 or later</license>
+	<old_authorEmail>info@joaktree.com</old_authorEmail>
+	<old_authorUrl>www.joaktree.com</old_authorUrl>
+    <author>Robert Gastaud</author>
+    <creationDate>January 2017</creationDate>
+	<copyright>(C) 2017 JoomXtensions.com</copyright>
+	<authorEmail>rg-consultant@robertg-conseil.fr</authorEmail>
+	<authorUrl>www.joomxtensions.com</authorUrl>	
+   <version>2.0.2</version>
+	<description>MOD_JOAKTREE_LASTPERSONSVIEWED_XML_DESCRIPTION</description>
+    <namespace path="src">Joaktree\Module\Lastpersonsviewed</namespace>	
+	<!-- user part -->
+	<files>
+   		<folder module="mod_joaktree_lastpersonsviewed">services</folder>
+		<filename>index.html</filename>
+		<folder>tmpl</folder>
+        <folder>src</folder>
+	</files>
+
+	<languages folder="language">
+		<language tag="en-GB">en-GB/mod_joaktree_lastpersonsviewed.ini</language>
+		<language tag="en-GB">en-GB/mod_joaktree_lastpersonsviewed.sys.ini</language>
+		<language tag="fr-FR">fr-FR/mod_joaktree_lastpersonsviewed.ini</language>
+		<language tag="fr-FR">fr-FR/mod_joaktree_lastpersonsviewed.sys.ini</language>
+	</languages>
+    
+	<config>
+		<fields name="params">			
+			<fieldset name="basic" 
+                addfieldprefix="Joaktree\Module\Lastpersonsviewed\Site\Field">
+                <field name="version" type="version"  margintop="-3em" extension="mod_joaktree_lastpersonsviewed"/>
+                
+				<field
+					id="numberInList"
+					name="numberInList"
+					type="list"
+					label="MOD_JTLPV_NUMBER_IN_LIST"
+					description="MOD_JTLPV_NUMBER_IN_LIST_DESC"
+					default="3"
+				>
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+					<option value="8">8</option>
+					<option value="9">9</option>
+					<option value="10">10</option>
+				</field>
+			</fieldset>
+			<fieldset name="advanced">		
+				<field name="owncache" type="list" default="1"
+					label="COM_MODULES_FIELD_CACHING_LABEL" description="COM_MODULES_FIELD_CACHING_DESC" >
+					<option value="1">JGLOBAL_USE_GLOBAL</option>
+					<option value="0">COM_MODULES_FIELD_VALUE_NOCACHING
+					</option>
+				</field>
+	
+				<field name="cache_time" type="text" default="900"
+					label="COM_MODULES_FIELD_CACHE_TIME_LABEL" description="COM_MODULES_FIELD_CACHE_TIME_DESC" />
+			</fieldset>
+		</fields>
+	</config>
+
+</extension>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="4.0" type="plugin" group="editors-xtd" method="upgrade">
+	<name>plg_editor-xtd_joaktreeperson</name>
+    <old_author>joaktree.com</old_author>
+    <old_creationDate>June 2013</old_creationDate>
+	<old_copyright>(C) 2009 - 2013 Joaktree.com</old_copyright>
+	<license>GNU General Public License version 2 or later</license>
+	<old_authorEmail>info@joaktree.com</old_authorEmail>
+	<old_authorUrl>www.joaktree.com</old_authorUrl>
+    <author>Robert Gastaud</author>
+    <creationDate>January 2017</creationDate>
+	<copyright>(C) 2017 - now JoomXtensions.com</copyright>
+	<authorEmail>rg-consultant@robertg-conseil.fr</authorEmail>
+	<authorUrl>www.joomxtensions.com</authorUrl>	
+    <version>2.0.0</version>
+	<description>PLG_EDITOR-XTD_JOAKTREE_LINK_XML_DESCRIPTION</description>
+    <namespace path="src">Joaktree\Plugin\EditorsXtd\Joaktreeperson</namespace>
+	<files>
+		<folder plugin="joaktreeperson">services</folder>
+        <folder>src</folder>
+		<filename>index.html</filename>
+	</files>
+	<media destination="com_joaktree" folder="media">
+		<folder>js</folder>
+    </media>
+    <languages>
+        <language tag="en-GB">language/en-GB/plg_editors-xtd_joaktreeperson.sys.ini</language>
+        <language tag="en-GB">language/en-GB/plg_editors-xtd_joaktreeperson.ini</language>
+        <language tag="fr-FR">language/fr-FR/plg_editors-xtd_joaktreeperson.sys.ini</language>
+        <language tag="fr-FR">language/fr-FR/plg_editors-xtd_joaktreeperson.ini</language>
+	</languages>
+    
+	<config>
+		<fields name="params">
+		</fields>
+	</config>
+
+</extension>

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE extension>
+<extension type="component" version="4.0" method="upgrade">
+    <name>Joaktree</name>
+    <old_author>joaktree.com</old_author>
+    <old_creationDate>June 2013</old_creationDate>
+	<old_copyright>(C) 2009 - 2013 Joaktree.com</old_copyright>
+	<license>GNU General Public License version 2 or later</license>
+	<old_authorEmail>info@joaktree.com</old_authorEmail>
+	<old_authorUrl>www.joaktree.com</old_authorUrl>
+    <author>Robert Gastaud</author>
+    <rrgcreationDate>November 2017</rrgcreationDate>
+	<creationDate>July 2024</creationDate>
+	<copyright>(C) 2017-2024 JoomXtensions.com</copyright>
+	<authorEmail>rg-consultant@robertg-conseil.fr</authorEmail>
+	<authorUrl>www.joomxtensions.com</authorUrl>	
+    <version>2.0.2</version>
+    <description>COM_JOAKTREE_XML_DESC</description>
+	<namespace path="src">Joaktree\Component\Joaktree</namespace>
+    <install>
+		<sql>
+			<file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql
+			</file>
+		</sql>
+	</install>
+    <uninstall>
+		<sql>
+			<file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql
+			</file>
+		</sql>
+	</uninstall>
+	<update>
+		<schemas>
+			<schemapath type="mysql">sql/updates</schemapath>
+		</schemas>
+	</update>
+	<media destination="com_joaktree" folder="media">
+		<folder>js</folder>
+		<folder>css</folder>
+		<folder>conversion</folder>
+		<folder>images</folder>
+		<folder>shadowbox</folder>
+		<filename>index.html</filename>
+	</media>
+    <!-- start: site -->
+    <files folder="site">
+        <filename>index.html</filename>
+		<folder>src</folder>
+		<folder>themes</folder>
+		<folder>tmpl</folder>
+		<folder>forms</folder>
+    </files>
+    <languages folder="language">
+        <language tag="en-GB">en-GB/com_joaktree.ini</language>
+		<language tag="fr-FR">fr-FR/com_joaktree.ini</language>
+    </languages>
+    <!-- end: site -->
+    
+    <!-- start: administration -->
+    <administration>
+	    <menu 
+	    	task="default" 
+	    	img="media/com_joaktree/images/icon-16-joaktree.png"
+	    >
+	    	COM_JOAKTREE
+	    </menu>
+	    <submenu>
+			<!--
+				Note that all & must be escaped to &amp; for the file to be valid
+				XML and be parsed by the installer
+			-->
+			<menu 
+				img="media/com_joaktree/images/icon-16-joaktree.png"
+			>
+				JT_SUBMENU_CONTROLPANEL
+			</menu>
+			<menu 
+				view="applications"
+				img="media/com_joaktree/images/icon-16-app.png"
+			>
+				JT_SUBMENU_APPLICATIONS
+			</menu>
+			<menu 
+				view="trees"
+				img="media/com_joaktree/images/icon-16-familytree.png"
+			>
+				JT_SUBMENU_FAMILYTREES
+			</menu>
+			<menu 
+				view="persons"
+				img="media/com_joaktree/images/icon-16-person.png"
+			>
+				JT_SUBMENU_PERSONS
+			</menu>
+			<menu 
+				view="maps"
+				img="media/com_joaktree/images/icon-16-map.png"
+			>
+				JT_SUBMENU_MAPS
+			</menu>
+			<menu 
+				view="settings"
+				layout="personname"
+				img="media/com_joaktree/images/icon-16-display2.png"
+			>
+				JT_SUBMENU_PERSON_NAMEDISPLAY
+			</menu>
+			<menu 
+				view="settings"
+				layout="personevent"
+				img="media/com_joaktree/images/icon-16-display1.png"
+			>
+				JT_SUBMENU_PERSON_EVENTDISPLAY
+			</menu>
+			<menu 
+				view="settings"
+				layout="relationevent"
+				img="media/com_joaktree/images/icon-16-display3.png"
+			>
+				JT_SUBMENU_RELATION_EVENTDISPLAY
+			</menu>
+			<menu 
+				view="themes"
+				img="media/com_joaktree/images/icon-16-theme.png"
+			>
+				JT_SUBMENU_THEMES
+			</menu>
+	    </submenu>
+
+	    <files folder="administrator">
+			<filename>config.xml</filename>
+			<filename>index.html</filename>
+			<filename>access.xml</filename>
+            <folder>layouts</folder>
+			<folder>forms</folder>
+            <folder>src</folder>
+       		<folder>sql</folder>
+			<folder>services</folder>
+            <folder>tmpl</folder>
+	    </files>
+
+	    <languages>
+			<language tag="en-GB">administrator/language/en-GB/com_joaktree.ini</language>
+			<language tag="en-GB">administrator/language/en-GB/com_joaktree.gedcom.ini</language>
+			<language tag="en-GB">administrator/language/en-GB/com_joaktree.services.ini</language>
+			<language tag="en-GB">administrator/language/en-GB/com_joaktree.sys.ini</language>
+			<language tag="fr-FR">administrator/language/fr-FR/com_joaktree.ini</language>
+			<language tag="fr-FR">administrator/language/fr-FR/com_joaktree.gedcom.ini</language>
+			<language tag="fr-FR">administrator/language/fr-FR/com_joaktree.services.ini</language>
+			<language tag="fr-FR">administrator/language/fr-FR/com_joaktree.sys.ini</language>
+	    </languages>
+	</administration>
+    <!-- end: administration -->
+
+</extension>
+
+
+
+	
+	
+
