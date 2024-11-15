@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE extension>
-<extension type="component" version="4.0" method="upgrade">
+<extension type="component" version="5.0" method="upgrade">
     <name>Joaktree</name>
     <old_author>joaktree.com</old_author>
     <old_creationDate>June 2013</old_creationDate>
@@ -151,11 +151,7 @@
 	    </languages>
 	</administration>
     <!-- end: administration -->
+	<server type="extension" name="Joaktree" priority="1">https://raw.githubusercontent.com/joaktree/J5/updates/master/com_joaktree_update.xml</server>
+	</updateservers>
 
 </extension>
-
-
-
-	
-	
-

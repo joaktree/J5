@@ -1,6 +1,6 @@
 <changelogs>
 	<changelog>
-		<element>pkg_joaktree</element>
+		<element>com_joaktree</element>
 		<type>package</type>
 		<version>2.0.2</version>
         <note>
