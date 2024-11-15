@@ -2,8 +2,7 @@
  <extension version="4.0" type="plugin" group="system" method="upgrade">
  <name>Joaktree Package</name>
  <author>Robert Gastaud</author>
- <creationDate>Ocotber 2024</creationDate>
- <packagename>Joaktree</packagename>
+ <creationDate>15 November 2024</creationDate>
  <version>2.0.2</version>
  <license>GNU General Public License version 3 or later</license>
  <url>https://www.joomxtensions.com/</url>
@@ -19,5 +18,7 @@
 	<language tag="fr-FR">fr-FR/joaktreeinstaller.ini</language>
 	<language tag="en-GB">en-GB/joaktreeinstaller.ini</language>
 </languages>
-
+ <updateservers>
+	<server type="extension" name="Joaktree" priority="1">https://raw.githubusercontent.com/joaktree/J5/master/updates/com_joaktree_update.xml</server>
+ </updateservers>
 </extension>
