@@ -16,4 +16,8 @@
 		<filename plugin="joaktreeinstaller">joaktreeinstaller.php</filename>
 		<folder>language</folder>
 	</files>
+ <changelogurl>https://raw.githubusercontent.com/joaktree/j5/master/joaktree_changelog.xml</changelogurl>
+ <updateservers>
+	<server type="extension" name="CG Template Switcher" priority="1">https://raw.githubusercontent.com/joaktree/updates/master/pkg_joaktree_update.xml</server>
+ </updateservers>
  </extension>

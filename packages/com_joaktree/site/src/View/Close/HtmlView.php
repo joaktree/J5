@@ -1,10 +1,17 @@
 <?php
 /**
- * @version		$Id: view.html.php 20228 2011-01-10 00:52:54Z eddieajau $
- * @package		Joomla.Administrator
- * @subpackage	com_config
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * Joomla! component Joaktree
+ *
+ * @version	2.0.0
+ * @author	Niels van Dantzig (2009-2014) - Robert Gastaud (2017-2024)
+ * @package	Joomla
+ * @subpackage	Joaktree
+ * @license	GNU/GPL
+ *
+ * Component for genealogy in Joomla!
+ *
+ * Joomla! 5.x conversion by Conseilgouz
+ *
  */
 
 namespace Joaktree\Component\Joaktree\Site\View\Close;

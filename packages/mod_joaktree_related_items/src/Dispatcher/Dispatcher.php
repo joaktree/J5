@@ -3,11 +3,13 @@
  * Joomla! module Joaktree related items
  * file		JoaktreeHelper - helper.php
  *
- * @version	1.5.3
- * @author	Niels van Dantzig (2009-2014) - Robert Gastaud
+ * @version	2.0.0
+ * @author	Niels van Dantzig (2009-2014) - Robert Gastaud (2017-2024)
  * @package	Joomla
  * @subpackage	Joaktree
  * @license	GNU/GPL
+ *
+ * Joomla! 5.x conversion by Conseilgouz
  *
  * Module linking articles to persons in Joaktree component
  *

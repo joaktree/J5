@@ -1,22 +1,20 @@
 <?php
 /**
+/**
  * Joomla! component Joaktree
- * file		Joaktree Controller - controller.php
  *
  * @version	2.0.0
- * @author	Niels van Dantzig (2009-2014) - Robert Gastaud
+ * @author	Niels van Dantzig (2009-2014) - Robert Gastaud (2017-2024)
  * @package	Joomla
  * @subpackage	Joaktree
  * @license	GNU/GPL
  *
- * Component for genealogy in Joomla! 
+ * Component for genealogy in Joomla!
  *
- * This component file was created using the Joomla Component Creator by Not Web Design
- * http://www.notwebdesign.com/joomla_component_creator/
+ * Joomla! 5.x conversion by Conseilgouz
  *
  */
-
- namespace Joaktree\Component\Joaktree\Administrator\Controller;
+namespace Joaktree\Component\Joaktree\Administrator\Controller;
 
 \defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;

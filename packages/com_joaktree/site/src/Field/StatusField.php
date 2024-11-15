@@ -1,24 +1,24 @@
 <?php
 /**
- * @package     Joomla.Platform
- * @subpackage  Form
+ * Joomla! component Joaktree
  *
- * @copyright   Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE
+ * @version	2.0.0
+ * @author	Niels van Dantzig (2009-2014) - Robert Gastaud (2017-2024)
+ * @package	Joomla
+ * @subpackage	Joaktree
+ * @license	GNU/GPL
+ *
+ * Component for genealogy in Joomla!
+ *
+ * Joomla! 5.x conversion by Conseilgouz
+ *
  */
 namespace Joaktree\Component\Joaktree\Site\Field;
 
 defined('JPATH_PLATFORM') or die;
-use Joomla\CMS\Form\FormField;		//replace JFormField
+use Joomla\CMS\Form\FormField;
 
-/**
- * Form Field class for the Joomla Framework.
- *
- * @package     Joomla.Platform
- * @subpackage  Form
- * @since       11.1
- */
-class StatusField extends FormField		//JFormField
+class StatusField extends FormField
 {
 	/**
 	 * The form field type.

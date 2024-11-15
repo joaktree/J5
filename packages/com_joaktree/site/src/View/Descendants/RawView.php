@@ -1,18 +1,16 @@
 <?php
 /**
  * Joomla! component Joaktree
- * file		view joaktree person - view.html.php
  *
  * @version	2.0.0
- * @author	Niels van Dantzig (2009-2014) - Robert Gastaud
+ * @author	Niels van Dantzig (2009-2014) - Robert Gastaud (2017-2024)
  * @package	Joomla
  * @subpackage	Joaktree
  * @license	GNU/GPL
  *
  * Component for genealogy in Joomla!
  *
- * This component file was created using the Joomla Component Creator by Not Web Design
- * http://www.notwebdesign.com/joomla_component_creator/
+ * Joomla! 5.x conversion by Conseilgouz
  *
  */
 
@@ -22,7 +20,7 @@ namespace Joaktree\Component\Joaktree\Site\View\Descendants;
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\MVC\View\HtmlView; //replace JViewLegacy
+use Joomla\CMS\MVC\View\HtmlView;
 use Joaktree\Component\Joaktree\Site\Helper\JoaktreeHelper;
 
 /**

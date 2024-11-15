@@ -3,18 +3,20 @@
  * Joomla! component Joaktree
  *
  * @version	2.0.0
- * @author	Niels van Dantzig (2009-2014) - Robert Gastaud (2017-2020)
+ * @author	Niels van Dantzig (2009-2014) - Robert Gastaud (2017-2024)
  * @package	Joomla
  * @subpackage	Joaktree
  * @license	GNU/GPL
  *
  * Component for genealogy in Joomla!
  *
+ * Joomla! 5.x conversion by Conseilgouz
+ *
  */
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Router\Route;		//replace JRoute
+use Joomla\CMS\Router\Route;
 
 $html = '';
 $linkBase = 'index.php?option=com_joaktree&view=joaktree&tech='.$this->lists['technology'].'';

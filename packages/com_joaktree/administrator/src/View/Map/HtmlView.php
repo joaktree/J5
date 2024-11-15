@@ -1,35 +1,33 @@
 <?php
 /**
  * Joomla! component Joaktree
- * file		view jt_map - view.html.php
  *
  * @version	2.0.0
- * @author	Niels van Dantzig (2009-2014) - Robert Gastaud
+ * @author	Niels van Dantzig (2009-2014) - Robert Gastaud (2017-2024)
  * @package	Joomla
  * @subpackage	Joaktree
  * @license	GNU/GPL
  *
  * Component for genealogy in Joomla!
  *
- * This component file was created using the Joomla Component Creator by Not Web Design
- * http://www.notwebdesign.com/joomla_component_creator/
+ * Joomla! 5.x conversion by Conseilgouz
  *
  */
 namespace Joaktree\Component\Joaktree\Administrator\View\Map;
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Joomla\CMS\Factory;		//replace JFactory
-use Joomla\CMS\Language\Text;		// replace JText
-use Joomla\CMS\HTML\HTMLHelper;		// replace JHtml
-use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;		//replace Htmlview
-use Joomla\CMS\Toolbar\ToolbarHelper; 	// replace JToolBarHelper
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Joomla\CMS\Toolbar\ToolbarHelper;
 
 use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeHelper;
 /**
  * HTML View class for the Joaktree component
  */
-class HtmlView extends BaseHtmlView {			//JViewLegacy {
+class HtmlView extends BaseHtmlView {
 
 	protected $form;
 	protected $item;

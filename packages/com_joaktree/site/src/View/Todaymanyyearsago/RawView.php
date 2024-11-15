@@ -1,28 +1,25 @@
 <?php
 /**
- * Joomla! 1.5 component Joaktree
- * file		view module Today Many Years Ago - view.raw.php
+ * Joomla! component Joaktree
  *
- * @version	1.2
- * @author	Niels van Dantzig (2009-2014) - Robert Gastaud
+ * @version	2.0.0
+ * @author	Niels van Dantzig (2009-2014) - Robert Gastaud (2017-2024)
  * @package	Joomla
  * @subpackage	Joaktree
  * @license	GNU/GPL
  *
  * Component for genealogy in Joomla!
  *
- * This component file was created using the Joomla Component Creator by Not Web Design
- * http://www.notwebdesign.com/joomla_component_creator/
+ * Joomla! 5.x conversion by Conseilgouz
  *
  */
-
 namespace Joaktree\Component\Joaktree\Site\View\Todaymanyyearsago;
 
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\MVC\View\HtmlView; //replace JViewLegacy
+use Joomla\CMS\MVC\View\HtmlView;
 
 /**
  * HTML View class for the Joaktree component

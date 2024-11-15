@@ -1,27 +1,27 @@
 <?php
 /**
  * Joomla! component Joaktree
- * file		jt_location modelAdmin - jt_location.php
  *
  * @version	2.0.0
- * @author	Niels van Dantzig (2009-2014) - Robert Gastaud
+ * @author	Niels van Dantzig (2009-2014) - Robert Gastaud (2017-2024)
  * @package	Joomla
  * @subpackage	Joaktree
  * @license	GNU/GPL
  *
  * Component for genealogy in Joomla!
  *
+ * Joomla! 5.x conversion by Conseilgouz
+ *
  */
-
 namespace Joaktree\Component\Joaktree\Administrator\Model;
 
 // No direct access.
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Factory;		//replace JFactory
-use Joomla\CMS\Language\Text;		// replace JText
-use Joomla\CMS\Table\Table;		//replace JTable
-use Joomla\CMS\MVC\Model\AdminModel;	//replace JModelAdmin
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Table\Table;
+use Joomla\CMS\MVC\Model\AdminModel;
 use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeHelper;
 use Joaktree\Component\Joaktree\Administrator\Mapservice\MBJGeocode;
 

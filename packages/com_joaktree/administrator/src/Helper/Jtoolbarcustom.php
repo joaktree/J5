@@ -1,10 +1,21 @@
 <?php
 /**
- * @version		$Id: toolbar.php 22155 2011-09-25 21:04:08Z dextercowley $
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
- */
-namespace Joaktree\Component\Joaktree\Administrator\Helper;
+ * Joomla! component Joaktree
+ *
+ * @version	2.0.0
+ * @author	Niels van Dantzig (2009-2014) - Robert Gastaud (2017-2024)
+ * @package	Joomla
+ * @subpackage	Joaktree
+ * @license	GNU/GPL
+ *
+ * Component for genealogy in Joomla!
+ *
+ * Joomla! 5.x conversion by Conseilgouz
+ *
+ * from toolbar.php 22155 2011-09-25 21:04:08Z dextercowley
+*/
+ 
+ namespace Joaktree\Component\Joaktree\Administrator\Helper;
 // No direct access
 defined('_JEXEC') or die;
 use Joomla\CMS\Toolbar\Toolbar;

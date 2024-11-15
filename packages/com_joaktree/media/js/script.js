@@ -1,3 +1,17 @@
+/**
+ * Joomla! component Joaktree
+ *
+ * @version	2.0.0
+ * @author	Niels van Dantzig (2009-2014) - Robert Gastaud (2017-2024)
+ * @package	Joomla
+ * @subpackage	Joaktree
+ * @license	GNU/GPL
+ *
+ * Component for genealogy in Joomla!
+ *
+ * Joomla! 5.x conversion by Conseilgouz
+ *
+ */
 console.log('connecté'); 
 // Je sélectionne l'image grand format
 //const fullImg = document.getElementById('full'); 
@@ -29,22 +43,6 @@ btn_alpha.forEach((item)=>{
     }); 
 }); // fermeture de la forEach
 
-/*
-btn.addEventListener('click', function(){
-    console.log('bouton cliqué'); 
-    // J'ajoute 1 au compteur
-    panier = panier + 1 ; 
-    console.log(panier); 
-    // J'affiche le contenu
-    if( panier < 2) {
-        panierContainer.innerText = "Vous avez" + " " + panier + " " + "produit dans votre panier"; 
-    }else{
-        panierContainer.innerText = "Vous avez" + " " + panier + " " + "produits dans votre panier"; 
-    }
-   
-
-
-});*/ 
 function handleEvent(event) {
   // Create a new custom event object
   event = new CustomEvent('DOMEvent', {

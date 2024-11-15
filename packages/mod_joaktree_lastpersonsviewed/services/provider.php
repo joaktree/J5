@@ -3,11 +3,13 @@
  * Joomla! module Joaktree last persons viewed 
  * file		JoaktreeHelper - helper.php
  *
- * @version	1.5.4
- * @author	Niels van Dantzig (2009-2014) - Robert Gastaud (2017-2020)
+ * @version	2.0.0
+ * @author	Niels van Dantzig (2009-2014) - Robert Gastaud (2017-2024)
  * @package	Joomla
  * @subpackage	Joaktree
  * @license	GNU/GPL
+ *
+ * Joomla! 5.x conversion by Conseilgouz
  *
  * Module showing list of persons last viewed by user
  *

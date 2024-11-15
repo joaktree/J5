@@ -1,34 +1,32 @@
 <?php
 /**
  * Joomla! component Joaktree
- * file		administrator default view - view.html.php
  *
  * @version	2.0.0
- * @author	Niels van Dantzig (2009-2014) - Robert Gastaud
+ * @author	Niels van Dantzig (2009-2014) - Robert Gastaud (2017-2024)
  * @package	Joomla
  * @subpackage	Joaktree
  * @license	GNU/GPL
  *
  * Component for genealogy in Joomla!
  *
- * This component file was created using the Joomla Component Creator by Not Web Design
- * http://www.notwebdesign.com/joomla_component_creator/
+ * Joomla! 5.x conversion by Conseilgouz
  *
  */
 namespace Joaktree\Component\Joaktree\Administrator\View\Default;
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Joomla\CMS\Language\Text;		// replace JText
-use Joomla\CMS\HTML\HTMLHelper;		//replace JHtml
-use Joomla\CMS\Toolbar\ToolbarHelper; 	// replace JToolBarHelper
-use Joomla\CMS\HTML\Helpers\Sidebar; 		// replace JHTMLSidebar
-use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView; //replace JViewLegacy
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Toolbar\ToolbarHelper;
+use Joomla\CMS\HTML\Helpers\Sidebar;
+use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 
 use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeHelper;
 use Joaktree\Component\Joaktree\Administrator\Mapservice\MBJService;
 
-class HtmlView extends BaseHtmlView {	//JViewLegacy {
+class HtmlView extends BaseHtmlView {
 	function display($tpl = null) {
 		$this->lists = array();
 		
@@ -40,7 +38,6 @@ class HtmlView extends BaseHtmlView {	//JViewLegacy {
 		$this->lists['version']   = JoaktreeHelper::getJoaktreeVersion();
 		$this->lists['providers'] = $this->get('providers');
 
-		//JoaktreeHelper::addSubmenu('default');		
 		$this->addToolbar();
 		$this->sidebar = Sidebar::render();
 		parent::display($tpl);

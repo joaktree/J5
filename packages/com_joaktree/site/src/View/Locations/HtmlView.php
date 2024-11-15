@@ -1,18 +1,16 @@
 <?php
 /**
  * Joomla! component Joaktree
- * file		view joaktree locations - view.html.php
  *
  * @version	2.0.0
- * @author	Niels van Dantzig (2009-2014) - Robert Gastaud
+ * @author	Niels van Dantzig (2009-2014) - Robert Gastaud (2017-2024)
  * @package	Joomla
  * @subpackage	Joaktree
  * @license	GNU/GPL
  *
  * Component for genealogy in Joomla!
  *
- * This component file was created using the Joomla Component Creator by Not Web Design
- * http://www.notwebdesign.com/joomla_component_creator/
+ * Joomla! 5.x conversion by Conseilgouz
  *
  */
 
@@ -31,7 +29,6 @@ use Joaktree\Component\Joaktree\Site\Helper\Tree;
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 $wa->useScript('jquery');
 
-//jimport( 'joomla.application.component.view');
 HtmlHelper::_('bootstrap.framework', true);
 HTMLHelper::_('bootstrap.modal', 'a.modal');
 /**

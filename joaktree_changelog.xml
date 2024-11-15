@@ -1,0 +1,13 @@
+<changelogs>
+	<changelog>
+		<element>pkg_joaktree</element>
+		<type>package</type>
+		<version>2.0.2</version>
+        <note>
+            <item>Update : 2024-11-15</item>
+        </note>
+        <addition>
+            <item>Joomla 5.0 compatibility</item>
+        </addition>
+	</changelog>
+</changelogs>

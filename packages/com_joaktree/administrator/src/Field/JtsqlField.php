@@ -1,12 +1,18 @@
 <?php
 /**
- * @package     MapsByJoaktree
- * @subpackage  Service
+ * Joomla! component Joaktree
  *
- * @copyright   Joaktree.com
- * @license     GNU General Public License version 2 or later; see LICENSE
+ * @version	2.0.0
+ * @author	Niels van Dantzig (2009-2014) - Robert Gastaud (2017-2024)
+ * @package	Joomla
+ * @subpackage	Joaktree
+ * @license	GNU/GPL
+ *
+ * Component for genealogy in Joomla!
+ *
+ * Joomla! 5.x conversion by Conseilgouz
+ *
  */
-
 namespace Joaktree\Component\Joaktree\Administrator\Field;
 
 defined('JPATH_PLATFORM') or die;

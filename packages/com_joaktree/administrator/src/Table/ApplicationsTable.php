@@ -1,15 +1,16 @@
 <?php
 /**
  * Joomla! component Joaktree
- * file		table: joaktree_applications.php
  *
  * @version	2.0.0
- * @author	Niels van Dantzig (2009-2014) - Robert Gastaud
+ * @author	Niels van Dantzig (2009-2014) - Robert Gastaud (2017-2024)
  * @package	Joomla
  * @subpackage	Joaktree
  * @license	GNU/GPL
  *
  * Component for genealogy in Joomla!
+ *
+ * Joomla! 5.x conversion by Conseilgouz
  *
  */
 
@@ -20,7 +21,7 @@ use Joomla\CMS\Access\Rules;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Versioning\VersionableTableInterface;
 use Joomla\Database\DatabaseDriver;
-use Joomla\Registry\Registry; //replace JRegistry
+use Joomla\Registry\Registry;
 
 class ApplicationsTable extends Table implements VersionableTableInterface
 {

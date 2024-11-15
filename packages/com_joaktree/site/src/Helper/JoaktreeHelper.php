@@ -1,35 +1,32 @@
 <?php
 /**
  * Joomla! component Joaktree
- * file		JoaktreeHelper - helper.php
  *
  * @version	2.0.0
- * @author	Niels van Dantzig (2009-2014) - Robert Gastaud
+ * @author	Niels van Dantzig (2009-2014) - Robert Gastaud (2017-2024)
  * @package	Joomla
  * @subpackage	Joaktree
  * @license	GNU/GPL
  *
  * Component for genealogy in Joomla!
  *
- * This component file was created using the Joomla Component Creator by Not Web Design
- * http://www.notwebdesign.com/joomla_component_creator/
+ * Joomla! 5.x conversion by Conseilgouz
  *
  */
-
 namespace Joaktree\Component\Joaktree\Site\Helper;
 
 // no direct access
 
 defined('_JEXEC') or die('Restricted access');
 
-use Joomla\CMS\Component\ComponentHelper;		//replace JComponentHelper
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Installer\Installer; 		//replace Installer
-use Joomla\CMS\Uri\Uri;		//replace JUri
+use Joomla\CMS\Installer\Installer;
+use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseInterface;
-use Joomla\Filesystem\Folder; 	//replace JFolder
-use Joomla\Input\Cookie; 	//replace JInputCookie
+use Joomla\Filesystem\Folder;
+use Joomla\Input\Cookie;
 use Joomla\Registry\Registry;
 use Joaktree\Component\Joaktree\Site\Helper\StdHelper;
 

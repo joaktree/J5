@@ -1,15 +1,16 @@
 <?php
 /**
  * Joomla! component Joaktree
- * file		script.php
  *
  * @version	2.0.0
- * @author	Niels van Dantzig (2009-2014) - Robert Gastaud
+ * @author	Niels van Dantzig (2009-2014) - Robert Gastaud (2017-2024)
  * @package	Joomla
  * @subpackage	Joaktree
  * @license	GNU/GPL
  *
  * Component for genealogy in Joomla!
+ *
+ * Joomla! 5.x conversion by Conseilgouz
  *
  */
 
@@ -21,9 +22,6 @@ use Joomla\CMS\Installer\Installer;
 use Joomla\Filesystem\Folder;
 use Joomla\Filesystem\File;
 
-//\JLoader::import('joomla.filesystem.file');
-//\JLoader::import('joomla.filesystem.folder');
-//$retval=true;
 /* 
  * An optional script file (PHP code that is run before, during and/or after installation, 
  * uninstallation and upgrading) can be defined using a <scriptfile> element. 

@@ -1,18 +1,16 @@
 <?php
 /**
  * Joomla! component Joaktree
- * file		front end repositories model - repositories.php
  *
  * @version	2.0.0
- * @author	Niels van Dantzig (2009-2014) - Robert Gastaud
+ * @author	Niels van Dantzig (2009-2014) - Robert Gastaud (2017-2024)
  * @package	Joomla
  * @subpackage	Joaktree
  * @license	GNU/GPL
  *
  * Component for genealogy in Joomla!
  *
- * This component file was created using the Joomla Component Creator by Not Web Design
- * http://www.notwebdesign.com/joomla_component_creator/
+ * Joomla! 5.x conversion by Conseilgouz
  *
  */
 namespace Joaktree\Component\Joaktree\Site\Model;
@@ -20,7 +18,7 @@ namespace Joaktree\Component\Joaktree\Site\Model;
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\MVC\Model\ListModel;		//replace JModelList
+use Joomla\CMS\MVC\Model\ListModel;
 use Joaktree\Component\Joaktree\Site\Helper\JoaktreeHelper;
 
 class RepositoriesModel extends ListModel {

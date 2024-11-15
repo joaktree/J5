@@ -1,12 +1,16 @@
 <?php
 /**
- * @package     Joaktree
- * @subpackage  Service
+ * @version	2.0.0
+ * @author	Niels van Dantzig (2009-2014) - Robert Gastaud 
+ * @package	Joomla
+ * @subpackage	Joaktree
+ * @license	GNU/GPL
  *
- * @copyright   Joaktree.com
- * @license     GNU General Public License version 2 or later; see LICENSE
- */
-
+ * Component for genealogy in Joomla!
+ *
+ * Joomla! 5.x conversion by Conseilgouz
+ *
+*/
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\Router\RouterFactoryInterface;

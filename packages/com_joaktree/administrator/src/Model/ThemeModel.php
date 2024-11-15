@@ -1,15 +1,16 @@
 <?php
 /**
  * Joomla! component Joaktree
- * file		jt_theme modelAdmin - jt_theme.php
  *
  * @version	2.0.0
- * @author	Niels van Dantzig (2009-2014) - Robert Gastaud
+ * @author	Niels van Dantzig (2009-2014) - Robert Gastaud (2017-2024)
  * @package	Joomla
  * @subpackage	Joaktree
  * @license	GNU/GPL
  *
  * Component for genealogy in Joomla!
+ *
+ * Joomla! 5.x conversion by Conseilgouz
  *
  */
 
@@ -18,16 +19,14 @@ namespace Joaktree\Component\Joaktree\Administrator\Model;
 // No direct access.
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Factory;		//replace JFactory
-use Joomla\CMS\Language\Text;		// replace JText
-use Joomla\CMS\MVC\Model\AdminModel;	//replace JModelAdmin
-use Joomla\CMS\Table\Table;		//replace JTable
-use Joomla\Filesystem\File;		//replace JFile
-use Joomla\Filesystem\Folder; 	//replace JFolder
-use Joomla\Filesystem\Path;	//replace JPath
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Model\AdminModel;
+use Joomla\CMS\Table\Table;
+use Joomla\Filesystem\File;
+use Joomla\Filesystem\Folder;
+use Joomla\Filesystem\Path;
 use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeHelper;
-
-//jimport('joomla.application.component.modeladmin');
 
 class ThemeModel extends AdminModel
 {

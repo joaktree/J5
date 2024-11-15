@@ -1,15 +1,16 @@
 <?php
 /**
  * Joomla! component Joaktree
- * file		administrator jt_trees view - view.raw.php
  *
  * @version	2.0.0
- * @author	Niels van Dantzig (2009-2014) - Robert Gastaud (2017-2020)
+ * @author	Niels van Dantzig (2009-2014) - Robert Gastaud (2017-2024)
  * @package	Joomla
  * @subpackage	Joaktree
  * @license	GNU/GPL
  *
  * Component for genealogy in Joomla!
+ *
+ * Joomla! 5.x conversion by Conseilgouz
  *
  */
 namespace Joaktree\Component\Joaktree\Administrator\View\Trees;
@@ -26,7 +27,6 @@ class RawView extends BaseHtmlView {
 	{	
 		$items			= $this->get( 'assignFamilyTree' );
 		$tpl			= 'raw';
-		// $this->assignRef( 'items',  $items );
         $this->items = $items;
 		parent::display($tpl);
 	}
