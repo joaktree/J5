@@ -277,7 +277,7 @@ class Trees extends BaseDatabaseModel
                 $tree = $this->_db->loadObject();
 
                 $this->procObject->msg = ($this->procObject->status == 'starttree')
-                                        ? 'Assigning persons to tree: '.$tree->name
+                                        ? Text::sprintf('JTTREE_ASSIGN',$tree->name)
                                         : null;
 
                 if (($tree->holds == 'descendants')
@@ -499,7 +499,7 @@ class Trees extends BaseDatabaseModel
                 $msg   = $this->_db->setQuery($quer1);
                 $msg   = $this->_db->execute(); //$this->_db->query( );
 
-                $this->procObject->msg = 'Setting up default trees for persons.';
+                $this->procObject->msg = Text::_('JTTREE_DEFAULT');
 
                 $returnStatus = 'treedef_1';
                 break;
