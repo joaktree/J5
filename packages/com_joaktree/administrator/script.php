@@ -19,6 +19,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Filesystem\Folder;
+use Joomla\Filesystem\File;
 
 class com_joaktreeInstallerScript
 {
@@ -44,50 +45,52 @@ class com_joaktreeInstallerScript
 		    ->where($db->quoteName('element') . ' like "%joaktree%"');
 		$db->setQuery($query);
 		$result = $db->execute();
-		$obsloteFolders = [
-            '/plugins/content/joaktree','/plugins/editors-xtd/joaktreemap', 
-            '/plugins/editors-xtd/joaktreeperson','/plugins/finder/joaktree',
-            '/modules/mod_joaktree_lastpersonsviewed','/modules/mod_joaktree_related_items',
-            '/modules/mod_joaktree_show_update','/modules/mod_joaktree_todaymanyyearsago',
-            '/media/com_joaktree',
-            '/languages/en-GB/com_joaktree.ini',
-            '/languages/en-GB/mod_joaktree_lastpersonsviewed.ini','/languages/en-GB/mod_joaktree_lastpersonsviewed.sys.ini',
-            '/languages/en-GB/mod_joaktree_related_items.ini','/languages/en-GB/mod_joaktree_related_items.sys.ini',
-            '/languages/en-GB/mod_joaktree_show_update.ini','/languages/en-GB/mod_joaktree_show_update.sys.ini',
-            '/languages/en-GB/mod_joaktree_todaymanyyearsago.ini','/languages/en-GB/mod_joaktree_todaymanyyearsago.sys.ini',
-            '/languages/fr-FR/com_joaktree.ini',
-            '/languages/fr-FR/mod_joaktree_lastpersonsviewed.ini','/languages/fr-FR/mod_joaktree_lastpersonsviewed.sys.ini',
-            '/languages/fr-FR/mod_joaktree_related_items.ini','/languages/fr-FR/mod_joaktree_related_items.sys.ini',
-            '/languages/fr-FR/mod_joaktree_show_update.ini','/languages/fr-FR/mod_joaktree_show_update.sys.ini',
-            '/languages/fr-FR/mod_joaktree_todaymanyyearsago.ini','/languages/fr-FR/mod_joaktree_todaymanyyearsago.sys.ini',
-            '/administrator/languages/en-GB/joaktreeinstaller.ini',
-            '/administrator/languages/en-GB/com_joaktree.ini','/administrator/languages/en-GB/com_joaktree.sys.ini',
-            '/administrator/languages/en-GB/com_joaktree.services.ini','/administrator/languages/en-GB/com_joaktree.gedcom.ini',
-            '/administrator/languages/en-GB/plg_content_joaktree.ini','/administrator/languages/en-GB/plg_content_joaktree.sys.ini',
-            '/administrator/languages/en-GB/plg_editors-xtd_joaktreeperson.ini','/administrator/languages/en-GB/plg_editors-xtd_joaktreeperson.sys.ini',
-            '/administrator/languages/en-GB/plg_editors-xtd_joaktreemap.ini','/administrator/languages/en-GB/plg_editors-xtd_joaktreemap.sys.ini',
-            '/administrator/languages/en-GB/plg_finder_joaktree.ini','/administrator/languages/en-GB/plg_finder_joaktree.sys.ini',
-            '/administrator/languages/fr-FR/joaktreeinstaller.ini',
-            '/administrator/languages/fr-FR/com_joaktree.ini','/administrator/languages/fr-FR/com_joaktree.sys.ini',
-            '/administrator/languages/fr-FR/com_joaktree.services.ini','/administrator/languages/fr-FR/com_joaktree.gedcom.ini',
-            '/administrator/languages/fr-FR/plg_content_joaktree.ini','/administrator/languages/fr-FR/plg_content_joaktree.sys.ini',
-            '/administrator/languages/fr-FR/plg_editors-xtd_joaktreeperson.ini','/administrator/languages/fr-FR/plg_editors-xtd_joaktreeperson.sys.ini',
-            '/administrator/languages/fr-FR/plg_editors-xtd_joaktreemap.ini','/administrator/languages/fr-FR/plg_editors-xtd_joaktreemap.sys.ini',
-            '/administrator/languages/fr-FR/plg_finder_joaktree.ini','/administrator/languages/fr-FR/plg_finder_joaktree.sys.ini',
+        $obsoleteFiles = [
+            JPATH_SITE.'/plugins/content/joaktree',JPATH_SITE.'/plugins/editors-xtd/joaktreemap', 
+            JPATH_SITE.'/plugins/editors-xtd/joaktreeperson',JPATH_SITE.'/plugins/finder/joaktree',
+            JPATH_SITE.'/modules/mod_joaktree_lastpersonsviewed',JPATH_SITE.'/modules/mod_joaktree_related_items',
+            JPATH_SITE.'/modules/mod_joaktree_show_update',JPATH_SITE.'/modules/mod_joaktree_todaymanyyearsago',
+            JPATH_SITE.'/media/com_joaktree',
+            JPATH_SITE.'/languages/en-GB/com_joaktree.ini',
+            JPATH_SITE.'/languages/en-GB/mod_joaktree_lastpersonsviewed.ini',JPATH_SITE.'/languages/en-GB/mod_joaktree_lastpersonsviewed.sys.ini',
+            JPATH_SITE.'/languages/en-GB/mod_joaktree_related_items.ini',JPATH_SITE.'/languages/en-GB/mod_joaktree_related_items.sys.ini',
+            JPATH_SITE.'/languages/en-GB/mod_joaktree_show_update.ini',JPATH_SITE.'/languages/en-GB/mod_joaktree_show_update.sys.ini',
+            JPATH_SITE. '/languages/en-GB/mod_joaktree_todaymanyyearsago.ini',JPATH_SITE.'/languages/en-GB/mod_joaktree_todaymanyyearsago.sys.ini',
+            JPATH_SITE.'/languages/fr-FR/com_joaktree.ini',
+            JPATH_SITE.'/languages/fr-FR/mod_joaktree_lastpersonsviewed.ini',JPATH_SITE.'/languages/fr-FR/mod_joaktree_lastpersonsviewed.sys.ini',
+            JPATH_SITE.'/languages/fr-FR/mod_joaktree_related_items.ini',JPATH_SITE.'/languages/fr-FR/mod_joaktree_related_items.sys.ini',
+            JPATH_SITE.'/languages/fr-FR/mod_joaktree_show_update.ini',JPATH_SITE.'/languages/fr-FR/mod_joaktree_show_update.sys.ini',
+            JPATH_SITE.'/languages/fr-FR/mod_joaktree_todaymanyyearsago.ini',JPATH_SITE.'/languages/fr-FR/mod_joaktree_todaymanyyearsago.sys.ini',
+            JPATH_ADMINISTRATOR.'/languages/en-GB/joaktreeinstaller.ini',
+            JPATH_ADMINISTRATOR.'/languages/en-GB/com_joaktree.ini',JPATH_ADMINISTRATOR.'/languages/en-GB/com_joaktree.sys.ini',
+            JPATH_ADMINISTRATOR.'/languages/en-GB/com_joaktree.services.ini',JPATH_ADMINISTRATOR.'/languages/en-GB/com_joaktree.gedcom.ini',
+            JPATH_ADMINISTRATOR.'/languages/en-GB/plg_content_joaktree.ini',JPATH_ADMINISTRATOR.'/languages/en-GB/plg_content_joaktree.sys.ini',
+            JPATH_ADMINISTRATOR.'/languages/en-GB/plg_editors-xtd_joaktreeperson.ini',JPATH_ADMINISTRATOR.'/languages/en-GB/plg_editors-xtd_joaktreeperson.sys.ini',
+            JPATH_ADMINISTRATOR.'/languages/en-GB/plg_editors-xtd_joaktreemap.ini',JPATH_ADMINISTRATOR.'/languages/en-GB/plg_editors-xtd_joaktreemap.sys.ini',
+            JPATH_ADMINISTRATOR.'/languages/en-GB/plg_finder_joaktree.ini',JPATH_ADMINISTRATOR.'/languages/en-GB/plg_finder_joaktree.sys.ini',
+            JPATH_ADMINISTRATOR. '/languages/fr-FR/joaktreeinstaller.ini',
+            JPATH_ADMINISTRATOR.'/languages/fr-FR/com_joaktree.ini',JPATH_ADMINISTRATOR.'/languages/fr-FR/com_joaktree.sys.ini',
+            JPATH_ADMINISTRATOR.'/languages/fr-FR/com_joaktree.services.ini',JPATH_ADMINISTRATOR.'/languages/fr-FR/com_joaktree.gedcom.ini',
+            JPATH_ADMINISTRATOR.'/languages/fr-FR/plg_content_joaktree.ini',JPATH_ADMINISTRATOR.'/languages/fr-FR/plg_content_joaktree.sys.ini',
+            JPATH_ADMINISTRATOR.'/languages/fr-FR/plg_editors-xtd_joaktreeperson.ini',JPATH_ADMINISTRATOR.'/languages/fr-FR/plg_editors-xtd_joaktreeperson.sys.ini',
+            JPATH_ADMINISTRATOR.'/languages/fr-FR/plg_editors-xtd_joaktreemap.ini',JPATH_ADMINISTRATOR.'/languages/fr-FR/plg_editors-xtd_joaktreemap.sys.ini',
+            JPATH_ADMINISTRATOR.'/languages/fr-FR/plg_finder_joaktree.ini',JPATH_ADMINISTRATOR.'/languages/fr-FR/plg_finder_joaktree.sys.ini',
             ];
-		// Remove plugins' files.
-		foreach ($obsloteFolders as $folder)
-		{
-			$f = JPATH_SITE . $folder;
-
-			if (!@file_exists($f) || !is_dir($f) || is_link($f))
-			{
-				continue;
-			}
-
-			Folder::delete($f);
-		}
-		
-		Factory::getApplication()->enqueueMessage('Joaktree package uninstalled', 'notice');
+            $this->delete($obsoleteFiles);
+            
+		Factory::getApplication()->enqueueMessage('Joaktree package uninstalled.', 'notice');
     }
+    public function delete($files = [])
+    {
+        foreach ($files as $file) {
+            if (is_dir($file)) {
+                Folder::delete($file);
+            }
+
+            if (is_file($file)) {
+                File::delete($file);
+            }
+        }
+    }
+    
 }
