@@ -86,10 +86,7 @@ class PlgSystemJoaktreeInstallerInstallerScript
             //$db->query();
             $db->execute();
         }
-        //$retval=false;
-        // Set a simple message
         Factory::getApplication()->enqueueMessage('NOTE: Five database tables were NOT removed to allow for upgrades', 'notice') ;
-
 
         return true;
     }

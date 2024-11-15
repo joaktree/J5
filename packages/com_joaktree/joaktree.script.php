@@ -98,71 +98,7 @@ class com_joaktreeInstallerScript
 			}
 			
 			
-/*			switch ($old_version) {
-				case '1.5.0.beta.1' :
-							switch ($new_version) {
-								case '1.5.0.beta.2': // continue
-								case '1.5.0.beta.3': // continue
-								case '1.5.0': 		 // continue
-									 	// Table joaktree_trees
-										$update_queries[] = 
-										    'ALTER IGNORE TABLE '
-										   .'#__joaktree_trees '
-										   .'ADD catid           int(11)                   NULL '
-										   .'AFTER  root_person_id ';	   
-										// end: joaktree_trees
-										break;
-								default:      break;								
-							}
-				case ' 1.5.0' :
-				case '1.5.1': 
-							switch ($new_version) {
-								case '1.5.3' :
-										// Table joaktree_locations
-										$update_queries[] = 
-										'ALTER IGNORE TABLE '
-										.'#__joaktree_locations '
-										.'CHANGE value value varchar(100) NOT NULL';
-										// end joaktree_locations										
-										// Table joaktree_person_events
-										$update_queries[] = 
-										'ALTER IGNORE TABLE '
-										.'#__joaktree_person_events '
-										.'CHANGE location location varchar(100) NOT NULL';
-										// end joaktree_person_events									
-										// Table joaktree_relation_events
-										$update_queries[] = 
-										'ALTER IGNORE TABLE '
-										.'#__joaktree_relation_events '
-										.'CHANGE location location varchar(100) NOT NULL';
-										// end joaktree_relation_events
-									   break;
-								default: break;
-							}
-				case '1.5.2' :
-							switch ($new_version) {
-								case '1.5.3' :
-										// Table joaktree_person_events
-										$update_queries[] = 
-										'ALTER IGNORE TABLE '
-										.'#__joaktree_person_events '
-										.'CHANGE location location varchar(100) NOT NULL';
-										// end joaktree_person_events									
-										// Table joaktree_relation_events
-										$update_queries[] = 
-										'ALTER IGNORE TABLE '
-										.'#__joaktree_relation_events '
-										.'CHANGE location location varchar(100) NOT NULL';
-										// end joaktree_relation_events
-									   break;
-								default: break;
-							break;
-							}
-							
-				default:	// continue
-							break;
-			}
-*/				
+
 				// Table joaktree_persons
 				$update_queries[] = 
 					'ALTER IGNORE TABLE '
@@ -367,8 +303,7 @@ class com_joaktreeInstallerScript
 			//$retval=false;
 			// Set a simple message
 			Factory::getApplication()->enqueueMessage( Text::_( 'NOTE: Five database tables were NOT removed to allow for upgrades' ), 'notice' ) ;
-			return $retval;
-			
-        }
 
+            return $retval;
+        }
 }
