@@ -332,23 +332,6 @@ class PlgSystemJoaktreeInstallerInstallerScript
                 return false;
             }
         }
-        // enable plugins
-        $db = Factory::getContainer()->get(DatabaseInterface::class);
-        $conditions = array(
-            $db->qn('type') . ' = ' . $db->q('plugin'),
-            $db->qn('element') . ' = ' . $db->quote('joaktree')
-        );
-        $fields = array($db->qn('enabled') . ' = 1');
-
-        $query = $db->getQuery(true);
-        $query->update($db->quoteName('#__extensions'))->set($fields)->where($conditions);
-        $db->setQuery($query);
-        try {
-            $db->execute();
-        } catch (RuntimeException $e) {
-            Log::add('unable to enable Plugins Joaktree', Log::ERROR, 'jerror');
-        }
-
         return true;
     }
     private function installPackage($package)
