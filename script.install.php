@@ -269,7 +269,7 @@ class PlgSystemJoaktreeInstallerInstallerScript
         $conditions = array(
             $db->qn('type') . ' = ' . $db->q('plugin'),
             $db->qn('element') . ' LIKE ' . $db->quote('joaktree%'),
-            $db->qn('folder') . ' NOT LIKE ' . $db->quote('finder') 
+            $db->qn('folder') . ' IN [' . $db->quote('content').','$db->quote('editors-xtd').']' 
         );
         $fields = array($db->qn('enabled') . ' = 1');
 
