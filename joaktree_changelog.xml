@@ -2,6 +2,22 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
+		<version>2.0.3</version>
+        <note>
+            <item>Update : 2024-11-18</item>
+        </note>
+        <addition>
+            <item>Global param : add default server dir</item>
+            <item>Gedcom : add copy button from local to server</item>
+            <item>GedCom import: add error log</item>
+        </addition>
+        <fix>
+            <item>Person_event table : increase type length to 300 chars</item>
+        </fix>
+	</changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
 		<version>2.0.2</version>
         <note>
             <item>Update : 2024-11-15</item>
