@@ -27,7 +27,7 @@ use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseInterface;
 use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeHelper;
 
-class ApplicationModel extends AdminModel //JModelAdmin
+class ApplicationModel extends AdminModel 
 {
     /**
      * Returns a reference to the a Table object, always creating it.
@@ -41,7 +41,6 @@ class ApplicationModel extends AdminModel //JModelAdmin
     public function getTable($type = 'applications', $prefix = 'Table', $config = array())
     {
         $db = Factory::getContainer()->get(DatabaseInterface::class);
-        // return Table::getInstance('ApplicationsTable', 'Joaktree\\Component\\Joaktree\\Administrator\\Table\\', array('dbo' => $db));
         return Factory::getApplication()->bootComponent('com_joaktree')->getMVCFactory()->createTable('Applications');
 
     }
@@ -91,7 +90,6 @@ class ApplicationModel extends AdminModel //JModelAdmin
                 Factory::getApplication()->enqueueMessage("Sauvegarde models/application");
             }
             $ret = parent::save($form);
-            // dumpVar($ret, 'retour d\'enregistrement)');
 
             if ($ret) {
                 if ((bool)Factory::getApplication()->getConfig()->get('debug')) { // Mode debug

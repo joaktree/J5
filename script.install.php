@@ -265,10 +265,11 @@ class PlgSystemJoaktreeInstallerInstallerScript
         $db->setQuery($query);
         $db->execute();
 
-        // activate all joaktree plugins
+        // activate all joaktree plugins except finder
         $conditions = array(
             $db->qn('type') . ' = ' . $db->q('plugin'),
-            $db->qn('element') . ' LIKE ' . $db->quote('joaktree%')
+            $db->qn('element') . ' LIKE ' . $db->quote('joaktree%'),
+            $db->qn('folder') . ' NOT = ' . $db->quote('finder') 
         );
         $fields = array($db->qn('enabled') . ' = 1');
 

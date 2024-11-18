@@ -63,7 +63,15 @@
 				<option value="5">COM_JOAKTREE_ARTICLELINKMETHOD_VALUE_5</option>
 				<option value="9">COM_JOAKTREE_ARTICLELINKMETHOD_VALUE_9</option>
 			</field>
-		
+			<field
+				id="defaultdir"
+				name="defaultdir"
+				label="COM_JOAKTREE_DEFAULTDIR_LABEL"
+				description="COM_JOAKTREE_DEFAULTDIR_DESC"
+				default="tmp"
+				size="50"
+				class="inputbox"
+			/>
 	</fieldset>
 	
 	<fieldset name="services"

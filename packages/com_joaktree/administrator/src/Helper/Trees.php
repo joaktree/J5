@@ -19,6 +19,7 @@ namespace Joaktree\Component\Joaktree\Administrator\Helper;
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel ;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Filesystem\Stream;

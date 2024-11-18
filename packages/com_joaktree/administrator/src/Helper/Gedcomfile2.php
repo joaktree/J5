@@ -13,6 +13,7 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
+
 namespace Joaktree\Component\Joaktree\Administrator\Helper;
 
 // no direct access
@@ -20,8 +21,8 @@ defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Log\Log;
 use Joomla\CMS\Plugin\PluginHelper;
-use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseInterface;
 use Joaktree\Component\Joaktree\Administrator\Helper\Gedcompersons2;
 use Joaktree\Component\Joaktree\Administrator\Helper\Gedcomsources2;
@@ -55,6 +56,7 @@ class Gedcomfile2
         $this->note     = new Gedcomnotes2($procObject->id);
         $this->document = new Gedcomdocuments2($procObject->id);
         $this->procObject = $procObject;
+        Log::addLogger(array('text_file' => 'joaktreeged.log.php'), Log::INFO, array('joaktreeged'));
     }
 
     /*
@@ -253,7 +255,8 @@ class Gedcomfile2
                 $ret = $this->person->process($this->objectKey, $this->objectLines);
                 $this->procObject->persons++;
                 if (!$ret) {
-                    $this->procObject->msg = (isset($this->procObject->msg) ? $this->procObject->msg : '') . '<br />'.Text::sprintf('JTGEDCOM_MESSAGE_NOSUCPERSON', $this->objectKey);
+                    Log::add(Text::sprintf('JTGEDCOM_MESSAGE_NOSUCPERSON', $this->objectKey, $this->person->persons->getErrors()[0]), Log::INFO, "joaktreeged");
+                    $this->procObject->msg = (isset($this->procObject->msg) ? $this->procObject->msg : '') . '<br />'.Text::sprintf('JTGEDCOM_MESSAGE_NOSUCPERSON', $this->objectKey, $this->person->persons->getErrors()[0]);
                 }
                 break;
 
@@ -340,7 +343,6 @@ class Gedcomfile2
             $this->procObject->status = 'error';
             return $this->procObject;
         }
-
         // initialize array
         $objectLine   		= array();
         $this->objectLines  = array();

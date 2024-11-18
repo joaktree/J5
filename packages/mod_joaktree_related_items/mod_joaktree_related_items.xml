@@ -9,11 +9,11 @@
 	<old_authorEmail>info@joaktree.com</old_authorEmail>
 	<old_authorUrl>www.joaktree.com</old_authorUrl>
     <author>Robert Gastaud</author>
-    <creationDate>January 2017</creationDate>
+	<creationDate>18-11-2024</creationDate>
 	<copyright>(C) 2017 JoomXtensions.com</copyright>
 	<authorEmail>rg-consultant@robertg-conseil.fr</authorEmail>
 	<authorUrl>www.joomxtensions.com</authorUrl>	
-   <version>2.0.2</version>
+   <version>2.0.3</version>
 	<description>MOD_JOAKTREE_RELITEMS_XML_DESCRIPTION</description>
     <namespace path="src">Joaktree\Module\Relateditems</namespace>	
 	<!-- user part -->

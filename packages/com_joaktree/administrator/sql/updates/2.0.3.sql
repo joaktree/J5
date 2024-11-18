@@ -1,0 +1,1 @@
+ALTER  TABLE #__joaktree_person_events CHANGE type type varchar(300) NULL;

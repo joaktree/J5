@@ -45,6 +45,8 @@ class HtmlView extends BaseHtmlView
         $this->item		= $this->get('Item');
         $this->state	= $this->get('State');
 
+  		HTMLHelper::script( 'media/com_joaktree/js/jtupload_admin.js');
+
         /* Check for errors.
         if (count($errors = $this->get('Errors'))) {
             //JError::raiseError(500, implode("\n", $errors));

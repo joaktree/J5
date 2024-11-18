@@ -20,9 +20,9 @@ namespace Joaktree\Component\Joaktree\Administrator\Model;
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Language\Text;		// replace JText
-use Joomla\CMS\MVC\Model\ListModel;		//replace JModelList
-use Joomla\CMS\Pagination\Pagination; 		//replace JPagination
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\CMS\Pagination\Pagination;
 use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeHelper;
 use Joaktree\Component\Joaktree\Administrator\Helper\Gedcomfile2;
 

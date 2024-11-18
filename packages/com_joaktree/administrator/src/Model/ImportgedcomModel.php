@@ -13,6 +13,7 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
+
 namespace Joaktree\Component\Joaktree\Administrator\Model;
 
 // no direct access
@@ -20,7 +21,7 @@ defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel ;
-use Joomla\CMS\Table\Table;
+use Joomla\CMS\Log\Log;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joaktree\Component\Joaktree\Administrator\Helper\Trees;
@@ -207,7 +208,6 @@ class ImportgedcomModel extends BaseDatabaseModel
     {
         $canDo	= JoaktreeHelper::getActions();
         $procObject = $this->getProcessObject();
-
         if (($canDo->get('core.create')) && ($canDo->get('core.edit'))) {
 
             switch ($procObject->status) {
@@ -215,6 +215,8 @@ class ImportgedcomModel extends BaseDatabaseModel
                     $procObject->start = date('h:i:s');
                     //$procObject->start = strftime('%H:%M:%S');
                     $procObject->msg = Text::sprintf('JTPROCESS_START_MSG', $procObject->id);
+                    Log::addLogger(array('text_file' => 'joaktreeged.log.php'), Log::INFO, array('joaktreeged'));
+                    Log::add('Start : '.$procObject->id, Log::INFO, "joaktreeged");
                     // no break
                 case 'progress':	// continue
                 case 'endload':		// continue
@@ -230,7 +232,6 @@ class ImportgedcomModel extends BaseDatabaseModel
                     }
 
                     $procObject->current = date('h:i:s');
-                    //$resObject->current = strftime('%H:%M:%S');
                     $this->setProcessObject($resObject);
                     $return = json_encode($resObject);
                     break;
@@ -289,6 +290,8 @@ class ImportgedcomModel extends BaseDatabaseModel
                     break;
                 case 'end':
                     // store first empty object
+                    Log::addLogger(array('text_file' => 'joaktreeged.log.php'), Log::INFO, array('joaktreeged'));
+                    Log::add('End : '.$procObject->id, Log::INFO, "joaktreeged");
                     $appId = $procObject->id;
                     $this->initObject($procObject->japp_ids);
                     $newObject = $this->getProcessObject();

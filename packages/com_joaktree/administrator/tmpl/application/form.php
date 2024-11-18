@@ -28,9 +28,10 @@ HtmlHelper::_('formbehavior.chosen', 'select');
 /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('keepalive')
-    ->useScript('form.validate');?>
+    ->useScript('form.validate');
 
-
+$linkUpload = 'index.php?option=com_joaktree&amp;view=upload&amp;tmpl=component&amp;appId='.$this->item->id;
+?>
 <form 
 	action="<?php echo Route::_('index.php?option=com_joaktree'); ?>" 
 	method="post" 
@@ -64,6 +65,25 @@ echo HTMLHelper::_('uitab.addTab', 'myTab', 'details', $titletab); ?>
             <fieldset id="fieldset-otherparams" class="options-form">
                 <legend><?php echo Text::_('JTAPPS_TITLE_PARAMS'); ?></legend>
                 <div>
+                         <div class="control-group">
+							<div class="controls">
+                            <!-- Modal !-->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#upload"><?php echo Text::_('JTFIELD_UPLOAD_BUTTONDESC'); ?></button>
+                            <div class="modal fade modal-xl"  id="upload" tabindex="-1" aria-labelledby="upload" aria-hidden="true">
+                                <div class="modal-dialog h-50">
+                                    <div class="modal-content h-100">
+                                        <div class="modal-header">
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body h-100">
+                                            <iframe id="iframeModalWindow" height="100%" src="<?php echo $linkUpload; ?>" name="iframe_modal"></iframe>      
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <!-- Fin de modal !-->
+                            </div>
+                            </div>
 				<?php foreach($this->form->getFieldset('settings') as $field): ?>
 						<?php if ($field->hidden) { ?>
                         <div class="control-group">
