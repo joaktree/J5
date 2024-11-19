@@ -21,7 +21,6 @@ defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel ;
-use Joomla\CMS\Log\Log;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joaktree\Component\Joaktree\Administrator\Helper\Trees;
@@ -30,33 +29,32 @@ use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeHelper;
 
 class processObject
 {
-    public $id			= null;
-    public $start		= null;
-    public $current	= null;
-    public $end		= null;
-    public $cursor		= 0;
-    public $persons	= 0;
-    public $families	= 0;
-    public $sources	= 0;
-    public $repos		= 0;
-    public $notes		= 0;
-    public $docs		= 0;
-    public $unknown	= 0;
-    public $japp_ids	= null;
-    public $status		= 'new';
-    public $msg		= null;
+    public $id          = null;
+    public $start       = null;
+    public $current	    = null;
+    public $end         = null;
+    public $cursor      = 0;
+    public $persons     = 0;
+    public $families    = 0;
+    public $sources     = 0;
+    public $repos       = 0;
+    public $notes       = 0;
+    public $docs        = 0;
+    public $unknown     = 0;
+    public $japp_ids    = null;
+    public $status      = 'new';
+    public $msg         = null;
 }
 
 class ImportgedcomModel extends BaseDatabaseModel
 {
     public $_data;
-    public $_pagination 	= null;
-    public $_total         = null;
+    public $_pagination = null;
+    public $_total      = null;
 
     public function __construct()
     {
         parent::__construct();
-        // $this->jt_registry = Table::getInstance('RegistryitemsTable', 'Joaktree\\Component\\Joaktree\\Administrator\\Table\\', array('dbo' => $this->_db));
         $this->jt_registry = Factory::getApplication()->bootComponent('com_joaktree')->getMVCFactory()->createTable('Registryitems');
     }
 
@@ -64,7 +62,6 @@ class ImportgedcomModel extends BaseDatabaseModel
     {
         // Get the WHERE and ORDER BY clauses for the query
         $wheres      =  $this->_buildContentWhere();
-
         if (($wheres) && (is_array($wheres))) {
             $query = $this->_db->getQuery(true);
             $query->select(' japp.* ');
@@ -73,12 +70,10 @@ class ImportgedcomModel extends BaseDatabaseModel
                 $query->where(' '.$where.' ');
             }
             $query->order(' japp.id ');
-
         } else {
             // if there is no where statement, there are no applications selected.
             unset($query);
         }
-
         return $query;
     }
 
@@ -89,29 +84,22 @@ class ImportgedcomModel extends BaseDatabaseModel
         $procObject = $this->getProcessObject();
         $cids = $procObject->japp_ids;
         array_unshift($cids, $procObject->id);
-
         if (count($cids) == 0) {
             // no applications are selected
             return false;
-
         } else {
             // make sure the input consists of integers
             for ($i = 0;$i < count($cids);$i++) {
                 $cids[$i] = (int) $cids[$i];
-
                 if ($cids[$i] == 0) {
                     die('wrong request');
                 }
             }
-
             // create a string
             $japp_ids = '('.implode(",", $cids).')';
-
             // create where
             $wheres[] = 'japp.id IN '.$japp_ids;
-
         }
-
         return $wheres;
     }
 
@@ -122,7 +110,6 @@ class ImportgedcomModel extends BaseDatabaseModel
             $query = $this->_buildquery();
             $this->_data = $this->_getList($query);
         }
-
         return $this->_data;
     }
 
@@ -141,7 +128,6 @@ class ImportgedcomModel extends BaseDatabaseModel
                 die('wrong request');
             }
         }
-
         // store first empty object
         $this->initObject($cids);
     }
@@ -160,12 +146,11 @@ class ImportgedcomModel extends BaseDatabaseModel
         $this->setProcessObject($newObject);
     }
 
-
     private function setProcessObject($procObject)
     {
         // create a registry item
         if (isset($procObject->msg)) {
-            $procObject->msg 		= substr($procObject->msg, 0, 1500);
+            $procObject->msg    = substr($procObject->msg, 0, 1500);
         }
         $this->jt_registry->regkey 	= 'PROCESS_OBJECT';
         $this->jt_registry->value  	= json_encode($procObject);
@@ -215,12 +200,12 @@ class ImportgedcomModel extends BaseDatabaseModel
                     $procObject->start = date('h:i:s');
                     //$procObject->start = strftime('%H:%M:%S');
                     $procObject->msg = Text::sprintf('JTPROCESS_START_MSG', $procObject->id);
-                    Log::addLogger(array('text_file' => 'joaktreeged.log.php'), Log::INFO, array('joaktreeged'));
-                    Log::add('Start : '.$procObject->id, Log::INFO, "joaktreeged");
+                    JoaktreeHelper::addLog('Start : '.$procObject->id);
+                    JoaktreeHelper::addLog($procObject->msg);
                     // no break
-                case 'progress':	// continue
-                case 'endload':		// continue
-                case 'endpat':		// continue
+                case 'progress':    // continue
+                case 'endload':     // continue
+                case 'endpat':      // continue
                     $gedcomfile = new Gedcomfile2($procObject);
                     $resObject 	= $gedcomfile->process('all');
 
@@ -240,21 +225,19 @@ class ImportgedcomModel extends BaseDatabaseModel
                     $procObject->status = 'start';
                     // Addition for processing tree-persons
                     // no break
-                case 'start':		// continue
-                case 'starttree':	// continue
-                case 'progtree':	// continue
-                case 'endtree':		// continue
-                case 'treedef_1':	// continue
-                case 'treedef_2':	// continue
-                case 'treedef_3':	// continue
-                case 'treedef_4':	// continue
-                case 'treedef_5':	// continue
-                case 'treedef_6':	// continue
+                case 'start':       // continue
+                case 'starttree':   // continue
+                case 'progtree':    // continue
+                case 'endtree':     // continue
+                case 'treedef_1':   // continue
+                case 'treedef_2':   // continue
+                case 'treedef_3':   // continue
+                case 'treedef_4':   // continue
+                case 'treedef_5':   // continue
+                case 'treedef_6':   // continue
                     $familyTree = new Trees($procObject);
                     $resObject 	= $familyTree->assignFamilyTree();
-
                     $procObject->current = date('h:i:s');
-                    //$resObject->current = strftime('%H:%M:%S');
                     $this->setProcessObject($resObject);
                     $return = json_encode($resObject);
                     break;
@@ -262,11 +245,11 @@ class ImportgedcomModel extends BaseDatabaseModel
                     // we are done
                     $procObject->status  = 'index';
                     $procObject->current = date('h:i:s');
-                    //$procObject->current = strftime('%H:%M:%S');
                     $this->setLastUpdateDateTime();
                     $this->setInitialChar();
                     $appId = $procObject->id;
                     $procObject->msg = Text::_('JTPROCESS_INDEX_MSG');
+                    JoaktreeHelper::addLog($procObject->msg);
                     $this->setProcessObject($procObject);
                     $return = json_encode($procObject);
                     break;
@@ -280,34 +263,30 @@ class ImportgedcomModel extends BaseDatabaseModel
                     // we are done
                     $procObject->status  = 'end';
                     $procObject->current = date('h:i:s');
-                    //$procObject->current = strftime('%H:%M:%S');
                     $procObject->end 	 = $procObject->current;
                     $this->setLastUpdateDateTime();
                     $this->setInitialChar();
-
                     $this->setProcessObject($procObject);
                     $return = json_encode($procObject);
                     break;
                 case 'end':
                     // store first empty object
-                    Log::addLogger(array('text_file' => 'joaktreeged.log.php'), Log::INFO, array('joaktreeged'));
-                    Log::add('End : '.$procObject->id, Log::INFO, "joaktreeged");
                     $appId = $procObject->id;
                     $this->initObject($procObject->japp_ids);
                     $newObject = $this->getProcessObject();
+                    $newObject->id = $appId;
                     $newObject->msg = Text::sprintf('JTPROCESS_END_MSG', $appId);
-
                     $return = json_encode($newObject);
+                    JoaktreeHelper::addLog($newObject->msg);
+                    JoaktreeHelper::addLog('End : '.$procObject->id);
                     break;
-                case 'error':	// continue
-                default:		// continue
+                case 'error':   // continue
+                default:        // continue
                     break;
             }
         } else {
-
             $procObject->status = 'error';
             $procObject->msg    = Text::_('JT_NOTAUTHORISED');
-
             $return = json_encode($procObject);
         }
 
@@ -320,9 +299,8 @@ class ImportgedcomModel extends BaseDatabaseModel
         $query->update(' #__joaktree_registry_items ');
         $query->set(' value  = NOW() ');
         $query->where(' regkey = '.$this->_db->quote('LAST_UPDATE_DATETIME').' ');
-
         $this->_db->setQuery($query);
-        $this->_db->execute(); //$this->_db->query();
+        $this->_db->execute();
     }
 
     private function setInitialChar()
@@ -332,8 +310,7 @@ class ImportgedcomModel extends BaseDatabaseModel
         $query->update(' #__joaktree_registry_items ');
         $query->set(' value  = '.$this->_db->quote('0').' ');
         $query->where(' regkey = '.$this->_db->quote('INITIAL_CHAR').' ');
-
         $this->_db->setQuery($query);
-        $this->_db->execute(); //$this->_db->query();
+        $this->_db->execute();
     }
 }

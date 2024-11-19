@@ -25,12 +25,12 @@ use Joomla\Registry\Registry;
 
 class ApplicationsTable extends Table implements VersionableTableInterface
 {
-    public $id 						= null;
-    public $asset_id           		= null;
-    public $title						= null;
-    public $description				= null;
-    public $programName				= null;
-    public $params						= null;
+    public $id              = null;
+    public $asset_id        = null;
+    public $title           = null;
+    public $description     = null;
+    public $programName     = null;
+    public $params          = null;
 
     public function __construct(DatabaseDriver $db)
     {

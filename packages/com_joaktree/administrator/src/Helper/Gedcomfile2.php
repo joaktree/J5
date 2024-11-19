@@ -21,7 +21,6 @@ defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Log\Log;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Database\DatabaseInterface;
 use Joaktree\Component\Joaktree\Administrator\Helper\Gedcompersons2;
@@ -46,6 +45,7 @@ class Gedcomfile2
     protected $objectType ;
     protected $objectKey;
     protected $objectLines;
+    protected $has_errors = false;
 
     public function __construct($procObject)
     {
@@ -56,7 +56,6 @@ class Gedcomfile2
         $this->note     = new Gedcomnotes2($procObject->id);
         $this->document = new Gedcomdocuments2($procObject->id);
         $this->procObject = $procObject;
-        Log::addLogger(array('text_file' => 'joaktreeged.log.php'), Log::INFO, array('joaktreeged'));
     }
 
     /*
@@ -255,8 +254,10 @@ class Gedcomfile2
                 $ret = $this->person->process($this->objectKey, $this->objectLines);
                 $this->procObject->persons++;
                 if (!$ret) {
-                    Log::add(Text::sprintf('JTGEDCOM_MESSAGE_NOSUCPERSON', $this->objectKey, $this->person->persons->getErrors()[0]), Log::INFO, "joaktreeged");
-                    $this->procObject->msg = (isset($this->procObject->msg) ? $this->procObject->msg : '') . '<br />'.Text::sprintf('JTGEDCOM_MESSAGE_NOSUCPERSON', $this->objectKey, $this->person->persons->getErrors()[0]);
+                    $this->has_errors = true;
+                    JoaktreeHelper::addLog(Text::sprintf('JTGEDCOM_MESSAGE_NOSUCPERSON', $this->objectKey).' : '.$this->person->persons->getErrors()[0]);
+                    // $this->procObject->msg = (isset($this->procObject->msg) ? $this->procObject->msg : '') . '<br />'.Text::sprintf('JTGEDCOM_MESSAGE_NOSUCPERSON', $this->objectKey, $this->person->persons->getErrors()[0]);
+                    $this->procObject->msg = (isset($this->procObject->msg) ? $this->procObject->msg : '') . '<br />'.Text::sprintf('JTGEDCOM_MESSAGE_NOSUCPERSON', $this->objectKey, '');
                 }
                 break;
 
@@ -264,6 +265,8 @@ class Gedcomfile2
                 $ret = $this->person->family($this->objectKey, $this->objectLines);
                 $this->procObject->families++;
                 if (!$ret) {
+                    $this->has_errors = true;
+                    JoaktreeHelper::addLog(Text::sprintf('JTGEDCOM_MESSAGE_NOSUCFAMILY', $this->objectKey).' : '.$this->person->errors[0]);
                     $this->procObject->msg = (isset($this->procObject->msg) ? $this->procObject->msg : '') . '<br />'.Text::sprintf('JTGEDCOM_MESSAGE_NOSUCFAMILY', $this->objectKey);
                 }
                 break;
@@ -272,6 +275,8 @@ class Gedcomfile2
                 $ret = $this->source->process($this->objectKey, $this->objectLines);
                 $this->procObject->sources++;
                 if (!$ret) {
+                    $this->has_errors = true;
+                    JoaktreeHelper::addLog(Text::sprintf('JTGEDCOM_MESSAGE_NOSUCSOURCE', $this->objectKey));
                     $this->procObject->msg = (isset($this->procObject->msg) ? $this->procObject->msg : '') . '<br />'.Text::sprintf('JTGEDCOM_MESSAGE_NOSUCSOURCE', $this->objectKey);
                 }
                 break;
@@ -280,6 +285,8 @@ class Gedcomfile2
                 $ret = $this->repo->process($this->objectKey, $this->objectLines);
                 $this->procObject->repos++;
                 if (!$ret) {
+                    $this->has_errors = true;
+                    JoaktreeHelper::addLog(Text::sprintf('JTGEDCOM_MESSAGE_NOSUCREPO', $this->objectKey));
                     $this->procObject->msg = (isset($this->procObject->msg) ? $this->procObject->msg : '') . '<br />'.Text::sprintf('JTGEDCOM_MESSAGE_NOSUCREPO', $this->objectKey);
                 }
                 break;
@@ -288,6 +295,8 @@ class Gedcomfile2
                 $ret = $this->note->process($this->objectKey, $this->objectLines);
                 $this->procObject->notes++;
                 if (!$ret) {
+                    $this->has_errors = true;
+                    JoaktreeHelper::addLog(Text::sprintf('JTGEDCOM_MESSAGE_NOSUCNOTE', $this->objectKey));
                     $this->procObject->msg = (isset($this->procObject->msg) ? $this->procObject->msg : '') . '<br />'.Text::sprintf('JTGEDCOM_MESSAGE_NOSUCNOTE', $this->objectKey);
                 }
                 break;
@@ -296,6 +305,8 @@ class Gedcomfile2
                 $ret = $this->document->process($this->objectKey, $this->objectLines);
                 $this->procObject->docs++;
                 if (!$ret) {
+                    $this->has_errors = true;
+                    JoaktreeHelper::addLog(Text::sprintf('JTGEDCOM_MESSAGE_NOSUCDOC', $this->objectKey));
                     $this->procObject->msg = (isset($this->procObject->msg) ? $this->procObject->msg : '') . '<br />'.Text::sprintf('JTGEDCOM_MESSAGE_NOSUCDOC', $this->objectKey);
                 }
                 break;
@@ -308,6 +319,7 @@ class Gedcomfile2
             ) {
                 $this->procObject->unknown++;
                 $this->application->enqueueMessage($this->procObject->unknown.': '.$this->objectType, 'notice');
+                JoaktreeHelper::addLog(Text::sprintf('JTGEDCOM_MESSAGE_UNKNOWNOBJ', $this->procObject->unknown.': '.$this->objectType));
                 $this->procObject->msg = (isset($this->procObject->msg) ? $this->procObject->msg : '') . '<br />'.Text::sprintf('JTGEDCOM_MESSAGE_UNKNOWNOBJ', $this->procObject->unknown.': '.$this->objectType);
             }
                 break;
@@ -588,6 +600,7 @@ class Gedcomfile2
                             if ($indAjax) {
                                 $this->procObject->status = 'error';
                                 $this->procObject->msg = 'line '.$this->objectType.', key '.$this->objectKey.', Error : '.$e->getMessage().'<br>Query : '.$e->getTraceAsString();
+                                JoaktreeHelper::addLog($this->procObject->msg);
                                 fclose($handle);
                                 return $this->procObject;
                             }
@@ -762,6 +775,7 @@ class Gedcomfile2
                 // if no result - an error occured and we stop
                 $this->procObject->status = 'error';
                 $this->procObject->msg = (isset($this->procObject->msg) ? $this->procObject->msg : '') . Text::_('JTGEDCOM_MESSAGE_NOSUCPATRONYMS') ;
+                JoaktreeHelper::addLog(Text::_('JTGEDCOM_MESSAGE_NOSUCPATRONYMS'));
                 return $this->procObject;
             } else {
                 // we are done - so change the status
@@ -769,6 +783,7 @@ class Gedcomfile2
                 if ($indAjax) {
                     // we are looping back to the caller
                     $this->procObject->msg = (isset($this->procObject->msg) ? $this->procObject->msg : '') . Text::_('JTGEDCOM_MESSAGE_SUCPATRONYMS') ;
+                    JoaktreeHelper::addLog(Text::_('JTGEDCOM_MESSAGE_SUCPATRONYMS'));
                     return $this->procObject;
                 }
             }
@@ -782,12 +797,14 @@ class Gedcomfile2
             if (!$ret) {
                 $this->procObject->status = 'error';
                 $this->procObject->msg =  (isset($this->procObject->msg) ? $this->procObject->msg : '') . Text::_('JTGEDCOM_MESSAGE_NOSUCRELINDICATORS') ;
+                JoaktreeHelper::addLog(Text::_('JTGEDCOM_MESSAGE_NOSUCRELINDICATORS'));
                 return $this->procObject;
             } else {
                 $this->procObject->status = 'endrel';
                 if ($indAjax) {
                     // we are looping back to the caller
                     $this->procObject->msg = (isset($this->procObject->msg) ? $this->procObject->msg : '') . Text::_('JTGEDCOM_MESSAGE_SUCRELINDICATORS') ;
+                    JoaktreeHelper::addLog(Text::_('JTGEDCOM_MESSAGE_SUCRELINDICATORS'));
                     return $this->procObject;
                 }
             }

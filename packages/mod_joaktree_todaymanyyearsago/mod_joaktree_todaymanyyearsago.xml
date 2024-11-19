@@ -3,9 +3,8 @@
 <extension version="4.0" type="module" client="site" method="upgrade">
 	<name>Joaktree Today Many Years Ago</name>
     <author>joaktree.com</author>
-    <creationDate>June 2013</creationDate>
 	<copyright>(C) 2009 - 2013 Joaktree.com</copyright>
-	<license>GNU General Public License version 2 or later</license>
+	<license>GNU General Public License version 3 or later</license>
 	<authorEmail>info@joaktree.com</authorEmail>
 	<authorUrl>www.joaktree.com</authorUrl>
     <new_author>Robert Gastaud</new_author>

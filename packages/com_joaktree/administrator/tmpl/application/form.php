@@ -31,6 +31,7 @@ $wa->useScript('keepalive')
     ->useScript('form.validate');
 
 $linkUpload = 'index.php?option=com_joaktree&amp;view=upload&amp;tmpl=component&amp;appId='.$this->item->id;
+$linkViewlog = 'index.php?option=com_joaktree&amp;view=viewlogs&amp;tmpl=component&amp;appId='.$this->item->id;
 ?>
 <form 
 	action="<?php echo Route::_('index.php?option=com_joaktree'); ?>" 
@@ -47,11 +48,24 @@ echo HTMLHelper::_('uitab.addTab', 'myTab', 'details', $titletab); ?>
         <div class="row">
             <div class="col-lg-9">
                 <?php echo $this->form->renderField('title'); ?>
-                <?php
-        echo $this->form->renderField('description');
-?>
+                <?php echo $this->form->renderField('description'); ?>
                 <?php echo $this->form->renderField('programName'); ?>
                 <?php echo $this->form->renderField('id'); ?>
+                <!-- Modal !-->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewlog"><?php echo Text::_('JTFIELD_LOGS_BUTTONDESC'); ?></button>
+                <div class="modal fade modal-xl"  id="viewlog" tabindex="-1" aria-labelledby="upload" aria-hidden="true">
+                    <div class="modal-dialog h-75">
+                        <div class="modal-content h-100">
+                             <div class="modal-header">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                             </div>
+                             <div class="modal-body h-100">
+                                <iframe id="iframeModalWindow" height="100%" src="<?php echo $linkViewlog; ?>" name="iframe_modal"></iframe>      
+                             </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Fin de modal !-->
            	</div>
             <div class="col-lg-3">
                 <?php echo LayoutHelper::render('joomla.edit.global', $this); ?>

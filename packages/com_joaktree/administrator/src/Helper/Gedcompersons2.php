@@ -21,7 +21,6 @@ defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Log\Log;
 use Joomla\Database\DatabaseInterface;
 use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeHelper;
 use Joaktree\Component\Joaktree\Administrator\Helper\Names;
@@ -33,7 +32,6 @@ class Gedcompersons2 extends \StdClass
         $this->_db      = Factory::getContainer()->get(DatabaseInterface::class);
         $this->errors   = array();
         $this->application = Factory::getApplication();
-        Log::addLogger(array('text_file' => 'joaktreeged.log.php'), Log::INFO, array('joaktreeged'));
 
         // parameters
         $params           		= JoaktreeHelper::getJTParams($app_id);
@@ -54,7 +52,6 @@ class Gedcompersons2 extends \StdClass
 
         // initialize tables
         $this->admin 			= Factory::getApplication()->bootComponent('com_joaktree')->getMVCFactory()->createTable('Adminpersons');
-        //$this->documents		= Table::getInstance('DocumentsTable', 'Joaktree\\Component\\Joaktree\\Administrator\\Table\\', array('dbo' => $this->_db));
         $this->documents        = Factory::getApplication()->bootComponent('com_joaktree')->getMVCFactory()->createTable('Documents');
         $this->persons			= Factory::getApplication()->bootComponent('com_joaktree')->getMVCFactory()->createTable('Persons');
         $this->person_names		= Factory::getApplication()->bootComponent('com_joaktree')->getMVCFactory()->createTable('Personnames');
@@ -69,7 +66,6 @@ class Gedcompersons2 extends \StdClass
         $this->relation_citations = Factory::getApplication()->bootComponent('com_joaktree')->getMVCFactory()->createTable('Citations');
         $this->children			= Factory::getApplication()->bootComponent('com_joaktree')->getMVCFactory()->createTable('Relations');
 
-        // $this->logs				= Table::getInstance('LogsTable', 'Joaktree\\Component\\Joaktree\\Administrator\\Table\\', array('dbo' => $this->_db));
         $this->logs             = Factory::getApplication()->bootComponent('com_joaktree')->getMVCFactory()->createTable('Logs');
 
 
@@ -191,7 +187,7 @@ class Gedcompersons2 extends \StdClass
             if (!$ret) {
                 $this->errors[] = $this->_db->getError();
                 $this->application->enqueueMessage(Text::_('function admin_person: '.$this->errors[count($this->errors) - 1]), 'notice');
-                Log::add(Text::_('function admin_person : '.$this->errors[count($this->errors) - 1].'-'.$this->persons->get('id')), Log::INFO, "joaktreeged");
+                JoaktreeHelper::addLog(Text::_('function admin_person : '.$this->errors[count($this->errors) - 1].'-'.$this->persons->get('id')));
             }
 
             return $ret;
@@ -309,7 +305,7 @@ class Gedcompersons2 extends \StdClass
         } else {
             $this->errors[] = $this->person_citations->getError();
             $this->application->enqueueMessage(Text::_('function setPersonCitation: '.$this->errors[count($this->errors) - 1]), 'notice');
-            Log::add(Text::_('function setPersonCitation : '.$this->errors[count($this->errors) - 1].'-'.$this->person_citations->get('source_id')), Log::INFO, "joaktreeged");
+            JoaktreeHelper::addLog(Text::_('function setPersonCitation : '.$this->errors[count($this->errors) - 1].'-'.$this->person_citations->get('source_id')));
         }
 
         return $ret;
@@ -357,7 +353,7 @@ class Gedcompersons2 extends \StdClass
         } else {
             $this->errors[] = $this->relation_citations->getError();
             $this->application->enqueueMessage(Text::_('function setRelationCitation: '.$this->errors[count($this->errors) - 1]), 'notice');
-            Log::add(Text::_('function setRelationCitation : '.$this->errors[count($this->errors) - 1].'-'.$this->relation_citations->get('source_id')), Log::INFO, "joaktreeged");
+            JoaktreeHelper::addLog(Text::_('function setRelationCitation : '.$this->errors[count($this->errors) - 1].'-'.$this->relation_citations->get('source_id')));
         }
 
         return $ret;
@@ -384,7 +380,7 @@ class Gedcompersons2 extends \StdClass
         } else {
             $this->errors[] = $this->person_names->getError();
             $this->application->enqueueMessage(Text::_('function setPersonName: '.$this->errors[count($this->errors) - 1]), 'notice');
-            Log::add(Text::_('function setPersonName : '.$this->errors[count($this->errors) - 1].'-'.$this->person_names->get('value')), Log::INFO, "joaktreeged");
+            JoaktreeHelper::addLog(Text::_('function setPersonName : '.$this->errors[count($this->errors) - 1].'-'.$this->person_names->get('value')));
         }
 
         return $ret;
@@ -416,7 +412,7 @@ class Gedcompersons2 extends \StdClass
         } else {
             $this->errors[] = $this->person_events->getError();
             $this->application->enqueueMessage(Text::_('function setPersonEvent: '.$this->errors[count($this->errors) - 1]), 'notice');
-            Log::add(Text::_('function setPersonEvent : '.$this->errors[count($this->errors) - 1].'-'), Log::INFO, "joaktreeged");
+            JoaktreeHelper::addLog(Text::_('function setPersonEvent : '.$this->errors[count($this->errors) - 1].'-'));
         }
 
         return $ret;
@@ -436,7 +432,7 @@ class Gedcompersons2 extends \StdClass
             if (!$ret) {
                 $this->errors[] = $this->person_notes->getError();
                 $this->application->enqueueMessage(Text::_('function setPersonNote: '.$this->errors[count($this->errors) - 1]), 'notice');
-                Log::add(Text::_('function setPersonNote : '.$this->errors[count($this->errors) - 1].'-'), Log::INFO, "joaktreeged");
+                JoaktreeHelper::addLog(Text::_('function setPersonNote : '.$this->errors[count($this->errors) - 1].'-'));
             }
         }
 
@@ -499,7 +495,7 @@ class Gedcompersons2 extends \StdClass
             if (!$ret) {
                 $this->errors[] = $this->person_docs_1->getError();
                 $this->application->enqueueMessage('function setDocument 1: '.$this->errors[count($this->errors) - 1], 'notice');
-                Log::add('function setDocument 1 : '.$this->errors[count($this->errors) - 1].'-'.$person_id_1, Log::INFO, "joaktreeged");
+                JoaktreeHelper::addLog('function setDocument 1 : '.$this->errors[count($this->errors) - 1].'-'.$person_id_1);
             }
 
             // document is linked to a relation
@@ -511,7 +507,7 @@ class Gedcompersons2 extends \StdClass
                 if (!$ret) {
                     $this->errors[] = $this->person_docs_2->getError();
                     $this->application->enqueueMessage('function setDocument 2: '.$this->errors[count($this->errors) - 1], 'notice');
-                    Log::add('function setDocument 2 : '.$this->errors[count($this->errors) - 1].'-'.$person_id_2, Log::INFO, "joaktreeged");
+                    JoaktreeHelper::addLog('function setDocument 2 : '.$this->errors[count($this->errors) - 1].'-'.$person_id_2);
                 }
             }
 
@@ -531,7 +527,7 @@ class Gedcompersons2 extends \StdClass
                 if (!$ret) {
                     $this->errors[] = $this->documents->getError();
                     $this->application->enqueueMessage('function setDocument 3: '.$this->errors[count($this->errors) - 1], 'notice');
-                    Log::add('function setDocument 3 : '.$this->errors[count($this->errors) - 1].'-'.$this->documents->get('file'), Log::INFO, "joaktreeged");
+                    JoaktreeHelper::addLog('function setDocument 3 : '.$this->errors[count($this->errors) - 1].'-'.$this->documents->get('file'));
                 }
                 // start actions for this docuement
                 $this->documents->set('app_id', $this->app_id);
@@ -543,7 +539,7 @@ class Gedcompersons2 extends \StdClass
                     if (!$ret) {
                         $this->errors[] = $this->person_docs_1->getError();
                         $this->application->enqueueMessage('function setDocument 4: '.$this->errors[count($this->errors) - 1], 'notice');
-                        Log::add('function setDocument 4 : '.$this->errors[count($this->errors) - 1].'-'.$this->person_docs_1->get('person_id'), Log::INFO, "joaktreeged");
+                        JoaktreeHelper::addLog('function setDocument 4 : '.$this->errors[count($this->errors) - 1].'-'.$this->person_docs_1->get('person_id'));
                     }
                 }
 
@@ -555,7 +551,7 @@ class Gedcompersons2 extends \StdClass
                     if (!$ret) {
                         $this->errors[] = $this->person_docs_2->getError();
                         $this->application->enqueueMessage('function setDocument 5: '.$this->errors[count($this->errors) - 1], 'notice');
-                        Log::add('function setDocument 5 : '.$this->errors[count($this->errors) - 1].'-'.$this->person_docs_2->get('person_id'), Log::INFO, "joaktreeged");
+                        JoaktreeHelper::addLog('function setDocument 5 : '.$this->errors[count($this->errors) - 1].'-'.$this->person_docs_2->get('person_id'));
 
                     }
                 }
@@ -601,9 +597,8 @@ class Gedcompersons2 extends \StdClass
         } else {
             $this->errors[] = $this->relation_events->getError();
             $this->application->enqueueMessage('function setRelationEvent: '.$this->errors[count($this->errors) - 1], 'notice');
-            Log::add('function setRelationEvent: '.$this->errors[count($this->errors) - 1].'-'.$this->relation_events->get('person_id_1').'+'.$this->relation_events->get('person_id_2'), Log::INFO, "joaktreeged");
+            JoaktreeHelper::addLog('function setRelationEvent: '.$this->errors[count($this->errors) - 1].'-'.$this->relation_events->get('person_id_1').'+'.$this->relation_events->get('person_id_2'));
         }
-
         return $ret;
     }
 
@@ -626,7 +621,7 @@ class Gedcompersons2 extends \StdClass
             if (!$ret) {
                 $this->errors[] = $this->relation_notes->getError();
                 $this->application->enqueueMessage('function setRelationNote: '.$this->errors[count($this->errors) - 1], 'notice');
-                Log::add('function setRelationNote: '.$this->errors[count($this->errors) - 1].'-'.$this->relation_notes->get('person_id_1').'+'.$this->relation_notes->get('person_id_2'), Log::INFO, "joaktreeged");
+                JoaktreeHelper::addLog('function setRelationNote: '.$this->errors[count($this->errors) - 1].'-'.$this->relation_notes->get('person_id_1').'+'.$this->relation_notes->get('person_id_2'));
             }
         }
 
@@ -711,7 +706,7 @@ class Gedcompersons2 extends \StdClass
         $ret = $this->_db->execute(); //$this->_db->query();
         if (!$ret) {
             $this->application->enqueueMessage('function keepChild: person='.$pid1.'; family='.$family_id, 'notice');
-            Log::add('function keepChild: person='.$pid1.'; family='.$family_id, Log::INFO, "joaktreeged");
+            JoaktreeHelper::addLog('function keepChild: person='.$pid1.'; family='.$family_id);
         }
 
         return $ret;
@@ -805,7 +800,7 @@ class Gedcompersons2 extends \StdClass
         $ret = $this->_db->execute();
         if (!$ret) {
             $this->application->enqueueMessage('function spouse: person='.$pid1.'; family='.$family_id, 'notice');
-            Log::add('function spouse: person='.$pid1.'; family='.$family_id, Log::INFO, "joaktreeged");
+            JoaktreeHelper::addLog('function spouse: person='.$pid1.'; family='.$family_id);
         }
 
         return $ret;
@@ -1202,8 +1197,7 @@ class Gedcompersons2 extends \StdClass
         if (!$ret) {
             $this->errors[] = $this->relations->getError();
             $this->application->enqueueMessage(Text::sprintf('JTGEDCOM_MESSAGE_NOSUCFAMILY', $family_id), 'notice') ;
-            Log::add(Text::sprintf('JTGEDCOM_MESSAGE_NOSUCFAMILY', $family_id), Log::INFO, "joaktreeged");
-
+            JoaktreeHelper::addLog(Text::sprintf('JTGEDCOM_MESSAGE_NOSUCFAMILY', $family_id));
         }
 
 
@@ -1849,7 +1843,8 @@ class Gedcompersons2 extends \StdClass
 
         // if insert or update went ok, continue with next source; else stop
         if (!$ret) {
-            $this->application->enqueueMessage(Text::sprintf('JTGEDCOM_MESSAGE_NOSUCPERSON', $person_id, $errors[0]), 'notice') ;
+            // $this->application->enqueueMessage(Text::sprintf('JTGEDCOM_MESSAGE_NOSUCPERSON', $person_id, $errors[0]), 'notice') ;
+            $this->application->enqueueMessage(Text::sprintf('JTGEDCOM_MESSAGE_NOSUCPERSON', $person_id, ''), 'notice') ;
         }
 
         return $ret;

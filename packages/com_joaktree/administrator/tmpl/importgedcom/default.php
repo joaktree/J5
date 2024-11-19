@@ -22,6 +22,7 @@ HTMLHelper::_('bootstrap.framework');
 HTMLHelper::_('bootstrap.tooltip');
 
 echo HTMLHelper::_( 'form.token' ); 
+
  ?>
 
 <div id="j-main-container">
@@ -244,6 +245,23 @@ echo HTMLHelper::_( 'form.token' );
 						/>
 					</div>
 				</div>
+                <!-- Modal !-->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewlog" id="btnviewlog" style="display:none">
+                    <?php echo Text::_('JTFIELD_LOGS_BUTTONDESC'); ?>
+                </button>
+                <div class="modal fade modal-xl"  id="viewlog" tabindex="-1" aria-labelledby="viewlog" aria-hidden="true">
+                    <div class="modal-dialog h-75">
+                        <div class="modal-content h-100">
+                             <div class="modal-header">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                             </div>
+                             <div class="modal-body h-100">
+                                <iframe id="iframeModalWindow" height="100%" src="" name="iframe_modal"></iframe>      
+                             </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Fin de modal !-->
 
 			</div>
 		</div>

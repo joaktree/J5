@@ -1,15 +1,9 @@
 /**
- * Joomla! component Joaktree
+ * @package     Joaktree
+ * @subpackage  article-joaktree-person
  *
- * @version	2.0.0
- * @author	Niels van Dantzig (2009-2014) - Robert Gastaud (2017-2024)
- * @package	Joomla
- * @subpackage	Joaktree
- * @license	GNU/GPL
- *
- * Component for genealogy in Joomla!
- *
- * Joomla! 5.x conversion by Conseilgouz
+ * @copyright   Joaktree.com
+ * @license     GNU General Public License version 2 or later; see LICENSE
  *
  */
 function jSelectPerson(id, title, appid, apptitle) {

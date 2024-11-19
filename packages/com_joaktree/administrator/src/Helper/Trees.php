@@ -13,6 +13,7 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
+
 namespace Joaktree\Component\Joaktree\Administrator\Helper;
 
 // no direct access
@@ -278,9 +279,11 @@ class Trees extends BaseDatabaseModel
                 $tree = $this->_db->loadObject();
 
                 $this->procObject->msg = ($this->procObject->status == 'starttree')
-                                        ? Text::sprintf('JTTREE_ASSIGN',$tree->name)
+                                        ? Text::sprintf('JTTREE_ASSIGN', $tree->name)
                                         : null;
-
+                if ($this->procObject->msg) {
+                    JoaktreeHelper::addLog($this->procObject->msg);
+                }
                 if (($tree->holds == 'descendants')
                    and (isset($tree->root_person_id) && $tree->root_person_id != null)
                 ) {
@@ -501,8 +504,8 @@ class Trees extends BaseDatabaseModel
                 $msg   = $this->_db->execute(); //$this->_db->query( );
 
                 $this->procObject->msg = Text::_('JTTREE_DEFAULT');
-
                 $returnStatus = 'treedef_1';
+                JoaktreeHelper::addLog($this->procObject->msg);
                 break;
             case 'treedef_1':
                 // PERSONS WITH EXACTLY 1 TREE

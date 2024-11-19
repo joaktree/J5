@@ -24,7 +24,7 @@ use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\Filesystem\File;
 use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeHelper;
 
-class UploadController extends FormController
+class ViewlogsController extends FormController
 {
     public function upload($key = null, $urlVar = null)
     {

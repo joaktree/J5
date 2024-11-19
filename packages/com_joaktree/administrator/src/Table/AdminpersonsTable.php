@@ -23,13 +23,13 @@ use Joomla\Database\DatabaseDriver;
 
 class AdminpersonsTable extends Table implements VersionableTableInterface
 {
-    public $app_id			= null; // PK
-    public $id 			= null; // PK
-    public $published 		= null;
-    public $living			= null;
-    public $page			= null;
-    public $robots			= null;
-    public $map			= null;
+    public $app_id      = null; // PK
+    public $id          = null; // PK
+    public $published   = null;
+    public $living      = null;
+    public $page        = null;
+    public $robots      = null;
+    public $map         = null;
 
     public function __construct(DatabaseDriver $db)
     {

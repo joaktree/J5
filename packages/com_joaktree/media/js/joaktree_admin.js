@@ -257,11 +257,13 @@ function HandleResponseGedcom(type, response) {
 		}
 		
 		if (r.status == 'stop') {
-			console.log('stop');			
+			console.log('stop');
 			document.getElementById('head_process').style.display  = 'none';
-			document.getElementById('head_finished').style.display = 'block';
-			document.getElementById('end_' + r.id).value = r.end;
-			document.getElementById('procmsg').innerHTML = r.msg;
+            document.getElementById('head_finished').style.display = 'block';
+			// document.getElementById('end_' + r.id).value = r.end;
+			// document.getElementById('procmsg').innerHTML = r.msg;
+            document.getElementById('iframeModalWindow').src = "index.php?option=com_joaktree&view=viewlogs&tmpl=component&appId="+r.id;
+            document.getElementById('btnviewlog').style.display = 'block';
 			return true;
 		}
 
