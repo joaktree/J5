@@ -6,6 +6,7 @@
 		<element>com_joaktree</element>
 		<type>component</type>
 		<version>2.0.3</version>
+        <client>administrator</client>
 		<changelogurl>https://raw.githubusercontent.com/joaktree/J5/master/joaktree_changelog.xml</changelogurl>
 		<downloads>
 			<downloadurl type="full" format="zip">https://github.com/joaktree/j5/archive/refs/tags/2.0.3-alpha6.zip</downloadurl>
@@ -13,7 +14,6 @@
 		<maintainer>ConseilGouz</maintainer>
 		<maintainerurl>https://www.conseilgouz.com</maintainerurl>
 		<targetplatform name="joomla" version="((4\.(0|1|2|3|4))|(5\.(0|1|2|3|4|5|6|7|8|9)))"/>
-		<client>site</client>
 		<sha256>e5f980eb861b9cba3390c6621cdcf590038d1c73638a33795e331a0e21aa685c</sha256>
 	</update>
 </updates>
