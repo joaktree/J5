@@ -139,7 +139,7 @@ class ThemeModel extends AdminModel
                 return $this->saveSource($form);
             } else {
 
-                if (isset($form['theme'])) {
+                if (isset($form['newname'])) {
                     $this->createSource($form);
                 }
 
@@ -202,17 +202,19 @@ class ThemeModel extends AdminModel
     public function createSource($form)
     {
         $theme 		 = JoaktreeHelper::getThemeName($form['theme']);
-        $source		 = Path::clean($this->getSourceBase().$theme);
-        $destination = Path::clean($this->getSourceBase().$form['newname']);
+        $source		 = $theme;
+        $destination = $form['newname'];
 
-        return Folder::copy($source, $destination);
+        return Folder::copy($source, $destination, $this->getSourceBase(), true);
     }
 
     public function deleteSource($id)
     {
         $theme 		 = JoaktreeHelper::getThemeName($id);
         $source		 = Path::clean($this->getSourceBase().$theme);
-
+        if (!is_dir($source)) { // dir not found : exit
+            return;
+        }
         return Folder::delete($source);
     }
 }

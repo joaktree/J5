@@ -33,7 +33,7 @@ HTMLHelper::_('behavior.formvalidator');
 	Joomla.submitbutton = function(task)
 	{
 		//if (task == 'theme.cancel' || document.formvalidator.isValid(document.id('theme-form'))) {
-		if (task == 'theme.cancel' || document.formvalidator.isValid(document.getElementById('theme-form'))) {
+		if (task == 'themes.cancel' || document.formvalidator.isValid(document.getElementById('theme-form'))) {
 			Joomla.submitform(task, document.getElementById('theme-form'));
 		} else {
 			alert('<?php echo $this->escape(Text::_('JGLOBAL_VALIDATION_FORM_FAILED'));?>');
@@ -58,6 +58,7 @@ HTMLHelper::_('behavior.formvalidator');
             <div class="col-lg-9">
                 <?php if (empty($this->item->id)) {
 					echo $this->form->renderField("newname"); 
+                    echo $this->form->renderField("theme"); 
 				} else {
 					echo $this->form->renderField("name");
 				}?>

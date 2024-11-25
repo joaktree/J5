@@ -13,6 +13,8 @@
         </addition>
         <fix>
             <item>Person_event table : increase type length to 300 chars</item>
+            <item>Theme : creation error</item>
+            <item>Theme : cancel error</item>
         </fix>
 	</changelog>
 	<changelog>
