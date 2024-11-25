@@ -15,6 +15,7 @@
             <item>Person_event table : increase type length to 300 chars</item>
             <item>Theme : creation error</item>
             <item>Theme : cancel error</item>
+            <item>Theme : delete error if directory not found</item>
         </fix>
 	</changelog>
 	<changelog>
