@@ -11,7 +11,7 @@
  *
  * Joomla! 5.x conversion by Conseilgouz
  *
- * use https://leafletjs.com/ and https://github.com/coryasilva/Leaflet.ExtraMarkers
+ * use https://leafletjs.com/ 
  *
  * leaflet map  to image : from https://dev.to/gabiaxel/exporting-leaflet-map-to-image-in-the-browser-16am
  * using https://github.com/tsayen/dom-to-image
@@ -67,8 +67,8 @@ createMapImage = async(afield) => {
 
         markers = jtoptions.markers;
         markers.forEach(marker => {
-            let myMarker = L.ExtraMarkers.icon({
-                    icon: 'fa-number',
+            let myMarker = L.IconColor.icon({
+                    icon: '\uf05a',
                     markerColor: marker.color,
                     // shape: 'square',
                     // prefix: 'fa',
@@ -93,12 +93,3 @@ createMapImage = async(afield) => {
             afield.appendChild(imgElement);
         } catch($e) {}
 }
-/*
-function createPopup(mapid,jtmarker, alat,along,atext) {
-    max = jtmap[mapid].getSize().x - 20;
-    popuptext = atext;   /// jtaddress[mapid].value;
-    if (jtiti[mapid] == 'true') { // affiche un lien Venir ici
-        popuptext += '<br><a href="https://www.openstreetmap.org/directions?route=%3B'+alat+'%2C'+along+'#map=14/'+alat+'/'+along+'" target="_blank" rel="noopener">Venir ici</a>'; 
-    }
-    jtmarker.bindPopup(popuptext,{maxWidth: max,keepInView:true});
-}*/

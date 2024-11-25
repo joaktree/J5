@@ -3,7 +3,7 @@
  * @subpackage  article-joaktree-person
  *
  * @copyright   Joaktree.com
- * @license     GNU General Public License version 2 or later; see LICENSE
+ * @license     GNU General Public License version 3 or later; see LICENSE
  *
  */
 function jSelectPerson(id, title, appid, apptitle) {
@@ -12,10 +12,10 @@ function jSelectPerson(id, title, appid, apptitle) {
         if (window['tinyMCE']) {
             window['tinyMCE'].execCommand('mceInsertContent',false,tag);
         }
-        if (window['WFEditor']) { // JCE
+        else if (window['WFEditor']) { // JCE
             WfEditor.insert('name', tag);
         }
-        if(window['CKEDITOR']){ // ArkEditor
+        else if(window['CKEDITOR']){ // ArkEditor
             for(var inst in CKEDITOR.instances)
                CKEDITOR.instances[inst].insertText(tag);
         }

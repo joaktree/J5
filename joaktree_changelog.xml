@@ -17,6 +17,7 @@
             <item>Theme : cancel error</item>
             <item>Theme : delete error if directory not found</item>
             <item>Theme : Interactive Openstreetmap colors</item>
+            <item>Theme : Static Openstreetmap colors</item>
         </fix>
 	</changelog>
 	<changelog>
