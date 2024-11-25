@@ -141,7 +141,7 @@ class Openstreetmap extends MBJStaticmap
             $tmpdata = $data;
             $item = array_shift($tmpdata);
             //             $mapview .= '&pois=';
-            $color = (isset($options['color'])) && !empty($options['color']) ? $options['color'] : 'orange';
+            $color = (isset($options['statcolor'])) && !empty($options['statcolor']) ? $options['statcolor'] : 'orange';
             $markers = [];
             while ($indContinue) {
                 if (is_object($item)) {

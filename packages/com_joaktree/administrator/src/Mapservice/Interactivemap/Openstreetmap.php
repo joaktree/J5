@@ -86,7 +86,7 @@ class Openstreetmap extends MBJInteractivemap
 
     public function fetch($data, $options = array())
     {
-        //public function fetch() {
+        $colors = ['yellow','orange','red','red','green','green','purple','purple'];
         $base	= 'media/com_joaktree/';
         $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
         $wa->registerAndUseStyle('leaflet', 'https://unpkg.com/leaflet@'.self::$version.'/dist/leaflet.css');
@@ -139,7 +139,7 @@ class Openstreetmap extends MBJInteractivemap
             $tmpdata = $data;
             $item = array_shift($tmpdata);
             //             $mapview .= '&pois=';
-            $color = (isset($options['color'])) && !empty($options['color']) ? $options['color'] : 'orange';
+            $color = (isset($options['color'])) && !($options['color'] == null) ? $colors[$options['color']] : 'orange';
 
             $markers = [];
             while ($indContinue) {
@@ -167,19 +167,19 @@ class Openstreetmap extends MBJInteractivemap
             }
         }
         $radius = 0;
-		if (  ($options['selection'] == 'location')
-		   && isset($options['distance']) 
-		   && !empty($options['distance'])
-		   && ($options['distance'] > 0)
-		   ) {
-               $radius = $options['distance'] * 1000;
-           }        
+        if (($options['selection'] == 'location')
+           && isset($options['distance'])
+           && !empty($options['distance'])
+           && ($options['distance'] > 0)
+        ) {
+            $radius = $options['distance'] * 1000;
+        }
         Factory::getApplication()->getDocument()->addScriptOptions(
             'joaktree',
             array('width' => $width,'height' => $height,'minlength' => $minlength,
             'longitude' => $longitude, 'latitude' => $latitude,
             'mapzoom' => $mapzoom,'showpopup' => $showpopup, 'showiti' => $showiti,
-            'markers' => $markers,'radius' =>$radius
+            'markers' => $markers,'radius' => $radius
             )
         );
 
