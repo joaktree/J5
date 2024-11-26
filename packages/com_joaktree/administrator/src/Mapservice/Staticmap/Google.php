@@ -17,10 +17,11 @@ namespace Joaktree\Component\Joaktree\Administrator\Mapservice\Staticmap;
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Joomla\CMS\Language\Text;		// replace JText
+use Joomla\CMS\Language\Text;
 
 use Joaktree\Component\Joaktree\Administrator\Mapservice\MBJStaticmap;
 use Joaktree\Component\Joaktree\Administrator\Mapservice\MBJGeocode;
+use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeHelper;
 /**
  * Service connector class.
  *
@@ -183,7 +184,8 @@ class Google extends MBJStaticmap {
 		}
 		
 		if ((!$indCenter) || (!$indZoom)) {
-			$this->log[] = Text::_('MBJ_MAP_ERROR_NO_CENTERZOOM');
+			// $this->log[] = Text::_('MBJ_MAP_ERROR_NO_CENTERZOOM');
+            JoaktreeHelper::addLog(Text::_('MBJ_MAP_ERROR_NO_CENTERZOOM'), 'joaktreemap');
 			return false;
 		}
 						

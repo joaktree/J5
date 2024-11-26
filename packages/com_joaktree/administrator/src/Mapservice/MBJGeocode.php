@@ -21,8 +21,9 @@ defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Factory;		//replace JFactory
 use Joomla\CMS\Language\Text;		// replace JText
-use Joaktree\Component\Joaktree\Administrator\Mapservice\MBJService;
 use Joomla\CMS\Component\ComponentHelper;
+use Joaktree\Component\Joaktree\Administrator\Mapservice\MBJService;
+use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeHelper;
 
 /**
  * Service connector class.
@@ -59,7 +60,7 @@ class MBJGeocode extends MBJService
     protected static $myGeoclass;
     //protected static $resultSet = array();
     protected $resultSet = array();
-    protected $log = array();
+    //protected $log = array();
 
 
     /**
@@ -133,20 +134,19 @@ class MBJGeocode extends MBJService
         }
         $params 	=	ComponentHelper::getParams(self::$component);
 
-        $services = json_decode($params->get('services'));
-        if ($services->interactivemap == "Openstreetmap") {
-            self::$indSubdiv = 1;
-        }
-
         // set the parameters
         static $delay 		= 0;
         $geocode_pending = true;
         while ($geocode_pending) {
             //Factory::getApplication()->enqueueMessage( self::$indSubdiv, 'notice' ) ;
             $request_url = $this->getUrl($data);
+            if (!strpos($request_url, 'google')) {// not Google : force $indSubdiv
+                self::$indSubdiv = 1;
+            }
 
             // RRG 02/01/2017 si paramétré à 0, on supprime la subdivision pour faciliter la géolocalisation
             // indsubdiv est dans les paramètres du composant sous forme 0 ou 1
+            /* @todo : Pascal 26/11 : routine en erreur
             if (self::$indSubdiv == 0) {
                 $key_url = explode("&", $request_url);
                 $key1_url = '&' . $key_url[1];
@@ -164,7 +164,7 @@ class MBJGeocode extends MBJService
                 };
                 $request_url .= $key1_url;
                 //Factory::getApplication()->enqueueMessage( $request_url, 'notice' ) ;
-            };
+            }; */
 
             // Try to fetch a response from the service.
             //$xml = simplexml_load_file($request_url) or die($this->service.": url not loading");
@@ -198,7 +198,7 @@ class MBJGeocode extends MBJService
                 // failure to geocode
                 $geocode_pending = false;
                 //$this->errorNum++;		  		/// RRG 25/07/2024
-                $this->log[] = Text::sprintf('JT_GEOCODE_FAILED', $data->value, $status);
+                JoaktreeHelper::addLog(Text::sprintf('JT_GEOCODE_FAILED', $data->value, $status), 'joaktreemap');
                 $data->results   = 0;
                 $data->result_address = null;
 
