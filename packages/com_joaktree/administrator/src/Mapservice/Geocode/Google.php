@@ -93,11 +93,9 @@ class Google extends MBJGeocode
     public static function getUrl(&$data)
     {
         $url  = self::getBaseUrl();
-        //$url .= '&address='.urlencode($data->value);
-        //$base_url .= '&key='.$this->provider->getAPIkey();
         $keys = self::getKeys();
         $APIkey = (isset($keys->GoogleAPIkey)) ? $keys->GoogleAPIkey : '';
-        $url .= '?address=' . $data->value . '&key='. trim($APIkey);
+        $url .= '&address=' . $data->value . '&key='. trim($APIkey);
         return $url;
     }
 
