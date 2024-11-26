@@ -13,6 +13,7 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
+
 namespace Joaktree\Component\Joaktree\Administrator\Mapservice\Staticmap;
 
 // no direct access
@@ -90,8 +91,8 @@ class Openstreetmap extends MBJStaticmap
         $wa->registerAndUseStyle('leaflet', 'https://unpkg.com/leaflet@'.self::$version.'/dist/leaflet.css');
         $wa->registerAndUseScript('leaflet', 'https://unpkg.com/leaflet@'.self::$version.'/dist/leaflet.js');
         $wa->registerAndUseScript('domtoimage', 'https://unpkg.com/dom-to-image@2.6.0/dist/dom-to-image.min.js');
-        $wa->registerAndUseScript('markers', $base.'js/leaflet.extra-markers.min.js');
-        $wa->registerAndUseStyle('osmcss', $base.'css/leaflet.extra-markers.min.css');
+        $wa->registerAndUseScript('markers', $base.'js/leaflet.icon-color.js');
+        $wa->registerAndUseStyle('osmcss', $base.'css/leaflet.icon-color.css');
 
         if ((bool)Factory::getApplication()->getConfig()->get('debug')) { // Mode debug
             Factory::getApplication()->getDocument()->addScript(''.URI::root().'media/com_joaktree/js/jtopenstreetmap_static.js');
@@ -141,7 +142,7 @@ class Openstreetmap extends MBJStaticmap
             $tmpdata = $data;
             $item = array_shift($tmpdata);
             //             $mapview .= '&pois=';
-            $color = (isset($options['statcolor'])) && !empty($options['statcolor']) ? $options['statcolor'] : 'orange';
+            $color = (isset($options['color'])) && !empty($options['color']) ? $options['color'] : 'orange';
             $markers = [];
             while ($indContinue) {
                 if (is_object($item)) {
@@ -173,13 +174,6 @@ class Openstreetmap extends MBJStaticmap
             'longitude' => $longitude, 'latitude' => $latitude,
             'mapzoom' => $mapzoom,'showpopup' => $showpopup, 'showiti' => $showiti,
             'markers' => $markers,
-            )
-        );
-        Factory::getApplication()->getDocument()->addScriptOptions(
-            'joaktree',
-            array('width' => $width,'height' => $height,'minlength' => $minlength,
-            'longitude' => $longitude, 'latitude' => $latitude,
-            'mapzoom' => $mapzoom,'showpopup' => $showpopup, 'showiti' => $showiti,
             )
         );
 

@@ -38,6 +38,8 @@ class MBJInteractivemap extends MBJService
      */
     private $service = 'interactivemap';
 
+    protected $log = [];
+
     /**
      * Test to see if service exists.
      *

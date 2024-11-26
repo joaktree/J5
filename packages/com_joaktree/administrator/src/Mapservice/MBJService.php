@@ -66,6 +66,8 @@ abstract class MBJService implements MBJServiceInterface
      */
     public $name;
 
+    protected $log = [];
+    protected $count;
 
     /**
      * @var    The service provider
@@ -200,13 +202,13 @@ abstract class MBJService implements MBJServiceInterface
         // Sanitize the service connector options.
         $options['service']  = (isset($options['service'])) ? $options['service'] : self::$service;
         $myService = $options['service'];
-        //throw new MBJServiceException(Text::sprintf($options['service']));
+        $params = ComponentHelper::getParams(self::$component);
+
         if (!isset($options['provider'])) {
             $keys = self::getKeys();
             //$options['provider'] = $keys->$options['service'];
             $options['provider'] = (isset($keys->$myService)) ? $keys->$myService : $params[$myService]['value']; //$keys->$options['geocode'];
             $myProvider  = $options['provider'];
-            //$myService = (isset($keys->service)) ? $keys->service : $params[0]['value'];
         }
         // Get the options signature for the database connector.
         $signature = md5(serialize($options));
@@ -216,15 +218,11 @@ abstract class MBJService implements MBJServiceInterface
 
             // Derive the class name from the service.
             $class = 'Joaktree\\Component\\Joaktree\\Administrator\\Mapservice\\' . ucfirst(trim($options['service'])) .'\\'. ucfirst(trim($options['provider']));
-            //$class = 'MBJService' . ucfirst($options['service']).ucfirst($myProvider);
-            //$class = 'MBJService' . ucfirst($myService).ucfirst($myProvider);
             // If the class doesn't exist, let's look for it and register it.
             if (!class_exists($class)) {
 
                 // Derive the file path for the driver class.
                 $path = JPATH_ADMINISTRATOR.'/components/'.self::$component.'/src/Mapservice/'.ucfirst($options['service']).'/'.ucfirst($options['provider']).'.php';
-                //$path = JPATH_COMPONENT_ADMINISTRATOR.'/services'.DS.$options['service'].DS.$options['provider'].'.php';
-                //throw new MBJServiceException(Text::sprintf($path));
 
                 // If the file exists register the class with our class loader.
                 if (file_exists($path)) {
@@ -233,14 +231,12 @@ abstract class MBJService implements MBJServiceInterface
                 // If it doesn't exist we are at an impasse so throw an exception.
                 else {
                     throw new \Exception(Text::sprintf('MBJ_SERVICE_ERROR_LOAD_SERVICE_DRIVER', $options['service'], $options['provider']));
-                    //throw new MBJServiceException(Text::sprintf('fichier non trouvé'));
                 }
             }
 
             // If the class still doesn't exist we have nothing left to do but throw an exception.  We did our best.
             if (!class_exists($class)) {
                 throw new \Exception(Text::sprintf('MBJ_SERVICE_ERROR_LOAD_SERVICE_DRIVER', $options['service'], $options['provider']));
-                //throw new MBJServiceException(Text::sprintf('classe non trouvée', $class));
             }
 
             // Create our new MBJService connector based on the options given.
@@ -269,9 +265,6 @@ abstract class MBJService implements MBJServiceInterface
         // Initialise object variables.
         $this->service = (isset($options['service'])) ? $options['service'] : '';
         $this->provider = (isset($options['provider'])) ? MBJProvider::getInstance($options) : '';
-        /*$this->count = 0;
-        $this->errorNum = 0;
-        $this->log = array();*/
         self::setLanguage();
     }
 
@@ -309,7 +302,7 @@ abstract class MBJService implements MBJServiceInterface
 
         if (!isset($language_is_set)) {
             //load the GedCom language file
-            $lang 	= Factory::getLanguage();
+            $lang 	= Factory::getApplication()->getLanguage();
             $lang->load(self::$component.'.services');
             $language_is_set = true;
         }
