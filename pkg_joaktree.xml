@@ -2,7 +2,7 @@
  <extension type="plugin" version="4.0" method="upgrade">
  <name>Joaktree Package</name>
  <author>Robert Gastaud</author>
- <creationDate>18-11-2024</creationDate>
+ <creationDate>26-11-2024</creationDate>
  <packagename>Joaktree</packagename>
  <license>GNU General Public License version 3 or later</license>
  <version>2.0.3</version>
