@@ -20,6 +20,8 @@
             <item>Theme : Static Openstreetmap colors</item>
             <item>Map : wrong Googlemap url</item>
             <item>Map : Static OpenStreetmap : use icon-color instead of extra-marker library</item>
+            <item>Images : Joomla 4/5 compatibility</item>
+            <item>Geocoding : ignore indSubdiv parameter</item>
         </fix>
 	</changelog>
 	<changelog>
