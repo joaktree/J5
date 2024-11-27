@@ -13,6 +13,7 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
+
 namespace Joaktree\Component\Joaktree\Site\Helper;
 
 defined('_JEXEC') or die('Restricted access');
@@ -27,7 +28,7 @@ use Joaktree\Component\Joaktree\Administrator\Mapservice\MBJStaticmap;
 use Joaktree\Plugin\Content\Joaktree\Extension\Joaktree as PluginContentJoaktree;
 
 class Person extends \StdClass
-{		//JObject {
+{
     // member declaration
     public $app_id;
     public $id;
@@ -530,7 +531,7 @@ class Person extends \StdClass
         try {
             $this->_db->setquery($query);
             $personNames  = $this->_db->loadObjectList();
-        }   catch(\Exception $e ) {
+        } catch (\Exception $e) {
             return new \StdClass();
         }
         return $personNames;
@@ -1635,6 +1636,8 @@ class Person extends \StdClass
                     $this->_db->setquery($query);
                     $result = $this->_db->loadObjectList();
                     foreach ($result as $pic_i => $picture) {
+                        $apic = explode('#', $picture->file); // Joomla 4/5 add # file info to name
+                        $picture->file = $apic[0]; // just keep image name
                         if (($gedcomroot) && ($joomlaroot)) {
                             $picture->file = str_replace($gedcomroot, $joomlaroot, $picture->file);
                         } elseif (($gedcomroot) && (!$joomlaroot)) {
