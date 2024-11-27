@@ -83,8 +83,13 @@ class Google extends MBJGeocode
             $country   = (isset($keys->country)) ? $keys->country : $params['country']['value'];
             $base_url .= ($country) ? '?region='.$country : '';
 
+            $car = "&";
+            if (strpos($base_url, '?') === false) { // no ? in URL
+                $car = "?";
+            }
             $language  = (isset($keys->language)) ? $keys->language : $params['language']['value'];
-            $base_url .= ($language) ? '&language='.$language : '';
+            $base_url .= ($language) ? $car.'language='.$language : '';
+
         }
         return $base_url;
 
@@ -95,7 +100,11 @@ class Google extends MBJGeocode
         $url  = self::getBaseUrl();
         $keys = self::getKeys();
         $APIkey = (isset($keys->GoogleAPIkey)) ? $keys->GoogleAPIkey : '';
-        $url .= '&address=' . $data->value . '&key='. trim($APIkey);
+        $car = "&";
+        if (strpos($url, '?') === false) { // no ? in URL
+            $car = "?";
+        }
+        $url .= $car.'address=' . $data->value . '&key='. trim($APIkey);
         return $url;
     }
 

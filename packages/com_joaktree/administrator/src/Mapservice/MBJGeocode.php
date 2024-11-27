@@ -140,14 +140,10 @@ class MBJGeocode extends MBJService
         while ($geocode_pending) {
             //Factory::getApplication()->enqueueMessage( self::$indSubdiv, 'notice' ) ;
             $request_url = $this->getUrl($data);
-            if (!strpos($request_url, 'google')) {// not Google : force $indSubdiv
-                self::$indSubdiv = 1;
-            }
 
             // RRG 02/01/2017 si paramétré à 0, on supprime la subdivision pour faciliter la géolocalisation
             // indsubdiv est dans les paramètres du composant sous forme 0 ou 1
-            /* @todo : Pascal 26/11 : routine en erreur
-            if (self::$indSubdiv == 0) {
+            if (self::$indSubdiv == 0 && strpos($request_url, 'google')) {
                 $key_url = explode("&", $request_url);
                 $key1_url = '&' . $key_url[1];
                 $loc_url = explode(",", $key_url[0]);
@@ -163,8 +159,29 @@ class MBJGeocode extends MBJService
                     $i++;
                 };
                 $request_url .= $key1_url;
-                //Factory::getApplication()->enqueueMessage( $request_url, 'notice' ) ;
-            }; */
+            };
+            if (self::$indSubdiv == 0 && strpos($request_url, 'openstreetmap')) {
+                $key_url = explode("&", $request_url);
+                $loc_url = explode("%2C", $key_url[count($key_url) - 1]); // address
+                //$loc_url = explode("%2C",$request_url);
+                $url = '';
+                $i = 0;
+                //while ($i <= 4) { /// RRG 20/04/2017
+                while ($i < count($loc_url) - 2) {
+                    // $locurl = !empty($loc_url[$i]) ? $loc_url[$i] : ''; /// RRG 20/04/2017
+                    $url .= $loc_url[$i] . "%2C"; /// RRG 20/04/2017
+                    $i++;
+                };
+                if (!$url) { // not enough info: restore
+                    $url = $key_url[count($key_url) - 1];
+                }
+                $request_url = "";
+                for ($i = 0; $i <= count($key_url) - 2; $i++) {
+                    $request_url .= $request_url ? "&" : '';
+                    $request_url .= $key_url[$i];
+                }
+                $request_url .= '&'.$url;
+            }; // */
 
             // Try to fetch a response from the service.
             //$xml = simplexml_load_file($request_url) or die($this->service.": url not loading");
