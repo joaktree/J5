@@ -36,6 +36,14 @@ if (file_exists($filename)) {
     while (!feof($file)) {
         $line = fgets($file);
         if ((strlen(trim($line)) > 0) && (substr(trim($line), 0, 1) != "#")) {
+            if (strpos($line, 'Delete Data :')) { // Data deleted fir this source ?
+                $linespl = explode(':', $line);
+                $str = trim($linespl[count($linespl) - 1]);
+                if ((int)$str == $id) {
+                    $bStart = true;
+                    $log = [];
+                }
+            }
             if (strpos($line, 'Start : '.$id)) {
                 $bStart = true;
                 $log = [];

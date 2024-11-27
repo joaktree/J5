@@ -161,7 +161,6 @@ class ApplicationsModel extends ListModel
     {
         // Lets load the content if it doesn't already exist
         if (empty($this->_pagination)) {
-            jimport('joomla.html.pagination');
             $this->_pagination = new Pagination($this->getTotal(), $this->getState('limitstart'), $this->getState('limit'));
         }
 
@@ -200,35 +199,35 @@ class ApplicationsModel extends ListModel
 
                     // as of version 1.2: new method
                     if ($processStep == 4) {
-                        $gedcomfile = new jt_gedcomfile2($procObject);
+                        $gedcomfile = new Gedcomfile2($procObject);
                         $procObject = $gedcomfile->process('person');
                     }
 
                     if ($processStep == 5) {
-                        $gedcomfile = new jt_gedcomfile2($procObject);
+                        $gedcomfile = new Gedcomfile2($procObject);
                         $procObject = $gedcomfile->process('family');
-                        $ret = jt_gedcomfile2::clear_gedcom();
+                        $ret = Gedcomfile2::clear_gedcom();
                         if ($ret) {
                             $procObject->msg .= '<br />'.$ret;
                         }
                     }
 
                     if ($processStep == 6) {
-                        $gedcomfile = new jt_gedcomfile2($procObject);
+                        $gedcomfile = new Gedcomfile2($procObject);
                         $procObject = $gedcomfile->process('source');
                     }
 
                     if ($processStep == 7) {
-                        $gedcomfile = new jt_gedcomfile2($procObject);
+                        $gedcomfile = new Gedcomfile2($procObject);
                         $procObject = $gedcomfile->process('repository');
                         $procObject = $gedcomfile->process('note');
                         $procObject = $gedcomfile->process('document');
                     }
 
                     if ($processStep == 9) {
-                        $gedcomfile = new jt_gedcomfile2($procObject);
+                        $gedcomfile = new Gedcomfile2($procObject);
                         $procObject = $gedcomfile->process('all');
-                        $ret = jt_gedcomfile2::clear_gedcom();
+                        $ret = Gedcomfile2::clear_gedcom();
                         if ($ret) {
                             $procObject->msg .= '<br />'.$ret;
                         }
@@ -293,7 +292,7 @@ class ApplicationsModel extends ListModel
 
             foreach ($cids as $cid_num => $app_id) {
                 $app_id	= (int) $app_id;
-                $msg   .= '+'.jt_gedcomfile2::deleteGedcomData($app_id, false);
+                $msg   .= '+'.Gedcomfile2::deleteGedcomData($app_id, false);
             }
 
             $return = $msg;
@@ -319,12 +318,13 @@ class ApplicationsModel extends ListModel
             foreach ($cids as $cid_num => $app_id) {
                 $app_id	= (int) $app_id;
                 $msg   .= '+'.Gedcomfile2::deleteGedcomData($app_id, true);
+                JoaktreeHelper::addLog('Delete Data : '.$msg.' : '.$app_id);
             }
-
             $return = $msg;
 
         } else {
             $return = Text::_('JT_NOTAUTHORISED');
+            JoaktreeHelper::addLog('Delete Data : '.$return);
         }
 
         return $return;
