@@ -22,6 +22,7 @@
             <item>Map : Static OpenStreetmap : use icon-color instead of extra-marker library</item>
             <item>Images : Joomla 4/5 compatibility</item>
             <item>Geocoding : ignore indSubdiv parameter</item>
+            <item>Sources : sources title not displayed in front end view</item>
         </fix>
 	</changelog>
 	<changelog>

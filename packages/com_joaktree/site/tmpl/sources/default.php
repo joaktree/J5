@@ -268,7 +268,9 @@ HTMLHelper::_('bootstrap.modal', 'a.modal');
 				>
 					<td align="center"><?php echo $this->pagination->getRowOffset( $i ); ?></td>
 					<td class="<?php echo $showclass; ?>">
-						<?php if ($this->lists['action'] == 'select') { 
+                        <?php echo $row->title; ?>
+						<?php 
+                        if ($this->lists['action'] == 'select') { 
                                 $function =  'window.parent.jtSelectSource' //(idid, titleid, id, title)
 											.'( \'src_'.$this->lists['counter'].'_id\''
 											.', \'src_'.$this->lists['counter'].'_name\''
