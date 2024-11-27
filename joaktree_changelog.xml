@@ -10,6 +10,7 @@
             <item>Global param : add default server dir</item>
             <item>Gedcom : add copy button from local to server</item>
             <item>GedCom import: add error log</item>
+            <item>Add Source delete data command in log file</item>
         </addition>
         <fix>
             <item>Person_event table : increase type length to 300 chars</item>
