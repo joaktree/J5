@@ -138,7 +138,6 @@ class MBJGeocode extends MBJService
         static $delay 		= 0;
         $geocode_pending = true;
         while ($geocode_pending) {
-            //Factory::getApplication()->enqueueMessage( self::$indSubdiv, 'notice' ) ;
             $request_url = $this->getUrl($data);
 
             // RRG 02/01/2017 si paramétré à 0, on supprime la subdivision pour faciliter la géolocalisation
@@ -147,7 +146,6 @@ class MBJGeocode extends MBJService
                 $key_url = explode("&", $request_url);
                 $key1_url = '&' . $key_url[1];
                 $loc_url = explode(",", $key_url[0]);
-                //$loc_url = explode("%2C",$request_url);
                 $request_url = '';
                 $i = 0;
                 //while ($i <= 4) { /// RRG 20/04/2017
@@ -166,10 +164,8 @@ class MBJGeocode extends MBJService
                 //$loc_url = explode("%2C",$request_url);
                 $url = '';
                 $i = 0;
-                //while ($i <= 4) { /// RRG 20/04/2017
                 while ($i < count($loc_url) - 2) {
-                    // $locurl = !empty($loc_url[$i]) ? $loc_url[$i] : ''; /// RRG 20/04/2017
-                    $url .= $loc_url[$i] . "%2C"; /// RRG 20/04/2017
+                    $url .= $loc_url[$i] . "%2C"; 
                     $i++;
                 };
                 if (!$url) { // not enough info: restore

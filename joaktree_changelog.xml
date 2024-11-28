@@ -22,7 +22,7 @@
             <item>Map : wrong Googlemap url</item>
             <item>Map : Static OpenStreetmap : use icon-color instead of extra-marker library</item>
             <item>Images : Joomla 4/5 compatibility</item>
-            <item>Geocoding : ignore indSubdiv parameter</item>
+            <item>Geocoding : indSubdiv parameter for Google and OpenStreet</item>
             <item>Sources : sources title not displayed in front end view</item>
             <item>GED Import : Repositories : new name : reset website</item>
         </fix>
