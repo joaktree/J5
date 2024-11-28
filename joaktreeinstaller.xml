@@ -2,7 +2,7 @@
  <extension version="4.0" type="plugin" group="system" method="upgrade">
  <name>Joaktree Package</name>
  <author>Robert Gastaud</author>
- <creationDate>26-11-2024</creationDate>
+ <creationDate>28-11-2024</creationDate>
  <version>2.0.3</version>
  <license>GNU General Public License version 3 or later</license>
  <url>https://www.joomxtensions.com/</url>

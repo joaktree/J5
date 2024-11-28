@@ -99,5 +99,6 @@ span.jt-default {
     width: auto !important;
     min-width: 100px;
 }
-
-
+#fieldset-services .control-group .control-label{display:none}
+#fieldset-services .subform-wrapper .control-group .control-label{display:block}
+#fieldset-services h4 {font-size: 110%;color: red;font-weight: normal;}

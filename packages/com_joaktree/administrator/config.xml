@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE config>
 <config>
+    <inlinehelp button="show"/>     
 	<fieldset name="component"
 		label="COM_JOAKTREE"
 		description="">					
@@ -79,14 +80,80 @@
 		description=""
         addfieldprefix="Joaktree\Component\Joaktree\Administrator\Field"
 	>	
-			<field
-				id="services"
-				name="services"
-				type="services"
-				label="MBJ_LABEL_SERVICES"
-				description="MBJ_DESCR_SERVICES"
-			/>			
-	</fieldset>
+			<field id="services" name="services" type="subform"
+				label=""
+				description="">
+                <form>
+                <config>
+                    <inlinehelp button="show"/>     
+                </config>
+                <fieldset name="section" 
+                    addruleprefix="Joaktree\Component\Joaktree\Administrator\Rule">
+                    <field id="disclamer" type="note" label="MBJ_DISCAIMER"/>
+                    <field id="geocode"  name="geocode" 
+                        type="list"
+                        label="MBJ_GEOCODE" description="MBJ_GEOCODE_DESC"
+                        default="none">
+                        <option	value="0">JNO</option>
+                        <option	value="Google">Google</option>
+                        <option value="Openstreetmap">Openstreetmap</option>
+                    </field>
+                    <field id="interactivemap" name="interactivemap" 
+                        type="list"
+                        label="MBJ_INTERACTIVEMAP" description="MBJ_INTERACTIVEMAP_DESC"
+                        default="none">
+                        <option	value="0">JNO</option>
+                        <option	value="Google">Google</option>
+                        <option value="Openstreetmap">Openstreetmap</option>
+                    </field>
+                    <field id="staticmap" name="staticmap"
+                        type="list"
+                        label="MBJ_STATICMAP" description="MBJ_STATICMAP_DESC"
+                        default="none">
+                        <option	value="0">JNO</option>
+                        <option	value="Google">Google</option>
+                        <option value="Openstreetmap">Openstreetmap</option>
+                    </field>
+                    <field id="GoogleAPIkey" name="GoogleAPIkey"
+                        showon="geocode:Google[OR]interactivemap:Google[OR]staticmap:Google"
+                        type="text" size="50" 
+                        label="MBJ_GOOGLE_APIKEY"   description ="MBJ_GOOGLE_APIKEY_DESC" 
+                        validate="apikey"
+                    />
+                    <field id="indHttps" name="indHttps" type="list"
+                        label="MBJ_LABEL_INDHTTPS" description="MBJ_DESCR_INDHTTPS"
+                        default="1">
+                        <option	value="0">JNO</option>
+                        <option	value="1">JYES</option>
+                    </field>
+                    <field id="country" name="country" type="text" size="50" 
+                        showon="geocode:Google[OR]interactivemap:Google[OR]staticmap:Google"
+                        label="MBJ_LABEL_COUNTRY"   description ="MBJ_DESCR_COUNTRY" 
+                        validate="country"
+                    />
+                    <field id="language" name="language" type="text" size="50" 
+                        showon="geocode:Google[OR]interactivemap:Google[OR]staticmap:Google"
+                        label="MBJ_LABEL_LANGUAGE"   description ="MBJ_DESCR_COUNTRY" 
+                        validate="country"
+                    />
+                    <field id="email" name="email" type="text" size="50" 
+                        showon="geocode:Openstreetmap[OR]interactivemap:Openstreetmap[OR]staticmap:Openstreetmap"
+                        label="MBJ_LABEL_EMAIL"   description ="MBJ_DESCR_EMAIL" 
+                        validate="emailosm"
+                    />
+                    <field id="maxloadsize" name="maxloadsize" type="text" size="50" default='100'
+                        label="MBJ_LABEL_LOADSIZE"   description ="MBJ_DESCR_LOADSIZE" 
+                    />
+                    <field id="indsubdiv" name="indsubdiv" type="list"
+                        label="MBJ_IND_SUBDIV" description=""
+                        default="1">
+                        <option	value="0">JNO</option>
+                        <option	value="1">JYES</option>
+                    </field>
+                </fieldset>
+            </form>
+        </field>
+     </fieldset>
 	
 	<fieldset
 		name="permissions"

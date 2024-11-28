@@ -94,6 +94,7 @@ class HtmlView extends BaseHtmlView {
 		if ($this->canDo->get('core.delete')) {
 			Jtoolbarcustom::custom('deleteGedCom', 'deletegedcom','deletegedcom', Text::_( 'JTPERSONS_BUTTON_DELETEGEDCOM' ), 'JT_CONFIRMDELETE',true );
 		}
+        ToolbarHelper::inlinehelp();
 		ToolBarHelper::divider();
 		ToolBarHelper::help('JoaktreeManuel', true, 'https://www.joomxtensions.com/download/');		
 	}

@@ -61,7 +61,7 @@ class Gedcomrepos2 extends \StdClass
                 case "1": switch ($row_line['tag']) {
                     case "NAME":
                         $this->repos->set('name', $row_line['value']);
-                        $this->repos->set('website', ''); // new name : reset website
+                        $this->repos->set('website', ''); //new name :  reset website
                         break;
                     case "WWW":
                         $this->repos->set('website', $row_line['value']);

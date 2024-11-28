@@ -283,7 +283,10 @@ abstract class MBJService implements MBJServiceInterface
             $params = ComponentHelper::getParams(self::$component);
             $keys = new \stdClass();
             if ($params->get('services')) {
-                $keys = json_decode($params->get('services'));
+                $keys = $params->get('services');
+                if (!is_object($keys)) {
+                    $keys = json_decode($params->get('services'));
+                }
             }
         }
         return $keys;

@@ -26,6 +26,9 @@
             <item>Sources : sources title not displayed in front end view</item>
             <item>GED Import : Repositories : new name : reset website</item>
         </fix>
+        <change>
+            <item>Joaktree config : use config.xml file to configure services</item>
+        </change>
 	</changelog>
 	<changelog>
 		<element>com_joaktree</element>
