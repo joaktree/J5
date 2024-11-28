@@ -24,6 +24,7 @@
             <item>Images : Joomla 4/5 compatibility</item>
             <item>Geocoding : ignore indSubdiv parameter</item>
             <item>Sources : sources title not displayed in front end view</item>
+            <item>GED Import : Repositories : new name : reset website</item>
         </fix>
 	</changelog>
 	<changelog>
