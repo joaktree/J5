@@ -9,11 +9,11 @@
         <client>administrator</client>
 		<changelogurl>https://raw.githubusercontent.com/joaktree/J5/master/joaktree_changelog.xml</changelogurl>
 		<downloads>
-			<downloadurl type="full" format="zip">https://github.com/joaktree/j5/archive/refs/tags/2.0.3-rc6.zip</downloadurl>
+			<downloadurl type="full" format="zip">https://github.com/joaktree/j5/archive/refs/tags/2.0.4.zip</downloadurl>
 		</downloads>
 		<maintainer>ConseilGouz</maintainer>
 		<maintainerurl>https://www.conseilgouz.com</maintainerurl>
 		<targetplatform name="joomla" version="((4\.(0|1|2|3|4))|(5\.(0|1|2|3|4|5|6|7|8|9)))"/>
-		<sha256>c72094ed42ccaa8f199200824ea5fd9ec3aee1c3801c2df59a9afa8826ced60b</sha256>
+		<sha256>b948c29820c52e57c748302faf7c2570e95ca9b7a84288f0fa2184b844c15390</sha256>
 	</update>
 </updates>
