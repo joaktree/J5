@@ -92,6 +92,10 @@ HTMLHelper::_('behavior.formvalidator');
 					<?php echo $this->form->getInput('title'); ?>			
 				</li>
 				<li>
+					<?php echo $this->form->getLabel('abbr'); ?>
+					<?php echo $this->form->getInput('abbr'); ?>			
+				</li>
+				<li>
 					<?php echo $this->form->getLabel('author'); ?>
 					<?php echo $this->form->getInput('author'); ?>			
 				</li>
@@ -102,6 +106,14 @@ HTMLHelper::_('behavior.formvalidator');
 				<li>
 					<?php echo $this->form->getLabel('information'); ?>
 					<?php echo $this->form->getInput('information'); ?>			
+				</li>
+				<li>
+					<?php echo $this->form->getLabel('note'); ?>
+					<?php echo $this->form->getInput('note'); ?>			
+				</li>
+				<li>
+					<?php echo $this->form->getLabel('www'); ?>
+					<?php echo $this->form->getInput('www'); ?>			
 				</li>
 				<li>
 					<?php echo $this->form->getLabel('app_repo_id'); ?>

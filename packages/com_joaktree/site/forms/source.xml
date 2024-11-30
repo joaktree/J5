@@ -54,6 +54,29 @@
 		/>
 		
 		<field 
+			name="abbr" 
+			type="text" 
+			class="inputbox"
+            maxlength="250"
+			label="JT_ABBR" 	
+			description ="JT_ABBR" 
+		/>
+		<field 
+			name="note" 
+			type="textarea" 
+			class="inputbox"
+			label="JT_NOTE" 	
+			description ="JT_NOTE" 
+		/>
+		<field 
+			name="www" 
+			type="text" 
+			class="inputbox"
+            maxlength="250"
+			label="JT_WEBSITE" 	
+			description ="JT_WEBSITE" 
+		/>
+		<field 
 			name="app_repo_id" 
 			type="repository" 
 			class="inputbox"

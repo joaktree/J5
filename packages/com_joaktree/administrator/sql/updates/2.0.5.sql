@@ -1,0 +1,1 @@
+ALTER TABLE `#__joaktree_sources` ADD COLUMN `abbr` varchar(250) NULL DEFAULT '' AFTER `title`;ALTER TABLE `#__joaktree_sources` ADD COLUMN `medi` varchar(100) NULL DEFAULT '' AFTER `abbr`;ALTER TABLE `#__joaktree_sources` ADD COLUMN `note` text NULL AFTER `med`;ALTER TABLE `#__joaktree_sources` ADD COLUMN `www` varchar(250) NULL DEFAULT '' AFTER `note`;

@@ -2,13 +2,13 @@
  <extension version="4.0" type="plugin" group="system" method="upgrade">
  <name>Joaktree Package</name>
  <author>Robert Gastaud</author>
- <creationDate>2024-11-29</creationDate>
- <version>2.0.4</version>
+ <creationDate>2024-11-30</creationDate>
+ <version>2.0.5</version>
  <license>GNU General Public License version 3 or later</license>
  <url>https://www.joomxtensions.com/</url>
  <packager>Robert Gastaud</packager>
  <packagerurl>http://www.joomxtensions.com</packagerurl>
- <description>Installation package for Joaktree 2.0.3</description>
+ <description>Installation package for Joaktree 2.0.5</description>
  <update>http://updates.joomxtensions.com</update>
  <scriptfile>script.install.php</scriptfile>
  <files>

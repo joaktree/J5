@@ -26,7 +26,6 @@ use Joaktree\Component\Joaktree\Site\Helper\JoaktreeHelper;
 
 class SourceModel extends FormModel
 {
-
     public function getApplicationId()
     {
         return JoaktreeHelper::getApplicationId();
@@ -96,6 +95,10 @@ class SourceModel extends FormModel
         $query->select(' jse.author ');
         $query->select(' jse.publication ');
         $query->select(' jse.information ');
+        $query->select(' jse.abbr ');
+        $query->select(' jse.medi ');
+        $query->select(' jse.note ');
+        $query->select(' jse.www ');
         $query->from(' #__joaktree_sources jse ');
 
         // Get the WHERE, GROUP BY and ORDER BY clauses for the query
@@ -115,6 +118,11 @@ class SourceModel extends FormModel
             $item->author		= htmlspecialchars_decode($item->author, ENT_QUOTES);
             $item->publication	= htmlspecialchars_decode($item->publication, ENT_QUOTES);
             $item->information	= htmlspecialchars_decode($item->information, ENT_QUOTES);
+            $item->abbr	        = htmlspecialchars_decode($item->abbr, ENT_QUOTES);
+            $item->note     	= htmlspecialchars_decode($item->note, ENT_QUOTES);
+            $item->note         = str_replace('&#10;&#13;', PHP_EOL, $item->note);
+            $item->medi     	= htmlspecialchars_decode($item->medi, ENT_QUOTES);
+            $item->www      	= htmlspecialchars_decode($item->www, ENT_QUOTES);
         }
 
         $item->app_repo_id = $item->app_id.'!'.((isset($item->repo_id)) ? $item->repo_id : null);
@@ -189,6 +197,10 @@ class SourceModel extends FormModel
             $table->author		= htmlspecialchars($form['author'], ENT_QUOTES, 'UTF-8');
             $table->publication	= htmlspecialchars($form['publication'], ENT_QUOTES, 'UTF-8');
             $table->information	= htmlspecialchars($form['information'], ENT_QUOTES, 'UTF-8');
+            $table->abbr    	= htmlspecialchars($form['abbr'], ENT_QUOTES, 'UTF-8');
+            $table->medi    	= htmlspecialchars($form['medi'], ENT_QUOTES, 'UTF-8');
+            $table->note    	= htmlspecialchars($form['note'], ENT_QUOTES, 'UTF-8');
+            $table->www     	= htmlspecialchars($form['www'], ENT_QUOTES, 'UTF-8');
 
             // repo id
             $tmp = explode('!', $form['app_repo_id']);

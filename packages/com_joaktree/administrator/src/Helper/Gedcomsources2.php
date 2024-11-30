@@ -58,12 +58,31 @@ class Gedcomsources2 extends \StdClass
         // logs
         $this->logs->set('object_id', $source_id);
 
+        // init all
+        $this->sources->set('author', '');
+        $this->sources->set('abbr', '');
+        $this->sources->set('medi', '');
+        $this->sources->set('note', '');
+        $this->sources->set('title', '');
+        $this->sources->set('publication', '');
+        $this->sources->set('information', '');
+        $this->sources->set('repo_id', '');
+        $this->sources->set('www', '');
         // loop through lines related to the source
         foreach ($row_lines as $row_line_num => $row_line) {
             switch ($row_line['level']) {
                 case "1": switch ($row_line['tag']) {
                     case "AUTH":
                         $this->sources->set('author', $row_line['value']);
+                        break;
+                    case "ABBR":
+                        $this->sources->set('abbr', $row_line['value']);
+                        break;
+                    case "MEDI":
+                        $this->sources->set('medi', $row_line['value']);
+                        break;
+                    case "NOTE":
+                        $this->sources->set('note', $row_line['value']);
                         break;
                     case "TITL":
                         $this->sources->set('title', $row_line['value']);
@@ -79,11 +98,12 @@ class Gedcomsources2 extends \StdClass
                             $this->sources->set('repo_id', rtrim(ltrim($row_line['value'], '@'), '@'));
                         }
                         break;
+                    case "WWW":
+                        $this->sources->set('www', $row_line['value']);
+                        break;
                     default:
                         break;
                 }
-                    break;
-                default: break;
             } // end of level switch
         } // end of loop throuth source lines
 

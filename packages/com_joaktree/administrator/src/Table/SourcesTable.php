@@ -28,6 +28,10 @@ class SourcesTable extends Table
 	var $publication	= null;
 	var $information	= null;
 	var $repo_id		= null;
+	var $abbr	= null;
+	var $med	= null;
+	var $note	= null;
+	var $www	= null;
 
 	function __construct( DatabaseDriver $db) {
         $this->typeAlias = 'com_joaktree.sources';

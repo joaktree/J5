@@ -1050,6 +1050,18 @@ class Gedcomexport2
                     if (!empty($source['information'])) {
                         $this->exportLongText($handle, 'TEXT', 1, $source['information']);
                     }
+                    if (!empty($source['abbr'])) {
+                        $this->exportLongText($handle, 'TEXT', 1, $source['abbr']);
+                    }
+                    if (!empty($source['medi'])) {
+                        $this->exportLongText($handle, 'TEXT', 1, $source['medi']);
+                    }
+                    if (!empty($source['note'])) {
+                        $this->exportLongText($handle, 'TEXT', 1, $source['note']);
+                    }
+                    if (!empty($source['information'])) {
+                        $this->exportLongText($handle, 'www', 1, $source['www']);
+                    }
                     if (!empty($source['repo_id'])) {
                         fwrite($handle, $this->jt("1 REPO @".$source['repo_id']."@\r\n"));
                     }
