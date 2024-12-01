@@ -9,6 +9,9 @@
         <addition>
             <item>Sources table : add ABBR,WWW,MED, NOTE</item>
         </addition>
+        <fix>
+            <item>Locations : error json_decode</item>
+        </fix>
     </changelog>
     <changelog>
 		<element>com_joaktree</element>

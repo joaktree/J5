@@ -22,8 +22,10 @@ use Joomla\CMS\Language\Text;
 use Joaktree\Component\Joaktree\Site\Helper\JoaktreeHelper;
 
 $this->params 		= JoaktreeHelper::getJTParams();
-
-$services = json_decode($this->params->get('services'));
+$services = $this->params->get('services');
+if (!is_object($services)) {
+    $services = json_decode($this->params->get('services'));
+}
 $format = "raw";
 if ($services->interactivemap == "Openstreetmap") {
     $format = "html";

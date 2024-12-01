@@ -38,8 +38,10 @@ class RawView extends HtmlView
 
         // Load the parameters.
         $this->params 		= JoaktreeHelper::getJTParams();
-
-        $services = json_decode($this->params->get('services'));
+        $services = $this->params->get('services');
+        if (!is_object($services)) {
+            $services = json_decode($this->params->get('services'));
+        }
         $format = "raw";
         if ($services->interactivemap == "Openstreetmap") {
             $format = "html";
