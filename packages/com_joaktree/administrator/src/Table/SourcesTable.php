@@ -29,7 +29,7 @@ class SourcesTable extends Table
 	var $information	= null;
 	var $repo_id		= null;
 	var $abbr	= null;
-	var $med	= null;
+	var $media	= null;
 	var $note	= null;
 	var $www	= null;
 

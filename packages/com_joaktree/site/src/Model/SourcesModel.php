@@ -79,7 +79,7 @@ class SourcesModel extends ListModel
         $query->select(' jse.publication ');
         $query->select(' jse.information ');
         $query->select(' jse.abbr ');
-        $query->select(' jse.medi ');
+        $query->select(' jse.media ');
         $query->select(' jse.note ');
         $query->select(' jse.www ');
         $query->from(' #__joaktree_sources jse ');
@@ -174,7 +174,7 @@ class SourcesModel extends ListModel
         $query->select(' jse.information ');
         $query->select(' jse.abbr ');
         $query->select(' jse.note ');
-        $query->select(' jse.medi ');
+        $query->select(' jse.media ');
         $query->select(' jse.www ');
         $query->from(' #__joaktree_sources jse ');
 

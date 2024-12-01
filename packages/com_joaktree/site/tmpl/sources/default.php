@@ -313,10 +313,10 @@ HTMLHelper::_('bootstrap.modal', 'a.modal');
 											<?php echo $row->abbr; ?>
 										</div>													
 									<?php } ?>
-									<?php if (!empty($row->medi)) { ?>
+									<?php if (!empty($row->media)) { ?>
 										<div class="jt-h3"><?php echo Text::_('JT_MEDIA'); ?></div>
 										<div>
-											<?php echo $row->medi; ?>
+											<?php echo $row->media; ?>
 										</div>													
 									<?php } ?>
 									<?php if (!empty($row->note)) { ?>
@@ -353,7 +353,7 @@ HTMLHelper::_('bootstrap.modal', 'a.modal');
                                      && empty($row->information)
                                      && empty($row->repository)
                                      && empty($row->abbr)
-                                     && empty($row->medi)
+                                     && empty($row->media)
                                      && empty($row->note)
                                      && empty($row->www)
                                      && empty($row->website)) {

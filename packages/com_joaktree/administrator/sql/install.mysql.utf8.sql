@@ -350,7 +350,7 @@ id               varchar(20)           NOT NULL ,
 repo_id          varchar(20)  default  NULL ,
 title            varchar(500) default  NULL ,
 abbr             varchar(250) default  NULL ,
-medi             varchar(100) NULL DEFAULT,
+media            varchar(100) NULL DEFAULT,
 note             text NULL,
 www              varchar(250) NULL DEFAULT ''
 author           varchar(250) default  NULL ,

@@ -1053,8 +1053,8 @@ class Gedcomexport2
                     if (!empty($source['abbr'])) {
                         $this->exportLongText($handle, 'TEXT', 1, $source['abbr']);
                     }
-                    if (!empty($source['medi'])) {
-                        $this->exportLongText($handle, 'TEXT', 1, $source['medi']);
+                    if (!empty($source['media'])) {
+                        $this->exportLongText($handle, 'TEXT', 1, $source['media']);
                     }
                     if (!empty($source['note'])) {
                         $this->exportLongText($handle, 'TEXT', 1, $source['note']);

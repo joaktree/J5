@@ -61,7 +61,7 @@ class Gedcomsources2 extends \StdClass
         // init all
         $this->sources->set('author', '');
         $this->sources->set('abbr', '');
-        $this->sources->set('medi', '');
+        $this->sources->set('media', '');
         $this->sources->set('note', '');
         $this->sources->set('title', '');
         $this->sources->set('publication', '');
@@ -79,7 +79,7 @@ class Gedcomsources2 extends \StdClass
                         $this->sources->set('abbr', $row_line['value']);
                         break;
                     case "MEDI":
-                        $this->sources->set('medi', $row_line['value']);
+                        $this->sources->set('media', $row_line['value']);
                         break;
                     case "NOTE":
                         $this->sources->set('note', $row_line['value']);
