@@ -1,38 +1,59 @@
 /**
-* CG Isotope Component  - Joomla 4.x/5.x Component 
-* Package			: CG ISotope
-* copyright 		: Copyright (C) 2024 ConseilGouz. All rights reserved.
-* license    		: https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
-*
-*/
-jQuery(document).ready(function(){
+ * Joomla! component Joaktree
+ *
+ * @version	2.0.0
+ * @author	Niels van Dantzig (2009-2014) - Robert Gastaud (2017-2024)
+ * @package	Joomla
+ * @subpackage	Joaktree
+ * @license	GNU/GPL
+ *
+ * Component for genealogy in Joomla!
+ *
+ * Joomla! 5.x conversion by Conseilgouz
+ *
+ */
+document.addEventListener('DOMContentLoaded', function() {
 
     sel = document.querySelector('#fieldset-basic');
     sel = sel.querySelector('.form-grid');
     if (sel) sel.classList.remove('form-grid');
-	jQuery( ".clear" ).parent('fieldset').parent('.controls').parent(".control-group").css({"clear":"both"});
-	jQuery( ".left" ).parent('fieldset').parent('.controls').parent(".control-group").css({"float":"left"});
-	jQuery( ".right" ).parent('fieldset').parent('.controls').parent(".control-group").css({"float":"right"});
-	jQuery( ".half" ).parent('fieldset').parent('.controls').parent(".control-group").css({"width":"50%"});
-	jQuery( ".third" ).parent('fieldset').parent('.controls').parent(".control-group").css({"width":"33%"});
-	jQuery( ".full" ).parent('fieldset').parent('.controls').parent(".control-group").css({"width":"100%"});
 
-	jQuery( ".clear" ).parent('.controls').parent(".control-group").css({"clear":"both"});
-	jQuery( ".left" ).parent('.controls').parent(".control-group").css({"float":"left"});
-	jQuery( ".right" ).parent('.controls').parent(".control-group").css({"float":"right"});
-	jQuery( ".half" ).parent('.controls').parent(".control-group").css({"width":"50%"});
-	jQuery( ".third" ).parent('.controls').parent(".control-group").css({"width":"33%"});
-	jQuery( ".full" ).parent('.controls').parent(".control-group").css({"width":"100%"});
+    sels = document.querySelectorAll('.clear');
+    sels.forEach(function (element) {
+        element.parentNode.parentNode.parentNode.style.clear = 'both';
+        element.parentNode.parentNode.style.clear = 'both';
+    });
+    sels = document.querySelectorAll('input.left');
+    sels.forEach(function (element) {
+        element.parentNode.parentNode.style.float = 'left';
+    });
+    sels = document.querySelectorAll('div.left');
+    sels.forEach(function (element) {
+        element.parentNode.parentNode.parentNode.style.float = 'left';
+        element.parentNode.parentNode.style.float = 'left';
+    });
+    sels = document.querySelectorAll('input.right');
+    sels.forEach(function (element) {
+        element.parentNode.parentNode.style.float = 'right';
+    });
 
-    jQuery(".alert-success.clear.half").css({"width":"100%"});
-	jQuery(".half").parent(".control-group").css({"width":"50%"});
-	jQuery(".clear").parent(".control-group").css({"clear":"both"});
-
-	jQuery( ".half" ).parent('.minicolors ').parent('.controls').parent(".control-group").css({"width":"50%"});
-	jQuery( ".left" ).parent('.minicolors ').parent('.controls').parent(".control-group").css({"float":"left"});
-	jQuery( ".right" ).parent('.minicolors ').parent('.controls').parent(".control-group").css({"float":"right"});
-	jQuery( ".half" ).parent('.form-check').parent('.controls').parent(".control-group").css({"width":"50%"});
-	jQuery( ".left" ).parent('.form-check').parent('.controls').parent(".control-group").css({"float":"left"});
-	jQuery( ".right" ).parent('.form-check').parent('.controls').parent(".control-group").css({"float":"right"});
-	
+    sels = document.querySelectorAll('div.right');
+    sels.forEach(function (element) {
+        element.parentNode.parentNode.parentNode.style.float = 'right';
+        element.parentNode.parentNode.style.float = 'right';
+    });
+    
+    sels = document.querySelectorAll('input.half');
+    sels.forEach(function (element) {
+        element.parentNode.parentNode.style.width = '50%';
+        element.parentNode.style.width = '50%';
+    });
+    sels = document.querySelectorAll('div.half');
+    sels.forEach(function (element) {
+        element.parentNode.parentNode.parentNode.style.width = '50%';
+        element.parentNode.parentNode.style.width = '50%';
+        element.parentNode.style.width = '50%';
+    });
+    
+    
 });
