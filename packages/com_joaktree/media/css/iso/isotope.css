@@ -1,13 +1,18 @@
 /**
-* CG Isotope Component  - Joomla 4.x Component 
-* Version			: 4.2.18
-* Package			: CG ISotope
-* copyright 		: Copyright (C) 2024 ConseilGouz. All rights reserved.
-* license    		: https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
-* From              : isotope.metafizzy.co
-*/
-/* .isotope-main {overflow: hidden} */
-
+ * Joomla! component Joaktree
+ *
+ * @version	2.0.0
+ * @author	Niels van Dantzig (2009-2014) - Robert Gastaud (2017-2024)
+ * @package	Joomla
+ * @subpackage	Joaktree
+ * @license	GNU/GPL
+ *
+ * Component for genealogy in Joomla!
+ *
+ * Joomla! 5.x conversion by Conseilgouz
+ *
+ */
+ 
 .isotope_pointer {
 cursor: pointer;
 }

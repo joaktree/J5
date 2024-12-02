@@ -17,7 +17,10 @@ document.addEventListener('DOMContentLoaded', function() {
     sel = document.querySelector('#fieldset-basic');
     sel = sel.querySelector('.form-grid');
     if (sel) sel.classList.remove('form-grid');
-
+    sels = sel.querySelectorAll('.control-group .control-label');
+    sels.forEach(function (element) {
+        element.style.width = '140px';
+    });   
     sels = document.querySelectorAll('.clear');
     sels.forEach(function (element) {
         element.parentNode.parentNode.parentNode.style.clear = 'both';

@@ -2,6 +2,18 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
+		<version>2.0.6</version>
+        <note>
+            <item>Update : 2024-12-02</item>
+        </note>
+        <fix>
+            <item>Isotope : missing fonts directory</item>
+            <item>Isotope : remove jQuery from css_admin.js</item>
+        </fix>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
 		<version>2.0.5</version>
         <note>
             <item>Update : 2024-11-30</item>
