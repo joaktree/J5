@@ -13,6 +13,7 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
+
 namespace Joaktree\Component\Joaktree\Site\Helper;
 
 // no direct access
@@ -1479,4 +1480,18 @@ class JoaktreeHelper
         }
         return $person;
     }
+    //--------------------------Alpha buttons --------------------------------//
+    public static function create_alpha_buttons($iso, $button_bootstrap)
+    {
+        $result = "";
+        $liball = Text::_('JT_ISO_LIBALL');
+        $result .=  '<button class="'.$button_bootstrap.'  iso_button_alpha_tout isotope_button_first is-checked" data-sort-value="*">'.$liball.'</button>';
+        asort($iso->alpha);
+        foreach ($iso->alpha as $alpha) {
+            $result .= "<button class='".$button_bootstrap." iso_button_alpha_".$alpha."' data-sort-value='".$alpha."' title='".$alpha."'>".$alpha;
+            $result .= "</button>";
+        }
+        return $result;
+    }
+
 }

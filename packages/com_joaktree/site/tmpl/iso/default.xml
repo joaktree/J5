@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE metadata>
+<metadata>
+	<layout title="COM_JOAKTREE_ISO">
+	</layout>
+
+	<!-- Add fields to the parameters object for the layout. -->
+	<fields name="params">
+
+		<!-- Basic options. -->
+		<fieldset name="basic" label="JTSTART_BASIC_FIELDSET_LABEL" class="none">
+		
+			<field
+				name="treeId" type="sql" 
+				label="JTFAMTREE_LABEL" description="JTFAMTREE_DESC" 
+                class="half"
+				query="SELECT id AS value, name AS treeId FROM #__joaktree_trees"
+			/>
+			<field	name="iso_layout"
+				type="radio" default="fitRows" class="btn-group clear half left"
+				label="JT_ISO_DISPLAYTYPE" description="JT_ISO_DISPLAYTYPEDESC" >
+				<option value="fitRows">JT_ISO_DISPLAYTYPELINES</option> 
+				<option value="masonry">JT_ISO_DISPLAYTYPEMASO</option> 
+				<option value="vertical">JT_ISO_DISPLAYTYPEVERT</option>
+				<option value="packery">JT_ISO_DISPLAYTYPEPACKERY</option>
+			</field>
+			<field	showon="iso_layout:masonry,fitRows,packery"
+				name="iso_nbcol" type="number"	default="4"	min="1"	max="10" step="1"
+				label="JT_ISO_NBCOL"	description="JT_ISO_NBCOLDESC" class="half right"	/>
+			<field	name="displayfilterfamily" 
+				type="radio" default="button" class="btn-group clear half left"
+				label="JT_ISO_DISPLAYFILTER"	description="JT_ISO_DISPLAYFILTERDESC" 	>
+				<option value="hide">JT_ISO_DISPLAYFILTERHIDE</option>
+				<option value="button">JT_ISO_DISPLAYFILTERBUTTON</option> 
+			</field>
+			<field	name="familyfiltercount"
+                showon="displayfilterfamily!:hide"
+				type="radio" class="btn-group half right" default="true"
+				label="JT_ISO_DISPLAYFAMILYCOUNTER" description="JT_ISO_DISPLAYFAMILYCOUNTERDESC" >
+				<option value="false">JNO</option> 
+				<option value="true">JYES</option> 
+			</field>
+			<field	name="displayrange"
+				type="radio" class="btn-group clear half left" default="true"
+				label="JT_ISO_DISPLAYRANGE" description="JT_ISO_DISPLAYRANGEDESC" >
+				<option value="false">JNO</option> 
+				<option value="true">JYES</option> 
+			</field>
+			<field name="rangestep" showon="displayrange:true"
+				type="radio" class="btn-group half right" default="auto" 
+				label="JT_ISO_RANGESTEP" description="JT_ISO_RANGESTEPDESC"	>
+				<option value="auto">JT_ISO_AUTO</option>
+				<option value="5">5</option>
+				<option value="10">10</option>
+				<option value="20">20</option>
+				<option value="50">50</option>
+				<option value="100">100</option>
+			</field>
+            
+			<field	name="displayalpha"
+				type="radio" class="btn-group clear" default="false"
+				label="JT_ISO_DISPLAYALPHA" description="JT_ISO_DISPLAYALPHADESC" >
+				<option value="false">JNO</option> 
+				<option value="button">JT_ISO_DISPLAYFILTERBUTTON</option> 
+			</field>
+		</fieldset>
+	</fields>
+</metadata>

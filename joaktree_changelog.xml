@@ -8,6 +8,7 @@
         </note>
         <addition>
             <item>Sources table : add ABBR,WWW,MED, NOTE</item>
+            <item>Add Isotope view</item>
         </addition>
         <fix>
             <item>Locations : error json_decode</item>
