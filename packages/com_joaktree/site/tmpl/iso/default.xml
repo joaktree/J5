@@ -32,6 +32,7 @@
 				label="JT_ISO_DISPLAYFILTER"	description="JT_ISO_DISPLAYFILTERDESC" 	>
 				<option value="hide">JT_ISO_DISPLAYFILTERHIDE</option>
 				<option value="button">JT_ISO_DISPLAYFILTERBUTTON</option> 
+				<option value="multi">JT_ISO_DISPLAYFILTERMULTIBUTTON</option> 
 			</field>
 			<field	name="familyfiltercount"
                 showon="displayfilterfamily!:hide"

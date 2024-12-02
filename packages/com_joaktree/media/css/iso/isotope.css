@@ -400,29 +400,6 @@ div.itemExtraFields ul li span.itemExtraFieldsLabel {
   animation-name: reveal;
   animation-direction: reverse;
 }
-/* OffCanvas */
-#offcanvas-hamburger-btn.left {max-height:3em;position: absolute;left:0;margin-right:0}
-#offcanvas-hamburger-btn.right {max-height:3em;position: absolute;right:0;margin-right:0}
-#offcanvas-hamburger-btn{float:left;margin-right:1em}
-.offcanvas-start,.offcanvas-end {width:auto;max-width:15em}
-.offcanvas .iso_fields_title  p{width:100%}
-.offcanvas .choices {width:13rem}
-.offcanvas-header {padding: 1rem 1rem 0rem 1rem !important;}
-.offcanvas-body .isotope_button-group,.offcanvas-body .iso_range {margin-bottom: 1rem;}
-@media (min-width: 640px) {
-	.offcanvas-start.offcanvas25,.offcanvas-end.offcanvas25{
-		width:25%!important
-	}
-	.offstart,.offend{
-		width: 75% !important;
-	}
-	.offstart{ right:-25%}
-	
-}
+
 .isotope_button-group .family-count.badge.bg-info {margin-left:10px}
 
-/* tags with links */
-.iso_tag_link .iso_tagsep span{display:none}
-.iso-tags .iso_tag_link {
-    margin-right:5px;
-}

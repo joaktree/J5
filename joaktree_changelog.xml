@@ -2,6 +2,19 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
+		<version>2.0.7</version>
+        <note>
+            <item>Update : 2024-12-02</item>
+        </note>
+        <addition>
+            <item>Isotope : add date sort button</item>
+            <item>Isotope : add multiple buttons selection</item>
+            <item>Isotope : add botomm copyright</item>
+        </addition>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
 		<version>2.0.6</version>
         <note>
             <item>Update : 2024-12-02</item>

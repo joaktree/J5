@@ -263,7 +263,15 @@ JTIsotope.prototype.events_multibutton = function(component) {
 			agroup[i].addEventListener(type,this.listenmultibutton);
 		})
 	};
-}	
+}
+JTIsotope.prototype.listenmultibutton = function(evt){
+	evt.stopPropagation();
+	evt.preventDefault();
+	id = evt.currentTarget.parentNode.getAttribute('data');
+	jtisotope[id].filter_multi(evt.currentTarget,evt);
+	jtisotope[id].set_buttons_multi(evt.currentTarget);
+}
+	
 JTIsotope.prototype.update_sort_buttons = function(obj) {
 	var sortValue = obj.getAttribute('data-sort-value');
 	if (sortValue == "random") {

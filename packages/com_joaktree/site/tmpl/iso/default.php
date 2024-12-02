@@ -34,6 +34,7 @@ $this->iso_params = JoaktreeHelper::getJTParams();
 /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
 $wa = $app->getDocument()->getWebAssetManager();
 
+$wa->registerAndUseStyle('joaktree', $comfield.'css/joaktree.css');
 $wa->registerAndUseStyle('iso', $comfield.'css/iso/isotope.css');
 $wa->registerAndUseStyle('rslider', $comfield.'css/iso/rSlider.min.css');
 

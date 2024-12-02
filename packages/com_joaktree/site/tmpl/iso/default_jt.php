@@ -32,7 +32,7 @@ $displayalpha = $this->displayalpha;
 $familyfiltercount = $this->familyfiltercount;
 $displayrange =  $this->displayrange;
 $button_bootstrap = 'btn btn-sm ';
-$btndate = "false";
+$btndate = "true";
 $btnalpha = "true";
 $btnfamily = "true";
 
@@ -228,7 +228,8 @@ foreach ($this->personlist as $item) {
 
     $alias = ApplicationHelper::stringURLSafe((string) $item->familyName);
 
-    $isotope_grid_div .=  '<div class="isotope_item iso_family_'.$alias.'" data-family="'.$alias.'" data-title="'.$item->familyName.'" data-id="'.$item->id.'" data-alpha="'.strtoupper(substr($item->familyName, 0, 1)).'" '.$data_range.'>';
+    $isotope_grid_div .=  '<div class="isotope_item iso_family_'.$alias.'" data-family="'.$alias.'" data-title="'.$item->familyName.'" data-id="'.$item->id.'"';
+    $isotope_grid_div .=  ' data-date="'.$item->birthDate.'" data-alpha="'.strtoupper(substr($item->familyName, 0, 1)).'" '.$data_range.'>';
     
     $menus		= JoaktreeHelper::getMenus('joaktree');
     $treeId     = $this->lists['tree_id'];
@@ -331,4 +332,11 @@ foreach ($layouts_order as $layout) {
 
 ?>
 </div>
+
+</div>
+<div class="jt-update">
+	<?php echo $this->lists[ 'lastUpdate' ]; ?>
+</div>
+<div class="jt-stamp">
+	<?php echo $this->lists[ 'CR' ]; ?>
 </div>
