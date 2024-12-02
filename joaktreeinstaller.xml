@@ -8,7 +8,7 @@
  <url>https://www.joomxtensions.com/</url>
  <packager>Robert Gastaud</packager>
  <packagerurl>http://www.joomxtensions.com</packagerurl>
- <description>Installation package for Joaktree 2.0.5</description>
+ <description>Installation package for Joaktree 2.0.6</description>
  <update>http://updates.joomxtensions.com</update>
  <scriptfile>script.install.php</scriptfile>
  <files>
