@@ -64,7 +64,7 @@ $this->default_family = '';
 $this->default_letter = '';
 $this->iso_layout = $this->iso_params->get('iso_layout', "masonry");
 $this->displayfilterfamily =  $this->iso_params->get('displayfilterfamily', "false");
-$this->displayalpha = "true";// $this->iso_params->get('displayalpha', "false");
+$this->displayalpha = "button";// $this->iso_params->get('displayalpha', "false");
 $this->familyfiltercount = $this->iso_params->get('familyfiltercount', "true");
 $this->displayrange = $this->iso_params->get('displayrange', "false");
 $this->rangestep = $this->iso_params->get('rangestep', "false");
@@ -107,9 +107,9 @@ if (($this->displayrange == "true") && ($this->rangestep == "auto")) {
     }
     $this->rangestep = $step;
 }
-if (count($this->personlist) > 300) {
-    $this->default_letter = $first;
-}
+// if (count($this->personlist) > 300) {
+$this->default_letter = $first;
+// }
 $document->addScriptOptions(
     'com_joaktree_'.$com_id,
     array(  'layout' => $this->iso_layout, 'nbcol' => $this->iso_params->get('iso_nbcol', 2),
