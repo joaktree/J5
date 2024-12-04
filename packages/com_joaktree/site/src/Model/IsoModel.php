@@ -20,10 +20,8 @@ namespace Joaktree\Component\Joaktree\Site\Model;
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel ;
 use Joomla\CMS\Pagination\Pagination;
-use Joomla\Database\DatabaseInterface;
 use Joaktree\Component\Joaktree\Site\Helper\JoaktreeHelper;
 
 class IsoModel extends BaseDatabaseModel
@@ -42,7 +40,7 @@ class IsoModel extends BaseDatabaseModel
         // In case limit has been changed, adjust limitstart accordingly
         $limitstart = ($limit != 0 ? (floor($limitstart / $limit) * $limit) : 0);
 
-        $this->setState('limit', 1000);
+        $this->setState('limit', 0);
         $this->setState('limitstart', $limitstart);
     }
 
@@ -149,6 +147,7 @@ class IsoModel extends BaseDatabaseModel
 
         $context			= 'com_joaktree.list.iso.';
         $filter_order		= $app->getUserStateFromRequest($context.'filter_order', 'filter_order', 'jpn.familyName', 'cmd');
+        // $filter_order = 'jpn.id';
         $filter_order_Dir	= $app->getUserStateFromRequest($context.'filter_order_Dir', 'filter_order_Dir', '', 'word');
 
         if ($filter_order == 'jpn.familyName') {

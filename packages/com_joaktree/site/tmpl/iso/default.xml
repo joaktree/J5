@@ -33,8 +33,10 @@
 				<option value="hide">JT_ISO_DISPLAYFILTERHIDE</option>
 				<option value="button">JT_ISO_DISPLAYFILTERBUTTON</option> 
 				<option value="multi">JT_ISO_DISPLAYFILTERMULTIBUTTON</option> 
+				<option value="list">JT_ISO_DISPLAYFILTERLIST</option> 
+				<option value="listmulti">JT_ISO_DISPLAYFILTERLISTMULTI</option> 
 			</field>
-			<field	name="familyfiltercount"
+            <field	name="familyfiltercount"
                 showon="displayfilterfamily!:hide"
 				type="radio" class="btn-group half right" default="true"
 				label="JT_ISO_DISPLAYFAMILYCOUNTER" description="JT_ISO_DISPLAYFAMILYCOUNTERDESC" >
@@ -59,10 +61,8 @@
 			</field>
             
 			<field	name="displayalpha"
-				type="radio" class="btn-group clear" default="false"
+				type="hidden" class="btn-group clear" default="true"
 				label="JT_ISO_DISPLAYALPHA" description="JT_ISO_DISPLAYALPHADESC" >
-				<option value="false">JNO</option> 
-				<option value="button">JT_ISO_DISPLAYFILTERBUTTON</option> 
 			</field>
 		</fieldset>
 	</fields>

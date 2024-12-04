@@ -1485,10 +1485,10 @@ class JoaktreeHelper
     {
         $result = "";
         $liball = Text::_('JT_ISO_LIBALL');
-        $result .=  '<button class="'.$button_bootstrap.'  iso_button_alpha_tout isotope_button_first is-checked" data-sort-value="*">'.$liball.'</button>';
+        $result .=  '<button class="'.$button_bootstrap.'  iso_btn_alpha_tout isotope_button_first is-checked" data-sv="*">'.$liball.'</button>';
         asort($iso->alpha);
         foreach ($iso->alpha as $alpha) {
-            $result .= "<button class='".$button_bootstrap." iso_button_alpha_".$alpha."' data-sort-value='".$alpha."' title='".$alpha."'>".$alpha;
+            $result .= "<button class='".$button_bootstrap." iso_btn_alpha_".$alpha."' data-sv='".$alpha."' title='".$alpha."'>".$alpha;
             $result .= "</button>";
         }
         return $result;

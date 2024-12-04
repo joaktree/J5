@@ -12,9 +12,7 @@ use Joomla\CMS\Application\ApplicationHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Route;
-use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Component\Modules\Administrator\Helper\ModulesHelper;
 use Joaktree\Component\Joaktree\Site\Helper\JoaktreeHelper;
@@ -60,10 +58,9 @@ if ($displaysort == "true") {
     $values->div_line = $line;
     $values->div_pos = "1";
     $pos = $values->div_pos;
-    $values->div_width = "5";
+    $values->div_width = "3";
     $values->div_align = "";
-    $values->offcanvas = "false";
-    $width += 5;
+    $width += 3;
     $layouts['sort'] = $values;
 }
 if ($displaysearch == "true") {
@@ -75,24 +72,26 @@ if ($displaysearch == "true") {
     $width += 4;
     $values->div_width = "4";
     $values->div_align = "";
-    $values->offcanvas = "false";
     $layouts['search'] = $values;
 }
 if ($displayfamily != "false") {
     $values = new \stdClass();
     $values->div = "family";
     $pos += 1;
-    if ($width + 6 > 12) {
-        $pos = 1;
-        $line += 1;
-        $width = 0;
-    }
-    $width += 12;
     $values->div_line = $line;
-    $values->div_pos = $pos;
-    $values->div_width = "12";
+    if ($displayfamily == 'list' || $displayfamily == "listmulti") {
+        $values->div_pos = $pos;
+        $width = 5;
+        $values->div_width = "5";
+    } else { // buttons
+        $pos = 1;
+        $line = 2;
+        $width = 12;
+        $values->div_line = 2;
+        $values->div_width = "12";
+        $values->div_pos = $pos;
+    }
     $values->div_align = "";
-    $values->offcanvas = "false";
     $layouts['family'] = $values;
 }
 if ($displayrange == "true") {
@@ -103,7 +102,6 @@ if ($displayrange == "true") {
     $values->div_pos = "1";
     $values->div_width = "12";
     $values->div_align = "";
-    $values->offcanvas = "false";
     $layouts['range'] = $values;
 }
 if ($displayalpha != "false") {
@@ -114,7 +112,6 @@ if ($displayalpha != "false") {
     $values->div_pos = "1";
     $values->div_width = "12";
     $values->div_align = "";
-    $values->offcanvas = "false";
     $layouts['alpha'] = $values;
 }
 
@@ -125,14 +122,14 @@ $values->div_line = $line;
 $values->div_pos = "1";
 $values->div_width = "12";
 $values->div_align = "";
-$values->offcanvas = "false";
 $layouts["iso"] = $values;
 
 foreach ($layouts as $layout) {
     $layouts_order[$layout->div_line.$layout->div_pos] = $layout->div;
 }
 ?>
-<div id="isotope-main-<?php echo $com_id;?>" data="<?php echo $com_id;?>" class="isotope-main container">
+<div id="isotope-loading-<?php echo $com_id;?>" class="article-loading"></div>
+<div id="isotope-main-<?php echo $com_id;?>" data="<?php echo $com_id;?>" class="isotope-main container hidden">
 <div class="isotope-div row" >
 <?php
 // =====================================sort buttons div =================================================//
@@ -140,25 +137,25 @@ $sort_buttons_div = "";
 if ($displaysort != "hide") {
     $awidth = $layouts["sort"]->div_width;
 
-    $sort_buttons_div = '<div class="isotope_button-group sort-by-button-group col-md-'.$awidth.' col-12 '.$layouts["sort"]->div_align.'" data="'.$com_id.'">';
+    $sort_buttons_div = '<div class="isotope_button-group sort-btn-grp col-md-'.$awidth.' col-12 '.$layouts["sort"]->div_align.'" data="'.$com_id.'">';
     $checked = " is-checked ";
 
     if ($btndate != "false") {
         $sens = $this->iso_params->get('btndate', 'true') == 'true' ? '+' : '-';
         $sens = $defaultdisplay == "date_desc" ? "-" : $sens;
-        $sort_buttons_div .= '<button class="'.$button_bootstrap.$checked.' is-checked iso_button_date" data-sort-value="date,title,family" data-init="'.$sens.'" data-sens="'.$sens.'" title="'.$libreverse.'">'.$libdate.'</button>';
+        $sort_buttons_div .= '<button class="'.$button_bootstrap.$checked.' is-checked iso_btn_date" data-sv="date,title,family" data-init="'.$sens.'" data-sens="'.$sens.'" title="'.$libreverse.'">'.$libdate.'</button>';
         $checked = "";
     }
     if ($btnfamily != "false") {
         $sens = $this->iso_params->get('btnfamily', 'true') == 'true' ? '+' : '-';
         $sens = $defaultdisplay == "family_desc" ? "-" : $sens;
-        $sort_buttons_div .= '<button class="'.$button_bootstrap.$checked.' iso_button_cat" data-sort-value="family,title,date" data-init="'.$sens.'" data-sens="'.$sens.'" title="'.$libreverse.'">'.$libfamily.'</button>';
+        $sort_buttons_div .= '<button class="'.$button_bootstrap.$checked.' iso_btn_family" data-sv="family,title,date" data-init="'.$sens.'" data-sens="'.$sens.'" title="'.$libreverse.'">'.$libfamily.'</button>';
         $checked = "";
     }
     if ($btnalpha != "false") {
         $sens = $this->iso_params->get('btnalpha', 'true') == 'true' ? '+' : '-';
         $sens = $defaultdisplay == "alpha_desc" ? "-" : $sens;
-        $sort_buttons_div .= '<button class="'.$button_bootstrap.$checked.' iso_button_alpha" data-sort-value="title,family,date" data-init="'.$sens.'" data-sens="'.$sens.'" title="'.$libreverse.'">'.$libalpha.'</button>';
+        $sort_buttons_div .= '<button class="'.$button_bootstrap.$checked.' iso_btn_alpha" data-sv="title,family,date" data-init="'.$sens.'" data-sens="'.$sens.'" title="'.$libreverse.'">'.$libalpha.'</button>';
         $checked = "";
     }
     $sort_buttons_div .= "</div>";
@@ -185,12 +182,12 @@ if (($displayfamily != "false")) {
     asort($this->sortFilter, SORT_STRING | SORT_FLAG_CASE | SORT_NATURAL); // alphabatic order
     if (($displayfamily == "button")  || ($displayfamily == "multi")) {
         $awidth = $layouts["family"]->div_width;
-        $filter_family_div .= '<div class="isotope_button-group filter-button-group-family col-md-'.$awidth.' col-12 '.$layouts["family"]->div_align.'" data-filter-group="family" data="'.$com_id.'">';
+        $filter_family_div .= '<div class="iso_btn-grp filter-btn-grp-family col-md-'.$awidth.' col-12 '.$layouts["family"]->div_align.'" data-fg="family" data="'.$com_id.'">';
         $checked = "";
         if ($this->default_family == "") {
             $checked = "is-checked";
         }
-        $filter_family_div .= '<button class="'.$button_bootstrap.'  iso_button_family_tout '.$checked.'" data-sort-value="*" />'.$liball.'</button>';
+        $filter_family_div .= '<button class="'.$button_bootstrap.'  iso_btn_family_tout '.$checked.'" data-sv="*" />'.$liball.'</button>';
         foreach ($this->sortFilter as $key => $filter) {
             $aff = $this->families[$key];
             $aff_alias = $this->families_alias[$key];
@@ -203,9 +200,51 @@ if (($displayfamily != "false")) {
                 if ($familyfiltercount == 'true') {
                     $familycount = '<span class="family-count badge bg-info">'.$this->family_count[$aff_alias].'</span>';
                 }
-                $filter_family_div .= '<button class="'.$button_bootstrap.'  iso_button_family_'.$aff_alias.' '.$checked.'" data-sort-value="'.$aff_alias.'" title="'.$this->families[$key].'"/>'.Text::_($aff).$familycount.'</button>';
+                $filter_family_div .= '<button class="'.$button_bootstrap.'  iso_btn_family_'.$aff_alias.' '.$checked.'" data-sv="'.$aff_alias.'" title="'.$this->families[$key].'"/>'.Text::_($aff).$familycount.'</button>';
             }
         }
+        $filter_family_div .= '</div>';
+    } else {
+        Text::script('JGLOBAL_SELECT_PRESS_TO_SELECT');
+        $app->getDocument()->getWebAssetManager()
+             ->useScript('webcomponent.field-fancy-select')
+             ->usePreset('choicesjs');
+         $attributes = array(
+             'class="isotope_select"',
+             ' data-fg="family"',
+             ' id="isotope-select-family"'
+        );
+        $selectAttr = array();
+        $multiple = "";
+        if ($displayfamily == "listmulti") {
+            $libmulti = Text::_('CG_ISO_LIBLISTMULTI');
+            $multiple = "  place-placeholder='".$libmulti."'";
+            $selectAttr = array(' multiple');
+        }
+        $awidth = $layouts["family"]->div_width;
+        $filter_family_div .= '<div class="iso_btn-grp filter-btn-grp-family col-md-'.$awidth.' col-12 '.$layouts["family"]->div_align.'" data-fg="family" data="'.$com_id.'">';
+        $name = 'isotope-select-family';
+        $options = array();
+        $options['']['items'][] = ModulesHelper::createOption('', $liball);
+        foreach ($this->sortFilter as $key => $filter) {
+            $aff = $this->families[$key];
+            $aff_alias = $this->families_alias[$key];
+            $familycount = '';
+            if ($familyfiltercount == 'true') {
+                $familycount = ' ('.$this->family_count[$aff_alias].') ';
+            }
+            if (!is_null($aff)) {
+                $selected = "";
+                if ($this->default_family == $aff_alias) {
+                    $selected = "selected";
+                }
+                $options['']['items'][] = ModulesHelper::createOption($aff_alias, Text::_($aff).$familycount);
+            }
+        }
+        $filter_family_div .= '<joomla-field-fancy-select '.implode(' ', $attributes).'>';
+        $filter_family_div .= HTMLHelper::_('select.groupedlist', $options, $name, array('id'          => $name,'list.select' => null,'list.attr'   => implode(' ', $selectAttr)));
+
+        $filter_family_div .= '</joomla-field-fancy-select>';
         $filter_family_div .= '</div>';
     }
 }
@@ -228,21 +267,27 @@ foreach ($this->personlist as $item) {
 
     $alias = ApplicationHelper::stringURLSafe((string) $item->familyName);
 
-    $isotope_grid_div .=  '<div class="isotope_item iso_family_'.$alias.'" data-family="'.$alias.'" data-title="'.$item->familyName.'" data-id="'.$item->id.'"';
+    $isotope_grid_div .=  '<div class="iso_itm " data-family="'.$alias.'" data-title="'.$item->firstName.'"';// data-id="'.$item->id.'"';
     $isotope_grid_div .=  ' data-date="'.$item->birthDate.'" data-alpha="'.strtoupper(substr($item->familyName, 0, 1)).'" '.$data_range.'>';
-    
+
     $menus		= JoaktreeHelper::getMenus('joaktree');
     $treeId     = $this->lists['tree_id'];
     $link = Route::_(
-            'index.php?option=com_joaktree&view=joaktree'
+        'index.php?option=com_joaktree&view=joaktree'
                  .'&tech='.$this->lists['technology']
                  .'&Itemid='.$menus[$treeId]
                  .'&treeId='.$treeId
                  .'&personId='.$item->app_id.'!'.$item->id
-        );
-    
-    
-    $title = '<a href="'.$link.'" target="_blank">'.$item->firstName.' '.$item->familyName.'</a>';
+    );
+    $pat = "";
+    if ($this->lists['patronym'] != 0) {
+        $sep = $this->iso_params->get('patronymSeparation');
+        if ($item->patronym) {
+            $pat = $sep.$item->patronym.$sep.' ';
+        }
+    }
+
+    $title = '<a href="'.$link.'" target="_blank">'.$item->firstName.' '.$pat.$item->familyName.'</a>';
 
     $perso = "";// $this->iso_params->get('perso');
 
@@ -252,11 +297,16 @@ foreach ($this->personlist as $item) {
     }
     $perso = $title;
     if ($item->birthDate || $item->deathDate) {
+        $perso .= '<br>';
         if ($item->birthDate) {
-            $perso .= '<br>'.Text::_('JT_ISO_BIRTH').' : '.$item->birthDate;
+            $perso .= $item->birthDate; // '<br>'.Text::_('JT_ISO_BIRTH').' : '.$item->birthDate;
+        } else {
+            $perso .= '?';
         }
         if ($item->deathDate) {
-            $perso .= '<br>'.Text::_('JT_ISO_DEATH').' : '.$item->deathDate;
+            $perso .= '-'.$item->deathDate; // Text::_('JT_ISO_DEATH').' : '.$item->deathDate;
+        } else {
+            $perso .= '-?';
         }
     }
     $isotope_grid_div .= $perso;
@@ -284,7 +334,7 @@ if ($displayalpha != "false") {
     }
 
     $awidth = $layouts["alpha"]->div_width;
-    $isotope_alpha_div = '<div class="isotope_button-group filter-button-group-alpha iso_alpha col-md-'.$awidth.' col-12 '.$layouts["alpha"]->div_align.'" data-filter-group="alpha" data="'.$com_id.'">';
+    $isotope_alpha_div = '<div class="iso_btn-grp filter-btn-grp-alpha iso_alpha col-md-'.$awidth.' col-12 '.$layouts["alpha"]->div_align.'" data-fg="alpha" data="'.$com_id.'">';
     $isotope_alpha_div .= JoaktreeHelper::create_alpha_buttons($this, $button_bootstrap);
     $isotope_alpha_div .= '</div>';
 }

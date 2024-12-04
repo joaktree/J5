@@ -29,6 +29,10 @@ for(var i=0; i<mains.length; i++) {
 	options_iso = Joomla.getOptions('com_joaktree_'+isoid);
 	if (typeof options_iso === 'undefined' ) {return false}
 	jtisotope[isoid] = new JTIsotope(isoid,options_iso)
+    adiv = document.querySelector('.article-loading');
+    jtisotope[isoid].addClass(adiv,'hidden');    
+    adiv = document.querySelector('.isotope-main');
+    jtisotope[isoid].removeClass(adiv,'hidden');
 	jtisotope[isoid].goisotope(isoid);
 }
 }) // end of ready --------------
@@ -56,8 +60,51 @@ function JTIsotope(isoid,options) {
 		this.filters['family'] = ['*']
 	else 
 		this.filters['family'] = [this.options.default_family];
-	this.filters['alpha'] = ['*'];
+	if (this.options.default_letter == "")
+        this.filters['alpha'] = ['*'];
+    else {
+        this.filters['alpha'] = [this.options.default_letter];
+    }
 }
+JTIsotope.prototype.updateselectfamily = function (iso, onechar)  {
+    if (iso.options.displayfilterfamily == 'hide') return;
+    if (iso.options.displayfilterfamily == 'list' || iso.options.displayfilterfamily == 'listmulti') {
+        sel = document.querySelector(iso.me+'#isotope-select-family');
+        if (!sel) return;
+        sels = sel.querySelectorAll('.choices__item');
+        sels.forEach(element => {
+            $data = element.getAttribute('data-value');
+            if ($data && $data.substr(0,1).toUpperCase() == onechar) 
+                element.style.display = 'inherit';
+            else
+                element.style.display = 'none';
+        })
+    } else { // buttons
+        sel = document.querySelector(iso.me+'.filter-btn-grp-family');
+        if (!sel) return;
+        sels = sel.querySelectorAll('.btn');
+        sels.forEach(element => {
+            $data = element.getAttribute('data-sv');
+            if ($data && $data.substr(0,1).toUpperCase() == onechar) 
+                element.style.display = 'inline-block';
+            else
+                element.style.display = 'none';
+        })
+    }
+    // remove filters with wrong first letter
+    res = [];
+    iso.filters['family'].forEach(elem => {
+        if (elem.substr(0,1).toUpperCase() == onechar) res.push( elem );
+    })
+    if (res.length == 0) {
+        iso.filters['family'] =  ['*'];
+    } else {
+        iso.filters['family'] = res;
+    }
+    iso.update_cookie_filter();
+    if (iso.iso) iso.iso.arrange();
+}
+
 JTIsotope.prototype.goisotope = function(isoid) {
 	$myiso = jtisotope[isoid];
 	$myiso.cookie = $myiso.getCookie($myiso.cookie_name);
@@ -67,7 +114,14 @@ JTIsotope.prototype.goisotope = function(isoid) {
 			$myiso.splitCookie($myiso.isoid,$arr[index]);
 		}
 	}
-	$items = document.querySelectorAll('#isotope-main-' + $myiso.isoid + ' .isotope_item');
+	if ($myiso.options.default_letter) { 
+        $button =  document.querySelector( $myiso.me+'.iso_btn_alpha_'+ $myiso.filters['alpha']);
+        if ($button)    $myiso.addClass($button,'is-checked');
+        $button = document.querySelector( this.me+'.iso_btn_alpha_tout');
+        if ($button)    $myiso.addClass($button,'hidden');
+        $myiso.updateselectfamily($myiso,$myiso.filters['alpha']);
+    }
+	$items = document.querySelectorAll('#isotope-main-' + $myiso.isoid + ' .iso_itm');
 	for (var i=0; i< $items.length;i++) {
 		if (($myiso.options.layout == "masonry") || ($myiso.options.layout == "fitRows") || ($myiso.options.layout == "packery"))
 			$items[i].style.width = (100 / parseInt($myiso.options.nbcol)-2)+"%" ;
@@ -81,12 +135,13 @@ JTIsotope.prototype.goisotope = function(isoid) {
 	}
 	var grid = document.querySelector($myiso.me + '.isotope_grid');
 	$myiso.iso = new Isotope(grid,{ 
-			itemSelector: $myiso.me+'.isotope_item',
+			itemSelector: $myiso.me+'.iso_itm',
 			percentPosition: true,
 			layoutMode: $myiso.options.layout,
 			getSortData: {
 				family: '[data-family]',
 				date: '[data-date]',
+				title: '[data-title]',
 			},
 			sortBy: $myiso.sort_by,
 			sortAscending: $myiso.asc,
@@ -128,7 +183,7 @@ JTIsotope.prototype.goisotope = function(isoid) {
 	iso_div.addEventListener("refresh", function(){
  	  $myiso.iso.arrange();
 	});
-	var sortbybutton = document.querySelectorAll($myiso.me+'.sort-by-button-group button');
+	var sortbybutton = document.querySelectorAll($myiso.me+'.sort-btn-grp button');
 
 	for (var i=0; i< sortbybutton.length;i++) {
 		['click', 'touchstart'].forEach(type => {
@@ -177,23 +232,34 @@ JTIsotope.prototype.goisotope = function(isoid) {
 				isoobj.CG_Cookie_Set(isoobj.isoid,'range',range_sel);
 			}
 			isoobj.filters['family'] = ['*']
-			isoobj.filters['alpha'] = ['*']
-			grouptype = ['family']
+			grouptype = ['family','alpha'];
 			for (var g = 0; g < grouptype.length;g++) {
-				agroup = document.querySelectorAll(isoobj.me+'.filter-button-group-'+grouptype[g]+' button'); 
+				agroup = document.querySelectorAll(isoobj.me+'.filter-btn-grp-'+grouptype[g]+' button'); 
 				for (var i=0; i< agroup.length;i++) {
 					agroup[i].classList.remove('is-checked');
-					if (agroup[i].getAttribute('data-sort-value') == "*") isoobj.addClass(agroup[i],'is-checked');
+					if (agroup[i].getAttribute('data-sv') == "*") isoobj.addClass(agroup[i],'is-checked');
 					if (agroup[i].getAttribute('data-all') == "all") agroup[i].setAttribute('selected',true);
-					if (grouptype[g] == 'fields') {
-						isoobj.removeClass(agroup[i],'iso_hide_elem');
-						myparent = agroup[i].parentNode.getAttribute('data-filter-group');
-						if (myparent) isoobj.filters[myparent] = ['*'];
-					}
 				}
 			}
+			agroup= document.querySelectorAll(isoobj.me+'select[id^="isotope-select-"]');
+			for (var i=0; i< agroup.length;i++) {
+				var myval = agroup[i].parentElement.parentElement.parentElement.getAttribute('data-fg');
+				var elChoice = document.querySelector('joomla-field-fancy-select#isotope-select-'+myval);
+				var choicesInstance = elChoice.choicesInstance;
+				choicesInstance.removeActiveItems();
+				choicesInstance.setChoiceByValue('')
+				// isoobj.filters[myval] = ['*']
+			};
+            if (isoobj.options.default_letter == "")
+                isoobj.filters['alpha'] = ['*'];
+            else {
+                isoobj.filters['alpha'] = [isoobj.options.default_letter];
+                $button =  document.querySelector( isoobj.me+'.iso_btn_alpha_'+ isoobj.options.default_letter);
+                if ($button)    isoobj.addClass($button,'is-checked');
+                isoobj.updateselectfamily(isoobj,isoobj.options.default_letter);
+            }
+            
 			isoobj.update_cookie_filter();
-						
 			isoobj.updateFilterCounts();
 			if (isoobj.quicksearch) {
 				isoobj.quicksearch.focus();
@@ -201,14 +267,17 @@ JTIsotope.prototype.goisotope = function(isoid) {
 		});
 	})
 	}
-	if (($myiso.options.displayfilterfamily == "multi") || ($myiso.options.displayfilterfamily == "multiex")  ) {
+	if ($myiso.options.displayfilterfamily == "multi") {
 		$myiso.events_multibutton('family')
-	}
-	if ($myiso.options.displayalpha == "multi") { 
-		$myiso.events_multibutton('alpha')
 	}
 	if ($myiso.options.displayfilterfamily == "button"){
 		$myiso.events_button('family');
+	}
+	if ($myiso.options.displayfilterfamily == "list")  { 
+		$myiso.events_list('family');
+	} 
+	if ($myiso.options.displayfilterfamily == "listmulti") {
+		$myiso.events_listmulti('family');
 	}
 	if ($myiso.options.displayalpha == "button") { 
 		$myiso.events_button('alpha');
@@ -227,7 +296,7 @@ JTIsotope.prototype.rangeUpdated = function(){
 }
 // remove buttons eventListeners
 JTIsotope.prototype.remove_events_button = function(component) {
-	agroup= document.querySelectorAll(this.me+'.filter-button-group-'+component+' button');
+	agroup= document.querySelectorAll(this.me+'.filter-btn-grp-'+component+' button');
 	for (var i=0; i< agroup.length;i++) {
 		['click', 'touchstart'].forEach(type => {
 			agroup[i].removeEventListener(type,this.listenbutton);
@@ -245,10 +314,21 @@ JTIsotope.prototype.listenbutton= function(evt){
 		jtisotope[id].removeClass(mygroup[g],'is-checked');
 	}
 	jtisotope[id].addClass(evt.currentTarget,'is-checked');
+    agrp = evt.currentTarget.parentNode.getAttribute('data-fg');
+    if (agrp && agrp == 'alpha') {
+        if (jtisotope[id].options.displayfilterfamily == 'list' || jtisotope[id].options.displayfilterfamily == 'listmulti') {
+            var elChoice = document.querySelector('joomla-field-fancy-select#isotope-select-family');
+            var choicesInstance = elChoice.choicesInstance;
+            choicesInstance.removeActiveItems();
+            choicesInstance.setChoiceByValue('')
+        }
+        onechar = evt.currentTarget.getAttribute('data-sv');
+        if (onechar) jtisotope[id].updateselectfamily(jtisotope[id],onechar);
+    }
 };
 // create buttons eventListeners
 JTIsotope.prototype.events_button = function(component) {
-	agroup= document.querySelectorAll(this.me+'.filter-button-group-'+component+' button');
+	agroup= document.querySelectorAll(this.me+'.filter-btn-grp-'+component+' button');
 	for (var i=0; i< agroup.length;i++) {
 		['click', 'touchstart'].forEach(type => {
 			agroup[i].addEventListener(type,this.listenbutton);
@@ -257,7 +337,7 @@ JTIsotope.prototype.events_button = function(component) {
 }
 // create multiselect buttons eventListeners
 JTIsotope.prototype.events_multibutton = function(component) {
-	agroup= document.querySelectorAll(this.me+'.filter-button-group-'+component+' button');
+	agroup= document.querySelectorAll(this.me+'.filter-btn-grp-'+component+' button');
 	for (var i=0; i< agroup.length;i++) {
 		['click', 'touchstart'].forEach(type =>{
 			agroup[i].addEventListener(type,this.listenmultibutton);
@@ -271,9 +351,49 @@ JTIsotope.prototype.listenmultibutton = function(evt){
 	jtisotope[id].filter_multi(evt.currentTarget,evt);
 	jtisotope[id].set_buttons_multi(evt.currentTarget);
 }
-	
+// create list eventListeners
+JTIsotope.prototype.events_list = function(component) {
+	agroup= document.querySelectorAll(this.me+'.filter-btn-grp-'+component);
+	for (var i=0; i< agroup.length;i++) {
+		agroup[i].addEventListener('choice',(evt, params) => {
+			this.filter_list(this,evt,'choice')
+			});
+		agroup[i].addEventListener('removeItem',(evt, params) => {
+			this.filter_list(this,evt,'remove');
+		});
+			
+	};
+	var elChoice = document.querySelector('joomla-field-fancy-select#isotope-select-'+component);
+	if (!elChoice) return;
+	var choicesInstance = elChoice.choicesInstance;
+	choicesInstance.setChoiceByValue(this.filters[component]);
+}
+// create listmulti eventListeners
+JTIsotope.prototype.events_listmulti = function(component) {
+	agroup= document.querySelectorAll(this.me+'select[id^="isotope-select-'+component+'"]');
+	for (var i=0; i< agroup.length;i++) {
+		agroup[i].addEventListener('choice',(evt, params) => {
+			$myiso.filter_list_multi(this,evt,'choice');
+		});
+		agroup[i].addEventListener('removeItem',(evt, params) => {
+			$myiso.filter_list_multi(this,evt,'remove');
+		});
+		$parent = agroup[i].parentElement.parentElement.parentElement.getAttribute('data-fg');
+		if (typeof $myiso.filters[$parent] === 'undefined' ) { 
+            $myiso.filters[$parent] = ['*'];
+		}
+	};
+	if ((this.filters[$parent][0] != '*') && (this.filters[$parent].length == 1)) {
+		var elChoice = document.querySelector('joomla-field-fancy-select#isotope-select-'+component);
+		var choicesInstance = elChoice.choicesInstance;
+		var savefilter = this.filters[$parent][0];
+		choicesInstance.removeActiveItemsByValue(''); // remove all 
+		choicesInstance.setChoiceByValue(savefilter);
+	}	
+}
+
 JTIsotope.prototype.update_sort_buttons = function(obj) {
-	var sortValue = obj.getAttribute('data-sort-value');
+	var sortValue = obj.getAttribute('data-sv');
 	if (sortValue == "random") {
 		this.CG_Cookie_Set(this.isoid,'sort',sortValue+'-');
 		this.iso.shuffle();
@@ -308,14 +428,89 @@ JTIsotope.prototype.update_sort_buttons = function(obj) {
 	this.iso.options.sortAscending = sortAsc;
 	this.iso.arrange();
 }
-
+JTIsotope.prototype.filter_list = function($this,evt,params) {
+	obj = evt.currentTarget;
+	$parent = obj.getAttribute('data-fg');
+	$isclone = false;
+    $selectid = obj.getAttribute('data-fg');
+	sortValue = obj.querySelector(".is-highlighted");
+	sortValue = sortValue.dataset.value;
+	if (typeof sortValue === 'undefined') sortValue = ""
+	elChoice = document.querySelector('joomla-field-fancy-select#isotope-select-'+$selectid);
+	choicesInstance = elChoice.choicesInstance;
+	if (params == 'remove' ) { // remove item from offcanvas => remove button
+		$this.removeFilter( $this.filters, $parent, evt.detail.value );
+		if ($this.filters[$parent].length == 0) {
+			$this.filters[$parent] = ['*'] ;
+			choicesInstance.setChoiceByValue('')
+			$this.update_cookie_filter();
+			$this.updateFilterCounts();
+		}	
+		return;
+	}
+	if (sortValue == '')   {
+		choicesInstance.removeActiveItems();
+		choicesInstance.setChoiceByValue('');
+		$this.filters[$parent] = ['*'];
+		$buttons = document.querySelectorAll('#clonedbuttons [data-fg="'+$parent+'"]');
+		for (var i=0; i< $buttons.length;i++) { // remove buttons
+			$buttons[i].remove(); 
+		}
+	} else { 
+		$this.filters[$parent] = [sortValue];
+        if (choicesInstance.getValue().value != sortValue) {
+            choicesInstance.setChoiceByValue(sortValue);
+        }
+	}
+	$this.update_cookie_filter();
+	$this.updateFilterCounts();
+}
+	// ----- Filter MultiSelect List
+JTIsotope.prototype.filter_list_multi = function($this,evt,params) {
+		$evnt = evt;
+		obj = evt.currentTarget;
+		$params = params;
+		$parent = obj.parentNode.parentNode.parentNode.getAttribute('data-fg')
+		$selectid = obj.getAttribute('id');
+		if (typeof $this.filters[$parent] === 'undefined' ) { 
+			$this.filters[$parent] = [];
+		}
+		var elChoice = document.querySelector('joomla-field-fancy-select#'+$selectid);
+		var choicesInstance = elChoice.choicesInstance;
+		
+		if ($params == "remove") { // deselect element except all
+			this.removeFilter( $this.filters, $parent, $evnt.detail.value );
+			if ($this.filters[$parent].length == 0) {
+                $this.filters[$parent] = ['*'] ;
+				choicesInstance.setChoiceByValue('')
+			}
+		}
+		if ($params == "choice") {
+            let sel = $evnt.detail.choice.value;
+ 			if (sel == '') {// all
+				$this.filters[$parent] = ['*'];
+				choicesInstance.removeActiveItems();
+				choicesInstance.setChoiceByValue('');
+			} else {
+				if ($this.filters[$parent].indexOf('*') != -1) { // was all
+					choicesInstance.removeActiveItemsByValue('')
+					$this.filters[$parent] = []; // remove it
+				}
+				$this.addFilter( $this.filters, $parent, sel );
+			}
+			choicesInstance.hideDropdown();
+		}
+        if ($this.options.default_letter) {
+            this.updateselectfamily(this,this.filters['alpha']);
+        }
+		$this.update_cookie_filter();
+		$this.updateFilterCounts();
+	}
 /*------- grid filter --------------*/
 JTIsotope.prototype.grid_filter = function($id,elem) {
 	var $myiso = jtisotope[$id];
 	var searchResult = $myiso.qsRegex ? elem.textContent.match( $myiso.qsRegex ) : true;
 	var	lafam = elem.getAttribute('data-family');
-	var laclasse = elem.getAttribute('class');
-	var lescles = laclasse.split(" ");
 	var buttonResult = false;
 	var rangeResult = true;
 	var searchAlpha = true;
@@ -331,31 +526,23 @@ JTIsotope.prototype.grid_filter = function($id,elem) {
 		}
 	}
 	if ($myiso.filters['family'].indexOf('*') != -1)  { return searchResult && rangeResult && true};
-	count = 0;
 	if ($myiso.filters['family'].indexOf('*') == -1) { // on a demandé une classe
 		if ($myiso.filters['family'].indexOf(lafam) == -1)  {
 			return false; // n'appartient pas à la bonne classe: on ignore
 		} else {  // on a trouvé la famille
-            count = 1;
             buttonResult = true;
         } 
 	}
-	if ($myiso.options.searchmultiex == "true")	{
-		lgth = $myiso.filters['family'].length ;
-		if ( ($myiso.filters['family'].indexOf('*') != -1)) {lgth = lgth - 1;}
-			return searchResult && rangeResult && (count == lgth) ;
-	} else { 
-		return searchResult && rangeResult && buttonResult;
-    }
+	return searchResult && rangeResult && buttonResult;
 } 
      
 JTIsotope.prototype.filter_button = function(obj,evt) {
 		$myid = obj.parentNode.getAttribute('data');
 		$myiso = jtisotope[$myid];
 		if ($myiso.hasClass(obj,'disabled')) return; //ignore disabled buttons
-		$parent = obj.parentNode.getAttribute('data-filter-group');
+		$parent = obj.parentNode.getAttribute('data-fg');
 		child =  obj.getAttribute('data-child'); // child group number
-		var sortValue = obj.getAttribute('data-sort-value');
+		var sortValue = obj.getAttribute('data-sv');
 		$isclone = false;
 		if (typeof $myiso.filters[$parent] === 'undefined' ) { 
 			$myiso.filters[$parent] = {};
@@ -363,7 +550,10 @@ JTIsotope.prototype.filter_button = function(obj,evt) {
 		$needclone = false;
 		$grdparent = obj.parentNode.parentNode;
 		if (sortValue == '*') {
-			$myiso.filters[$parent] = ['*'];
+            $myiso.filters[$parent] = ['*'];
+            if ($parent == 'alpha' && $myiso.options.default_letter) {
+                $myiso.filters[$parent] = [$myiso.options.default_letter];
+			}
 		} else { 
 			$myiso.filters[$parent]= [sortValue];
 			if (child) {
@@ -376,10 +566,10 @@ JTIsotope.prototype.filter_button = function(obj,evt) {
 JTIsotope.prototype.filter_multi = function(obj,evt) {
 		id = obj.parentNode.getAttribute('data');
 		$myiso = jtisotope[id];
-		var sortValue = obj.getAttribute('data-sort-value');
+		var sortValue = obj.getAttribute('data-sv');
 		child =  obj.getAttribute('data-child'); // child group number
 		$isclone = false;
-		$parent = obj.parentNode.getAttribute('data-filter-group');
+		$parent = obj.parentNode.getAttribute('data-fg');
 		$myiso.toggleClass(obj,'is-checked');
 		var isChecked = $myiso.hasClass(obj,'is-checked');
 		// clone offcanvas button
@@ -417,45 +607,34 @@ JTIsotope.prototype.filter_multi = function(obj,evt) {
 			}	
 		}
 		$myiso.update_cookie_filter();
-						
 		$myiso.updateFilterCounts();
 	}
 JTIsotope.prototype.set_buttons_multi = function(obj) {
-		$parent = obj.parentNode.getAttribute('data-filter-group');
-		if (obj.getAttribute('data-sort-value') == '*') { // on a cliqué sur tout => on remet le reste à blanc
-			buttons = obj.parentNode.querySelectorAll('button.is-checked');
-			for (var i=0; i< buttons.length;i++) { 
-					this.removeClass(buttons[i],'is-checked');
-			}
-			this.addClass(obj,'is-checked');
-		} else { // on a cliqué sur un autre bouton : uncheck le bouton tout
-			if ((this.filters[$parent].length == 0) || (this.filters[$parent] == '*')) {// plus rien de sélectionné : on remet tout actif
-				button_all = obj.parentNode.querySelector('[data-sort-value="*"]');
-				this.addClass(button_all,'is-checked');
-				this.filters[$parent] = ['*'];
-				this.update_cookie_filter();
-				this.iso.arrange();
-			}
-			else {
-				button_all = obj.parentNode.querySelector('[data-sort-value="*"]');
-				this.removeClass(button_all,'is-checked');
-			}
+	$parent = obj.parentNode.getAttribute('data-fg');
+	if (obj.getAttribute('data-sv') == '*') { // on a cliqué sur tout => on remet le reste à blanc
+		buttons = obj.parentNode.querySelectorAll('button.is-checked');
+		for (var i=0; i< buttons.length;i++) { 
+				this.removeClass(buttons[i],'is-checked');
+		}
+		this.addClass(obj,'is-checked');
+	} else { // on a cliqué sur un autre bouton : uncheck le bouton tout
+		if ((this.filters[$parent].length == 0) || (this.filters[$parent] == '*')) {// plus rien de sélectionné : on remet tout actif
+			button_all = obj.parentNode.querySelector('[data-sv="*"]');
+			this.addClass(button_all,'is-checked');
+			this.filters[$parent] = ['*'];
+			this.update_cookie_filter();
+			this.iso.arrange();
+		}
+		else {
+			button_all = obj.parentNode.querySelector('[data-sv="*"]');
+			this.removeClass(button_all,'is-checked');
 		}
 	}
-	//
-	// check items limit and hide unnecessary items
+}
+// check items limit and hide unnecessary items
 JTIsotope.prototype.updateFilterCounts = function() {
-		var items = document.querySelectorAll(this.me + '.isotope_item');
-		var itemElems = this.iso.getFilteredItemElements();
-		var count_items = itemElems.length;
-		var divempty = document.querySelector(this.me + '.iso_div_empty')
-		for (var i=0;i < items.length;i++) {
-			if (this.hasClass(items[i],'iso_hide_elem')) {
-				this.removeClass(items[i],'iso_hide_elem');
-			}
-		}
-		this.iso.arrange();
-	}
+	this.iso.arrange();
+}
 JTIsotope.prototype.debounce = function( fn, threshold ) {
 	var timeout;
 	return function debounced() {
@@ -559,25 +738,26 @@ JTIsotope.prototype.splitCookie = function(isoid,item) {
 	}
 	if (item.indexOf('sort:') >= 0) {
 		val = item.split(':');
+        jtisotope[isoid].sort_by = val[1];  // val[0] contains 'sort'
 		val = val[1].split('-');
 		sort_by = val[0].split(',');
 		asc = (val[1] == "true");
-		//if (sort_by[0] == "featured") { // featured always first
-			sortAsc = {};
-			for (i=0;i < sort_by.length;i++) {
-				if ( sort_by[i] == "featured"){  // featured always first
-					sortAsc[sort_by[i]] = false ;
-				} else {
-					sortAsc[sort_by[i]] = asc;
-				}
+        sortAsc = {};
+		for (i=0;i < sort_by.length;i++) {
+			if ( sort_by[i] == "featured"){  // featured always first
+				sortAsc[sort_by[i]] = false ;
+			} else {
+				sortAsc[sort_by[i]] = asc;
 			}
-			asc = sortAsc;
-		// } 
-		sortButtons = document.querySelectorAll(this.me+'.sort-by-button-group button');
+		}
+		asc = sortAsc;
+        jtisotope[isoid].asc = asc;
+
+		sortButtons = document.querySelectorAll(this.me+'.sort-btn-grp button');
 		for(s=0;s < sortButtons.length;s++) {
 			if (val[0] != '*') { // tout
 				sortButtons[s].classList.remove('is-checked');
-				if (sortButtons[s].getAttribute("data-sort-value") == val[0]) {
+				if (sortButtons[s].getAttribute("data-sv") == val[0]) {
 					sortButtons[s].classList.add('is-checked');
 					sortButtons[s].setAttribute("data-sens","+");
 					if (val[1] != "true") sortButtons[s].setAttribute("data-sens","-");
@@ -597,13 +777,13 @@ JTIsotope.prototype.splitCookie = function(isoid,item) {
 						if (values[0] == 'lang') {
 							filterButtons = document.querySelectorAll(this.me+'.iso_lang button.is-checked');
 						} else {
-							filterButtons = document.querySelectorAll(this.me+'.filter-button-group-'+values[0]+' button.is-checked')
+							filterButtons = document.querySelectorAll(this.me+'.filter-btn-grp-'+values[0]+' button.is-checked')
 						}
 						for(f=0;f < filterButtons.length;f++) {
 							filterButtons[f].classList.remove('is-checked');
 						}
 						for(v=0;v < this.filters[values[0]].length;v++) {
-                            $button =  document.querySelector( this.me+'.iso_button_'+values[0]+'_'+ this.filters[values[0]][v]);
+                            $button =  document.querySelector( this.me+'.iso_btn_'+values[0]+'_'+ this.filters[values[0]][v]);
 							if (!$button) continue; // not defined : ignore it
 							this.addClass($button,'is-checked');
 						}
@@ -627,7 +807,7 @@ JTIsotope.prototype.hasClass = function (el, cl) {
     return !!el.className.match(regex);
 }
 JTIsotope.prototype.addClass = function (el, cl) {
-    el.className += ' ' + cl;
+    if (!$myiso.hasClass(el, cl)) el.className += ' ' + cl;
 },
 JTIsotope.prototype.removeClass = function (el, cl) {
     var regex = new RegExp('(?:\\s|^)' + cl + '(?:\\s|$)');
