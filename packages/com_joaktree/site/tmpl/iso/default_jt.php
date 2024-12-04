@@ -74,7 +74,7 @@ if ($displaysearch == "true") {
     $values->div_align = "";
     $layouts['search'] = $values;
 }
-if ($displayfamily != "false") {
+if ($displayfamily != "hide") {
     $values = new \stdClass();
     $values->div = "family";
     $pos += 1;
@@ -177,7 +177,7 @@ if ($displaysearch == "true") {
 }
 //============================filter div===============================================//
 $filter_family_div = "";
-if (($displayfamily != "false")) {
+if (($displayfamily != "hide")) {
     // family sort
     asort($this->sortFilter, SORT_STRING | SORT_FLAG_CASE | SORT_NATURAL); // alphabatic order
     if (($displayfamily == "button")  || ($displayfamily == "multi")) {
