@@ -5,15 +5,15 @@
 		<description>Joaktree J5 package</description>
 		<element>com_joaktree</element>
 		<type>component</type>
-		<version>2.0.7</version>
+		<version>2.1.0</version>
         <client>administrator</client>
 		<changelogurl>https://raw.githubusercontent.com/joaktree/J5/master/joaktree_changelog.xml</changelogurl>
 		<downloads>
-			<downloadurl type="full" format="zip">https://github.com/joaktree/j5/archive/refs/tags/2.0.7.zip</downloadurl>
+			<downloadurl type="full" format="zip">https://github.com/joaktree/j5/archive/refs/tags/2.1.0.zip</downloadurl>
 		</downloads>
 		<maintainer>ConseilGouz</maintainer>
 		<maintainerurl>https://www.conseilgouz.com</maintainerurl>
 		<targetplatform name="joomla" version="((4\.(0|1|2|3|4))|(5\.(0|1|2|3|4|5|6|7|8|9)))"/>
-		<sha256>9c59d221fab5c78d99964f2c0f93fd7d3b2b2fa5bcf345253763d9d0bea60f83</sha256>
+		<sha256>fe89fa2dcd7dc6537a6ada5b0c9fd9c3bb4686209f8c516c0595077eafbb6aba</sha256>
 	</update>
 </updates>
