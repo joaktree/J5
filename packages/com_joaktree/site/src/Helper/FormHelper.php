@@ -828,7 +828,7 @@ class FormHelper extends \StdClass
             Factory::getApplication()->getDocument()->addScriptOptions(
                 'jtfperson',
                 array(  'link1' => Route::_($link1),'link2' => Route::_($link2),
-                        'patronym' => $patronym,'sef' => Factory::getApplication()->get('sef'),
+                        'patronym' => (int)$patronym,'sef' => Factory::getApplication()->get('sef'),
                         'urlclose' => Route::_('index.php?option=com_joaktree&amp;view=close'))
             );
 

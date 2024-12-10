@@ -2,6 +2,17 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
+		<version>2.1.1</version>
+        <note>
+            <item>Update : 2024-12-05</item>
+        </note>
+        <fix>
+            <item>Person Form : patronym parameter should be numeric</item>
+        </fix>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
 		<version>2.1.0</version>
         <note>
             <item>Update : 2024-12-04</item>
