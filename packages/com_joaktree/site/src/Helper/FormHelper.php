@@ -1022,11 +1022,11 @@ class FormHelper extends \StdClass
 
         $query->select(' count(code) ');
         $query->from(' #__joaktree_display_settings ');
-        $query->where(' level = '.$db->quote($gedcomtype).' ');
+        $query->where(' level = :level');
         $query->where(' published = true ');
 
         if (!empty($code)) {
-            $query->where(' code = '.$db->quote($code).' ');
+            $query->where(' code = :code ');
         } else {
             $query->where(' code NOT IN ('
                                 .$db->quote('NAME').', '
@@ -1042,7 +1042,8 @@ class FormHelper extends \StdClass
         } else {
             $query->where(' accessLiving IN '.$levels.' ');
         }
-
+        $query->bind(':level',$db->quote($gedcomtype),\Joomla\Database\ParameterType::STRING);
+        $query->bind(':code',$db->quote($code),\Joomla\Database\ParameterType::STRING);
         // Set the query and get the result list.
         $db->setquery($query);
         $result = $db->loadResult();

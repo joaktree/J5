@@ -13,6 +13,7 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
+
 namespace Joaktree\Component\Joaktree\Site\Model;
 
 // no direct access
@@ -57,13 +58,13 @@ class ChangehistoryModel extends ListModel
         // select the basics
         $query->select(' jlg.* ');
         $query->from(' #__joaktree_logs jlg ');
-        $query->where(' jlg.object    = '.$db->quote($object).' ');
+        $query->where(' jlg.object    = :object');
 
         if (!empty($appId)) {
-            $query->where(' jlg.app_id    = '.(int) $appId.' ');
+            $query->where(' jlg.app_id    = :appid');
         }
         if (!empty($objectId)) {
-            $query->where(' jlg.object_id = '.$db->quote($objectId).' ');
+            $query->where(' jlg.object_id = :objectid');
         }
         $query->order(' jlg.changeDateTime DESC ');
 
@@ -142,6 +143,9 @@ class ChangehistoryModel extends ListModel
                         .'    ) '
         );
 
+        $query->bind(':appid', $appId, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':object', $object, \Joomla\Database\ParameterType::STRING);
+        $query->bind(':objectid', $objectId, \Joomla\Database\ParameterType::STRING);
 
         return $query;
     }
@@ -167,9 +171,12 @@ class ChangehistoryModel extends ListModel
 
             $query->select(JoaktreeHelper::getConcatenatedFullName().' AS fullName ');
             $query->from(' #__joaktree_persons  jpn ');
-            $query->where(' jpn.app_id = '.(int) $appId.' ');
-            $query->where(' jpn.id     = '.$db->quote($personId).' ');
+            $query->where(' jpn.app_id = :appid');
+            $query->where(' jpn.id     = :personid');
             $query->innerJoin(JoaktreeHelper::getJoinAdminPersons(true));
+
+            $query->bind(':appid', $appId, \Joomla\Database\ParameterType::INTEGER);
+            $query->bind(':personid', $personId, \Joomla\Database\ParameterType::STRING);
 
             try {
                 $db->setquery($query);

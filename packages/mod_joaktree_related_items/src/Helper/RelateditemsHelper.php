@@ -3,7 +3,6 @@
  * Joomla! module Joaktree related items
 * file		JoaktreeHelper - helper.php
  *
- * @version	2.0.0
  * @author	Niels van Dantzig (2009-2014) - Robert Gastaud (2017-2024)
  * @package	Joomla
  * @subpackage	Joaktree
@@ -60,8 +59,9 @@ class RelateditemsHelper extends \StdClass
 			$query = $_db->getQuery(true);
 			$query->select(' metakey ');
 			$query->from(  ' #__content ');
-			$query->where( ' id = '.(int) $_id.' ');
-						
+			$query->where( ' id = :id');
+            $query->bind(':id',$_id,\Joomla\Database\ParameterType::INTEGER);
+            
 			$_db->setQuery($query);
 
 			if ($metakey = trim($_db->loadResult()))
@@ -155,8 +155,9 @@ class RelateditemsHelper extends \StdClass
 								 .'        OR (jan.living = true  AND '.$displayAccess['NAMEname']->living.'    = 2 ) '
 								 .'        ) '
 								 .'    ) ');
-				$query->where(' jpn.id = ' . $_db->quote($personId).' ');
-					 
+				$query->where(' jpn.id = :personid');
+				$query->bind(':personid',$personId,\Joomla\Database\ParameterType::STRING);
+                
 				$_db->setQuery($query);
 				
 				if ($metakey = trim($_db->loadResult()))
@@ -209,7 +210,7 @@ class RelateditemsHelper extends \StdClass
 							.'    AND cc.access    IN ' .$accessLevels.' '
 							.'    ) ');
 			
-			$query->where( ' a.id             != '.(int) $_id .' ');
+			$query->where( ' a.id             != :id');
 			$query->where( ' a.state           = 1 ');
 			$query->where( ' a.access         IN ' .$accessLevels.' ');
 			$query->where( ' ( CONCAT( "," '
@@ -229,11 +230,11 @@ class RelateditemsHelper extends \StdClass
 					                           , $likes 
 					                           ).'%" '
 					 	 .'  ) '); //remove single space after commas in keywords
-			$query->where( ' (  a.publish_up  = '.$_db->Quote($nullDate).' '
-						 .'  OR a.publish_up <= '.$_db->Quote($now).' '
+			$query->where( ' (  a.publish_up  = :nulldate'
+						 .'  OR a.publish_up <= :now'
 						 .'  ) ');
-			$query->where( ' (  a.publish_down  = '.$_db->Quote($nullDate).' '
-						 .'  OR a.publish_down >= '.$_db->Quote($now).' '
+			$query->where( ' (  a.publish_down  = :nulldate'
+						 .'  OR a.publish_down >= :now'
 						 .'  ) ');
 						 
 			// Filter by language
@@ -244,8 +245,11 @@ class RelateditemsHelper extends \StdClass
 			}
 						 
 			$query->order(' a.title ');
-			
-			
+            
+			$query->bind(':id',$_id,\Joomla\Database\ParameterType::INTEGER);
+			$query->bind(':nulldate',$nullDate,\Joomla\Database\ParameterType::STRING);
+			$query->bind(':now',$now,\Joomla\Database\ParameterType::STRING);
+
 			$_db->setQuery($query);
 			$temp = $_db->loadObjectList();
 
@@ -302,7 +306,9 @@ class RelateditemsHelper extends \StdClass
 				$query = $_db->getQuery(true);
 				$query->select(' metakey ');
 				$query->from(  ' #__content ');
-				$query->where( ' id = '.(int) $_id.' ');
+				$query->where( ' id = :id');
+                $query->bind(':id',$_id,\Joomla\Database\ParameterType::INTEGER);
+                
 				$_db->setQuery($query);
 	
 				if ($metakey = trim($_db->loadResult()))

@@ -2,14 +2,12 @@
 /**
  * Joomla! module Joaktree Today Many Years Ago
  *
- * @version	1.5.4
  * @author	Niels van Dantzig
  * @package	Joomla
  * @subpackage	Joaktree
  * @license	GNU/GPL
  *
- * Module showing events in the past
- *
+ * Joomla! 5.x conversion by Conseilgouz
  */
 
 // no direct access

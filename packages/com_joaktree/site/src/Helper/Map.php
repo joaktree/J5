@@ -2,7 +2,6 @@
 /**
  * Joomla! component Joaktree
  *
- * @version	2.0.0
  * @author	Niels van Dantzig (2009-2014) - Robert Gastaud (2017-2024)
  * @package	Joomla
  * @subpackage	Joaktree
@@ -13,6 +12,7 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
+
 namespace Joaktree\Component\Joaktree\Site\Helper;
 
 // no direct access
@@ -45,7 +45,8 @@ class Map extends \StdClass
             // select from maps
             $query->select(' jmp.* ');
             $query->from(' #__joaktree_maps jmp ');
-            $query->where(' jmp.id = '.(int) $id['map'].' ');
+            $query->where(' jmp.id = :id');
+            $query->bind(':id', $id['map'], \Joomla\Database\ParameterType::INTEGER);
 
             $this->_db->setquery($query);
             $tmp 	= $this->_db->loadAssoc();
@@ -63,7 +64,8 @@ class Map extends \StdClass
             $query->clear();
             $query->select(' jln.latitude, jln.longitude ');
             $query->from(' #__joaktree_locations jln ');
-            $query->where(' jln.id     = '.(int) $id['location'].' ');
+            $query->where(' jln.id     = :id');
+            $query->bind(':id', $id['location'], \Joomla\Database\ParameterType::INTEGER);
 
             $this->_db->setquery($query);
             $this->params 	= $this->_db->loadAssoc();
@@ -72,7 +74,8 @@ class Map extends \StdClass
             $query->clear();
             $query->select(' jte.app_id ');
             $query->from(' #__joaktree_trees jte ');
-            $query->where(' jte.id     = '.(int) $id['tree'].' ');
+            $query->where(' jte.id     = :id');
+            $query->bind(':id', $id['tree'], \Joomla\Database\ParameterType::INTEGER);
 
             $this->_db->setquery($query);
             $this->params['app_id'] 	= $this->_db->loadResult();
@@ -103,8 +106,10 @@ class Map extends \StdClass
             // select from persons admin
             $query->select(' jan.* ');
             $query->from(' #__joaktree_admin_persons jan ');
-            $query->where(' jan.app_id = '.(int) $id['app'].' ');
-            $query->where(' jan.id     = '.$this->_db->quote($id['person']).' ');
+            $query->where(' jan.app_id = :appid');
+            $query->where(' jan.id     = :personid');
+            $query->bind(':appid', $id['app'], \Joomla\Database\ParameterType::INTEGER);
+            $query->bind(':personid', $id['person'], \Joomla\Database\ParameterType::STRING);
 
             $this->_db->setquery($query);
             $this->params 	= $this->_db->loadAssoc();
@@ -500,7 +505,8 @@ class Map extends \StdClass
                              .'    AND jte.access    IN ' .$levels.' '
                              .'    ) '
             );
-            $query->where(' jtp.tree_id = ' . $this->params['tree_id'] .' ');
+            $query->where(' jtp.tree_id = :treeid');
+            $query->bind(':treeid', $this->params['tree_id'], \Joomla\Database\ParameterType::INTEGER);
         }
 
         $query->innerJoin(
@@ -582,7 +588,9 @@ class Map extends \StdClass
                              .'        )'
                              .'      ) * 6371) < '.$this->params['distance'].' ');
             } else {
-                $query->where(' jln.id = '.(int) $this->params['loc_id'].' ');
+                $query->where(' jln.id = :locid');
+                $query->bind(':locid', $this->params['loc_id'], \Joomla\Database\ParameterType::INTEGER);
+
             }
         }
 
@@ -652,24 +660,24 @@ class Map extends \StdClass
         $query = // children
                  'SELECT jrn.person_id_1 '
                 .'FROM   #__joaktree_relations  jrn '
-                .'WHERE  jrn.app_id      =  '.$this->params['app_id'].' '
-                .'AND    jrn.person_id_2 =  '.$this->_db->quote($this->params['person_id']).' '
+                .'WHERE  jrn.app_id      =  '.(int)$this->params['app_id']
+                .'AND    jrn.person_id_2 =  '.$this->_db->quote($this->params['person_id'])
                 .'AND    jrn.type        <> '.$this->_db->quote('partner').' '
                 .'UNION ' // parents
                 .'SELECT jrn.person_id_2 '
                 .'FROM   #__joaktree_relations  jrn '
-                .'WHERE  jrn.app_id      =  '.$this->params['app_id'].' '
-                .'AND    jrn.person_id_1 =  '.$this->_db->quote($this->params['person_id']).' '
+                .'WHERE  jrn.app_id      =  :appid'
+                .'AND    jrn.person_id_1 =  :personid'
                 .'AND    jrn.type        <> '.$this->_db->quote('partner').' '
                 .'UNION ' // siblings
                 .'SELECT jrn.person_id_1 '
                 .'FROM   #__joaktree_relations  jrn '
-                .'WHERE  jrn.app_id      =  '.$this->params['app_id'].' '
+                .'WHERE  jrn.app_id      =  :appid'
                 .'AND    jrn.person_id_2 IN '
                 .'( SELECT jrn2.person_id_2 '
                 .'  FROM   #__joaktree_relations jrn2 '
                 .'  WHERE  jrn2.app_id      =  jrn.app_id '
-                .'  AND    jrn2.person_id_1 =  '.$this->_db->quote($this->params['person_id']).' '
+                .'  AND    jrn2.person_id_1 =  :personid'.$this->_db->quote($this->params['person_id']).' '
                 .'  AND    jrn.type        <> '.$this->_db->quote('partner').' '
                 .') '
                 .'AND    jrn.type        <> '.$this->_db->quote('partner').' ';
@@ -689,10 +697,9 @@ class Map extends \StdClass
             $query = // children
                      'SELECT jrn.person_id_1 '
                     .'FROM   #__joaktree_relations  jrn '
-                    .'WHERE  jrn.app_id      =  '.$this->params['app_id'].' '
+                    .'WHERE  jrn.app_id      =  '.(int)$this->params['app_id']
                     .'AND    jrn.person_id_2 IN ("'.implode('","', $persons).'") '
                     .'AND    jrn.type        <> '.$this->_db->quote('partner').' ';
-
             $this->_db->setquery($query);
             $result = $this->_db->loadColumn();
 
@@ -721,7 +728,7 @@ class Map extends \StdClass
             $query = // ancestors
                      'SELECT jrn.person_id_2 '
                     .'FROM   #__joaktree_relations  jrn '
-                    .'WHERE  jrn.app_id      =  '.$this->params['app_id'].' '
+                    .'WHERE  jrn.app_id      =  '.(int)$this->params['app_id']
                     .'AND    jrn.person_id_1 IN ("'.implode('","', $persons).'") '
                     .'AND    jrn.type        <> '.$this->_db->quote('partner').' ';
 
@@ -761,7 +768,8 @@ class Map extends \StdClass
                         .'    AND jan.id     = jpn.id '
                         .'    ) '
         );
-        $query->where(' jte.id      =  '.$this->params['tree_id'].' ');
+        $query->where(' jte.id      =  :treeid');
+        $query->bind(':treeid', $this->params['tree_id'], \Joomla\Database\ParameterType::INTEGER);
 
         $this->_db->setquery($query);
         $result = $this->_db->loadObject();
@@ -775,8 +783,10 @@ class Map extends \StdClass
 
         $query->select(JoaktreeHelper::getConcatenatedFullName(false).' AS name ');
         $query->from(' #__joaktree_persons  jpn ');
-        $query->where(' jpn.app_id =  '.$this->params['app_id'].' ');
-        $query->where(' jpn.id     =  '.$this->_db->quote($this->params['person_id']).' ');
+        $query->where(' jpn.app_id =  :appid');
+        $query->where(' jpn.id     =  :personid');
+        $query->bind(':appid', $this->params['app_id'], \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':personid', $this->params['person_id'], \Joomla\Database\ParameterType::STRING);
 
         $this->_db->setquery($query);
         $result = $this->_db->loadObject();
@@ -830,7 +840,8 @@ class Map extends \StdClass
                 ' #__joaktree_themes  jth '
                              .' ON (jth.id = jte.theme_id) '
             );
-            $query->where(' jte.id   = '.(int) $this->params['tree_id'].' ');
+            $query->where(' jte.id   = :treeid');
+            $query->bind(':treeid', $this->params['tree_id'], \Joomla\Database\ParameterType::INTEGER);
 
             // retrieve the name
             $this->_db->setquery($query);

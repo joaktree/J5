@@ -9,6 +9,9 @@
         <fix>
             <item>Person Form : patronym parameter should be numeric</item>
         </fix>
+        <change>
+            <item>Use prepared statements for db requests</item>
+        </change>
     </changelog>
 	<changelog>
 		<element>com_joaktree</element>

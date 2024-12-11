@@ -130,11 +130,14 @@ class JoaktreeHelper
                                             .'ON     (   jte.app_id = jan.app_id '
                                             .'       AND jte.id     = jan.default_tree_id '
                                             .'       ) ');
-                        $query->where(' jan.app_id    = '.$app_id.' ');
-                        $query->where(' jan.id        = '.$db->Quote($personId).' ');
+                        $query->where(' jan.app_id    = :appid');
+                        $query->where(' jan.id        = :personid');
                         $query->where(' jan.published = true ');
                         $query->where(' jte.access    IN '.$levels.' ');
                         $query->where(' jte.published = true ');
+                        $query->bind(':appid', $app_id, \Joomla\Database\ParameterType::INTEGER);
+                        $query->bind(':personid', $personId, \Joomla\Database\ParameterType::STRING);
+
                         try {
                             $db->setquery($query);
                             $tmp3 = $db->loadResult();
@@ -199,8 +202,9 @@ class JoaktreeHelper
                         $query = $db->getquery(true);
                         $query->select(' root_person_id ');
                         $query->from(' #__joaktree_trees ');
-                        $query->where(' id = '.$treeId.' ');
+                        $query->where(' id = :treeid');
                         $query->where(' access IN '.$levels.' ');
+                        $query->bind(':treeid', $treeId, \Joomla\Database\ParameterType::INTEGER);
                         try {
                             $db->setquery($query);
                             $tmp = $db->loadResult();
@@ -281,8 +285,9 @@ class JoaktreeHelper
                         $query = $db->getquery(true);
                         $query->select(' app_id ');
                         $query->from(' #__joaktree_trees ');
-                        $query->where(' id = '.$treeId.' ');
+                        $query->where(' id = :treeid');
                         $query->where(' access IN '.$levels.' ');
+                        $query->bind(':treeid', $treeId, \Joomla\Database\ParameterType::INTEGER);
                         try {
                             $db->setquery($query);
                             $tmp = $db->loadResult();
@@ -307,7 +312,8 @@ class JoaktreeHelper
                 $query = $db->getquery(true);
                 $query->select(' title ');
                 $query->from(' #__joaktree_applications ');
-                $query->where(' id = '.(int) $appId.' ');
+                $query->where(' id = :appid');
+                $query->bind(':appid', $appId, \Joomla\Database\ParameterType::INTEGER);
                 $db->setquery($query);
                 $_appName = $db->loadResult();
             } else {
@@ -506,7 +512,8 @@ class JoaktreeHelper
                 $query->select(' jte.access ');
                 $query->from(' #__joaktree_trees  jte ');
                 $query->where(' jte.published = true ');
-                $query->where(' jte.id = ' . $treeId.' ');
+                $query->where(' jte.id = :treeid');
+                $query->bind(':treeid', $treeId, \Joomla\Database\ParameterType::INTEGER);
                 try {
                     $db->setquery($query);
                     $jte_access = $db->loadResult();
@@ -530,9 +537,13 @@ class JoaktreeHelper
                             $query = $db->getquery(true);
                             $query->select(' 1 AS result ');
                             $query->from(' #__joaktree_tree_persons  jtp ');
-                            $query->where(' jtp.app_id    = '.$person->app_id.' ');
-                            $query->where(' jtp.person_id = '.$db->Quote($person->id).' ');
-                            $query->where(' jtp.tree_id   = ' . $treeId.' ');
+                            $query->where(' jtp.app_id    = :appid');
+                            $query->where(' jtp.person_id = :personid');
+                            $query->where(' jtp.tree_id   = :treeid');
+                            $query->bind(':appid', $person->app_id, \Joomla\Database\ParameterType::INTEGER);
+                            $query->bind(':personid', $person->id, \Joomla\Database\ParameterType::STRING);
+                            $query->bind(':treeid', $treeId, \Joomla\Database\ParameterType::INTEGER);
+
                             try {
                                 $db->setquery($query);
                                 $related = $db->loadResult();
@@ -576,7 +587,8 @@ class JoaktreeHelper
                 $query->select(' jte.access ');
                 $query->from(' #__joaktree_trees  jte ');
                 $query->where(' jte.published = true ');
-                $query->where(' jte.app_id = ' . $appId.' ');
+                $query->where(' jte.app_id = :appid');
+                $query->bind(':appid', $appId, \Joomla\Database\ParameterType::INTEGER);
                 try {
                     $db->setquery($query);
                     $trees = $db->loadObjectList();
@@ -676,7 +688,8 @@ class JoaktreeHelper
                 $query->select(' jte.access ');
                 $query->from(' #__joaktree_trees  jte ');
                 $query->where(' jte.published = true ');
-                $query->where(' jte.id = ' . $treeId.' ');
+                $query->where(' jte.id        = :treeid');
+                $query->bind(':treeid', $treeId, \Joomla\Database\ParameterType::INTEGER);
                 $db->setquery($query);
                 $jte_access = $db->loadResult();
                 if (isset($jte_access) && isset($userAccess) && in_array($jte_access, $userAccess)) {
@@ -1156,7 +1169,8 @@ class JoaktreeHelper
         $query = $db->getquery(true);
         $query->select(' id ');
         $query->from(' #__joaktree_notes ');
-        $query->where(' app_id = '.(int) $app_id.' ');
+        $query->where(' app_id = :appid');
+        $query->bind(':appid', $app_id, \Joomla\Database\ParameterType::INTEGER);
         $db->setquery($query, 0, 1);
         $tmp = $db->loadResult();
         return ((isset($tmp)) ? true : false);
@@ -1180,7 +1194,8 @@ class JoaktreeHelper
                 ' #__joaktree_themes  jth '
                              .' ON (jth.id = jte.theme_id) '
             );
-            $query->where(' jte.id   = '.(int) $treeId.' ');
+            $query->where(' jte.id   = :treeid');
+            $query->bind(':treeid', $treeId, \Joomla\Database\ParameterType::INTEGER);
         }
         // retrieve the name
         $db->setquery($query);
@@ -1213,7 +1228,8 @@ class JoaktreeHelper
             $query->select(' jte.indMarriageCount ');
             $query->select(' jte.robots AS treeRobots ');
             $query->from(' #__joaktree_trees   jte ');
-            $query->where(' jte.id   = '.(int) $treeId.' ');
+            $query->where(' jte.id   = :treeid');
+            $query->bind(':treeid', $treeId, \Joomla\Database\ParameterType::INTEGER);
         }
         $db->setquery($query);
         $tree = $db->loadObject();
@@ -1238,7 +1254,8 @@ class JoaktreeHelper
             $query->select(' japp.title AS gedcomName ');
             $query->select(' japp.params ');
             $query->from(' #__joaktree_applications   japp ');
-            $query->where(' japp.id   = '.(int) $appId.' ');
+            $query->where(' japp.id   = :appid');
+            $query->bind(':appid', $appId, \Joomla\Database\ParameterType::INTEGER);
             $db->setquery($query);
             $gedcom = $db->loadObject();
             if (is_object($gedcom)) {

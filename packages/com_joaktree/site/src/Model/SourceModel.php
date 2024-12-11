@@ -102,10 +102,7 @@ class SourceModel extends FormModel
         $query->from(' #__joaktree_sources jse ');
 
         // Get the WHERE, GROUP BY and ORDER BY clauses for the query
-        $wheres      	= $this->_buildContentWhere();
-        foreach ($wheres as $where) {
-            $query->where(' '.$where.' ');
-        }
+        $query      	= $this->_buildContentWhere($query);
 
         $this->_db->setquery($query);
         $item = $this->_db->loadObject();
@@ -129,20 +126,24 @@ class SourceModel extends FormModel
         return $item;
     }
 
-    private function _buildContentWhere()
+    private function _buildContentWhere($query)
     {
         $appId     	= intval($this->getApplicationId());
         $sourceId     = $this->getSourceId();
         $where = array();
 
         if ($appId) {
-            $where[] = ' jse.app_id = '.$appId.' ';
+            $query->where(' jse.app_id = :appid');
+            $query->bind(':appid', $appId, \Joomla\Database\ParameterType::INTEGER);
+
         }
 
         if ($sourceId) {
-            $where[] = ' jse.id = '.$this->_db->quote($sourceId).' ';
+            $query->where(' jse.id = :sourceid');
+            $query->bind(':sourceid', $sourceId, \Joomla\Database\ParameterType::INTEGER);
+
         }
-        return $where;
+        return $query;
     }
 
     public function save($form)
@@ -305,8 +306,8 @@ class SourceModel extends FormModel
         $query = $this->_db->getquery(true);
         $query->select(' 1 ');
         $query->from(' #__joaktree_sources ');
-        $query->where(' id   = '.$this->_db->quote($tmpId).' ');
-
+        $query->where(' id   = :tmpid');
+        $query->bind(':tmpid', $tmpId, \Joomla\Database\ParameterType::STRING);
         $this->_db->setquery($query);
         $result = $this->_db->loadResult();
 

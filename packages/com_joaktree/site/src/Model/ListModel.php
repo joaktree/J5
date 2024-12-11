@@ -13,6 +13,7 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
+
 namespace Joaktree\Component\Joaktree\Site\Model;
 
 // no direct access
@@ -72,9 +73,7 @@ class ListModel extends BaseDatabaseModel
 
     private function _buildquery()
     {
-        $treeId     	= intval($this->getTreeId());
         $levels			= JoaktreeHelper::getUserAccessLevels();
-        $displayAccess 	= JoaktreeHelper::getDisplayAccess();
 
         $query = $this->_db->getquery(true);
 
@@ -112,10 +111,7 @@ class ListModel extends BaseDatabaseModel
         $query->leftJoin(JoaktreeHelper::getJoinDeath());
 
         // Get the WHERE, GROUP BY and ORDER BY clauses for the query
-        $wheres      	= $this->_buildContentWhere();
-        foreach ($wheres as $where) {
-            $query->where(' '.$where.' ');
-        }
+        $query      	= $this->_buildContentWhere($query);
         $query->group(' jpn.id ');
         $query->group(' jpn.app_id ');
         $query->order(' '.$this->_buildContentOrderBy().' ');
@@ -124,12 +120,11 @@ class ListModel extends BaseDatabaseModel
         return $query;
     }
 
-    private function _buildContentWhere()
+    private function _buildContentWhere($query)
     {
         $app 		= Factory::getApplication('site');
         $treeId     = intval($this->getTreeId());
         $levels		= JoaktreeHelper::getUserAccessLevels();
-        $params 	= JoaktreeHelper::getJTParams();
 
         $context	= 'com_joaktree.list.list.';
 
@@ -150,30 +145,25 @@ class ListModel extends BaseDatabaseModel
         $search4	= $this->_db->escape($search4, true);
         $search4 = implode("", explode("\\", $search4));
         $search4	= stripslashes($search4);
-        //Factory::getApplication()->enqueueMessage($search4);
-        $where = array();
 
         if ($treeId) {
-            $where[] = 'jtp.tree_id = ' . $treeId;
+            $query->where('jtp.tree_id = :treeid');
+            $query->bind(':treeid', $treeId, \Joomla\Database\ParameterType::INTEGER);
         }
-
-
-
-
         if ($search1) {
-            $where[] = 'LOWER(jpn.firstName) LIKE '.$this->_db->Quote('%'.$search1.'%');
+            $query->where('LOWER(jpn.firstName) LIKE '.$this->_db->Quote('%'.$search1.'%'));
         }
 
         if ($search2) {
-            $where[] = 'LOWER(jpn.patronym) LIKE '.$this->_db->Quote('%'.$search2.'%');
+            $query->where('LOWER(jpn.patronym) LIKE '.$this->_db->Quote('%'.$search2.'%'));
         }
 
         if ($search3) {
-            $where[] = 'LOWER(jpn.familyName) LIKE '.$this->_db->Quote('%'.$search3.'%') ;
+            $query->where('LOWER(jpn.familyName) LIKE '.$this->_db->Quote('%'.$search3.'%')) ;
         }
 
         if ($search4) {
-            $where[] = 	 'EXISTS '
+            $query->where('EXISTS '
                         .'( '
                         .'SELECT 1 '
                         .'FROM   #__joaktree_person_events     ejpe '
@@ -225,12 +215,12 @@ class ListModel extends BaseDatabaseModel
                         .'       ) '
                         .'AND    ejre.app_id    = jpn.app_id '
                         .'AND    ejre.location  = '.$this->_db->Quote($search4).' '
-                        .') ';
+                        .') ');
         }
 
         //$where 		= ( count( $where ) ? ' WHERE '. implode( ' AND ', $where ) : '' );
 
-        return $where;
+        return $query;
     }
 
     private function _buildContentOrderBy()
@@ -259,7 +249,7 @@ class ListModel extends BaseDatabaseModel
             $query = $this->_buildquery();
             $this->_personlist = $this->_getList($query, $this->getState('limitstart'), $this->getState('limit'));
             if (!count($this->_personlist) && $this->getState('limitstart') > 0) {
-            // fix pagination : not on first page : retry
+                // fix pagination : not on first page : retry
                 $this->setState('limitstart', 0);
                 $this->_personlist = $this->_getList($query, $this->getState('limitstart'), $this->getState('limit'));
             }
@@ -361,8 +351,8 @@ class ListModel extends BaseDatabaseModel
         $query->select(' jrn.family_id ');
         $query->select(' jrn.person_id_'.$number2.' AS relation_id ');
         $query->from(' #__joaktree_relations  jrn ');
-        $query->where(' jrn.app_id = '.$appId.' ');
-        $query->where(' jrn.person_id_'.$number1.' = '.$db->quote($personId).' ');
+        $query->where(' jrn.app_id = :appid');
+        $query->where(' jrn.person_id_'.$number1.' = :personid');
         $query->where(' jrn.type = '.$db->quote('partner').' ');
 
         // select name partner
@@ -376,6 +366,9 @@ class ListModel extends BaseDatabaseModel
 
         // select from admin persons
         $query->innerJoin(JoaktreeHelper::getJoinAdminPersons());
+
+        $query->bind(':appid', $appId, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':personid', $personId, \Joomla\Database\ParameterType::STRING);
 
         $db->setquery($query);
         $partners  = $db->loadAssocList();
@@ -391,8 +384,8 @@ class ListModel extends BaseDatabaseModel
         // select relationship
         $query->select(' DISTINCT jrn.family_id ');
         $query->from(' #__joaktree_relations  jrn ');
-        $query->where(' jrn.app_id = '.$appId.' ');
-        $query->where(' jrn.person_id_2 = '.$db->quote($personId).' ');
+        $query->where(' jrn.app_id = :appid');
+        $query->where(' jrn.person_id_2 = :personid');
         $query->where(' jrn.type IN ('.$db->quote('father').', '.$db->quote('mother').') ');
         $query->where(
             ' NOT EXISTS '
@@ -403,6 +396,8 @@ class ListModel extends BaseDatabaseModel
                      . '   AND    jrn2.type      = '.$db->quote('partner').' '
                      . ' ) '
         );
+        $query->bind(':appid', $appId, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':personid', $personId, \Joomla\Database\ParameterType::STRING);
 
         $db->setquery($query);
         $familyId  = $db->loadResult();

@@ -2,7 +2,6 @@
 /**
  * Joomla! component Joaktree
  *
- * @version	2.0.0
  * @author	Niels van Dantzig (2009-2014) - Robert Gastaud (2017-2024)
  * @package	Joomla
  * @subpackage	Joaktree
@@ -125,8 +124,8 @@ class Person extends \StdClass
                           .'   )                   AS indCitation ');
         }
         $query->from(' #__joaktree_persons   jpn ');
-        $query->where(' jpn.app_id    = '.$id[ 'app_id' ].' ');
-        $query->where(' jpn.id        = '.$this->_db->Quote($id[ 'person_id' ]).' ');
+        $query->where(' jpn.app_id    = :appid');
+        $query->where(' jpn.id        = :personid');
         // select from admin persons
         $query->select(' jan.living            AS living ');
         $query->select(' jan.published         AS published ');
@@ -157,7 +156,9 @@ class Person extends \StdClass
                           .'   , false '
                           .'   )                   AS indAltSource ');
         }
-
+        $query->bind(':appid',$id[ 'app_id' ],\Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':personid',$id[ 'person_id' ],\Joomla\Database\ParameterType::STRING);
+        
         $query->innerJoin(JoaktreeHelper::getJoinAdminPersons(true));
 
         if ($indFull) {
@@ -168,7 +169,7 @@ class Person extends \StdClass
                 ' #__joaktree_tree_persons  jtp '
                              .' ON (   jtp.app_id    = jpn.app_id '
                              .'    AND jtp.person_id = jpn.id '
-                             .'    AND jtp.tree_id   = '.$id[ 'tree_id' ].' '
+                             .'    AND jtp.tree_id   = :treeid'
                              .'    ) '
             );
             $query->innerJoin(
@@ -191,6 +192,7 @@ class Person extends \StdClass
                             .'    ) '
             );
         }
+        $query->bind(':treeid',$id[ 'tree_id' ],\Joomla\Database\ParameterType::INTEGER);
         // select birth and death dates for ancestors
         if ($type == 'ancestor') {
             // select from birth
@@ -293,8 +295,8 @@ class Person extends \StdClass
             $query->select(' DATE_FORMAT( jpn.lastUpdateTimeStamp, "%e %b %Y" ) '
                           .'                       AS lastUpdateDate ');
             $query->from(' #__joaktree_persons   jpn ');
-            $query->where(' jpn.app_id    = '.$id[ 'app_id' ].' ');
-            $query->where(' jpn.id        = '.$this->_db->Quote($id[ 'person_id' ]).' ');
+            $query->where(' jpn.app_id    = :appid');
+            $query->where(' jpn.id        = :personid');
             $query->where(
                 ' NOT EXISTS '
                          . ' ( SELECT 1 '
@@ -335,19 +337,21 @@ class Person extends \StdClass
                           .'   , true '
                           .'   , false '
                           .'   )                   AS indAltSource ');
+                          
             $query->innerJoin(JoaktreeHelper::getJoinAdminPersons(true));
             // robots
             $query->select(' IF((jan.robots > 0), jan.robots, jte.robots ) AS robots ');
             $query->leftJoin(
                 ' #__joaktree_trees    jte '
                             .' ON (   jte.app_id    = jan.app_id '
-                            .'    AND jte.id        = IFNULL( jan.default_tree_id '
-                            .'                              , '.$id[ 'tree_id' ].' '
-                            .'                              ) '
+                            .'    AND jte.id        = IFNULL( jan.default_tree_id , :treeid) '
                             .'    AND jte.published = true '
                             .'    AND jte.access    IN '.$this->_levels.' '
                             .'    ) '
             );
+            $query->bind(':appid',$id[ 'app_id' ],\Joomla\Database\ParameterType::INTEGER);
+            $query->bind(':personid',$id[ 'person_id' ],\Joomla\Database\ParameterType::STRING);
+            $query->bind(':treeid',$id[ 'tree_id' ],\Joomla\Database\ParameterType::INTEGER);
             try {
                 $this->_db->setquery($query);
                 $person  = $this->_db->loadAssoc();
@@ -436,8 +440,11 @@ class Person extends \StdClass
         $query =  $this->_db->getquery(true);
         $query->select(' jtp.tree_id ');
         $query->from(' #__joaktree_tree_persons  jtp ');
-        $query->where(' jtp.app_id    = '.$this->app_id.' ');
-        $query->where(' jtp.person_id = '.$this->_db->Quote($this->id).' ');
+        $query->where(' jtp.app_id    = :appid');
+        $query->where(' jtp.person_id = :personid');
+        $query->bind(':appid',$this->app_id,\Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':personid',$this->id,\Joomla\Database\ParameterType::STRING);
+        
         $this->_db->setquery($query);
         $trees  = $this->_db->loadColumn();
         return $trees;
@@ -451,8 +458,8 @@ class Person extends \StdClass
         $query->select(' jpn.orderNumber ');
         $query->select(' jpn.code ');
         $query->from(' #__joaktree_person_names  jpn ');
-        $query->where(' jpn.app_id    = '.$this->app_id.' ');
-        $query->where(' jpn.person_id = '.$this->_db->Quote($this->id).' ');
+        $query->where(' jpn.app_id    = :appid');
+        $query->where(' jpn.person_id = :personid');
         // select from settings
         $query->select(' jds.ordering ');
         $query->innerJoin(
@@ -528,6 +535,9 @@ class Person extends \StdClass
                          .' ) '
             );
         }
+        $query->bind(':appid',$this->app_id,\Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':personid',$this->id,\Joomla\Database\ParameterType::STRING);
+        
         try {
             $this->_db->setquery($query);
             $personNames  = $this->_db->loadObjectList();
@@ -558,8 +568,9 @@ class Person extends \StdClass
             );
             $query->select(' jpe.orderNumber ');
             $query->from(' #__joaktree_person_events  jpe ');
-            $query->where(' jpe.app_id    = '.$this->app_id.' ');
-            $query->where(' jpe.person_id = '.$this->_db->Quote($this->id).' ');
+            $query->where(' jpe.app_id    = :appid');
+            $query->where(' jpe.person_id = :personid');
+            
             // select from settings
             $query->select(' jds.ordering ');
             $query->innerJoin(
@@ -658,6 +669,9 @@ class Person extends \StdClass
                                  .'    ) '
                 );
             }
+            $query->bind(':appid',$this->app_id,\Joomla\Database\ParameterType::INTEGER);
+            $query->bind(':personid',$this->id,\Joomla\Database\ParameterType::STRING);
+            
             $this->_db->setquery($query);
             $personEvents  = $this->_db->loadObjectList();
         }
@@ -678,9 +692,9 @@ class Person extends \StdClass
         $query->select(' jrn.indNote ');
         $query->select(' jrn.indCitation ');
         $query->from(' #__joaktree_relations jrn ');
-        $query->where(' jrn.app_id              = '.$this->app_id.' ');
-        $query->where(' jrn.person_id_'.$pid1.' = '.$this->_db->Quote($this->id).' ');
-        $query->where(' jrn.type                = '.$this->_db->Quote($relationType).' ');
+        $query->where(' jrn.app_id              = :appid');
+        $query->where(' jrn.person_id_'.$pid1.' = :personid');
+        $query->where(' jrn.type                = :relationtype');
         $query->group(' jrn.app_id ');
         $query->group(' jrn.person_id_'.$pid2.' ');
         $query->group(' jrn.family_id ');
@@ -740,6 +754,10 @@ class Person extends \StdClass
                         .'        ) '
                         .'    ) '
         );
+        $query->bind(':appid',$this->app_id,\Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':personid',$this->id,\Joomla\Database\ParameterType::STRING);
+        $query->bind(':relationtype',$relationType,\Joomla\Database\ParameterType::STRING);
+        
         return $query;
     }
 
@@ -819,8 +837,8 @@ class Person extends \StdClass
         $query->select(' jrn.indNote ');
         $query->select(' jrn.indCitation ');
         $query->from(' #__joaktree_relations jrn ');
-        $query->where(' jrn.app_id      = '.$this->app_id.' ');
-        $query->where(' jrn.person_id_2 = '.$this->_db->Quote($this->id).' ');
+        $query->where(' jrn.app_id      = :appid');
+        $query->where(' jrn.person_id_2 = :personid');
         $query->where(' jrn.type IN ('.$this->_db->Quote('father').','.$this->_db->Quote('mother').') ');
         $query->order(' jrn.orderNumber_2 ');
         // privacy filter from admin persons
@@ -845,7 +863,7 @@ class Person extends \StdClass
                         .' ON (   jrn2.app_id      = jrn.app_id '
                         .'    AND jrn2.person_id_1 = jrn.person_id_1 '
                         .'    AND jrn2.family_id   = jrn.family_id '
-                        .'    AND jrn2.person_id_2 <> ' . $this->_db->Quote($this->id) . ' '
+                        .'    AND jrn2.person_id_2 <> :personid'
                         .'    AND jrn2.type IN ('.$this->_db->Quote('father').','.$this->_db->Quote('mother').') '
                         .'    )'
         );
@@ -896,6 +914,9 @@ class Person extends \StdClass
         $query->group(' jrn.indNote ');
         $query->group(' jrn.indCitation ');
 
+        $query->bind(':appid',$this->app_id,\Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':personid',$this->id,\Joomla\Database\ParameterType::STRING);
+
         $children = $this->getRelations($query, $type);
         return $children;
     }
@@ -918,12 +939,12 @@ class Person extends \StdClass
         );
         $query->select(' jre.orderNumber ');
         $query->from(' #__joaktree_relation_events  jre ');
-        $query->where(' jre.app_id             = '.$this->app_id.' ');
-        $query->where(' (  (   jre.person_id_1 = '.$this->_db->Quote($this->id).' '
-                .'             AND jre.person_id_2 = '.$this->_db->Quote($relation_id).' '
+        $query->where(' jre.app_id             = :appid');
+        $query->where(' (  (   jre.person_id_1 = :personid'
+                .'             AND jre.person_id_2 = :relation'
                 .'             ) '
-                .'          OR (   jre.person_id_2 = '.$this->_db->Quote($this->id).' '
-                .'             AND jre.person_id_1 = '.$this->_db->Quote($relation_id).' '
+                .'          OR (   jre.person_id_2 =:personid '
+                .'             AND jre.person_id_1 = :relation'
                 .'             ) '
                 .'          ) ');
         // select from settings
@@ -1009,6 +1030,10 @@ class Person extends \StdClass
                          . ' ) '
             );
         }
+        $query->bind(':appid',$this->app_id,\Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':personid',$this->id,\Joomla\Database\ParameterType::STRING);
+        $query->bind(':relation',$relation_id,\Joomla\Database\ParameterType::STRING);
+
         $this->_db->setquery($query);
         $this->partnerEvents  = $this->_db->loadObjectList();
         return $this->partnerEvents;
@@ -1504,7 +1529,7 @@ class Person extends \StdClass
             $query->from(' #__content       AS a ');
             $query->where(' a.state           = 1 ');
             $query->where(' a.access         IN ' .$this->_levels .' ');
-            $query->where(' a.id             = '.$articleId.' ');
+            $query->where(' a.id             = :articleid');
             // Filter by language
             if ($this->languageFilter) {
                 $query->where('a.language in  ('.$this->_db->Quote(Factory::getApplication()->getLanguage()->getTag())
@@ -1559,10 +1584,14 @@ class Person extends \StdClass
                             .'    AND jne.id     = jpn.note_id '
                             .'    ) '
             );
-            $query->where(' jpn.app_id       = '.$app_id.' ');
-            $query->where(' jpn.person_id    = '.$this->_db->Quote($person_id).' ');
-            $query->where(' jpn.orderNumber  = '.$articleId.' ');
+            $query->where(' jpn.app_id       = :appid');
+            $query->where(' jpn.person_id    = :personid');
+            $query->where(' jpn.orderNumber  = :articleid');
         }
+        $query->bind(':appid',$app_id,\Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':personid',$person_id,\Joomla\Database\ParameterType::STRING);
+        $query->bind(':articleid',$articleId,\Joomla\Database\ParameterType::INTEGER);        
+
         $this->_db->setquery($query);
         $article = $this->_db->loadObject();
         // Convert parameter fields to objects for article.
@@ -1616,7 +1645,7 @@ class Person extends \StdClass
                     $joomlaroot = $params->get('joomlaDocumentRoot', '');
                     $query->select(' jdt.* ');
                     $query->from(' #__joaktree_documents  jdt ');
-                    $query->where(' jdt.app_id = '.$this->app_id.' ');
+                    $query->where(' jdt.app_id = :appid ');
                     $query->where(
                         ' UPPER(jdt.fileformat) IN '
                                   .'   ('.$this->_db->quote('GIF').' '
@@ -1630,9 +1659,12 @@ class Person extends \StdClass
                         ' #__joaktree_person_documents  jpd '
                                      .' ON (   jpd.app_id      = jdt.app_id '
                                      .'    AND jpd.document_id = jdt.id '
-                                     .'    AND jpd.person_id   = '.$this->_db->quote($this->id).' '
+                                     .'    AND jpd.person_id   = :personid'
                                      .'    ) '
                     );
+                    $query->bind(':appid',$this->app_id,\Joomla\Database\ParameterType::INTEGER);        
+                    $query->bind(':personid',$this->id,\Joomla\Database\ParameterType::STRING);
+                    
                     $this->_db->setquery($query);
                     $result = $this->_db->loadObjectList();
                     foreach ($result as $pic_i => $picture) {
@@ -1677,7 +1709,9 @@ class Person extends \StdClass
                         $query->select(' name ');
                         $query->select(' app_id ');
                         $query->from(' #__joaktree_trees ');
-                        $query->where(' id = '.$this->tree_id.' ');
+                        $query->where(' id = :treeid');
+                        $query->bind(':treeid',$this->tree_id,\Joomla\Database\ParameterType::INTEGER);
+                        
                         $this->_db->setquery($query);
                         $result				= $this->_db->loadObject();
                         $directory = $result->name;

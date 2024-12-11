@@ -13,6 +13,7 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
+
 namespace Joaktree\Component\Joaktree\Site\Model;
 
 // no direct access
@@ -62,9 +63,11 @@ class JoaktreestartModel extends BaseDatabaseModel
                 ' #__joaktree_persons  jpn '
                              .' ON ( jpn.app_id = jte.app_id ) '
             );
-            $query->where(' jte.id = '.(int) $treeId.' ');
+            $query->where(' jte.id = :treeid');
             $query->where(' jpn.familyName <> '.$this->_db->quote('').' ');
             $query->order(' jpn.indexNam ');
+            $query->bind(':treeid', $treeId, \Joomla\Database\ParameterType::INTEGER);
+
             $this->_db->setquery($query);
             $results = $this->_db->loadRowList();
             $params = JoaktreeHelper::getJTParams();
@@ -112,11 +115,10 @@ class JoaktreestartModel extends BaseDatabaseModel
     private function _buildPersonCountquery()
     {
         $treeId         = intval($this->getTreeId());
-        $displayAccess	= JoaktreeHelper::getDisplayAccess();
         $query	= $this->_db->getquery(true);
         $query->select(' COUNT(jtp.person_id)          AS personCount ');
         $query->from(' #__joaktree_trees             jte ');
-        $query->where(' jte.id = ' . $treeId . ' ');
+        $query->where(' jte.id = :treeid');
         $query->where(' jte.access IN '.JoaktreeHelper::getUserAccessLevels().' ');
 
         $query->innerJoin(
@@ -127,18 +129,19 @@ class JoaktreestartModel extends BaseDatabaseModel
         );
         $query->innerJoin(JoaktreeHelper::getJoinAdminPersons(true, 'jtp'));
 
+        $query->bind(':treeid', $treeId, \Joomla\Database\ParameterType::INTEGER);
+
         return $query;
     }
 
     private function _buildMarriageCountquery()
     {
         $treeId         = intval($this->getTreeId());
-        $displayAccess	= JoaktreeHelper::getDisplayAccess();
         $query	= $this->_db->getquery(true);
 
         $query->select(' COUNT(jre.app_id)             AS marriageCount ');
         $query->from(' #__joaktree_trees             jte ');
-        $query->where(' jte.id = '.$treeId.' ');
+        $query->where(' jte.id = :treeid');
         $query->where(' jte.access IN '.JoaktreeHelper::getUserAccessLevels().' ');
 
         $query->innerJoin(
@@ -156,6 +159,8 @@ class JoaktreestartModel extends BaseDatabaseModel
         );
         $query->innerJoin(JoaktreeHelper::getJoinAdminPersons(true, 'jre', 1));
         $query->innerJoin(JoaktreeHelper::getJoinAdminPersons(true, 'jre', 2));
+
+        $query->bind(':treeid', $treeId, \Joomla\Database\ParameterType::INTEGER);
 
         return $query;
     }
@@ -200,20 +205,13 @@ class JoaktreestartModel extends BaseDatabaseModel
         $query->innerJoin(JoaktreeHelper::getJoinAdminPersons(false));
 
         // Get the WHERE clauses for the query
-        $wheres      	=  $this->_buildContentWhere();
-        foreach ($wheres as $where) {
-            $query->where(' '.$where.' ');
-        }
-
-        // GROUP BY
+        $query      	=  $this->_buildContentWhere($query);
         $query->group(' '.$displayFamilyName.' ');
-
-
 
         return $query;
     }
 
-    private function _buildContentWhere()
+    private function _buildContentWhere($query)
     {
         $app 		= Factory::getApplication('site');
 
@@ -236,23 +234,24 @@ class JoaktreestartModel extends BaseDatabaseModel
         $filters	= $index[$filterId];
         // done with filter for index
 
-        $wheres 		= array();
         $treeId 		= intval($this->getTreeId());
 
-        $wheres[]  		= 'jpn.familyName <> '.$this->_db->quote('').' ';
+        $query->where('jpn.familyName <> '.$this->_db->quote('').' ');
 
         if ($treeId) {
-            $wheres[] = 'jtp.tree_id = ' . $treeId;
-            $wheres[] = 'jte.access IN ' . JoaktreeHelper::getUserAccessLevels();
+            $query->where('jtp.tree_id = :treeid');
+            $query->where('jte.access IN ' . JoaktreeHelper::getUserAccessLevels());
         }
 
         if ($filters) {
-            $wheres[] = (count($filters) == 1)
-                            ? ' jpn.indexNam =  "'.array_shift($filters).'" '
-                            : ' jpn.indexNam IN ("'.implode('","', $filters).'" ) ';
+            if (count($filters) == 1) {
+                $query->where(' jpn.indexNam =  "'.array_shift($filters).'" ');
+            } else {
+                $query->where(' jpn.indexNam IN ("'.implode('","', $filters).'" ) ');
+            }
         }
-
-        return $wheres;
+        $query->bind(':treeid', $treeId, \Joomla\Database\ParameterType::INTEGER);
+        return $query;
     }
 
     public function getNamelist()
@@ -275,8 +274,10 @@ class JoaktreestartModel extends BaseDatabaseModel
 
             $query->select(' * ');
             $query->from(' #__joaktree_trees ');
-            $query->where(' id = '.$treeId.' ');
+            $query->where(' id = :treeid');
             $query->where(' access IN '.JoaktreeHelper::getUserAccessLevels().' ');
+
+            $query->bind(':treeid', $treeId, \Joomla\Database\ParameterType::INTEGER);
 
             $this->_db->setquery($query);
             $this->_treeinfo = $this->_db->loadObject();

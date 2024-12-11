@@ -99,10 +99,7 @@ class RepositoryModel extends FormModel
         );
 
         // Get the WHERE, GROUP BY and ORDER BY clauses for the query
-        $wheres      	= $this->_buildContentWhere();
-        foreach ($wheres as $where) {
-            $query->where(' '.$where.' ');
-        }
+        $query      	= $this->_buildContentWhere($query);
         $query->group(' jry.name ');
         $query->group(' jry.website ');
         $query->group(' jry.id ');
@@ -121,22 +118,21 @@ class RepositoryModel extends FormModel
 
         return $item;
     }
-    private function _buildContentWhere()
+    private function _buildContentWhere($query)
     {
         $appId     	= intval($this->getApplicationId());
         $repoId     = $this->getRepoId();
 
-        $where = array();
-
         if ($appId) {
-            $where[] = ' jry.app_id = '.$appId.' ';
+            $query->where(' jry.app_id = :appid');
+            $query->bind(':appid', $appId, \Joomla\Database\ParameterType::INTEGER);
         }
 
         if ($repoId) {
-            $where[] = ' jry.id = '.$this->_db->quote($repoId).' ';
+            $query->where(' jry.id = :repoid');
+            $query->bind(':repoid', $repoId, \Joomla\Database\ParameterType::INTEGER);
         }
-
-        return $where;
+        return $query;
     }
 
     public function save($form)

@@ -1,7 +1,7 @@
 <?php
 /**
  * Joomla! module Joaktree related items
- * file		JoaktreeHelper - helper.php
+ * file		VersionField
  *
  * @version	2.0.0
  * @author	Niels van Dantzig (2009-2014) - Robert Gastaud (2017-2024)
@@ -49,7 +49,8 @@ class VersionField extends FormField
 		$query
 			->select($db->quoteName('manifest_cache'))
 			->from($db->quoteName('#__extensions'))
-			->where($db->quoteName('element') . '=' . $db->Quote($extension));
+			->where($db->quoteName('element') . '= :extension');
+        $query->bind(':extension',$extension,\Joomla\Database\ParameterType::STRING);
 		$db->setQuery($query, 0, 1);
 		$row = $db->loadAssoc();
 		$tmp = json_decode($row['manifest_cache']);

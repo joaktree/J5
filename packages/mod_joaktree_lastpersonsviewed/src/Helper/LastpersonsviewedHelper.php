@@ -3,7 +3,6 @@
  * Joomla! module Joaktree last persons viewed
  * file		JoaktreeHelper - helper.php
  *
- * @version	2.0.0
  * @author	Niels van Dantzig (2009-2014) - Robert Gastaud (2017-2024)
  * @package	Joomla
  * @subpackage	Joaktree
@@ -81,8 +80,8 @@ class LastpersonsviewedHelper
                 if (!empty($app_id) && !empty($person_id) && !empty($tree_id)) {
                     $query->select(JoaktreeHelper::getConcatenatedFullName().' AS fullName ');
                     $query->from(' #__joaktree_persons   jpn ');
-                    $query->where(' jpn.app_id    = '.$app_id.' ');
-                    $query->where(' jpn.id        = '.$db->Quote($person_id).' ');
+                    $query->where(' jpn.app_id    = :appid');
+                    $query->where(' jpn.id        = :personid');
 
                     // join with admin persons
                     $query->innerJoin(JoaktreeHelper::getJoinAdminPersons(true));
@@ -92,7 +91,7 @@ class LastpersonsviewedHelper
                         ' #__joaktree_tree_persons  jtp '
                                      .' ON (   jtp.app_id    = jpn.app_id '
                                      .'    AND jtp.person_id = jpn.id '
-                                     .'    AND jtp.tree_id   = '.$tree_id.' '
+                                     .'    AND jtp.tree_id   = :treeid'
                                      .'    ) '
                     );
                     $query->innerJoin(
@@ -103,12 +102,17 @@ class LastpersonsviewedHelper
                                      .'    AND jte.access    IN '.$levels.' '
                                      .'    ) '
                     );
+                    $query->bind(':appid',$app_id,\Joomla\Database\ParameterType::INTEGER);
+                    $query->bind(':personid',$person_id,\Joomla\Database\ParameterType::STRING);
+                    $query->bind(':treeid',$tree_id,\Joomla\Database\ParameterType::INTEGER);
 
                     // fetch from database
                     $db->setQuery($query);
                     $tmpPerson  = $db->loadObject();
-
-                    if (($tree_id) && (isset($menus[$tree_id]))) {
+                    if (!$tmpPerson) { // not found : ignore
+                        continue;
+                    }
+                    if (($tree_id) && (isset($menus[$tree_id])) ) {
                         $menuItemId			= $menus[$tree_id];
                         $tmpPerson->route	= Route::_($linkBase.'&Itemid='.$menuItemId.'&treeId='.$tree_id.'&personId='. $app_id.'!'.$person_id);
                         $tmpPerson->robot	= '';

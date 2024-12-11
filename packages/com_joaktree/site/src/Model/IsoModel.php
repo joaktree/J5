@@ -111,34 +111,18 @@ class IsoModel extends BaseDatabaseModel
         $query->leftJoin(JoaktreeHelper::getJoinDeath());
 
         // Get the WHERE, GROUP BY and ORDER BY clauses for the query
-        $wheres      	= $this->_buildContentWhere();
-        foreach ($wheres as $where) {
-            $query->where(' '.$where.' ');
+
+        if ($treeId) {
+            $query->where('jtp.tree_id = :treeid');
+            $query->bind(':treeid',$treeId,\Joomla\Database\ParameterType::INTEGER);
         }
+
         $query->group(' jpn.id ');
         $query->group(' jpn.app_id ');
         $query->order(' '.$this->_buildContentOrderBy().' ');
 
 
         return $query;
-    }
-
-    private function _buildContentWhere()
-    {
-        $app 		= Factory::getApplication('site');
-        $treeId     = intval($this->getTreeId());
-        $levels		= JoaktreeHelper::getUserAccessLevels();
-        $params 	= JoaktreeHelper::getJTParams();
-
-        $context	= 'com_joaktree.list.iso.';
-
-        $where = array();
-
-        if ($treeId) {
-            $where[] = 'jtp.tree_id = ' . $treeId;
-        }
-        //$where 		= ( count( $where ) ? ' WHERE '. implode( ' AND ', $where ) : '' );
-        return $where;
     }
 
     private function _buildContentOrderBy()

@@ -169,8 +169,6 @@ final class Joaktree extends CMSPlugin
 
     private static function getPerson($gedcom, $gedcomType, $personId)
     {
-        $db 		= Factory::getContainer()->get(DatabaseInterface::class);
-        $query 		= $db->getQuery(true);
         $id			= array();
 
         $id[ 'app_id' ] = self::getAppId($gedcom, $gedcomType);
@@ -189,9 +187,6 @@ final class Joaktree extends CMSPlugin
 
     private static function getMap($gedcom, $gedcomType, $id, $idType)
     {
-        $db 		= Factory::getContainer()->get(DatabaseInterface::class);
-        $query 		= $db->getQuery(true);
-
         $appId   = self::getAppId($gedcom, $gedcomType);
         $mapId   = self::getTreeId($id, $idType);
         if (!$appId) {
@@ -220,8 +215,8 @@ final class Joaktree extends CMSPlugin
         } else {
             $query->select(' id ');
             $query->from(' #__joaktree_applications ');
-            $query->where(' LOWER(title) = LOWER('.$db->quote($gedcom).') ');
-
+            $query->where(' LOWER(title) = LOWER(:gedcom) ');
+            $query->bind(':gedcom',$gedcom,\Joomla\Database\ParameterType::STRING);
             $db->setQuery($query);
             $result = $db->loadResult();
             return ($result) ? $result : false;
@@ -238,8 +233,8 @@ final class Joaktree extends CMSPlugin
         } else {
             $query->select(' id ');
             $query->from(' #__joaktree_trees ');
-            $query->where(' LOWER(name) = LOWER('.$db->quote($id).') ');
-
+            $query->where(' LOWER(name) = LOWER(:name) ');
+            $query->bind(':name',$id,\Joomla\Database\ParameterType::STRING);
             $db->setQuery($query);
             $result = $db->loadResult();
             return ($result) ? $result : false;

@@ -22,7 +22,6 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel ;
 use Joomla\Input\Cookie;
-
 use Joaktree\Component\Joaktree\Site\Helper\JoaktreeHelper;
 use Joaktree\Component\Joaktree\Administrator\Mapservice\MBJInteractivemap;
 
@@ -230,16 +229,13 @@ class LocationsModel extends BaseDatabaseModel
         );
 
         // Get the WHERE clauses for the query + GROUP BY
-        $wheres      	=  $this->_buildContentWhere();
-        foreach ($wheres as $where) {
-            $query->where(' '.$where.' ');
-        }
+        $query      	=  $this->_buildContentWhere($query);
         $query->order(' jln.value ');
 
         return $query;
     }
 
-    private function _buildContentWhere()
+    private function _buildContentWhere($query)
     {
         $app 		= Factory::getApplication('site');
 
@@ -261,16 +257,17 @@ class LocationsModel extends BaseDatabaseModel
         $index  	= $this->getLocationIndex();
         $filters	= $index[$filterId];
 
-        $wheres 	= array();
-        $wheres[] 	= ' jln.indDeleted = 0 ';
+        $query->where(' jln.indDeleted = 0 ');
 
         if ($filters) {
-            $wheres[] = (count($filters) == 1)
-                            ? ' jln.indexLoc =  "'.array_shift($filters).'" '
-                            : ' jln.indexLoc IN ("'.implode('","', $filters).'" ) ';
+            if (count($filters) == 1) {
+                $query->where(' jln.indexLoc =  "'.array_shift($filters).'" ');
+            } else {
+                $query->where(' jln.indexLoc IN ("'.implode('","', $filters).'" ) ');
+            }
         }
 
-        return $wheres;
+        return $query;
     }
 
     public function getLocationlist()
@@ -291,8 +288,10 @@ class LocationsModel extends BaseDatabaseModel
             $query	= $this->_db->getquery(true);
             $query->select(' * ');
             $query->from(' #__joaktree_trees ');
-            $query->where(' id = ' . intval($this->getTreeId()) . ' ');
+            $query->where(' id = :treeid');
             $query->where(' access IN ' . JoaktreeHelper::getUserAccessLevels().' ');
+
+            $query->bind(':treeid', $this->getTreeId(), \Joomla\Database\ParameterType::INTEGER);
 
             $this->_db->setquery($query);
             $this->_treeinfo = $this->_db->loadObject();

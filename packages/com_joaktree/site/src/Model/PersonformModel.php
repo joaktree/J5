@@ -13,6 +13,7 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
+
 namespace Joaktree\Component\Joaktree\Site\Model;
 
 // no direct access
@@ -413,10 +414,14 @@ class PersonformModel extends FormModel
                 if ($sextype != 'unknown') {
                     $query->clear();
                     $query->update(' #__joaktree_relations ');
-                    $query->set(' type        = '.$this->_db->quote($sextype).' ');
-                    $query->where(' app_id      = '.$tabPerson->app_id.' ');
-                    $query->where(' person_id_2 = '.$this->_db->quote($tabPerson->id).' ');
+                    $query->set(' type        = :sextype');
+                    $query->where(' app_id      = :appid');
+                    $query->where(' person_id_2 = :personid'.$this->_db->quote($tabPerson->id).' ');
                     $query->where(' type        IN ('.$this->_db->quote('father').', '.$this->_db->quote('mother').') ');
+                    $query->bind(':appid', $tabPerson->app_id, \Joomla\Database\ParameterType::INTEGER);
+                    $query->bind(':personid', $tabPerson->id, \Joomla\Database\ParameterType::STRING);
+                    $query->bind(':treeid', $sextype, \Joomla\Database\ParameterType::STRING);
+
                     $this->_db->setquery($query);
 
                     if (!$this->_db->execute()) {
@@ -923,8 +928,11 @@ class PersonformModel extends FormModel
         $query = $this->_db->getquery(true);
         $query->select(' jpn.sex ');
         $query->from(' #__joaktree_persons  jpn ');
-        $query->where(' jpn.app_id = '.$appId.' ');
-        $query->where(' jpn.id     = '.$this->_db->quote($personId).' ');
+        $query->where(' jpn.app_id = :appid');
+        $query->where(' jpn.id     = :personid');
+        $query->bind(':appid', $appId, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':personid', $personId, \Joomla\Database\ParameterType::STRING);
+
         $this->_db->setquery($query);
         $sex = $this->_db->loadResult();
 
@@ -1147,13 +1155,16 @@ class PersonformModel extends FormModel
                 $query->select(' jrn.person_id_1 ');
                 $query->select(' jrn.person_id_2 ');
                 $query->from(' #__joaktree_relations  jrn ');
-                $query->where(' jrn.app_id = '.$form['person']['app_id'].' ');
-                $query->where(' jrn.family_id = '.$this->_db->quote($form['person']['relations']['familyid'][$i]).' ');
+                $query->where(' jrn.app_id = :appid');
+                $query->where(' jrn.family_id = :familyid');
                 $query->where(
-                    ' (  jrn.person_id_1 = '.$this->_db->quote($form['person']['relations']['id'][$i]).' '
-                             . ' OR jrn.person_id_2 = '.$this->_db->quote($form['person']['relations']['id'][$i]).' '
+                    ' (  jrn.person_id_1 = :personid'
+                             . ' OR jrn.person_id_2 = :personid'
                              . ' ) '
                 );
+                $query->bind(':appid', $form['person']['app_id'], \Joomla\Database\ParameterType::INTEGER);
+                $query->bind(':familyid', $form['person']['relations']['familyid'][$i], \Joomla\Database\ParameterType::STRING);
+                $query->bind(':personid', $this->_db->quote($form['person']['relations']['id'][$i]), \Joomla\Database\ParameterType::STRING);
 
                 $this->_db->setquery($query);
                 $pairs = $this->_db->loadObjectList();
@@ -1167,13 +1178,16 @@ class PersonformModel extends FormModel
                 // delete the affected relationships
                 $query->clear();
                 $query->delete(' #__joaktree_relations ');
-                $query->where(' app_id = '.$form['person']['app_id'].' ');
-                $query->where(' family_id = '.$this->_db->quote($form['person']['relations']['familyid'][$i]).' ');
+                $query->where(' app_id = :appid');
+                $query->where(' family_id = :familyid');
                 $query->where(
-                    ' (  person_id_1 = '.$this->_db->quote($form['person']['relations']['id'][$i]).' '
-                             . ' OR person_id_2 = '.$this->_db->quote($form['person']['relations']['id'][$i]).' '
+                    ' (  person_id_1 = :personid '
+                             . ' OR person_id_2 = :personid'
                              . ' ) '
                 );
+                $query->bind(':appid', $form['person']['app_id'], \Joomla\Database\ParameterType::INTEGER);
+                $query->bind(':familyid', $form['person']['relations']['familyid'][$i], \Joomla\Database\ParameterType::STRING);
+                $query->bind(':personid', $this->_db->quote($form['person']['relations']['id'][$i]), \Joomla\Database\ParameterType::STRING);
 
                 $this->_db->setquery($query);
                 try {
@@ -1443,8 +1457,11 @@ class PersonformModel extends FormModel
                 $query->clear();
                 $query->select(' count( document_id ) AS number ');
                 $query->from(' #__joaktree_person_documents ');
-                $query->where(' app_id = '.$form['person']['app_id'].' ');
-                $query->where(' document_id = '.$this->_db->quote($form['person']['media']['id'][$i]).' ');
+                $query->where(' app_id = :appid');
+                $query->where(' document_id = :documentid');
+                $query->bind(':appid', $form['person']['app_id'], \Joomla\Database\ParameterType::INTEGER);
+                $query->bind(':documentid', $form['person']['media']['id'][$i], \Joomla\Database\ParameterType::STRING);
+
                 $this->_db->setquery($query);
 
                 $result = $this->_db->loadResult();
@@ -1470,8 +1487,8 @@ class PersonformModel extends FormModel
         $query->select(' jtp.tree_id ');
         $query->select(' jtp.lineage ');
         $query->from(' #__joaktree_tree_persons  jtp ');
-        $query->where(' jtp.app_id    = '.$appId.' ');
-        $query->where(' jtp.person_id = '.$this->_db->quote($personId).' ');
+        $query->where(' jtp.app_id    = :appid');
+        $query->where(' jtp.person_id = :personid');
 
         $query->select(' jte.holds ');
         $query->innerJoin(
@@ -1480,7 +1497,8 @@ class PersonformModel extends FormModel
                          .'    AND jte.id     = jtp.tree_id '
                          .'    ) '
         );
-
+        $query->bind(':appid', $appId, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':personid', $personId, \Joomla\Database\ParameterType::STRING);
 
         $this->_db->setquery($query);
         $trees = $this->_db->loadObjectList();
@@ -1495,12 +1513,12 @@ class PersonformModel extends FormModel
         switch ($type) {
             case "child":
                 $query->select(' MAX(IFNULL(jrn.orderNumber_2, 0)) AS count ');
-                $query->where(' jrn.person_id_2 = '.$this->_db->quote($personId).' ');
+                $query->where(' jrn.person_id_2 = :personid');
                 $query->where(' jrn.type IN ('.$this->_db->quote('father').', '.$this->_db->quote('mother').') ');
                 break;
             case "parent":
                 $query->select(' MAX(IFNULL(jrn.orderNumber_1, 0)) AS count ');
-                $query->where(' jrn.person_id_1 = '.$this->_db->quote($personId).' ');
+                $query->where(' jrn.person_id_1 = :personid');
                 $query->where(' jrn.type IN ('.$this->_db->quote('father').', '.$this->_db->quote('mother').') ');
                 break;
             case "partner":
@@ -1512,8 +1530,8 @@ class PersonformModel extends FormModel
                               .'    ) AS count '
                 );
                 $query->where(
-                    ' (  jrn.person_id_1 = '.$this->_db->quote($personId).' '
-                             . ' OR jrn.person_id_2 = '.$this->_db->quote($personId).' '
+                    ' (  jrn.person_id_1 = :personid'
+                             . ' OR jrn.person_id_2 = :personid'
                              . ' ) '
                 );
                 $query->where(' jrn.type = '.$this->_db->quote('partner').' ');
@@ -1522,7 +1540,10 @@ class PersonformModel extends FormModel
         }
 
         $query->from(' #__joaktree_relations  jrn ');
-        $query->where(' jrn.app_id      = '.$appId.' ');
+        $query->where(' jrn.app_id      = :appid');
+
+        $query->bind(':appid', $appId, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':personid', $personId, \Joomla\Database\ParameterType::STRING);
 
         $this->_db->setquery($query);
         $result = $this->_db->loadResult();
@@ -1539,23 +1560,23 @@ class PersonformModel extends FormModel
         switch ($type) {
             case 'person':
                 $query->from(' #__joaktree_persons ');
-                $query->where(' id   = '.$this->_db->quote($tmpId).' ');
+                $query->where(' id   = :tmpid');
                 break;
 
             case 'note':
                 $query->from(' #__joaktree_notes ');
-                $query->where(' id   = '.$this->_db->quote($tmpId).' ');
+                $query->where(' id   = :tmpid');
                 break;
 
             case 'family':
                 $query->from(' #__joaktree_relations ');
-                $query->where(' family_id   = '.$this->_db->quote($tmpId).' ');
+                $query->where(' family_id   = :tmpid');
                 break;
             default:
                 $query->from(' dual ');
                 break;
         }
-
+        $query->bind(':personid', $tmpId, \Joomla\Database\ParameterType::STRING);
         $this->_db->setquery($query);
         $result = $this->_db->loadResult();
 
@@ -1570,11 +1591,16 @@ class PersonformModel extends FormModel
 
         $query->select(' jrn.family_id ');
         $query->from(' #__joaktree_relations  jrn ');
-        $query->where(' jrn.app_id      = '.$appId.' ');
-        $query->where(' jrn.family_id   = '.$this->_db->quote($familyId).' ');
+        $query->where(' jrn.app_id      = :appid');
+        $query->where(' jrn.family_id   = :familyid');
         $query->where(' jrn.type        = '.$this->_db->quote('partner').' ');
-        $query->where(' jrn.person_id_1 IN ('.$this->_db->quote($pid1).', '.$this->_db->quote($pid2).') ');
-        $query->where(' jrn.person_id_2 NOT IN ('.$this->_db->quote($pid1).', '.$this->_db->quote($pid2).') ');
+        $query->where(' jrn.person_id_1 IN (:pid1, :pid2) ');
+        $query->where(' jrn.person_id_2 NOT IN (:pid1, :pid2) ');
+
+        $query->bind(':appid', $appId, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':pid1', $pid1, \Joomla\Database\ParameterType::STRING);
+        $query->bind(':pid2', $pid2, \Joomla\Database\ParameterType::STRING);
+        $query->bind(':familyid', $familyId, \Joomla\Database\ParameterType::INTEGER);
 
         $this->_db->setquery($query);
         $result = $this->_db->loadResult();
@@ -1608,9 +1634,12 @@ class PersonformModel extends FormModel
 
         $query->select(' jrn.person_id_1 AS id ');
         $query->from(' #__joaktree_relations  jrn ');
-        $query->where(' jrn.app_id      = '.$appId.' ');
-        $query->where(' jrn.family_id   = '.$this->_db->quote($familyId).' ');
+        $query->where(' jrn.app_id      = :appid');
+        $query->where(' jrn.family_id   = :familyid)');
         $query->where(' jrn.type        IN ('.$this->_db->quote('father').', '.$this->_db->quote('mother').') ');
+
+        $query->bind(':appid', $appId, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':familyid', $familyId, \Joomla\Database\ParameterType::INTEGER);
 
         $this->_db->setquery($query);
         $result = $this->_db->loadObjectList();

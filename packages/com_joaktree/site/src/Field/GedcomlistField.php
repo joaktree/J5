@@ -2,7 +2,6 @@
 /**
  * Joomla! component Joaktree
  *
- * @version	2.0.0
  * @author	Niels van Dantzig (2009-2014) - Robert Gastaud (2017-2024)
  * @package	Joomla
  * @subpackage	Joaktree
@@ -13,6 +12,7 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
+
 namespace Joaktree\Component\Joaktree\Site\Field;
 
 defined('JPATH_PLATFORM') or die;
@@ -24,7 +24,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\Database\DatabaseInterface;
 use Joaktree\Component\Joaktree\Site\Helper\JoaktreeHelper;
 
-class GedcomListField extends ListField	
+class GedcomListField extends ListField
 {
     /**
      * The form field type.
@@ -99,7 +99,7 @@ class GedcomListField extends ListField
         $query	= $db->getquery(true);
         $query->select(' code ');
         $query->from(' #__joaktree_display_settings ');
-        $query->where(' level = '.$db->quote($gedcomtype).' ');
+        $query->where(' level = :level');
         $query->where(' published = true ');
         $query->where(' code NOT IN ('
                             .$db->quote('NAME').', '
@@ -113,7 +113,7 @@ class GedcomListField extends ListField
         } else {
             $query->where(' access IN '.$levels.' ');
         }
-
+        $query->bind(':level', $db->q($gedcomtype), \Joomla\Database\ParameterType::STRING);
         // Set the query and get the result list.
         $db->setquery($query);
         try {
