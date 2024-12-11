@@ -290,8 +290,8 @@ class LocationsModel extends BaseDatabaseModel
             $query->from(' #__joaktree_trees ');
             $query->where(' id = :treeid');
             $query->where(' access IN ' . JoaktreeHelper::getUserAccessLevels().' ');
-
-            $query->bind(':treeid', $this->getTreeId(), \Joomla\Database\ParameterType::INTEGER);
+            $treeid = $this->getTreeId();
+            $query->bind(':treeid', $treeid, \Joomla\Database\ParameterType::INTEGER);
 
             $this->_db->setquery($query);
             $this->_treeinfo = $this->_db->loadObject();

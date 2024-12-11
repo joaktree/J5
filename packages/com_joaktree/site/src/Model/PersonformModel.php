@@ -1576,7 +1576,7 @@ class PersonformModel extends FormModel
                 $query->from(' dual ');
                 break;
         }
-        $query->bind(':personid', $tmpId, \Joomla\Database\ParameterType::STRING);
+        $query->bind(':tmpid', $tmpId, \Joomla\Database\ParameterType::STRING);
         $this->_db->setquery($query);
         $result = $this->_db->loadResult();
 

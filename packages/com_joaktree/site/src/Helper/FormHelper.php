@@ -1027,6 +1027,7 @@ class FormHelper extends \StdClass
 
         if (!empty($code)) {
             $query->where(' code = :code ');
+            $query->bind(':code',$code,\Joomla\Database\ParameterType::STRING);
         } else {
             $query->where(' code NOT IN ('
                                 .$db->quote('NAME').', '
@@ -1042,8 +1043,7 @@ class FormHelper extends \StdClass
         } else {
             $query->where(' accessLiving IN '.$levels.' ');
         }
-        $query->bind(':level',$db->quote($gedcomtype),\Joomla\Database\ParameterType::STRING);
-        $query->bind(':code',$db->quote($code),\Joomla\Database\ParameterType::STRING);
+        $query->bind(':level',$gedcomtype,\Joomla\Database\ParameterType::STRING);
         // Set the query and get the result list.
         $db->setquery($query);
         $result = $db->loadResult();

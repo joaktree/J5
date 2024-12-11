@@ -62,9 +62,11 @@ class ChangehistoryModel extends ListModel
 
         if (!empty($appId)) {
             $query->where(' jlg.app_id    = :appid');
+            $query->bind(':appid', $appId, \Joomla\Database\ParameterType::INTEGER);
         }
         if (!empty($objectId)) {
             $query->where(' jlg.object_id = :objectid');
+            $query->bind(':objectid', $objectId, \Joomla\Database\ParameterType::STRING);
         }
         $query->order(' jlg.changeDateTime DESC ');
 
@@ -143,9 +145,7 @@ class ChangehistoryModel extends ListModel
                         .'    ) '
         );
 
-        $query->bind(':appid', $appId, \Joomla\Database\ParameterType::INTEGER);
         $query->bind(':object', $object, \Joomla\Database\ParameterType::STRING);
-        $query->bind(':objectid', $objectId, \Joomla\Database\ParameterType::STRING);
 
         return $query;
     }

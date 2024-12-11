@@ -180,6 +180,7 @@ class Person extends \StdClass
                              .'    AND jte.access    IN '.$this->_levels.' '
                              .'    ) '
             );
+            $query->bind(':treeid',$id[ 'tree_id' ],\Joomla\Database\ParameterType::INTEGER);
         } else {
             // select from default tree
             $query->select(' jte.id                AS tree_id ');
@@ -192,7 +193,6 @@ class Person extends \StdClass
                             .'    ) '
             );
         }
-        $query->bind(':treeid',$id[ 'tree_id' ],\Joomla\Database\ParameterType::INTEGER);
         // select birth and death dates for ancestors
         if ($type == 'ancestor') {
             // select from birth

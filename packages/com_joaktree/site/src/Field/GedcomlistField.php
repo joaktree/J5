@@ -113,7 +113,8 @@ class GedcomListField extends ListField
         } else {
             $query->where(' access IN '.$levels.' ');
         }
-        $query->bind(':level', $db->q($gedcomtype), \Joomla\Database\ParameterType::STRING);
+        $level = $db->escape($gedcomtype);
+        $query->bind(':level', $level, \Joomla\Database\ParameterType::STRING);
         // Set the query and get the result list.
         $db->setquery($query);
         try {
