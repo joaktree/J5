@@ -4,7 +4,7 @@
 		<type>package</type>
 		<version>2.1.1</version>
         <note>
-            <item>Update : 2024-12-05</item>
+            <item>Update : 2024-12-12</item>
         </note>
         <fix>
             <item>Person Form : patronym parameter should be numeric</item>
