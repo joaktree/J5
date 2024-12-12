@@ -269,14 +269,16 @@ HTMLHelper::_('bootstrap.modal', 'a.modal');
 				>
 					<td align="center"><?php echo $this->pagination->getRowOffset($i); ?></td>
 					<td class="<?php echo $showclass; ?>">
-                        <?php echo $row->title; ?>
-						<?php
-                    if ($this->lists['action'] == 'select') {
+                        <?php 
+                    if ($this->lists['action'] != 'select') {
+                        echo $row->title; 
+                    } else {
+                        $atitle = $row->title ?  htmlspecialchars($row->title) : '';
                         $function =  'window.parent.jtSelectSource' //(idid, titleid, id, title)
                                     .'( \'src_'.$this->lists['counter'].'_id\''
                                     .', \'src_'.$this->lists['counter'].'_name\''
                                     .', \''.$row->id.'\''
-                                    .', \''.htmlspecialchars($row->title).'\''
+                                    .', \''.$atitle.'\''
                                     .')';?>
                                 <a 	href="#"
 									onclick="if (window.parent) <?php echo $function; ?>;"
@@ -323,8 +325,8 @@ HTMLHelper::_('bootstrap.modal', 'a.modal');
 										<div class="jt-h3"><?php echo Text::_('JT_NOTE'); ?></div>
 										<div>
 											<?php $note =  str_replace('&#10;&#13;', '<br>', $row->note);
-                                                  $note =  str_replace(PHP_EOL, '<br>', $note);
-                                                  echo $note;?>
+									    $note =  str_replace(PHP_EOL, '<br>', $note);
+									    echo $note;?>
 										</div>													
 									<?php } ?>
 									<?php if (!empty($row->www)) { ?>
@@ -336,13 +338,13 @@ HTMLHelper::_('bootstrap.modal', 'a.modal');
 									<?php if (!empty($row->website)) { ?>
 										<div class="jt-h3"><?php echo Text::_('JT_WEBSITE'); ?></div>
 										<div>
-											<a 	href="<?php 
-                                                        $str = "";
-                                                        if (!str_starts_with($row->website,'http://') &&
-                                                            !str_starts_with($row->website,'https://')) {
-                                                            $str = "https://";
-                                                            }
-                                                        echo $str.$row->website; ?>" 
+											<a 	href="<?php
+									          $str = "";
+									    if (!str_starts_with($row->website, 'http://') &&
+									        !str_starts_with($row->website, 'https://')) {
+									        $str = "https://";
+									    }
+									    echo $str.$row->website; ?>" 
 												target="_repo<?php echo $i; ?>"
 											>
 												<?php echo $row->website; ?>

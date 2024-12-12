@@ -453,8 +453,15 @@ class Router extends RouterBase
                     $count++;
                     $tmp = explode('!', $segments[1]);
                     $vars['action']   = $tmp[0];
-                    if ($tmp[1] == 'component') {
-                        $vars['tmpl']     = $tmp[1];
+                    if ($tmp[1]) {
+                        $subtmp = explode('&', $tmp[1]);
+                        if ($subtmp[0] == 'component') {
+                            $vars['tmpl']     = $subtmp[0];
+                        }
+                        if (isset($subtmp[1])) {
+                            $subtmp = explode('=', $subtmp[1]);
+                            $vars['counter']     = $subtmp[1];
+                        }
                     }
                 }
                 if (isset($segments[2])) {

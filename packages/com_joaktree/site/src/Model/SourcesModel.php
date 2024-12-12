@@ -104,10 +104,8 @@ class SourcesModel extends ListModel
         );
 
         // Get the WHERE, GROUP BY and ORDER BY clauses for the query
-        $wheres      	= $this->_buildContentWhere();
-        foreach ($wheres as $where) {
-            $query->where(' '.$where.' ');
-        }
+        $query      	= $this->_buildContentWhere($query);
+
         $query->group(' jse.title ');
         $query->group(' jse.author ');
         $query->group(' jse.publication ');
@@ -121,7 +119,7 @@ class SourcesModel extends ListModel
         return $query;
     }
 
-    private function _buildContentWhere()
+    private function _buildContentWhere($query)
     {
         $app 		= Factory::getApplication('site');
         $appId     	= intval($this->getApplicationId());
@@ -139,22 +137,25 @@ class SourcesModel extends ListModel
         $where = array();
 
         if ($appId) {
-            $where[] = ' jse.app_id = '.$appId.' ';
+            $query->where(' jse.app_id = :appid');
+            $query->bind(':appid', $appId, \Joomla\Database\ParameterType::INTEGER);
+            
         }
 
         if (isset($sourceId)) {
-            $where[] = ' jry.id <> '.$this->_db->quote($sourceId).' ';
+            $query->where(' jry.id <> :sourceid');
+            $query->bind(':sourceid', $sourceId, \Joomla\Database\ParameterType::STRING);
         }
 
         if ($search1) {
-            $where[] = ' (  LOWER(jse.title)       LIKE '.$this->_db->Quote('%'.$search1.'%').' '
+            $query->where(' (  LOWER(jse.title)       LIKE '.$this->_db->Quote('%'.$search1.'%').' '
                       .' OR LOWER(jse.author)  	   LIKE '.$this->_db->Quote('%'.$search1.'%').' '
                       .' OR LOWER(jse.publication) LIKE '.$this->_db->Quote('%'.$search1.'%').' '
                       .' OR LOWER(jse.information) LIKE '.$this->_db->Quote('%'.$search1.'%').' '
-                      .' ) ';
+                      .' ) ');
         }
 
-        return $where;
+        return $query;
     }
 
     public function getNewlyAddedItem()
@@ -198,7 +199,7 @@ class SourcesModel extends ListModel
         );
 
         // Get the WHERE, GROUP BY and ORDER BY clauses for the query
-        $query->where(' jse.app_id = '.$appId.' ');
+        $query->where(' jse.app_id = :appid');
         $query->where(' jse.id = '.$this->_db->quote($sourceId).' ');
         $query->group(' jse.title ');
         $query->group(' jse.author ');
@@ -208,6 +209,7 @@ class SourcesModel extends ListModel
         $query->group(' jse.id ');
         $query->group(' jry.name ');
         $query->group(' jry.website ');
+        $query->bind(':appid', $appId, \Joomla\Database\ParameterType::INTEGER);
 
         $this->_db->setquery($query);
         $item = $this->_db->loadObject();

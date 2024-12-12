@@ -23,9 +23,10 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
 use Joomla\Database\DatabaseInterface;
 
-class SourceField extends FormField		//JFormField
+class SourceField extends FormField
 {
     protected $type = 'source';
 
@@ -63,21 +64,21 @@ class SourceField extends FormField		//JFormField
             HTMLHelper::_('bootstrap.modal', 'a.modal_src_'.$counter);
             //HTMLHelper::_('behavior.modal', 'a.modal_src_'.$counter);
 
-            $link =  'index.php?option=com_joaktree'
+            $link =  Route::_('index.php?option=com_joaktree'
                     .'&amp;view=sources'
                     .'&amp;tmpl=component'
                     .'&amp;appId='.$appId
                     .'&amp;action=select'
-                    .'&amp;counter='.$counter;
+                    .'&amp;counter='.$counter);
         } else {
             // javascript - for fields while adding a new row to the form (after loading).
             $iframe  = '\\\'iframe\\\'';
             $counter = '\'+orderNumber+\'';
-            $link =  'index.php?option=com_joaktree'
+            $link =  Route::_('index.php?option=com_joaktree'
                     .'&amp;view=sources'
                     .'&amp;tmpl=component'
                     .'&amp;appId='.$appId
-                    .'&amp;action=select';
+                    .'&amp;action=select');
         }
 
         // Create a dummy text field with the source title.
