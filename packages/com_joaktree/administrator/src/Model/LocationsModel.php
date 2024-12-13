@@ -237,7 +237,9 @@ class LocationsModel extends ListModel
             $query->set(' results  = '.(int) $location->results.' ');
             $query->set(' resultValue  = '.(!empty($location->result_address) ? $this->_db->quote($location->result_address) : 'NULL').' ');
             $query->set(' indServerProcessed = 1 ');
-            $query->where(' id = '.$location->id.' ');
+            $query->where(' id = :locationid');
+            $query->bind(':locationid', $location->id, \Joomla\Database\ParameterType::INTEGER);
+            
             $this->_db->setQuery($query);
             $this->_db->execute(); //$this->_db->query();
         }
@@ -261,7 +263,8 @@ class LocationsModel extends ListModel
                 $query->set(' indServerProcessed = 0 ');
                 $query->set(' results     = NULL ');
                 $query->set(' resultValue = NULL ');
-                $query->where(' id     = '.$cid.' ');
+                $query->where(' id     = :id');
+                $query->bind(':id', $cid, \Joomla\Database\ParameterType::INTEGER);
 
                 $this->_db->setQuery($query);
                 $this->_db->execute(); //$this->_db->query();

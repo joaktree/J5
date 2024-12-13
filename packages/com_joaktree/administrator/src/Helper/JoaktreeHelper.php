@@ -208,8 +208,8 @@ class JoaktreeHelper
         // retrieve the name
         $query->select(' name ');
         $query->from(' #__joaktree_themes ');
-        $query->where(' id   = '.(int) $id.' ');
-
+        $query->where(' id   = :id');
+        $query->bind(':id', $id, \Joomla\Database\ParameterType::INTEGER);
         $db->setQuery($query);
         $name = $db->loadResult();
 
@@ -248,7 +248,8 @@ class JoaktreeHelper
         // retrieve the app parameters
         $query->select(' japp.params ');
         $query->from(' #__joaktree_applications  japp ');
-        $query->where(' japp.id =  '.(int) $app_id.' ');
+        $query->where(' japp.id =  :appid');
+        $query->bind(':appid', $app_id, \Joomla\Database\ParameterType::INTEGER);
 
         $db->setQuery($query);
         $appSource = $db->loadObject();

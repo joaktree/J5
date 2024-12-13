@@ -66,12 +66,10 @@ class RelationnotesTable extends Table
 		} else {
 			$query = $this->_db->getQuery(true);
 			$query->delete(' '.$this->_db->quoteName($this->_tbl).' ');
-			$query->where( ' app_id = '.(int) $this->app_id.' ');
-			$query->where( ' (  person_id_1 = '.$this->_db->quote($person_id).' '
-						 .'  OR person_id_2 = '.$this->_db->quote($person_id).' '
-						 .'  ) '
-						 );
-			
+			$query->where( ' app_id = :appid');
+			$query->where( ' (  person_id_1 = :personid OR person_id_2 = :personid )' );
+            $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
+            $query->bind(':personid', $person_id, \Joomla\Database\ParameterType::STRING);
 			$this->_db->setQuery( $query );
 			$result = $this->_db->execute(); //$this->_db->query();       
 		}
@@ -99,10 +97,12 @@ class RelationnotesTable extends Table
 
 			$query = $this->_db->getQuery(true);
 			$query->delete(' '.$this->_db->quoteName($this->_tbl).' ');
-			$query->where( ' app_id = '.(int) $this->app_id.' ');
-			$query->where( ' person_id_1 = '.$this->_db->quote($pid1).' ');
-			$query->where( ' person_id_2 = '.$this->_db->quote($pid2).' ');
-			
+			$query->where( ' app_id = :appid');
+			$query->where( ' person_id_1 = :personid1');
+			$query->where( ' person_id_2 = :personid2');
+            $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
+            $query->bind(':personid1', $pid1, \Joomla\Database\ParameterType::STRING);
+            $query->bind(':personid2', $pid2, \Joomla\Database\ParameterType::STRING);
 			$this->_db->setQuery( $query );
 			$result = $this->_db->execute(); //$this->_db->query();       
 		}
@@ -117,8 +117,8 @@ class RelationnotesTable extends Table
 	function truncateApp($app_id) {
 		$query = $this->_db->getQuery(true);
 		$query->delete(' '.$this->_db->quoteName($this->_tbl).' ');
-		$query->where( ' app_id = '.(int) $app_id.' ');
-		
+		$query->where( ' app_id = :appid');
+        $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
 		$this->_db->setQuery( $query );
 		$result = $this->_db->execute(); //$this->_db->query();       
 

@@ -8,11 +8,11 @@
 	<authorEmail>info@joaktree.com</authorEmail>
 	<authorUrl>www.joaktree.com</authorUrl>
     <new_author>Robert Gastaud</new_author>
-	<creationDate>2024-12-12</creationDate>
+	<creationDate>2024-12-13</creationDate>
 	<new_copyright>(C) 2017 JoomXtensions.com</new_copyright>
 	<new_authorEmail>rg-consultant@robertg-conseil.fr</new_authorEmail>
 	<new_authorUrl>www.joomxtensions.com</new_authorUrl>	
-   <version>2.1.1</version>
+   <version>2.1.2</version>
 	<description>MOD_JOAKTREE_TMYA_XML_DESCRIPTION</description>
     <namespace path="src">Joaktree\Module\Todaymanyyearsago</namespace>	
 	<!-- user part -->

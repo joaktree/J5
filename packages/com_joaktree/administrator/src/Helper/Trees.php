@@ -144,7 +144,7 @@ class Trees extends BaseDatabaseModel
                 $query->clear();
                 $query->select(' id ');
                 $query->from(' #__joaktree_trees ');
-                $query->where(' app_id    = '.$app_id.' ');
+                $query->where(' app_id    = :appid');
 
                 // if tree_ids are given, we only take a subset
                 if (isset($this->procObject->treeIds) && (count($this->procObject->treeIds) > 0)) {
@@ -153,6 +153,7 @@ class Trees extends BaseDatabaseModel
                 $query->where(' published = true ');
                 $query->order(' holds       DESC ');
                 $query->order(' id          ASC ');
+                $query->bind(':appid', $app_id, \Joomla\Database\ParameterType::INTEGER);
 
                 $this->_db->setQuery($query);
                 $tree_ids = $this->_db->loadColumn();
@@ -163,7 +164,8 @@ class Trees extends BaseDatabaseModel
                     $query->clear();
                     $query->select(' title ');
                     $query->from(' #__joaktree_applications ');
-                    $query->where(' id	       = '.$app_id.' ');
+                    $query->where(' id	       = :appid');
+                    $query->bind(':appid', $app_id, \Joomla\Database\ParameterType::INTEGER);
 
                     $this->_db->setQuery($query);
                     $tree_name = $this->_db->loadResult();
@@ -190,10 +192,11 @@ class Trees extends BaseDatabaseModel
                     $query->clear();
                     $query->select(' id ');
                     $query->from(' #__joaktree_trees ');
-                    $query->where(' app_id    = '.$app_id.' ');
+                    $query->where(' app_id    = :appid');
                     $query->where(' published = true ');
                     $query->order(' holds       DESC ');
                     $query->order(' id          ASC ');
+                    $query->bind(':appid', $app_id, \Joomla\Database\ParameterType::INTEGER);
 
                     $this->_db->setQuery($query);
                     $tree_ids = $this->_db->loadColumn();
@@ -249,8 +252,9 @@ class Trees extends BaseDatabaseModel
                     // initial steps
                     $query->clear();
                     $query->delete(' #__joaktree_tree_persons ');
-                    $query->where(' app_id = '.$app_id.' ');
+                    $query->where(' app_id = :appid');
                     $query->where(' tree_id IN ( '.implode(',', $procPersObject->tree_ids).' ) ');
+                    $query->bind(':appid', $app_id, \Joomla\Database\ParameterType::INTEGER);
 
                     $this->_db->setQuery($query);
                     $msg = $this->_db->execute(); //$this->_db->query();
@@ -259,8 +263,9 @@ class Trees extends BaseDatabaseModel
                     $query->clear();
                     $query->update(' #__joaktree_admin_persons ');
                     $query->set(' default_tree_id = null ');
-                    $query->where(' app_id = '.$app_id.' ');
+                    $query->where(' app_id = :appid');
                     $query->where(' default_tree_id IN ( '.implode(',', $procPersObject->tree_ids).' ) ');
+                    $query->bind(':appid', $app_id, \Joomla\Database\ParameterType::INTEGER);
 
                     $this->_db->setQuery($query);
                     $msg = $this->_db->execute(); //$this->_db->query();
@@ -273,8 +278,11 @@ class Trees extends BaseDatabaseModel
                 $query->clear();
                 $query->select(' * ');
                 $query->from(' #__joaktree_trees ');
-                $query->where(' app_id    = '.$app_id.' ');
-                $query->where(' id        = '.$tree_id.' ');
+                $query->where(' app_id    = :appid');
+                $query->where(' id        = :treeid');
+                $query->bind(':appid', $app_id, \Joomla\Database\ParameterType::INTEGER);
+                $query->bind(':treeid', $tree_id, \Joomla\Database\ParameterType::INTEGER);
+                
                 $this->_db->setQuery($query);
                 $tree = $this->_db->loadObject();
 

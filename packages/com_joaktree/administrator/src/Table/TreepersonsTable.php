@@ -43,13 +43,14 @@ class TreepersonsTable extends Table implements VersionableTableInterface
         if ($app_id) {
             $query = $this->_db->getQuery(true);
             $query->delete(' '.$this->_db->quoteName($this->_tbl).' ');
-            $query->where(' app_id = '.(int) $app_id.' ');
+            $query->where(' app_id = :appid');
+            $query->bind(':appid', $app_id, \Joomla\Database\ParameterType::INTEGER);            
         } else {
             $query = 'TRUNCATE ' . $this->_tbl;
         }
 
         $this->_db->setQuery($query);
-        $this->_db->execute(); //$this->_db->query();
+        $this->_db->execute();
 
         return true;
     }

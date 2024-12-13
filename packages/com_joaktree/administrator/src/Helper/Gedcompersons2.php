@@ -718,9 +718,11 @@ class Gedcompersons2 extends \StdClass
 
         $query->select(' subtype ');
         $query->from(' #__joaktree_gedcom_objectlines ');
-        $query->where(' object_id  = '.$this->_db->quote($child_id).' ');
+        $query->where(' object_id  = :objectid');
         $query->where(' tag        = '.$this->_db->quote('FAMC').' ');
-        $query->where(' value      = '.$this->_db->quote($family_id).' ');
+        $query->where(' value      = :familyid');
+        $query->bind(':objectid', $child_id, \Joomla\Database\ParameterType::STRING);
+        $query->bind(':familyid', $family_id, \Joomla\Database\ParameterType::STRING);
 
         $this->_db->setQuery($query);
         $result = $this->_db->loadResult();
@@ -776,7 +778,7 @@ class Gedcompersons2 extends \StdClass
     private function spouse($pid1, $family_id, $order_nr)
     {
         $ret = true;
-
+        $query = $this->_db->getQuery(true);
         // set all attributes for the object line
         $query = 'INSERT   '
                 .'INTO     #__joaktree_gedcom_objectlines '
@@ -813,11 +815,14 @@ class Gedcompersons2 extends \StdClass
     {
         // initialize values
         $order_nr = 999;
+        $query = $this->_db->getQuery(true);
 
-        $query = 'SELECT order_nr '
-                .'FROM   #__joaktree_gedcom_objectlines '
-                .'WHERE  object_id = '.$this->_db->quote($person_id).' '
-                .'AND    value = '.$this->_db->quote($family_id).' ';
+        $query->select('order_nr')
+            ->from('#__joaktree_gedcom_objectlines ')
+            ->where('object_id = :personid AND    value = :familyid');
+        $query->bind(':personid', $person_id, \Joomla\Database\ParameterType::STRING);
+        $query->bind(':familyid', $family_id, \Joomla\Database\ParameterType::STRING);
+
         $this->_db->setQuery($query);
 
         $order_nr = $this->_db->loadResult();

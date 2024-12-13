@@ -185,7 +185,7 @@ class TreeModel extends AdminModel
         $query = $this->_db->getQuery(true);
         $query->select(' jte.* ');
         $query->from(' #__joaktree_trees        jte ');
-        $query->where(' jte.id = '.(int) $pk.' ');
+        $query->where(' jte.id = :id');
         $query->select(' japp.title AS appTitle ');
         $query->leftJoin(' #__joaktree_applications japp '
                         .' ON japp.id = jte.app_id ');
@@ -200,6 +200,8 @@ class TreeModel extends AdminModel
                         .' ON (   jpn.app_id = jte.app_id '
                         .'    AND jpn.id     = jte.root_person_id '
                         .'    ) ');
+        $query->bind(':id', $pk, \Joomla\Database\ParameterType::INTEGER);
+                        
         return $query;
     }
 

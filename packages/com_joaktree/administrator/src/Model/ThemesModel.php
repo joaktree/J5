@@ -146,7 +146,8 @@ class ThemesModel extends ListModel
             $query = $this->_db->getQuery(true);
             $query->update(' #__joaktree_themes ');
             $query->set(' home = 1 ');
-            $query->where(' id   = '.(int) $id.' ');
+            $query->where(' id   = :id');
+            $query->bind(':d', $id, \Joomla\Database\ParameterType::INTEGER);
 
             $this->_db->setQuery($query);
             $ret = $this->_db->execute(); //$this->_db->query();
@@ -156,7 +157,8 @@ class ThemesModel extends ListModel
                 $query->clear();
                 $query->update(' #__joaktree_themes ');
                 $query->set(' home = 0 ');
-                $query->where(' id   <> '.(int) $id.' ');
+                $query->where(' id   <> :id');
+                $query->bind(':id', $id, \Joomla\Database\ParameterType::INTEGER);
 
                 $this->_db->setQuery($query);
                 $this->_db->execute(); //$this->_db->query();

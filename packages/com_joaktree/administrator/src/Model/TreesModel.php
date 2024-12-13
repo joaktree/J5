@@ -258,7 +258,8 @@ class TreesModel extends ListModel
 
                 $query->update(' #__joaktree_trees ');
                 $query->set(' published = !published ');
-                $query->where(' id = '.$cid.' ');
+                $query->where(' id = :id');
+                $query->bind(':id', $cid, \Joomla\Database\ParameterType::INTEGER);
 
                 $this->_db->setQuery($query);
                 $this->_db->execute(); //$this->_db->query();

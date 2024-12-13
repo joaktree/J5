@@ -49,8 +49,10 @@ class PersoneventsTable extends Table
         } else {
             $query = $this->_db->getQuery(true);
             $query->delete(' '.$this->_db->quoteName($this->_tbl).' ');
-            $query->where(' app_id    = '.$this->app_id.' ');
-            $query->where(' person_id = '.$this->_db->quote($person_id).' ');
+            $query->where(' app_id    = :appid');
+            $query->where(' person_id = :personid');
+            $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
+            $query->bind(':personid', $person_id, \Joomla\Database\ParameterType::STRING);
 
             $this->_db->setQuery($query);
             $result = $this->_db->execute(); //$this->_db->query();
@@ -108,9 +110,12 @@ class PersoneventsTable extends Table
         $query->select(' COUNT(jcn.objectOrderNumber) AS indCit ');
         $query->from(' #__joaktree_citations jcn ');
         $query->where(' jcn.objectType  = '.$this->_db->quote('personEvent').' ');
-        $query->where(' jcn.objectOrderNumber = '.$this->orderNumber.' ');
-        $query->where(' jcn.app_id      = '.$this->app_id.' ');
-        $query->where(' jcn.person_id_1 = '.$this->_db->quote($this->person_id).' ');
+        $query->where(' jcn.objectOrderNumber = :ordernumber');
+        $query->where(' jcn.app_id      = :appid');
+        $query->where(' jcn.person_id_1 = :personid');
+        $query->bind(':ordernumber', $this->orderNumber, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':personid', $this->person_id, \Joomla\Database\ParameterType::STRING);
 
         $this->_db->setQuery($query);
         $result = $this->_db->loadResult();
@@ -120,9 +125,12 @@ class PersoneventsTable extends Table
         $query->clear();
         $query->select(' COUNT(jpe.orderNumber) AS indNot ');
         $query->from(' #__joaktree_person_notes jpe ');
-        $query->where(' jpe.app_id     = '.$this->app_id.' ');
-        $query->where(' jpe.person_id  = '.$this->_db->quote($this->person_id).' ');
-        $query->where(' jpe.eventOrderNumber  = '.$this->orderNumber.' ');
+        $query->where(' jpe.app_id     = :appid');
+        $query->where(' jpe.person_id  = :personid');
+        $query->where(' jpe.eventOrderNumber  = :ordernumber');
+        $query->bind(':ordernumber', $this->orderNumber, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':personid', $this->person_id, \Joomla\Database\ParameterType::STRING);
 
         $this->_db->setQuery($query);
         $result = $this->_db->loadResult();
@@ -137,9 +145,12 @@ class PersoneventsTable extends Table
         $query = $this->_db->getQuery(true);
         $query->delete(' #__joaktree_citations ');
         $query->where(' objectType  = '.$this->_db->quote('personEvent').' ');
-        $query->where(' objectOrderNumber = '.$this->orderNumber.' ');
-        $query->where(' app_id      = '.$this->app_id.' ');
-        $query->where(' person_id_1 = '.$this->_db->quote($this->person_id).' ');
+        $query->where(' objectOrderNumber = :ordernumber');
+        $query->where(' app_id      = :appid');
+        $query->where(' person_id_1 = :personid');
+        $query->bind(':ordernumber', $this->orderNumber, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':personid', $this->person_id, \Joomla\Database\ParameterType::STRING);
 
         $this->_db->setQuery($query);
         $result = $this->_db->execute(); //$this->_db->query();
@@ -147,9 +158,12 @@ class PersoneventsTable extends Table
         // deletenotes
         $query->clear();
         $query->delete(' #__joaktree_person_notes ');
-        $query->where(' app_id     = '.$this->app_id.' ');
-        $query->where(' person_id  = '.$this->_db->quote($this->person_id).' ');
-        $query->where(' eventOrderNumber  = '.$this->orderNumber.' ');
+        $query->where(' app_id     = :appid');
+        $query->where(' person_id  = :personid');
+        $query->where(' eventOrderNumber  = :ordernumber');
+        $query->bind(':ordernumber', $this->orderNumber, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':personid', $this->person_id, \Joomla\Database\ParameterType::STRING);
 
         $this->_db->setQuery($query);
         $result = $this->_db->execute(); //$this->_db->query();

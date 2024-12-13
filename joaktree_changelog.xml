@@ -2,6 +2,17 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
+		<version>2.1.2</version>
+        <note>
+            <item>Update : 2024-12-13</item>
+        </note>
+        <change>
+            <item>Admin : use prepared statements for db requests</item>
+        </change>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
 		<version>2.1.1</version>
         <note>
             <item>Update : 2024-12-12</item>

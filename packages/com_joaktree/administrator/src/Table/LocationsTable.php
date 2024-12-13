@@ -77,7 +77,9 @@ class LocationsTable extends Table implements VersionableTableInterface
         $query = $this->_db->getQuery(true);
         $query->select(' jln.id ');
         $query->from(' #__joaktree_locations jln ');
-        $query->where(' jln.value       = '.$this->_db->quote($value).' ');
+        $query->where(' jln.value       = :value');
+        $query->bind(':value', $value, \Joomla\Database\ParameterType::STRING);
+        
         $this->_db->setQuery($query);
         $result = $this->_db->loadResult();
         if (!$result) {
@@ -110,7 +112,8 @@ class LocationsTable extends Table implements VersionableTableInterface
             $query->clear();
             $query->select(' jln.id ');
             $query->from(' #__joaktree_locations jln ');
-            $query->where(' jln.value       = '.$this->_db->quote($value).' ');
+            $query->where(' jln.value       = :value');
+            $query->bind(':value', $value, \Joomla\Database\ParameterType::STRING);
             $this->_db->setQuery($query);
             $result = $this->_db->loadResult();
         }

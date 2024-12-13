@@ -187,15 +187,20 @@ class LogsTable extends Table implements VersionableTableInterface
                       .', DATE_FORMAT( jlg.changeDateTime, '.$this->_db->quote('%Y-%m-%d').' ) AS changeDateTime '
         );
         $query->from(' #__joaktree_logs  jlg ');
-        $query->where(' jlg.app_id      = '.$this->app_id.' ');
-        $query->where(' jlg.object_id   = '.$this->_db->quote($this->object_id).' ');
-        $query->where(' jlg.object      = '.$this->_db->quote($this->object).' ');
+        $query->where(' jlg.app_id      = :appid');
+        $query->where(' jlg.object_id   = :objectid');
+        $query->where(' jlg.object      = :object');
         $query->order(' jlg.changeDateTime DESC ');
+        $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':objectid', $this->object_id, \Joomla\Database\ParameterType::STRING);
+        $query->bind(':object', $this->object, \Joomla\Database\ParameterType::STRING);
 
         if ($this->_changeDateTime->format('Y-m-d') == '0001-01-01') {
             // situation: no change date information in gedcom
             // finish the query and execute it
-            $query->where(' jlg.logevent = '.$this->_db->quote('JT_L_'.strtoupper($this->object)).' ');
+            $query->where(' jlg.logevent = :logevent');
+            $one = 'JT_L_'.strtoupper($this->object);
+            $query->bind(':logevent', $one, \Joomla\Database\ParameterType::STRING);
             $this->_db->setQuery($query);
             $tmp = $this->_db->loadObject();
 
@@ -213,7 +218,9 @@ class LogsTable extends Table implements VersionableTableInterface
         } else {
             // situation: change date information found in gedcom
             // finish the query and execute it
-            $query->where(' jlg.logevent = '.$this->_db->quote('JT_I_'.strtoupper($this->object)).' ');
+            $query->where(' jlg.logevent = :logevent ');
+            $one = 'JT_I_'.strtoupper($this->object);
+            $query->bind(':logevent', $one, \Joomla\Database\ParameterType::STRING);            
             $this->_db->setQuery($query);
             $tmp = $this->_db->loadObject();
 

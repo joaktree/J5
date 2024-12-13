@@ -47,7 +47,8 @@ class SettingsModel extends ListModel
 
         $query->select(' jds.* ');
         $query->from(' #__joaktree_display_settings jds ');
-        $query->where(' jds.level = '.$this->_db->quote($this->_level).' ');
+        $query->where(' jds.level = :level');
+        $query->bind(':level', $$this->_level, \Joomla\Database\ParameterType::STRING);
 
         $query->select(' vll1.title AS access_level ');
         $query->leftJoin(
@@ -127,7 +128,8 @@ class SettingsModel extends ListModel
 
                 $query->update(' #__joaktree_display_settings ');
                 $query->set(' published = !published ');
-                $query->where(' id = '.$cid.' ');
+                $query->where(' id = :id');
+                $query->bind(':id', $cid, \Joomla\Database\ParameterType::INTEGER);
 
                 $this->_db->setQuery($query);
                 $msg = $this->_db->execute(); //$this->_db->query();
@@ -216,6 +218,7 @@ class SettingsModel extends ListModel
             $query->set(' ordering = '.$i.' ');
             $query->where(' id = '.(int) $jtid.' ');
             $query->where(' '.$where.' ');
+            $query->bind(':id', $jtid, \Joomla\Database\ParameterType::INTEGER);
 
             $this->_db->setQuery($query);
 

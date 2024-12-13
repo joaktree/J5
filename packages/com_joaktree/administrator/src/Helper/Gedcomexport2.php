@@ -41,12 +41,13 @@ class Gedcomexport2
 
         $query->select(' COUNT( jrn.app_id ) ');
         $query->from(' #__joaktree_relations  jrn ');
-        $query->where(' jrn.app_id = '.(int) $this->procObject->id.' ');
+        $query->where(' jrn.app_id = :appid');
         $query->where(
             ' (  jrn.family_id IS NULL '
                      . ' OR jrn.family_id = '.$db->quote('').' '
                         . ' ) '
         );
+        $query->bind(':appid', $this->procObject->id, \Joomla\Database\ParameterType::INTEGER);
 
         $db->setQuery($query);
         $count = $db->loadResult();
@@ -66,14 +67,16 @@ class Gedcomexport2
         unset($attribs);
 
         $query->update(' #__joaktree_relations ');
-        $query->set(' family_id = '.$key.' ');
-        $query->where(' app_id = '.(int) $this->procObject->id.' ');
+        $query->set(' family_id = :familyid');
+        $query->where(' app_id = :appid');
         $query->where(' type = '.$db->quote('partner').' ');
         $query->where(
             ' (  family_id IS NULL '
                      . ' OR family_id = '.$db->quote('').' '
                         . ' ) '
         );
+        $query->bind(':appid', $this->procObject->id, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':familyid', $key, \Joomla\Database\ParameterType::STRING);
 
         $db->setQuery($query);
         //$db->query();
@@ -97,8 +100,9 @@ class Gedcomexport2
                       . '    ) '
         );
         $query->set(' child.family_id = parents.family_id ');
-        $query->where(' child.app_id = '.(int) $this->procObject->id.' ');
+        $query->where(' child.app_id = :appid');
         $query->where(' child.type IN ( '.$db->quote('father').', '.$db->quote('mother').') ');
+        $query->bind(':appid', $this->procObject->id, \Joomla\Database\ParameterType::INTEGER);
 
         $db->setQuery($query);
         //$db->query();
@@ -122,8 +126,9 @@ class Gedcomexport2
                       . '    ) '
         );
         $query->set(' child.family_id = parents.family_id ');
-        $query->where(' child.app_id = '.(int) $this->procObject->id.' ');
+        $query->where(' child.app_id = :appid');
         $query->where(' child.type IN ( '.$db->quote('father').', '.$db->quote('mother').') ');
+        $query->bind(':appid', $this->procObject->id, \Joomla\Database\ParameterType::INTEGER);
 
         $db->setQuery($query);
         //$db->query();
@@ -139,14 +144,16 @@ class Gedcomexport2
 
         $query->clear();
         $query->update(' #__joaktree_relations ');
-        $query->set(' family_id = '.$key.' ');
-        $query->where(' app_id = '.(int) $this->procObject->id.' ');
+        $query->set(' family_id = :familyid');
+        $query->where(' app_id = :appid');
         $query->where(' type IN ( '.$db->quote('father').', '.$db->quote('mother').') ');
         $query->where(
             ' (  family_id IS NULL '
                      . ' OR family_id = '.$db->quote('').' '
                         . ' ) '
         );
+        $query->bind(':appid', $this->procObject->id, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':familyid', $key, \Joomla\Database\ParameterType::STRING);
 
         $db->setQuery($query);
         //$db->query();
@@ -185,8 +192,9 @@ class Gedcomexport2
         $query->select(' jpn.indCitation ');
         $query->select(' jpn.indIsWitness ');
         $query->from(' #__joaktree_persons  jpn ');
-        $query->where(' jpn.app_id = '.(int) $this->procObject->id.' ');
+        $query->where(' jpn.app_id = :appid');
         $query->order(' CONVERT( SUBSTRING(jpn.id FROM 2), SIGNED) ');
+        $query->bind(':appid', $this->procObject->id, \Joomla\Database\ParameterType::INTEGER);
 
         $db->setQuery($query, $offset, $limit);
         $persons = $db->loadAssocList();
@@ -201,9 +209,10 @@ class Gedcomexport2
 
         $query->select(' DISTINCT jrn.family_id ');
         $query->from(' #__joaktree_relations  jrn ');
-        $query->where(' jrn.app_id = '.(int) $this->procObject->id.' ');
+        $query->where(' jrn.app_id = :appid');
 
         $query->order(' CONVERT( SUBSTRING(jrn.family_id FROM 2), SIGNED) ');
+        $query->bind(':appid', $this->procObject->id, \Joomla\Database\ParameterType::INTEGER);
 
         $db->setQuery($query, $offset, $limit);
         $families = $db->loadAssocList();
@@ -218,8 +227,9 @@ class Gedcomexport2
 
         $query->select(' jne.* ');
         $query->from(' #__joaktree_notes  jne ');
-        $query->where(' jne.app_id = '.(int) $this->procObject->id.' ');
+        $query->where(' jne.app_id = :appid');
         $query->order(' CONVERT( SUBSTRING(jne.id FROM 2), SIGNED) ');
+        $query->bind(':appid', $this->procObject->id, \Joomla\Database\ParameterType::INTEGER);
 
         $db->setQuery($query, $offset, $limit);
         $notes = $db->loadAssocList();
@@ -234,8 +244,9 @@ class Gedcomexport2
 
         $query->select(' jse.* ');
         $query->from(' #__joaktree_sources  jse ');
-        $query->where(' jse.app_id = '.(int) $this->procObject->id.' ');
+        $query->where(' jse.app_id = :appid');
         $query->order(' CONVERT( SUBSTRING(jse.id FROM 2), SIGNED) ');
+        $query->bind(':appid', $this->procObject->id, \Joomla\Database\ParameterType::INTEGER);
 
         $db->setQuery($query, $offset, $limit);
         $sources = $db->loadAssocList();
@@ -250,8 +261,9 @@ class Gedcomexport2
 
         $query->select(' jry.* ');
         $query->from(' #__joaktree_repositories  jry ');
-        $query->where(' jry.app_id = '.(int) $this->procObject->id.' ');
+        $query->where(' jry.app_id = :appid');
         $query->order(' CONVERT( SUBSTRING(jry.id FROM 2), SIGNED) ');
+        $query->bind(':appid', $this->procObject->id, \Joomla\Database\ParameterType::INTEGER);
 
         $db->setQuery($query, $offset, $limit);
         $repos = $db->loadAssocList();
@@ -268,9 +280,11 @@ class Gedcomexport2
 
         $query->select(' jne.* ');
         $query->from(' #__joaktree_person_names  jne ');
-        $query->where(' jne.app_id = '.(int) $this->procObject->id.' ');
+        $query->where(' jne.app_id = :appid');
         $query->where(' jne.person_id = '.$db->quote($personId).' ');
         $query->order(' jne.orderNumber ');
+        $query->bind(':appid', $this->procObject->id, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':personid', $personId, \Joomla\Database\ParameterType::STRING);
 
         $db->setQuery($query);
         $names = $db->loadAssocList();
@@ -330,9 +344,11 @@ class Gedcomexport2
 
         $query->select(' jpe.* ');
         $query->from(' #__joaktree_person_events  jpe ');
-        $query->where(' jpe.app_id = '.(int) $this->procObject->id.' ');
-        $query->where(' jpe.person_id = '.$db->quote($personId).' ');
+        $query->where(' jpe.app_id = :appid');
+        $query->where(' jpe.person_id = :personid');
         $query->order(' jpe.orderNumber ');
+        $query->bind(':appid', $this->procObject->id, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':personid', $personId, \Joomla\Database\ParameterType::STRING);
 
         $db->setQuery($query);
 
@@ -385,9 +401,11 @@ class Gedcomexport2
 
         $query->select(' jrn.* ');
         $query->from(' #__joaktree_relations  jrn ');
-        $query->where(' jrn.app_id    = '.(int) $this->procObject->id.' ');
-        $query->where(' jrn.family_id = '.$db->quote($familyId).' ');
+        $query->where(' jrn.app_id    = :appid');
+        $query->where(' jrn.family_id = :familyid');
         $query->where(' jrn.type      = '.$db->quote('partner').' ');
+        $query->bind(':appid', $this->procObject->id, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':familyid', $familyId, \Joomla\Database\ParameterType::STRING);
 
         $query->select(' jpn1.sex AS sex1 ');
         $query->leftJoin(' #__joaktree_persons  jpn1 '
@@ -417,9 +435,11 @@ class Gedcomexport2
         $query->select(' DISTINCT jrn.person_id_2 AS person_id ');
         $query->select(' jrn.type ');
         $query->from(' #__joaktree_relations  jrn ');
-        $query->where(' jrn.app_id    = '.(int) $this->procObject->id.' ');
-        $query->where(' jrn.family_id = '.$db->quote($familyId).' ');
+        $query->where(' jrn.app_id    = :appid');
+        $query->where(' jrn.family_id = :familyid');
         $query->where(' jrn.type      IN ('.$db->quote('father').', '.$db->quote('mother').') ');
+        $query->bind(':appid', $this->procObject->id, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':familyid', $familyId, \Joomla\Database\ParameterType::STRING);
 
         $db->setQuery($query);
         $parents = $db->loadAssocList();
@@ -438,10 +458,12 @@ class Gedcomexport2
 
         $query->select(' DISTINCT jrn.person_id_1 ');
         $query->from(' #__joaktree_relations  jrn ');
-        $query->where(' jrn.app_id    = '.(int) $this->procObject->id.' ');
-        $query->where(' jrn.family_id = '.$db->quote($familyId).' ');
+        $query->where(' jrn.app_id    = :appid');
+        $query->where(' jrn.family_id = :familyid');
         $query->where(' jrn.type      IN ('.$db->quote('father').', '.$db->quote('mother').') ');
         $query->order(' jrn.orderNumber_2 ');
+        $query->bind(':appid', $this->procObject->id, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':familyid', $familyId, \Joomla\Database\ParameterType::STRING);
 
         $db->setQuery($query);
         $children = $db->loadAssocList();
@@ -463,10 +485,13 @@ class Gedcomexport2
 
         $query->select(' jre.* ');
         $query->from(' #__joaktree_relation_events  jre ');
-        $query->where(' jre.app_id = '.(int) $this->procObject->id.' ');
-        $query->where(' jre.person_id_1 = '.$db->quote($personId_1).' ');
-        $query->where(' jre.person_id_2 = '.$db->quote($personId_2).' ');
+        $query->where(' jre.app_id = :appid');
+        $query->where(' jre.person_id_1 = :personid1');
+        $query->where(' jre.person_id_2 = :personid2');
         $query->order(' jre.orderNumber ');
+        $query->bind(':appid', $this->procObject->id, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':personid1', $personId_1, \Joomla\Database\ParameterType::STRING);
+        $query->bind(':personid2', $personId_2, \Joomla\Database\ParameterType::STRING);
 
         $db->setQuery($query);
 
@@ -514,8 +539,10 @@ class Gedcomexport2
             ' #__joaktree_person_documents  jpd '
                          .' ON ( jpd.document_id = jdt.id AND jpd.app_id = jdt.app_id) '
         );
-        $query->where(' jpd.app_id = '.(int) $this->procObject->id.' ');
-        $query->where(' jpd.person_id = '.$db->quote($personId).' ');
+        $query->where(' jpd.app_id = :appid');
+        $query->where(' jpd.person_id = :personid');
+        $query->bind(':appid', $this->procObject->id, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':personid', $personId, \Joomla\Database\ParameterType::STRING);
 
         $db->setQuery($query);
         $docs = $db->loadAssocList();
@@ -556,10 +583,12 @@ class Gedcomexport2
 
         $query->select(' UPPER(DATE_FORMAT(MAX(jlg.changeDateTime), '.$db->quote('%e %b %Y').')) ');
         $query->from(' #__joaktree_logs  jlg ');
-        $query->where(' jlg.app_id = '.(int) $this->procObject->id.' ');
-        $query->where(' jlg.object_id = '.$db->quote($personId).' ');
+        $query->where(' jlg.app_id = :appid');
+        $query->where(' jlg.object_id = :personid');
         $query->where(' jlg.object    = '.$db->quote('person').' ');
         $query->where(' jlg.logevent != '.$db->quote('JT_L_PRSN').' ');
+        $query->bind(':appid', $this->procObject->id, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':personid', $personId, \Joomla\Database\ParameterType::STRING);
 
         $db->setQuery($query);
         $log = $db->loadResult();
@@ -578,23 +607,27 @@ class Gedcomexport2
 
         $query->select(' jpe.* ');
         $query->from(' #__joaktree_person_notes  jpe ');
-        $query->where(' jpe.app_id = '.(int) $this->procObject->id.' ');
-        $query->where(' jpe.person_id = '.$db->quote($personId).' ');
+        $query->where(' jpe.app_id = :appid');
+        $query->where(' jpe.person_id = :personid');
 
         if (!empty($type)) {
             if ($type == 'name') {
-                $query->where(' jpe.nameOrderNumber = '.$orderNumber.' ');
+                $query->where(' jpe.nameOrderNumber = :order');
                 $query->where(' jpe.eventOrderNumber IS NULL ');
+                $query->bind(':order', $orderNumber, \Joomla\Database\ParameterType::INTEGER);
             }
 
             if ($type == 'event') {
                 $query->where(' jpe.nameOrderNumber IS NULL ');
                 $query->where(' jpe.eventOrderNumber = '.$orderNumber.' ');
+                $query->bind(':order', $orderNumber, \Joomla\Database\ParameterType::INTEGER);
             }
         } else {
             $query->where(' jpe.nameOrderNumber IS NULL ');
             $query->where(' jpe.eventOrderNumber IS NULL ');
         }
+        $query->bind(':appid', $this->procObject->id, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':personid', $personId, \Joomla\Database\ParameterType::STRING);
 
         $query->order(' jpe.orderNumber ');
 
@@ -626,12 +659,16 @@ class Gedcomexport2
 
         $query->select(' jre.* ');
         $query->from(' #__joaktree_relation_notes  jre ');
-        $query->where(' jre.app_id = '.(int) $this->procObject->id.' ');
-        $query->where(' jre.person_id_1 = '.$db->quote($personId_1).' ');
-        $query->where(' jre.person_id_2 = '.$db->quote($personId_2).' ');
-        $query->where(' jre.eventOrderNumber = '.$orderNumber.' ');
+        $query->where(' jre.app_id = :appid');
+        $query->where(' jre.person_id_1 = :personid1');
+        $query->where(' jre.person_id_2 = :personid2');
+        $query->where(' jre.eventOrderNumber = :order');
 
         $query->order(' jre.orderNumber ');
+        $query->bind(':appid', $this->procObject->id, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':personid1', $personId_1, \Joomla\Database\ParameterType::STRING);
+        $query->bind(':personid2', $personId_2, \Joomla\Database\ParameterType::STRING);
+        $query->bind(':order', $orderNumber, \Joomla\Database\ParameterType::INTEGER);
 
         $db->setQuery($query);
         $notes = $db->loadAssocList();
@@ -657,14 +694,19 @@ class Gedcomexport2
 
         $query->select(' jcn.* ');
         $query->from(' #__joaktree_citations  jcn ');
-        $query->where(' jcn.objectType = '.$db->quote($type).' ');
+        $query->where(' jcn.objectType = :type');
         if ($orderNumber) {
-            $query->where(' jcn.objectOrderNumber = '.$orderNumber.' ');
+            $query->where(' jcn.objectOrderNumber = :order');
+            $query->bind(':order', $orderNumber, \Joomla\Database\ParameterType::INTEGER);
         }
-        $query->where(' jcn.app_id = '.(int) $this->procObject->id.' ');
-        $query->where(' jcn.person_id_1 = '.$db->quote($personId_1).' ');
-        $query->where(' jcn.person_id_2 = '.$db->quote($personId_2).' ');
+        $query->where(' jcn.app_id = :appid');
+        $query->where(' jcn.person_id_1 =  :personid1');
+        $query->where(' jcn.person_id_2 = :personid2');
         $query->order(' jcn.orderNumber ');
+        $query->bind(':type', $type, \Joomla\Database\ParameterType::STRING);
+        $query->bind(':appid', $this->procObject->id, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':personid1', $personId_1, \Joomla\Database\ParameterType::STRING);
+        $query->bind(':personid2', $personId_2, \Joomla\Database\ParameterType::STRING);
 
         $db->setQuery($query);
         $cites = $db->loadAssocList();
@@ -702,8 +744,8 @@ class Gedcomexport2
             $query->select(' DISTINCT jrn.family_id ');
             $query->select(' jrn.subtype ');
             $query->from(' #__joaktree_relations  jrn ');
-            $query->where(' jrn.app_id = '.(int) $this->procObject->id.' ');
-            $query->where(' jrn.person_id_1 = '.$db->quote($personId).' ');
+            $query->where(' jrn.app_id = :appid');
+            $query->where(' jrn.person_id_1 = :personid');
             $query->where(' jrn.type IN ('.$db->quote('father').', '.$db->quote('mother').') ');
             $query->order(' jrn.orderNumber_1 ');
         } else {
@@ -713,26 +755,29 @@ class Gedcomexport2
                     .'( SELECT  jrn.family_id '
                     .'  ,       jrn.orderNumber_1 AS orderNumber '
                     .'  FROM    #__joaktree_relations  jrn '
-                    .'  WHERE   jrn.app_id      = '.(int) $this->procObject->id.' '
-                    .'  AND     jrn.person_id_1 = '.$db->quote($personId).' '
+                    .'  WHERE   jrn.app_id      = :appid'
+                    .'  AND     jrn.person_id_1 = :personid'
                     .'  AND     jrn.type        = '.$db->quote('partner').' '
                     .'  UNION   '
                     .'  SELECT  jrn.family_id '
                     .'  ,       jrn.orderNumber_2 AS orderNumber '
                     .'  FROM    #__joaktree_relations  jrn '
-                    .'  WHERE   jrn.app_id      = '.(int) $this->procObject->id.' '
-                    .'  AND     jrn.person_id_2 = '.$db->quote($personId).' '
+                    .'  WHERE   jrn.app_id      = :appid'
+                    .'  AND     jrn.person_id_2 = :personid'
                     .'  AND     jrn.type        = '.$db->quote('partner').' '
                     .'  UNION   '
                     .'  SELECT  jrn.family_id '
                     .'  ,       jrn.orderNumber_2 AS orderNumber '
                     .'  FROM    #__joaktree_relations  jrn '
-                    .'  WHERE   jrn.app_id      = '.(int) $this->procObject->id.' '
-                    .'  AND     jrn.person_id_2 = '.$db->quote($personId).' '
+                    .'  WHERE   jrn.app_id      = :appid'
+                    .'  AND     jrn.person_id_2 = :personid'
                     .'  AND     jrn.type        IN ('.$db->quote('father').', '.$db->quote('mother').') '
                     .') iv_jrn '
                     .'ORDER BY  iv_jrn.orderNumber ';
+
         }
+        $query->bind(':appid', $this->procObject->id, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':personid', $personId, \Joomla\Database\ParameterType::STRING);
 
         $db->setQuery($query);
         $fams = $db->loadAssocList();

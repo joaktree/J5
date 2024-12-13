@@ -46,8 +46,9 @@ class ThemeModel extends AdminModel
         $query = $this->_db->getQuery(true);
         $query->select(' home ');
         $query->from(' #__joaktree_themes ');
-        $query->where(' id   = '.(int) $id.' ');
+        $query->where(' id   = :id');
         $query->where(' home = 1 ');
+        $query->bind(':id', $id, \Joomla\Database\ParameterType::INTEGER);
 
         $this->_db->setQuery($query);
         $ret = $this->_db->loadResult();

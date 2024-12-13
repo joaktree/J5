@@ -130,8 +130,10 @@ class MapModel extends AdminModel
                       .'        , '.$this->_db->Quote(Text::_('JTFIELD_PERSON_BUTTON_PERSON')).' '
                       .'        )    AS personName ');
         $query->from(' #__joaktree_persons      jpn ');
-        $query->where(' jpn.app_id = '.$app_id.' ');
-        $query->where(' jpn.id     = '.$this->_db->Quote($person_id).' ');
+        $query->where(' jpn.app_id = :appid');
+        $query->where(' jpn.id     = :personid');
+        $query->bind(':appid', $app_id, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':personid', $personId, \Joomla\Database\ParameterType::STRING);
 
         $this->_db->setQuery($query);
         $result = $this->_db->loadResult();
@@ -200,9 +202,10 @@ class MapModel extends AdminModel
 
         $query->select(' code ');
         $query->from(' #__joaktree_display_settings ');
-        $query->where(' level = '.$this->_db->quote($type).' ');
+        $query->where(' level = :type');
         $query->where(' published = true ');
         $query->where(' code NOT IN '.$exclude.' ');
+        $query->bind(':type', $type, \Joomla\Database\ParameterType::STRING);
 
         $this->_db->setQuery($query);
         $excludes = $this->_db->loadColumn();
@@ -215,7 +218,8 @@ class MapModel extends AdminModel
         $query = $this->_db->getQuery(true);
         $query->select(' jte.app_id ');
         $query->from(' #__joaktree_trees  jte ');
-        $query->where(' jte.id = '.(int) $tree_id.' ');
+        $query->where(' jte.id = :treeid');
+        $query->bind(':treeid', $tree_id, \Joomla\Database\ParameterType::INTEGER);
 
         $this->_db->setQuery($query);
         $result = $this->_db->loadResult();

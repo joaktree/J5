@@ -148,10 +148,7 @@ class PersonsModel extends ListModel
         $query->select(' MIN('.$query->concatenate($attribs, ' - ').') AS period ');
 
         // WHERE, GROUP BY and ORDER BY clauses for the query
-        $wheres  =  $this->_buildContentWhere();
-        foreach ($wheres as $where) {
-            $query->where(' '.$where.' ');
-        }
+        $query  =  $this->_buildContentWhere($query);
         $query->group(' jpn.id ');
         $query->group(' jpn.app_id ');
         $query->group(' jpn.namePreposition');
@@ -161,7 +158,7 @@ class PersonsModel extends ListModel
         return $query;
     }
 
-    private function _buildContentWhere()
+    private function _buildContentWhere($query)
     {
         $app = Factory::getApplication();
 
@@ -180,57 +177,60 @@ class PersonsModel extends ListModel
         $search3		= $app->getUserStateFromRequest($context.'search3', 'search3', '', 'string');
         $search3		= strtolower($search3);
 
-        $where = array();
-
         if ($search1) {
-            $where[] = 'LOWER(jpn.firstName) LIKE '.$this->_db->Quote('%'.$search1.'%');
+            $query->where('LOWER(jpn.firstName) LIKE '.$this->_db->Quote('%'.$search1.'%'));
         }
 
         if ($search2) {
-            $where[] = 'LOWER(jpn.patronym) LIKE '.$this->_db->Quote('%'.$search2.'%');
+            $query->where('LOWER(jpn.patronym) LIKE '.$this->_db->Quote('%'.$search2.'%'));
         }
 
         if ($search3) {
-            $where[] = 'LOWER(jpn.familyName) LIKE '.$this->_db->Quote('%'.$search3.'%');
+            $query->where('LOWER(jpn.familyName) LIKE '.$this->_db->Quote('%'.$search3.'%'));
         }
 
         if (!($filter_state === '')) {
-            $where[] = 'jan.published = '. (int) $filter_state;
+            $query->where('jan.published = :filter'. (int) $filter_state);
+            $query->bind(':filter', $filter_state, \Joomla\Database\ParameterType::INTEGER);
         }
 
         if ($filter_living) {
             if ($filter_living == 'L') {
-                $where[] = 'jan.living = 1';
+                $query->where('jan.living = 1');
             } elseif ($filter_living == 'D') {
-                $where[] = 'jan.living = 0';
+                $query->where('jan.living = 0');
             }
         }
 
         if ($filter_page) {
             if ($filter_page == 'Y') {
-                $where[] = 'jan.page = 1';
+                $query->where('jan.page = 1');
             } elseif ($filter_page == 'N') {
-                $where[] = 'jan.page = 0';
+               $query->where('jan.page = 0');
             }
         }
 
         if ($filter_map >= 1) {
-            $where[] = 'jan.map = ' . ((int) $filter_map - 1);
+            $query->where('jan.map = :filtermap');
+            $query->bind(':filtermap', $filter_map - 1, \Joomla\Database\ParameterType::INTEGER);
         }
 
         if ($filter_tree != 0) {
-            $where[] = 'jtpe.tree_id = ' . $filter_tree;
+            $query->where('jtpe.tree_id = :treeid');
+            $query->bind(':treeid', $filter_tree, \Joomla\Database\ParameterType::INTEGER);
         }
 
         if ($filter_apptitle != 0) {
-            $where[] = 'jpn.app_id = ' . $filter_apptitle;
+            $query->where('jpn.app_id = :appid');
+            $query->bind(':appid', $filter_apptitle, \Joomla\Database\ParameterType::INTEGER);
         }
 
         if ($filter_robots >= 1) {
-            $where[] = 'jan.robots = ' . ((int) $filter_robots - 1);
+            $query->where('jan.robots = :robots');
+            $query->bind(':robots', $filter_robots - 1, \Joomla\Database\ParameterType::INTEGER);
         }
 
-        return $where;
+        return $query;
     }
 
     private function _buildContentOrderBy()
@@ -290,8 +290,10 @@ class PersonsModel extends ListModel
                 $query = $this->_db->getQuery(true);
                 $query->update(' #__joaktree_admin_persons ');
                 $query->set(' published = 1');
-                $query->where(' app_id = '.$id[0].' ');
-                $query->where(' id     = '.$this->_db->quote($id[1]).' ');
+                $query->where(' app_id = :appid');
+                $query->where(' id     = :personid');
+                $query->bind(':appid', $id[0], \Joomla\Database\ParameterType::INTEGER);
+                $query->bind(':personid', $id[1], \Joomla\Database\ParameterType::STRING);
 
                 $this->_db->setQuery($query);
                 $this->_db->execute(); //$this->_db->query();
@@ -324,8 +326,10 @@ class PersonsModel extends ListModel
                 $query = $this->_db->getQuery(true);
                 $query->update(' #__joaktree_admin_persons ');
                 $query->set(' published = 0');
-                $query->where(' app_id = '.$id[0].' ');
-                $query->where(' id     = '.$this->_db->quote($id[1]).' ');
+                $query->where(' app_id = :appid');
+                $query->where(' id     = :personid');
+                $query->bind(':appid', $id[0], \Joomla\Database\ParameterType::INTEGER);
+                $query->bind(':personid', $id[1], \Joomla\Database\ParameterType::STRING);
 
                 $this->_db->setQuery($query);
                 $this->_db->execute(); //$this->_db->query();
@@ -359,8 +363,10 @@ class PersonsModel extends ListModel
                 $query = $this->_db->getQuery(true);
                 $query->update(' #__joaktree_admin_persons ');
                 $query->set(' published = 1 ');
-                $query->where(' app_id = '.$id[0].' ');
-                $query->where(' id     = '.$this->_db->quote($id[1]).' ');
+                $query->where(' app_id = :appid');
+                $query->where(' id     = :personid');
+                $query->bind(':appid', $id[0], \Joomla\Database\ParameterType::INTEGER);
+                $query->bind(':personid', $id[1], \Joomla\Database\ParameterType::STRING);
 
                 $this->_db->setQuery($query);
                 $this->_db->execute(); //$this->_db->query();
@@ -394,8 +400,10 @@ class PersonsModel extends ListModel
                 $query = $this->_db->getQuery(true);
                 $query->update(' #__joaktree_admin_persons ');
                 $query->set(' published = 0 ');
-                $query->where(' app_id = '.$id[0].' ');
-                $query->where(' id     = '.$this->_db->quote($id[1]).' ');
+                $query->where(' app_id = :appid');
+                $query->where(' id     = :personid');
+                $query->bind(':appid', $id[0], \Joomla\Database\ParameterType::INTEGER);
+                $query->bind(':personid', $id[1], \Joomla\Database\ParameterType::STRING);
 
                 $this->_db->setQuery($query);
                 $this->_db->execute(); //$this->_db->query();
@@ -429,8 +437,10 @@ class PersonsModel extends ListModel
                 $query = $this->_db->getQuery(true);
                 $query->update(' #__joaktree_admin_persons ');
                 $query->set(' living = !living ');
-                $query->where(' app_id = '.$id[0].' ');
-                $query->where(' id     = '.$this->_db->quote($id[1]).' ');
+                $query->where(' app_id = :appid');
+                $query->where(' id     = :personid');
+                $query->bind(':appid', $id[0], \Joomla\Database\ParameterType::INTEGER);
+                $query->bind(':personid', $id[1], \Joomla\Database\ParameterType::STRING);
 
                 $this->_db->setQuery($query);
                 $this->_db->execute(); //$this->_db->query();
@@ -459,8 +469,10 @@ class PersonsModel extends ListModel
                 $query = $this->_db->getQuery(true);
                 $query->update(' #__joaktree_admin_persons ');
                 $query->set(' living = 1 ');
-                $query->where(' app_id = '.$id[0].' ');
-                $query->where(' id     = '.$this->_db->quote($id[1]).' ');
+                $query->where(' app_id = :appid');
+                $query->where(' id     = :personid');
+                $query->bind(':appid', $id[0], \Joomla\Database\ParameterType::INTEGER);
+                $query->bind(':personid', $id[1], \Joomla\Database\ParameterType::STRING);
 
                 $this->_db->setQuery($query);
                 $this->_db->execute(); //$this->_db->query();
@@ -489,8 +501,10 @@ class PersonsModel extends ListModel
                 $query = $this->_db->getQuery(true);
                 $query->update(' #__joaktree_admin_persons ');
                 $query->set(' living = 0 ');
-                $query->where(' app_id = '.$id[0].' ');
-                $query->where(' id     = '.$this->_db->quote($id[1]).' ');
+                $query->where(' app_id = :appid');
+                $query->where(' id     = :personid');
+                $query->bind(':appid', $id[0], \Joomla\Database\ParameterType::INTEGER);
+                $query->bind(':personid', $id[1], \Joomla\Database\ParameterType::STRING);
 
                 $this->_db->setQuery($query);
                 $this->_db->execute(); //$this->_db->query();
@@ -519,9 +533,10 @@ class PersonsModel extends ListModel
                 $query = $this->_db->getQuery(true);
                 $query->update(' #__joaktree_admin_persons ');
                 $query->set(' page = !page ');
-                $query->where(' app_id = '.$id[0].' ');
-                $query->where(' id     = '.$this->_db->quote($id[1]).' ');
-                // dumpVar($query->page, 'page?');
+                $query->where(' app_id = :appid');
+                $query->where(' id     = :personid');
+                $query->bind(':appid', $id[0], \Joomla\Database\ParameterType::INTEGER);
+                $query->bind(':personid', $id[1], \Joomla\Database\ParameterType::STRING);
                 $this->_db->setQuery($query);
                 $this->_db->execute(); //$this->_db->query();
             }
@@ -549,8 +564,10 @@ class PersonsModel extends ListModel
                 $query = $this->_db->getQuery(true);
                 $query->update(' #__joaktree_admin_persons ');
                 $query->set(' page = 1 ');
-                $query->where(' app_id = '.$id[0].' ');
-                $query->where(' id     = '.$this->_db->quote($id[1]).' ');
+                $query->where(' app_id = :appid');
+                $query->where(' id     = :personid');
+                $query->bind(':appid', $id[0], \Joomla\Database\ParameterType::INTEGER);
+                $query->bind(':personid', $id[1], \Joomla\Database\ParameterType::STRING);
 
                 $this->_db->setQuery($query);
                 $this->_db->execute(); //$this->_db->query();
@@ -579,8 +596,10 @@ class PersonsModel extends ListModel
                 $query = $this->_db->getQuery(true);
                 $query->update(' #__joaktree_admin_persons ');
                 $query->set(' page = 0 ');
-                $query->where(' app_id = '.$id[0].' ');
-                $query->where(' id     = '.$this->_db->quote($id[1]).' ');
+                $query->where(' app_id = :appid');
+                $query->where(' id     = :personid');
+                $query->bind(':appid', $id[0], \Joomla\Database\ParameterType::INTEGER);
+                $query->bind(':personid', $id[1], \Joomla\Database\ParameterType::STRING);
 
                 $this->_db->setQuery($query);
                 $this->_db->execute(); //$this->_db->query();
@@ -609,8 +628,10 @@ class PersonsModel extends ListModel
                 $query = $this->_db->getQuery(true);
                 $query->update(' #__joaktree_admin_persons ');
                 $query->set(' map = 1 ');
-                $query->where(' app_id = '.$id[0].' ');
-                $query->where(' id     = '.$this->_db->quote($id[1]).' ');
+                $query->where(' app_id = :appid');
+                $query->where(' id     = :personid');
+                $query->bind(':appid', $id[0], \Joomla\Database\ParameterType::INTEGER);
+                $query->bind(':personid', $id[1], \Joomla\Database\ParameterType::STRING);
 
                 $this->_db->setQuery($query);
                 $this->_db->execute(); //$this->_db->query();
@@ -639,8 +660,10 @@ class PersonsModel extends ListModel
                 $query = $this->_db->getQuery(true);
                 $query->update(' #__joaktree_admin_persons ');
                 $query->set(' map = 2 ');
-                $query->where(' app_id = '.$id[0].' ');
-                $query->where(' id     = '.$this->_db->quote($id[1]).' ');
+                $query->where(' app_id = :appid');
+                $query->where(' id     = :personid');
+                $query->bind(':appid', $id[0], \Joomla\Database\ParameterType::INTEGER);
+                $query->bind(':personid', $id[1], \Joomla\Database\ParameterType::STRING);
 
                 $this->_db->setQuery($query);
                 $this->_db->execute(); //$this->_db->query();
@@ -669,8 +692,10 @@ class PersonsModel extends ListModel
                 $query = $this->_db->getQuery(true);
                 $query->update(' #__joaktree_admin_persons ');
                 $query->set(' map = 0 ');
-                $query->where(' app_id = '.$id[0].' ');
-                $query->where(' id     = '.$this->_db->quote($id[1]).' ');
+                $query->where(' app_id = :appid');
+                $query->where(' id     = :personid');
+                $query->bind(':appid', $id[0], \Joomla\Database\ParameterType::INTEGER);
+                $query->bind(':personid', $id[1], \Joomla\Database\ParameterType::STRING);
 
                 $this->_db->setQuery($query);
                 $this->_db->execute(); //$this->_db->query();
@@ -702,10 +727,14 @@ class PersonsModel extends ListModel
 
                 $query = $this->_db->getQuery(true);
                 $query->update(' #__joaktree_admin_persons ');
-                $query->set(' robots = '.($robot - 1).' ');
-                $query->set(' map    = '.($map - 1).' ');
-                $query->where(' app_id = '.$id[0].' ');
-                $query->where(' id     = '.$this->_db->quote($id[1]).' ');
+                $query->set(' robots = :robots');
+                $query->set(' map    = :map');
+                $query->where(' app_id = :appid');
+                $query->where(' id     = :personid');
+                $query->bind(':appid', $id[0], \Joomla\Database\ParameterType::INTEGER);
+                $query->bind(':personid', $id[1], \Joomla\Database\ParameterType::STRING);
+                $query->bind(':robots', $robot - 1, \Joomla\Database\ParameterType::INTEGER);
+                $query->bind(':map', $map - 1, \Joomla\Database\ParameterType::INTEGER);
 
                 $this->_db->setQuery($query);
                 $this->_db->execute(); //$this->_db->query();

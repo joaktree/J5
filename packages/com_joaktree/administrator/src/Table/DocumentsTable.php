@@ -46,9 +46,11 @@ class DocumentsTable extends Table
 			$query->clear();
 			$query->select(' id ');
 			$query->from(  ' '.$this->_tbl.' ');
-			$query->where( ' file = '.$this->_db->quote($this->file).' ');
-			$query->where( ' app_id = '.$this->app_id.' ');
-			
+			$query->where( ' file = :file');
+			$query->where( ' app_id = :appid');
+            $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
+            $query->bind(':file', $this->file, \Joomla\Database\ParameterType::STRING);
+
 			// fetch and save the primary key 
 			$this->_db->setQuery($query);
 			$document_id = $this->_db->loadResult();			
@@ -61,7 +63,8 @@ class DocumentsTable extends Table
 				$query->clear();
 				$query->select(' MAX( id ) ');
 				$query->from(  ' '.$this->_tbl.' ');
-				$query->where( ' app_id = '.$this->app_id.' ');
+				$query->where( ' app_id = :appid');
+                $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
 				
 				// fetch and save the primary key 
 				$this->_db->setQuery($query);

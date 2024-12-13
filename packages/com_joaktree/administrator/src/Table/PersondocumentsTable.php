@@ -39,8 +39,10 @@ class PersondocumentsTable extends Table
 		} else {
 			$query = $this->_db->getQuery(true);
 			$query->delete(' '.$this->_db->quoteName($this->_tbl).' ');
-			$query->where( ' app_id    = '.$this->app_id.' ');
-			$query->where( ' person_id = '.$this->_db->quote($person_id).' ');
+			$query->where( ' app_id    = :appid');
+			$query->where( ' person_id = :personid');
+            $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
+            $query->bind(':personid', $person_id, \Joomla\Database\ParameterType::STRING);
 			
 			$this->_db->setQuery( $query );
 			$result = $this->_db->execute(); //$this->_db->query();       

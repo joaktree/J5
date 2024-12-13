@@ -74,12 +74,14 @@ class PersonsTable extends Table implements VersionableTableInterface
         $query = $this->_db->getQuery(true);
         $query->select(' COUNT(jcn.objectOrderNumber) AS indCit ');
         $query->from(' #__joaktree_citations jcn ');
-        $query->where(' jcn.app_id      = '.$this->app_id.' ');
+        $query->where(' jcn.app_id      = :appid');
         $query->where(
-            ' (  jcn.person_id_1 = '.$this->_db->quote($this->id).' '
-                     . ' OR jcn.person_id_2 = '.$this->_db->quote($this->id).' '
+            ' (  jcn.person_id_1 = :personid'
+                     . ' OR jcn.person_id_2 = :personid'
                      . ' ) '
         );
+        $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':personid', $this->id, \Joomla\Database\ParameterType::STRING);
 
         $this->_db->setQuery($query);
         $result = $this->_db->loadResult();
@@ -89,10 +91,12 @@ class PersonsTable extends Table implements VersionableTableInterface
         $query->clear();
         $query->select(' COUNT(jpe.orderNumber) AS indNot ');
         $query->from(' #__joaktree_person_notes jpe ');
-        $query->where(' jpe.app_id     = '.$this->app_id.' ');
-        $query->where(' jpe.person_id  = '.$this->_db->quote($this->id).' ');
+        $query->where(' jpe.app_id     = :appid');
+        $query->where(' jpe.person_id  = :personid');
         $query->where(' jpe.nameOrderNumber   IS NULL ');
         $query->where(' jpe.eventOrderNumber  IS NULL ');
+        $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':personid', $this->id, \Joomla\Database\ParameterType::STRING);
 
         $this->_db->setQuery($query);
         $result = $this->_db->loadResult();
@@ -141,8 +145,11 @@ class PersonsTable extends Table implements VersionableTableInterface
             $table = 'joaktree_person_events';
             //$query->clear();
             $query->delete(' #__joaktree_person_events ');
-            $query->where(' app_id    = '.$this->app_id.' ');
-            $query->where(' person_id = '.$this->_db->quote($this->id).' ');
+            $query->where(' app_id    = :appid');
+            $query->where(' person_id = :personid');
+            $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
+            $query->bind(':personid', $this->id, \Joomla\Database\ParameterType::STRING);
+            
             $this->_db->setQuery($query);
             $ret = $this->_db->execute(); //$this->_db->query();
         }
@@ -152,8 +159,11 @@ class PersonsTable extends Table implements VersionableTableInterface
             $table = 'joaktree_person_names';
             $query->clear();
             $query->delete(' #__joaktree_person_names ');
-            $query->where(' app_id    = '.$this->app_id.' ');
-            $query->where(' person_id = '.$this->_db->quote($this->id).' ');
+            $query->where(' app_id    = :appid');
+            $query->where(' person_id = :personid');
+            $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
+            $query->bind(':personid', $this->id, \Joomla\Database\ParameterType::STRING);
+            
             $this->_db->setQuery($query);
             $ret = $this->_db->execute(); //$this->_db->query();
         }
@@ -163,8 +173,11 @@ class PersonsTable extends Table implements VersionableTableInterface
             $table = 'joaktree_person_notes';
             $query->clear();
             $query->delete(' #__joaktree_person_notes ');
-            $query->where(' app_id    = '.$this->app_id.' ');
-            $query->where(' person_id = '.$this->_db->quote($this->id).' ');
+            $query->where(' app_id    = :appid');
+            $query->where(' person_id = :personid');
+            $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
+            $query->bind(':personid', $this->id, \Joomla\Database\ParameterType::STRING);
+            
             $this->_db->setQuery($query);
             $ret = $this->_db->execute(); //$this->_db->query();
         }
@@ -174,8 +187,11 @@ class PersonsTable extends Table implements VersionableTableInterface
             $table = 'joaktree_person_document';
             $query->clear();
             $query->delete(' #__joaktree_person_documents ');
-            $query->where(' app_id    = '.$this->app_id.' ');
-            $query->where(' person_id = '.$this->_db->quote($this->id).' ');
+            $query->where(' app_id    = :appid');
+            $query->where(' person_id = :personid');
+            $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
+            $query->bind(':personid', $this->id, \Joomla\Database\ParameterType::STRING);
+            
             $this->_db->setQuery($query);
             $ret = $this->_db->execute(); //$this->_db->query();
         }
@@ -184,7 +200,7 @@ class PersonsTable extends Table implements VersionableTableInterface
             $table = 'joaktree_documents';
             $query->clear();
             $query->delete(' #__joaktree_documents ');
-            $query->where(' app_id    = '.$this->app_id.' ');
+            $query->where(' app_id    = :appid');
             $query->where(
                 ' NOT EXISTS ( '
                          . '  SELECT 1 '
@@ -193,6 +209,8 @@ class PersonsTable extends Table implements VersionableTableInterface
                          . '  AND    jpd.document_id = id '
                          . '  ) '
             );
+            $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
+            
             $this->_db->setQuery($query);
             $ret = $this->_db->execute(); //$this->_db->query();
         }
@@ -204,8 +222,11 @@ class PersonsTable extends Table implements VersionableTableInterface
             // First select which relations exists (one direction)
             $query->select(' person_id_1 ');
             $query->from(' #__joaktree_relations ');
-            $query->where(' app_id = '.$this->app_id.' ');
-            $query->where(' person_id_2 = '.$this->_db->quote($this->id).' ');
+            $query->where(' app_id = :appid');
+            $query->where(' person_id_2 = :personid');
+            $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
+            $query->bind(':personid', $this->id, \Joomla\Database\ParameterType::STRING);
+            
             $this->_db->setQuery($query);
             $relations = $this->_db->loadColumn();
             $query->clear();
@@ -213,8 +234,11 @@ class PersonsTable extends Table implements VersionableTableInterface
             // Second select which relations exists (second direction)
             $query->select(' person_id_2 ');
             $query->from(' #__joaktree_relations ');
-            $query->where(' app_id = '.$this->app_id.' ');
-            $query->where(' person_id_1 = '.$this->_db->quote($this->id).' ');
+            $query->where(' app_id = :appid');
+            $query->where(' person_id_1 = :personid');
+            $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
+            query->bind(':personid', $this->id, \Joomla\Database\ParameterType::STRING);
+            
             $this->_db->setQuery($query);
             $tmp = $this->_db->loadColumn();
             $relations = array_merge($relations, $tmp);
@@ -222,12 +246,15 @@ class PersonsTable extends Table implements VersionableTableInterface
 
             // now we start deleting ...
             $query->delete(' #__joaktree_relations ');
-            $query->where(' app_id = '.$this->app_id.' ');
+            $query->where(' app_id = :appid');
             $query->where(
-                ' (  person_id_1 = '.$this->_db->quote($this->id).' '
-                         . ' OR person_id_2 = '.$this->_db->quote($this->id).' '
+                ' (  person_id_1 = :personid'
+                         . ' OR person_id_2 = :personid'
                          . ' ) '
             );
+            $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
+            $query->bind(':personid', $this->id, \Joomla\Database\ParameterType::STRING);
+            
             $this->_db->setQuery($query);
             $ret = $this->_db->execute(); //$this->_db->query();
 
@@ -243,12 +270,15 @@ class PersonsTable extends Table implements VersionableTableInterface
             $table = 'joaktree_relation_events';
             $query->clear();
             $query->delete(' #__joaktree_relation_events ');
-            $query->where(' app_id = '.$this->app_id.' ');
+            $query->where(' app_id = :appid');
             $query->where(
-                ' (  person_id_1 = '.$this->_db->quote($this->id).' '
-                         . ' OR person_id_2 = '.$this->_db->quote($this->id).' '
+                ' (  person_id_1 = :personid'
+                         . ' OR person_id_2 = :personid'
                          . ' ) '
             );
+            $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
+            $query->bind(':personid', $this->id, \Joomla\Database\ParameterType::STRING);
+
             $this->_db->setQuery($query);
             $ret = $this->_db->execute(); //$this->_db->query();
         }
@@ -258,12 +288,15 @@ class PersonsTable extends Table implements VersionableTableInterface
             $table = 'joaktree_relation_notes';
             $query->clear();
             $query->delete(' #__joaktree_relation_notes ');
-            $query->where(' app_id = '.$this->app_id.' ');
+            $query->where(' app_id = :appid');
             $query->where(
-                ' (  person_id_1 = '.$this->_db->quote($this->id).' '
-                         . ' OR person_id_2 = '.$this->_db->quote($this->id).' '
+                ' (  person_id_1 = :personid'
+                         . ' OR person_id_2 = :personid'
                          . ' ) '
             );
+            $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
+            $query->bind(':personid', $this->id, \Joomla\Database\ParameterType::STRING);
+            
             $this->_db->setQuery($query);
             $ret = $this->_db->execute(); //$this->_db->query();
         }
@@ -273,12 +306,15 @@ class PersonsTable extends Table implements VersionableTableInterface
             $table = 'joaktree_citations';
             $query->clear();
             $query->delete(' #__joaktree_citations ');
-            $query->where(' app_id = '.$this->app_id.' ');
+            $query->where(' app_id = :appid');
             $query->where(
-                ' (  person_id_1 = '.$this->_db->quote($this->id).' '
-                         . ' OR person_id_2 = '.$this->_db->quote($this->id).' '
+                ' (  person_id_1 = :personid'
+                         . ' OR person_id_2 = :personid'
                          . ' ) '
             );
+            $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
+            $query->bind(':personid', $this->id, \Joomla\Database\ParameterType::STRING);
+            
             $this->_db->setQuery($query);
             $ret = $this->_db->execute(); //$this->_db->query();
         }
@@ -288,7 +324,7 @@ class PersonsTable extends Table implements VersionableTableInterface
             $table = 'joaktree_notes';
             $query->clear();
             $query->delete(' #__joaktree_notes ');
-            $query->where(' app_id    = '.$this->app_id.' ');
+            $query->where(' app_id    = :appid');
             $query->where(
                 ' NOT EXISTS ( '
                          . '  SELECT 1 '
@@ -305,6 +341,8 @@ class PersonsTable extends Table implements VersionableTableInterface
                          . '  AND    jrn.note_id = id '
                          . '  ) '
             );
+            $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
+            
             $this->_db->setQuery($query);
             $ret = $this->_db->execute(); //$this->_db->query();
         }
@@ -314,8 +352,11 @@ class PersonsTable extends Table implements VersionableTableInterface
             $table = 'joaktree_tree_persons';
             $query->clear();
             $query->delete(' #__joaktree_tree_persons ');
-            $query->where(' app_id    = '.$this->app_id.' ');
-            $query->where(' person_id = '.$this->_db->quote($this->id).' ');
+            $query->where(' app_id    = :appid');
+            $query->where(' person_id = :personid');
+            $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
+            $query->bind(':personid', $this->id, \Joomla\Database\ParameterType::STRING);
+            
             $this->_db->setQuery($query);
             $ret = $this->_db->execute(); //$this->_db->query();
         }
@@ -325,8 +366,11 @@ class PersonsTable extends Table implements VersionableTableInterface
             $table = 'joaktree_persons';
             $query->clear();
             $query->delete(' #__joaktree_persons ');
-            $query->where(' app_id = '.$this->app_id.' ');
-            $query->where(' id     = '.$this->_db->quote($this->id).' ');
+            $query->where(' app_id = :appid');
+            $query->where(' id     = :personid');
+            $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
+            $query->bind(':personid', $this->id, \Joomla\Database\ParameterType::STRING);
+            
             $this->_db->setQuery($query);
             $ret = $this->_db->execute(); //$this->_db->query();
         }
@@ -336,8 +380,11 @@ class PersonsTable extends Table implements VersionableTableInterface
             $table = 'joaktree_admin_persons';
             $query->clear();
             $query->delete(' #__joaktree_admin_persons ');
-            $query->where(' app_id = '.$this->app_id.' ');
-            $query->where(' id     = '.$this->_db->quote($this->id).' ');
+            $query->where(' app_id = :appid');
+            $query->where(' id     = :personid');
+            $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
+            $query->bind(':personid', $this->id, \Joomla\Database\ParameterType::STRING);
+           
             $this->_db->setQuery($query);
             $ret = $this->_db->execute(); //$this->_db->query();
         }

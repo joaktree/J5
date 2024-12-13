@@ -39,7 +39,8 @@ class RegistryitemsTable extends Table implements VersionableTableInterface
             $query = $this->_db->getQuery(true);
             $query->select(' id ');
             $query->from(' '.$this->_tbl.' ');
-            $query->where(' regkey = '.$this->_db->quote($this->regkey).' ');
+            $query->where(' regkey = :regkey');
+            $query->bind(':regkey', $this->regkey, \Joomla\Database\ParameterType::STRING);
 
             $this->_db->setQuery($query);
             $result = $this->_db->loadResult();
@@ -63,7 +64,8 @@ class RegistryitemsTable extends Table implements VersionableTableInterface
         $query = $this->_db->getQuery(true);
         $query->select(' * ');
         $query->from(' '.$this->_tbl.' ');
-        $query->where(' regkey = '.$this->_db->quote($uk).' ');
+        $query->where(' regkey = :regkey');
+        $query->bind(':regkey', $uk, \Joomla\Database\ParameterType::STRING);
 
         $this->_db->setQuery($query);
         $tmp = $this->_db->loadObject();
@@ -83,8 +85,8 @@ class RegistryitemsTable extends Table implements VersionableTableInterface
     {
         $query = $this->_db->getQuery(true);
         $query->delete(' '.$this->_tbl.' ');
-        $query->where(' regkey = '.$this->_db->quote($uk).' ');
-
+        $query->where(' regkey = :regkey');
+        $query->bind(':regkey', $uk, \Joomla\Database\ParameterType::STRING);
         $this->_db->setQuery($query);
         $tmp = $this->_db->execute(); //$this->_db->query();
     }
