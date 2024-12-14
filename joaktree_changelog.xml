@@ -6,6 +6,9 @@
         <note>
             <item>Update : 2024-12-13</item>
         </note>
+        <fix>
+            <item>New install : error SQL near note text NULL</item>
+        </fix>
         <change>
             <item>Admin : use prepared statements for db requests</item>
         </change>
