@@ -13,17 +13,18 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
+
 namespace Joaktree\Component\Joaktree\Administrator\Field;
 
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 defined('DS') or define('DS', DIRECTORY_SEPARATOR);
 
-use Joomla\CMS\Factory;		//replace JFactory
-use Joomla\CMS\Language\Text;		// replace JText
-use Joomla\CMS\HTML\HTMLHelper;		//replace JHtml
-use Joomla\CMS\Table\Table;		//replace JTable
-use Joomla\CMS\Form\FormField;		//replace JFormField
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\Database\DatabaseInterface;
+use Joomla\CMS\Form\FormField;
 use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeHelper;
 
 class PersonField extends FormField	//JFormField
@@ -97,7 +98,7 @@ class PersonField extends FormField	//JFormField
     private function checkValue($name, $value)
     {
         static $initCharacters;
-        $db	= Factory::getDBO();
+        $db	= Factory::getContainer()->get(DatabaseInterface::class);
 
         if ($name == 'personId') {
             $tmp = explode('!', $value);

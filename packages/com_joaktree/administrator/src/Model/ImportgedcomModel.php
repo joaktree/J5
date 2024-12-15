@@ -19,6 +19,7 @@ namespace Joaktree\Component\Joaktree\Administrator\Model;
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Event\Finder as FinderEvent;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel ;
 use Joomla\CMS\Factory;
@@ -259,7 +260,17 @@ class ImportgedcomModel extends BaseDatabaseModel
                     PluginHelper::importPlugin('finder');
                     $obj = new \StdClass();
                     $obj->app_id = $procObject->id;
-                    Factory::getApplication()->triggerEvent('onFinderAfterSave', array('com_joaktree.person', $obj ,true));
+                    $dispatcher = Factory::getApplication()->getDispatcher();
+                    $dispatcher->dispatch(
+                        'onFinderAfterSave',
+                        new FinderEvent\AfterSaveEvent(
+                            'onFinderAfterSave',
+                            [   'context' => 'com_joaktree.person',
+                                'subject' => $obj,
+                                'isnew'   => true
+                            ]
+                        )
+                    );
                     // we are done
                     $procObject->status  = 'end';
                     $procObject->current = date('h:i:s');

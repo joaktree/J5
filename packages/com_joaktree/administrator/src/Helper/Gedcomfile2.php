@@ -19,6 +19,7 @@ namespace Joaktree\Component\Joaktree\Administrator\Helper;
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Event\Finder as FinderEvent;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
@@ -886,8 +887,14 @@ class Gedcomfile2
         PluginHelper::importPlugin('finder');
         $obj = new \StdClass();
         $obj->app_id = $app_id;
-        Factory::getApplication()->triggerEvent('onFinderAfterDelete', array('com_joaktree.person', $obj ,true));
-
+        $dispatcher = Factory::getApplication()->getDispatcher();
+        $dispatcher->dispatch(
+            'onFinderAfterDelete',
+            new FinderEvent\AfterDeleteEvent('onFinderAfterDelete', [
+                        'context' => 'com_joaktree.person',
+                        'subject' => $obj
+                    ])
+        );
         $msg = text::_('JTGEDCOM_MESSAGE_DELETEGEDCOM');
 
         return $msg;

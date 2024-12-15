@@ -40,7 +40,8 @@ class HtmlView extends BaseHtmlView
         $document 		= Factory::getApplication()->getDocument();
 
         // Load the parameters.
-        $this->map 		= $this->get('map');
+        $model          = $this->getModel();
+        $this->map 		= $model->getMap();
         $this->params	= $app->getParams();
         $this->params->merge(JoaktreeHelper::getTheme(true, true));
 
@@ -51,7 +52,7 @@ class HtmlView extends BaseHtmlView
 
         if (isset($this->map->params) && $this->map->params['service'] == 'staticmap') {
             // Get data from the model
-            $this->mapview 				= $this->get('mapView');
+            $this->mapview 				= $model->getMapView();
             $this->lists['userAccess']	= ($this->mapview) ? true : false;
 
             if ($this->lists['userAccess']) {

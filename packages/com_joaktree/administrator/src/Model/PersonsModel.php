@@ -13,16 +13,17 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
+
 namespace Joaktree\Component\Joaktree\Administrator\Model;
 
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Event\Finder as FinderEvent;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ListModel;
-use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Pagination\Pagination;
 use Joomla\Registry\Registry;
 use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeHelper;
@@ -206,7 +207,7 @@ class PersonsModel extends ListModel
             if ($filter_page == 'Y') {
                 $query->where('jan.page = 1');
             } elseif ($filter_page == 'N') {
-               $query->where('jan.page = 0');
+                $query->where('jan.page = 0');
             }
         }
 
@@ -298,11 +299,15 @@ class PersonsModel extends ListModel
                 $this->_db->setQuery($query);
                 $this->_db->execute(); //$this->_db->query();
             }
-            PluginHelper::importPlugin('finder');
-            $args = ['com_joaktree.person', $cids,1];
-            //$event = new \Joomla\CMS\Event\GenericEvent('finder', $args);
-            //Factory::getApplication()->getDispatcher()->dispatch('onFinderChangeState', $event);
-            Factory::getApplication()->triggerEvent('onFinderChangeState', $args);
+            $args = [
+            'context' => 'com_joaktree.person',
+            'subject' => $cids,
+            'value'   => 1,
+            ];
+            Factory::getApplication()->getDispatcher()->dispatch(
+                'onFinderChangeState',
+                new FinderEvent\AfterChangeStateEvent('onFinderChangeState', $args)
+            );
 
             $return = Text::sprintf('JTADMIN_PERSONS_UPDATED', count($cids));
         } else {
@@ -334,12 +339,15 @@ class PersonsModel extends ListModel
                 $this->_db->setQuery($query);
                 $this->_db->execute(); //$this->_db->query();
             }
-            PluginHelper::importPlugin('finder');
-            $args = ['com_joaktree.person', $cids,0];
-            // $event = new \Joomla\CMS\Event\GenericEvent('finder', $args);
-            // Factory::getApplication()->getDispatcher()->dispatch('onFinderChangeState', $event);
-            Factory::getApplication()->triggerEvent('onFinderChangeState', $args);
-
+            $args = [
+                'context' => 'com_joaktree.person',
+                'subject' => $cids,
+                'value'   => 0,
+                ];
+            Factory::getApplication()->getDispatcher()->dispatch(
+                'onFinderChangeState',
+                new FinderEvent\AfterChangeStateEvent('onFinderChangeState', $args)
+            );
             $return = Text::sprintf('JTADMIN_PERSONS_UPDATED', count($cids));
         } else {
             $return = Text::_('JT_NOTAUTHORISED');
@@ -371,12 +379,15 @@ class PersonsModel extends ListModel
                 $this->_db->setQuery($query);
                 $this->_db->execute(); //$this->_db->query();
             }
-            PluginHelper::importPlugin('finder');
-            $args = ['com_joaktree.person', $cids,1];
-            //$event = new \Joomla\CMS\Event\GenericEvent('onFinderChangeState', $args);
-            // Factory::getApplication()->getDispatcher()->dispatch('onFinderChangeState', $event);
-            Factory::getApplication()->triggerEvent('onFinderChangeState', $args);
-
+            $args = [
+                'context' => 'com_joaktree.person',
+                'subject' => $cids,
+                'value'   => 1,
+                ];
+            Factory::getApplication()->getDispatcher()->dispatch(
+                'onFinderChangeState',
+                new FinderEvent\AfterChangeStateEvent('onFinderChangeState', $args)
+            );
             $return = Text::sprintf('JTADMIN_PERSONS_UPDATED', count($cids));
         } else {
             $return = Text::_('JT_NOTAUTHORISED');
@@ -408,12 +419,15 @@ class PersonsModel extends ListModel
                 $this->_db->setQuery($query);
                 $this->_db->execute(); //$this->_db->query();
             }
-            PluginHelper::importPlugin('finder');
-            $args = ['com_joaktree.person', $cids,0];
-            //$event = new \Joomla\CMS\Event\GenericEvent('onFinderChangeState', $args);
-            //Factory::getApplication()->getDispatcher()->dispatch('onFinderChangeState', $event);
-            Factory::getApplication()->triggerEvent('onFinderChangeState', $args);
-
+            $args = [
+                'context' => 'com_joaktree.person',
+                'subject' => $cids,
+                'value'   => 0,
+                ];
+            Factory::getApplication()->getDispatcher()->dispatch(
+                'onFinderChangeState',
+                new FinderEvent\AfterChangeStateEvent('onFinderChangeState', $args)
+            );
             $return = Text::sprintf('JTADMIN_PERSONS_UPDATED', count($cids));
         } else {
             $return = Text::_('JT_NOTAUTHORISED');

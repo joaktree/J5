@@ -26,7 +26,6 @@ use Joomla\CMS\Installer\Installer;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
 use Joomla\Database\DatabaseInterface;
-use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
 use Joomla\Registry\Registry;
 
@@ -300,8 +299,9 @@ class JoaktreeHelper
 
         return ' '.$concatTxt.' ';
     }
-    
-    public static function addLog($msg,$cat = 'joaktreeged' ) {
+
+    public static function addLog($msg, $cat = 'joaktreeged')
+    {
         Log::addLogger(array('text_file' => $cat.'.log.php'), Log::INFO, array($cat));
         Log::add($msg, Log::INFO, $cat);
     }

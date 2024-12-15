@@ -20,9 +20,7 @@ namespace Joaktree\Component\Joaktree\Administrator\Helper;
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Table\Table;
 use Joomla\CMS\Language\Text;
-use Joomla\Database\DatabaseInterface;
 
 class Gedcomdocuments2 extends \StdClass
 {

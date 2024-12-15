@@ -2,6 +2,20 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
+		<version>2.1.3</version>
+        <note>
+            <item>Update : 2024-12-15</item>
+        </note>
+        <fix>
+            <item>Map creation : person selection not working</item>
+        </fix>
+        <change>
+            <item>Joomla 6.x compatibility</item>
+        </change>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
 		<version>2.1.2</version>
         <note>
             <item>Update : 2024-12-13</item>

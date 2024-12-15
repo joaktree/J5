@@ -17,8 +17,8 @@
 namespace Joaktree\Component\Joaktree\Administrator\Table;
 
 defined('_JEXEC') or die('Restricted access');
-use Joomla\CMS\Access\Rules;		//replace JRules
-use Joomla\CMS\Language\Text;		// replace JText
+use Joomla\CMS\Language\Text;
+use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeHelper;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Versioning\VersionableTableInterface;
 use Joomla\Database\DatabaseDriver;
@@ -44,7 +44,7 @@ class TreepersonsTable extends Table implements VersionableTableInterface
             $query = $this->_db->getQuery(true);
             $query->delete(' '.$this->_db->quoteName($this->_tbl).' ');
             $query->where(' app_id = :appid');
-            $query->bind(':appid', $app_id, \Joomla\Database\ParameterType::INTEGER);            
+            $query->bind(':appid', $app_id, \Joomla\Database\ParameterType::INTEGER);
         } else {
             $query = 'TRUNCATE ' . $this->_tbl;
         }
@@ -70,78 +70,13 @@ class TreepersonsTable extends Table implements VersionableTableInterface
     public function store($updateNulls = false)
     {
         // always an insert
-        $stored = $this->_db->insertObject($this->_tbl, $this, $this->_tbl_key);
-
-        // If the store failed return false.
-        if (!$stored) {
-            $e = new \Exception(Text::sprintf('JLIB_DATABASE_ERROR_STORE_FAILED', get_class($this), $this->_db->getErrorMsg()));
-            $this->setError($e);
+        try {
+            $this->_db->insertObject($this->_tbl, $this, $this->_tbl_key);
+        } catch (\Exception $e) {
+            $msg = Text::sprintf('JLIB_DATABASE_ERROR_STORE_FAILED', get_class($this), $e->getMessage());
+            JoaktreeHelper::addLog($msg, 'JoaktreeTable') ;
             return false;
         }
-
-        // If the table is not set to track assets return true.
-        if (!$this->_trackAssets) {
-            return true;
-        }
-
-        if ($this->_locked) {
-            $this->_unlock();
-        }
-
-        //
-        // Asset Tracking
-        //
-
-        $parentId	= $this->_getAssetParentId();
-        $name		= $this->_getAssetName();
-        $title		= $this->_getAssetTitle();
-
-        $asset	= Table::getInstance('Asset');
-        //$asset	= Factory::getApplication()->bootComponent('com_joaktree')->getMVCFactory()->createTable('Asset');
-
-        $asset->loadByName($name);
-
-        // Check for an error.
-        if ($error = $asset->getError()) {
-            $this->setError($error);
-            return false;
-        }
-
-        // Specify how a new or moved node asset is inserted into the tree.
-        if (empty($this->asset_id) || $asset->parent_id != $parentId) {
-            $asset->setLocation($parentId, 'last-child');
-        }
-
-        // Prepare the asset to be stored.
-        $asset->parent_id	= $parentId;
-        $asset->name		= $name;
-        $asset->title		= $title;
-        if ($this->_rules instanceof Rules) {
-            $asset->rules = (string) $this->_rules;
-        }
-
-        if (!$asset->check() || !$asset->store($updateNulls)) {
-            $this->setError($asset->getError());
-            return false;
-        }
-
-        if (empty($this->asset_id)) {
-            // Update the asset_id field in this table.
-            $this->asset_id = (int) $asset->id;
-
-            $query = $this->_db->getQuery(true);
-            $query->update($this->_db->quoteName($this->_tbl));
-            $query->set('asset_id = '.(int) $this->asset_id);
-            $query->where($this->_db->quoteName($k).' = '.(int) $this->$k);
-            $this->_db->setQuery($query);
-
-            if (!$this->_db->execute()) { //$this->_db->query())
-                $e = new \Exception(Text::sprintf('JLIB_DATABASE_ERROR_STORE_FAILED_UPDATE_ASSET_ID', $this->_db->getErrorMsg()));
-                $this->setError($e);
-                return false;
-            }
-        }
-
         return true;
     }
     /**

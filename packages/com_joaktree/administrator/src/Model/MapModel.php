@@ -133,7 +133,7 @@ class MapModel extends AdminModel
         $query->where(' jpn.app_id = :appid');
         $query->where(' jpn.id     = :personid');
         $query->bind(':appid', $app_id, \Joomla\Database\ParameterType::INTEGER);
-        $query->bind(':personid', $personId, \Joomla\Database\ParameterType::STRING);
+        $query->bind(':personid', $person_id, \Joomla\Database\ParameterType::STRING);
 
         $this->_db->setQuery($query);
         $result = $this->_db->loadResult();

@@ -18,6 +18,7 @@ namespace Joaktree\Component\Joaktree\Administrator\Table;
 
 defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Access\Rules;
+use Joomla\CMS\Table\Asset;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Versioning\VersionableTableInterface;
 use Joomla\Database\DatabaseDriver;
@@ -26,6 +27,7 @@ use Joomla\Registry\Registry;
 class ApplicationsTable extends Table implements VersionableTableInterface
 {
     public $id              = null;
+    public $db              = null;
     public $asset_id        = null;
     public $title           = null;
     public $description     = null;
@@ -35,6 +37,7 @@ class ApplicationsTable extends Table implements VersionableTableInterface
     public function __construct(DatabaseDriver $db)
     {
         $this->typeAlias = 'com_joaktree.applications';
+        $this->db = $db;
         parent::__construct('#__joaktree_applications', 'id', $db);
     }
 
@@ -97,7 +100,7 @@ class ApplicationsTable extends Table implements VersionableTableInterface
      */
     protected function _getAssetParentId(Table $table = null, $id = null)
     {
-        $asset	= Table::getInstance('Asset');
+        $asset	= new Asset($this->db);
 
         $asset->loadByName('com_joaktree');
         $parentId = empty($asset->id) ? 1 : $asset->id;

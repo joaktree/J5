@@ -13,6 +13,7 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
+
 namespace Joaktree\Component\Joaktree\Administrator\Model;
 
 // no direct access
@@ -22,7 +23,6 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Pagination\Pagination;
-use Joomla\CMS\Table\Table;
 use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeHelper;
 use Joaktree\Component\Joaktree\Administrator\Helper\Trees;
 
