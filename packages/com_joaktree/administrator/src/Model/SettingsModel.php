@@ -48,7 +48,7 @@ class SettingsModel extends ListModel
         $query->select(' jds.* ');
         $query->from(' #__joaktree_display_settings jds ');
         $query->where(' jds.level = :level');
-        $query->bind(':level', $$this->_level, \Joomla\Database\ParameterType::STRING);
+        $query->bind(':level', $this->_level, \Joomla\Database\ParameterType::STRING);
 
         $query->select(' vll1.title AS access_level ');
         $query->leftJoin(
