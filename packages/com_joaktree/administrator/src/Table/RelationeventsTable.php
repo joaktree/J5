@@ -18,10 +18,10 @@ namespace Joaktree\Component\Joaktree\Administrator\Table;
 
 defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Factory;
-use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
+use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeTable;
 
-class RelationeventsTable extends Table
+class RelationeventsTable extends JoaktreeTable
 {
     public $app_id			= null; // PK
     public $person_id_1	= null; // PK
@@ -47,22 +47,19 @@ class RelationeventsTable extends Table
     {
         if ($person_id == null) {
             return false;
-        } else {
-            $query = $this->_db->getQuery(true);
-            $query->delete(' '.$this->_db->quoteName($this->_tbl).' ');
-            $query->where(' app_id = :appid');
-            $query->where(' (  person_id_1 = :personid  OR person_id_2 = :personid');
-            $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
-            $query->bind(':personid', $person_id, \Joomla\Database\ParameterType::STRING);
-
+        }
+        $query = $this->_db->getQuery(true);
+        $query->delete(' '.$this->_db->quoteName($this->_tbl).' ');
+        $query->where(' app_id = :appid');
+        $query->where(' (  person_id_1 = :personid  OR person_id_2 = :personid');
+        $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':personid', $person_id, \Joomla\Database\ParameterType::STRING);
+        try {
             $this->_db->setQuery($query);
             $result = $this->_db->execute(); //$this->_db->query();
-        }
-
-        if ($result) {
             return true;
-        } else {
-            return $this->setError($this->$table->getError()); //$this->_db->getErrorMsg());
+        } catch (\Exception $e) {
+            return $this->setError('DeletePersonEvents '.$this->_tbl.': Error -> '.$e->getMessage());
         }
     }
 
@@ -72,33 +69,29 @@ class RelationeventsTable extends Table
            or ($person_id_2 == null)
            or ($person_id_1 == $person_id_2)) {
             return false;
+        }
+        if ($person_id_1 < $person_id_2) {
+            $pid1 = $person_id_1;
+            $pid2 = $person_id_2;
         } else {
-            if ($person_id_1 < $person_id_2) {
-                $pid1 = $person_id_1;
-                $pid2 = $person_id_2;
-            } else {
-                $pid1 = $person_id_2;
-                $pid2 = $person_id_1;
-            }
-
-            $query = $this->_db->getQuery(true);
-            $query->delete(' '.$this->_db->quoteName($this->_tbl).' ');
-            $query->where(' app_id = :appid');
-            $query->where(' person_id_1 = :pid1');
-            $query->where(' person_id_2 = :pid2');
-            $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
-            $query->bind(':personid1', $pid1, \Joomla\Database\ParameterType::STRING);
-            $query->bind(':personid2', $pid2, \Joomla\Database\ParameterType::STRING);
-
+            $pid1 = $person_id_2;
+            $pid2 = $person_id_1;
+        }
+        $query = $this->_db->getQuery(true);
+        $query->delete(' '.$this->_db->quoteName($this->_tbl).' ');
+        $query->where(' app_id = :appid');
+        $query->where(' person_id_1 = :pid1');
+        $query->where(' person_id_2 = :pid2');
+        $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':personid1', $pid1, \Joomla\Database\ParameterType::STRING);
+        $query->bind(':personid2', $pid2, \Joomla\Database\ParameterType::STRING);
+        try {
             $this->_db->setQuery($query);
-            $result = $this->_db->execute(); //$this->_db->query();
+            return $this->_db->execute();
+        } catch (\Exception $e) {
+            return $this->setError('DeleteEvents '.$this->_tbl.': Error -> '.$e->getMessage());
         }
 
-        if ($result) {
-            return true;
-        } else {
-            return $this->setError($this->$table->getError()); //$this->_db->getErrorMsg());
-        }
     }
 
     public function truncateApp($app_id)
@@ -107,15 +100,13 @@ class RelationeventsTable extends Table
         $query->delete(' '.$this->_db->quoteName($this->_tbl).' ');
         $query->where(' app_id = :appid');
         $query->bind(':appid', $app_id, \Joomla\Database\ParameterType::INTEGER);
-
-        $this->_db->setQuery($query);
-        $result = $this->_db->execute(); //$this->_db->query();
-
-        if ($result) {
-            return true;
-        } else {
-            return $this->setError($this->$table->getError()); //$this->_db->getErrorMsg());
+        try {
+            $this->_db->setQuery($query);
+            return $this->_db->execute();
+        } catch (\Exception $e) {
+            return $this->setError('truncateApp '.$this->_tbl.': Error -> '.$e->getMessage());
         }
+
     }
 
     public function check($cit = false)
@@ -184,8 +175,8 @@ class RelationeventsTable extends Table
         $query->from(' #__joaktree_relation_notes  jre ');
         $query->where(' jre.app_id     = :appid');
         $query->where(' jre.eventOrderNumber  = :ordernumber');
-        $query->where( ' jre.person_id_1 IN (:personid1,:personid2)');
-        $query->where( ' jre.person_id_2 IN (:personid1,:personid2)');
+        $query->where(' jre.person_id_1 IN (:personid1,:personid2)');
+        $query->where(' jre.person_id_2 IN (:personid1,:personid2)');
         $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
         $query->bind(':ordernumber', $this->orderNumber, \Joomla\Database\ParameterType::INTEGER);
         $query->bind(':personid1', $this->person_id_1, \Joomla\Database\ParameterType::STRING);
@@ -214,7 +205,7 @@ class RelationeventsTable extends Table
         $query->bind(':personid2', $this->person_id_2, \Joomla\Database\ParameterType::STRING);
 
         $this->_db->setQuery($query);
-        $result = $this->_db->execute(); //$this->_db->query();
+        $this->_db->execute(); //$this->_db->query();
 
         // deletenotes
         $query->clear();
@@ -229,7 +220,7 @@ class RelationeventsTable extends Table
         $query->bind(':personid2', $this->person_id_2, \Joomla\Database\ParameterType::STRING);
 
         $this->_db->setQuery($query);
-        $result = $this->_db->execute(); //$this->_db->query();
+        $this->_db->execute(); //$this->_db->query();
 
         // ready to delete
         $ret = parent::delete();

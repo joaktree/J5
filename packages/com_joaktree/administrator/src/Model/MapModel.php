@@ -21,7 +21,6 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;		//replace JFactory
 use Joomla\CMS\Language\Text;		// replace JText
-use Joomla\CMS\Table\Table;		//replace JTable
 use Joomla\CMS\MVC\Model\AdminModel;	//replace JModelAdmin
 use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeHelper;
 

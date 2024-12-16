@@ -13,6 +13,7 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
+
 namespace Joaktree\Component\Joaktree\Administrator\Model;
 
 // no direct access
@@ -20,11 +21,8 @@ defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Model\BaseDatabaseModel ;
-use Joomla\CMS\Table\Table;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Pagination\Pagination;
-
 use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeHelper;
 use Joaktree\Component\Joaktree\Administrator\Mapservice\MBJGeocode;
 use Joaktree\Component\Joaktree\Administrator\Mapservice\MBJService;
@@ -160,7 +158,6 @@ class LocationsModel extends ListModel
     {
         // Lets load the content if it doesn't already exist
         if (empty($this->_pagination)) {
-            jimport('joomla.html.pagination');
             $this->_pagination = new Pagination($this->getTotal(), $this->getState('limitstart'), $this->getState('limit'));
         }
 
@@ -239,11 +236,11 @@ class LocationsModel extends ListModel
             $query->set(' indServerProcessed = 1 ');
             $query->where(' id = :locationid');
             $query->bind(':locationid', $location->id, \Joomla\Database\ParameterType::INTEGER);
-            
+
             $this->_db->setQuery($query);
-            $this->_db->execute(); //$this->_db->query();
+            $this->_db->execute();
         }
-        // 		dumpVar($service->getLog());
+        //
         return implode("<br />", $service->getLog());
     }
 
@@ -267,7 +264,7 @@ class LocationsModel extends ListModel
                 $query->bind(':id', $cid, \Joomla\Database\ParameterType::INTEGER);
 
                 $this->_db->setQuery($query);
-                $this->_db->execute(); //$this->_db->query();
+                $this->_db->execute();
             }
 
             $return = '';
@@ -336,7 +333,7 @@ class LocationsModel extends ListModel
             // Perform all queries - we don't care if it fails
             foreach ($update_queries as $query) {
                 $this->_db->setQuery($query);
-                $this->_db->execute(); //$this->_db->query();
+                $this->_db->execute();
             }
 
             $return = $msg;

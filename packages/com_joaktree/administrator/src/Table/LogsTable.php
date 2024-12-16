@@ -19,13 +19,11 @@ namespace Joaktree\Component\Joaktree\Administrator\Table;
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\Table\Table;
 use Joomla\CMS\Versioning\VersionableTableInterface;
-use Joomla\Database\DatabaseDriver;
 use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeHelper;
+use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeTable;
 
-class LogsTable extends Table implements VersionableTableInterface
+class LogsTable extends JoaktreeTable implements VersionableTableInterface
 {
     public $id 				= null;
     public $app_id				= null;
@@ -85,8 +83,13 @@ class LogsTable extends Table implements VersionableTableInterface
             } else {
                 $this->changeDateTime = $changeDateTimeOverride;
             }
-
-            $ret = $this->store();
+            try {
+                $ret = $this->store();
+            } catch (\Exception $e) {
+                $this->application->enqueueMessage('function logChangeDateTime: '.$e->getMessage(), 'notice');
+                JoaktreeHelper::addLog('function logChangeDateTime: '.$e->getMessage(), 'JoaktreeTable') ;
+                $ret = false;
+            }
         } else {
             // Logging is switched off
             $ret = true;
@@ -220,7 +223,7 @@ class LogsTable extends Table implements VersionableTableInterface
             // finish the query and execute it
             $query->where(' jlg.logevent = :logevent ');
             $one = 'JT_I_'.strtoupper($this->object);
-            $query->bind(':logevent', $one, \Joomla\Database\ParameterType::STRING);            
+            $query->bind(':logevent', $one, \Joomla\Database\ParameterType::STRING);
             $this->_db->setQuery($query);
             $tmp = $this->_db->loadObject();
 
@@ -246,10 +249,7 @@ class LogsTable extends Table implements VersionableTableInterface
 
         $ret = $this->log($crud, $override);
 
-        if (!$ret) {
-            $this->errors[] = $this->_db->getError();
-            $this->application->enqueueMessage(Text::_('function logChangeDateTime: '.$this->errors[count($this->errors) - 1]), 'notice');
-        } else {
+        if ($ret) {
             // prepare for next person log
             $this->_changeDateTime->setDate(0001, 1, 1);
             $this->id = null;

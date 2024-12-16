@@ -13,35 +13,38 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
+
 namespace Joaktree\Component\Joaktree\Administrator\Table;
 
 defined('_JEXEC') or die('Restricted access');
 
-use Joomla\CMS\Table\Table;
 use Joomla\CMS\Versioning\VersionableTableInterface;
 use Joomla\Database\DatabaseDriver;
+use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeTable;
 
-class GedcomobjectlinesTable extends Table implements VersionableTableInterface
+class GedcomobjectlinesTable extends JoaktreeTable implements VersionableTableInterface
 {
-	var $id 		= null;
-	var $object_id	= null;
-	var $order_nr	= null;
-	var $level		= null;
-	var $tag		= null;
-	var $value 		= null;
-	var $subtype	= null;
+    public $id 		= null;
+    public $object_id	= null;
+    public $order_nr	= null;
+    public $level		= null;
+    public $tag		= null;
+    public $value 		= null;
+    public $subtype	= null;
 
-	function __construct( DatabaseDriver $db) {
+    public function __construct(DatabaseDriver $db)
+    {
         $this->typeAlias = 'com_joaktree.gedcom_objectlines';
-		parent::__construct('#__joaktree_gedcom_objectlines', 'id', $db);
-	}
+        parent::__construct('#__joaktree_gedcom_objectlines', 'id', $db);
+    }
 
-	function truncate() {
-            $query = 'TRUNCATE ' . $this->_tbl;
-            $this->_db->setQuery( $query );
-            $result = $this->_db->loadResult();
-            return $result;
-	}
+    public function truncate()
+    {
+        $query = 'TRUNCATE ' . $this->_tbl;
+        $this->_db->setQuery($query);
+        $result = $this->_db->loadResult();
+        return $result;
+    }
     /**
      * Get the type alias for the table
      *
@@ -52,7 +55,7 @@ class GedcomobjectlinesTable extends Table implements VersionableTableInterface
     public function getTypeAlias()
     {
         return $this->typeAlias;
-    }    
+    }
 }
 ?>
 

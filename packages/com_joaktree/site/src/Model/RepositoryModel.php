@@ -192,7 +192,7 @@ class RepositoryModel extends FormModel
 
             // Store the table to the database
             if (!$table->store(false)) {
-                $this->setError($this->$table->getError()); //_db->getErrorMsg());
+                $table->setError($this->$table->getError()); //_db->getErrorMsg());
                 return false;
             }
 

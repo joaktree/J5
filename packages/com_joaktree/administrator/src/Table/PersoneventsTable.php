@@ -13,15 +13,18 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
+
 namespace Joaktree\Component\Joaktree\Administrator\Table;
 
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Table\Table;
+use Joomla\CMS\Language\Text;
 use Joomla\Database\DatabaseDriver;
+use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeHelper;
+use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeTable;
 
-class PersoneventsTable extends Table
+class PersoneventsTable extends JoaktreeTable
 {
     public $app_id			= null; // PK
     public $person_id		= null; // PK
@@ -46,22 +49,21 @@ class PersoneventsTable extends Table
     {
         if ($person_id == null) {
             return false;
-        } else {
-            $query = $this->_db->getQuery(true);
-            $query->delete(' '.$this->_db->quoteName($this->_tbl).' ');
-            $query->where(' app_id    = :appid');
-            $query->where(' person_id = :personid');
-            $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
-            $query->bind(':personid', $person_id, \Joomla\Database\ParameterType::STRING);
-
-            $this->_db->setQuery($query);
-            $result = $this->_db->execute(); //$this->_db->query();
         }
-
-        if ($result) {
-            return true;
-        } else {
-            return $this->setError($this->$table->getError()); //$this->_db->getErrorMsg());
+        $query = $this->_db->getQuery(true);
+        $query->delete(' '.$this->_db->quoteName($this->_tbl).' ');
+        $query->where(' app_id    = :appid');
+        $query->where(' person_id = :personid');
+        $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':personid', $person_id, \Joomla\Database\ParameterType::STRING);
+        try {
+            $this->_db->setQuery($query);
+            $this->_db->execute();
+        } catch (\Exception $e) {
+            $msg = Text::sprintf('JLIB_DATABASE_ERROR_DELETE_FAILED', get_class($this), $e->getMessage());
+            JoaktreeHelper::addLog($msg, 'JoaktreeTable') ;
+            $this->setError($msg);
+            return false;
         }
     }
 
@@ -116,11 +118,14 @@ class PersoneventsTable extends Table
         $query->bind(':ordernumber', $this->orderNumber, \Joomla\Database\ParameterType::INTEGER);
         $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
         $query->bind(':personid', $this->person_id, \Joomla\Database\ParameterType::STRING);
-
-        $this->_db->setQuery($query);
-        $result = $this->_db->loadResult();
+        $result = false;
+        try {
+            $this->_db->setQuery($query);
+            $result = $this->_db->loadResult();
+        } catch (\Exception $e) {
+            $this->setError($e->getMessage());
+        }
         $this->indCitation = ($result) ? 1 : 0; // pascal
-
         // check for notes
         $query->clear();
         $query->select(' COUNT(jpe.orderNumber) AS indNot ');
@@ -131,9 +136,13 @@ class PersoneventsTable extends Table
         $query->bind(':ordernumber', $this->orderNumber, \Joomla\Database\ParameterType::INTEGER);
         $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
         $query->bind(':personid', $this->person_id, \Joomla\Database\ParameterType::STRING);
-
-        $this->_db->setQuery($query);
-        $result = $this->_db->loadResult();
+        $result = false;
+        try {
+            $this->_db->setQuery($query);
+            $result = $this->_db->loadResult();
+        } catch (\Exception $e) {
+            $this->setError($e->getMessage());
+        }
         $this->indNote = ($result) ? 1 : 0; // pascal
 
         return true;
@@ -151,10 +160,12 @@ class PersoneventsTable extends Table
         $query->bind(':ordernumber', $this->orderNumber, \Joomla\Database\ParameterType::INTEGER);
         $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
         $query->bind(':personid', $this->person_id, \Joomla\Database\ParameterType::STRING);
-
-        $this->_db->setQuery($query);
-        $result = $this->_db->execute(); //$this->_db->query();
-
+        try {
+            $this->_db->setQuery($query);
+            $this->_db->execute();
+        } catch (\Exception $e) {
+            $this->setError($e->getMessage());
+        }
         // deletenotes
         $query->clear();
         $query->delete(' #__joaktree_person_notes ');
@@ -164,10 +175,12 @@ class PersoneventsTable extends Table
         $query->bind(':ordernumber', $this->orderNumber, \Joomla\Database\ParameterType::INTEGER);
         $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
         $query->bind(':personid', $this->person_id, \Joomla\Database\ParameterType::STRING);
-
-        $this->_db->setQuery($query);
-        $result = $this->_db->execute(); //$this->_db->query();
-
+        try {
+            $this->_db->setQuery($query);
+            $this->_db->execute();
+        } catch (\Exception $e) {
+            $this->setError($e->getMessage());
+        }
         // ready to delete
         $ret = parent::delete();
         return $ret;

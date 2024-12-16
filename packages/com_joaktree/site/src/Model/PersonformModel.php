@@ -311,13 +311,13 @@ class PersonformModel extends FormModel
 
         // Load the person, so we can save the names for prosperity
         if (!$tabPerson->load()) {
-            $this->setError('Error deleting person -> Person not found in table joaktree_persons: '.$appId.'!'.$personId);
+            $tabPerson->setError('Error deleting person -> Person not found in table joaktree_persons: '.$appId.'!'.$personId);
             return false;
         }
 
         // Delete person, including all dependencies (cascading)
         if (!$tabPerson->delete()) {
-            $this->setError('Error deleting person -> delete: '.$tabPerson->getError());
+            $tabPerson->setError('Error deleting person -> delete: '.$tabPerson->getError());
             return false;
         }
 
@@ -328,7 +328,7 @@ class PersonformModel extends FormModel
         $tabLog->object_id			= $personId;
         $tabLog->object				= 'prsn';
         if (!$tabLog->log('D')) {
-            $this->setError('Error deleting person -> log: '.$tabLog->getError());
+            $tabLog->setError('Error deleting person -> log: '.$tabLog->getError());
             return false;
         }
 
@@ -345,7 +345,7 @@ class PersonformModel extends FormModel
         $name = implode(' ', $names);
         $tabLogRemoval->description	= substr($name, 0, 100);
         if (!$tabLogRemoval->store()) {
-            $this->setError('Error deleting person -> remove-log: '.$tabLogRemoval->getError());
+            $tabLogRemoval->setError('Error deleting person -> remove-log: '.$tabLogRemoval->getError());
             return false;
         }
 
@@ -1274,11 +1274,11 @@ class PersonformModel extends FormModel
 
             // Make sure the table is valid
             if (!$tabTreePerson->check()) {
-                $this->setError('Error checking tree-person: ');
+                $tabTreePerson->setError('Error checking tree-person: ');
                 return false;
                 // Else store the table to the database
             } elseif (!$tabTreePerson->store(false)) {
-                $this->setError('Error saving tree-person: '.$tabTreePerson->getError());
+                $tabTreePerson->setError('Error saving tree-person: '.$tabTreePerson->getError());
                 return false;
             }
 

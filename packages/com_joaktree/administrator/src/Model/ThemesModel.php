@@ -21,12 +21,9 @@ defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Model\BaseDatabaseModel ;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Pagination\Pagination;
-use Joomla\CMS\Table\Table;
 use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeHelper;
-use Joaktree\Component\Joaktree\Administrator\Helper\Trees;
 
 class ThemesModel extends ListModel
 {
@@ -130,7 +127,6 @@ class ThemesModel extends ListModel
     {
         // Lets load the content if it doesn't already exist
         if (empty($this->_pagination)) {
-            jimport('joomla.html.pagination');
             $this->_pagination = new Pagination($this->getTotal(), $this->getState('limitstart'), $this->getState('limit'));
         }
 

@@ -18,10 +18,10 @@ namespace Joaktree\Component\Joaktree\Administrator\Table;
 
 defined('_JEXEC') or die('Restricted access');
 
-use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
+use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeTable;
 
-class PersonnamesTable extends Table
+class PersonnamesTable extends JoaktreeTable
 {
     public $app_id			= null; // PK
     public $person_id		= null; // PK
@@ -52,7 +52,7 @@ class PersonnamesTable extends Table
             $query->bind(':personid', $person_id, \Joomla\Database\ParameterType::STRING);
             try {
                 $this->_db->setQuery($query);
-                $result = $this->_db->execute();
+                $this->_db->execute();
             } catch (\Exception $e) {
                 $this->setError($e->getMessage());
                 return false;
@@ -97,9 +97,13 @@ class PersonnamesTable extends Table
         $query->bind(':ordernumber', $this->orderNumber, \Joomla\Database\ParameterType::INTEGER);
         $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
         $query->bind(':personid', $this->person_id, \Joomla\Database\ParameterType::STRING);
-
-        $this->_db->setQuery($query);
-        $result = $this->_db->loadResult();
+        try {
+            $this->_db->setQuery($query);
+            $result = $this->_db->loadResult();
+        } catch (\Exception $e) {
+            $this->setError($e->getMessage());
+            $result = false;
+        }
         $this->indCitation = ($result) ? 1 : 0; // pascal
 
         // check for notes
@@ -112,9 +116,13 @@ class PersonnamesTable extends Table
         $query->bind(':ordernumber', $this->orderNumber, \Joomla\Database\ParameterType::INTEGER);
         $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
         $query->bind(':personid', $this->person_id, \Joomla\Database\ParameterType::STRING);
-
-        $this->_db->setQuery($query);
-        $result = $this->_db->loadResult();
+        try {
+            $this->_db->setQuery($query);
+            $result = $this->_db->loadResult();
+        } catch (\Exception $e) {
+            $this->setError($e->getMessage());
+            $result = false;
+        }
         $this->indNote = ($result) ? 1 : 0; // pascal
 
         return true;
@@ -132,10 +140,12 @@ class PersonnamesTable extends Table
         $query->bind(':ordernumber', $this->orderNumber, \Joomla\Database\ParameterType::INTEGER);
         $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
         $query->bind(':personid', $this->person_id, \Joomla\Database\ParameterType::STRING);
-
-        $this->_db->setQuery($query);
-        $result = $this->_db->execute(); //$this->_db->query();
-
+        try {
+            $this->_db->setQuery($query);
+            $this->_db->execute(); //$this->_db->query();
+        } catch (\Exception $e) {
+            $this->setError($e->getMessage());
+        }
         // deletenotes
         $query->clear();
         $query->delete(' #__joaktree_person_notes ');
@@ -145,9 +155,12 @@ class PersonnamesTable extends Table
         $query->bind(':ordernumber', $this->orderNumber, \Joomla\Database\ParameterType::INTEGER);
         $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
         $query->bind(':personid', $this->person_id, \Joomla\Database\ParameterType::STRING);
-
-        $this->_db->setQuery($query);
-        $result = $this->_db->execute(); //$this->_db->query();
+        try {
+            $this->_db->setQuery($query);
+            $this->_db->execute(); //$this->_db->query();
+        } catch (\Exception $e) {
+            $this->setError($e->getMessage());
+        }
 
         // ready to delete
         $ret = parent::delete();

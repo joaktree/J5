@@ -18,12 +18,11 @@ namespace Joaktree\Component\Joaktree\Administrator\Table;
 
 defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Language\Text;
-use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeHelper;
-use Joomla\CMS\Table\Table;
 use Joomla\CMS\Versioning\VersionableTableInterface;
 use Joomla\Database\DatabaseDriver;
+use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeTable;
 
-class TreepersonsTable extends Table implements VersionableTableInterface
+class TreepersonsTable extends JoaktreeTable implements VersionableTableInterface
 {
     public $id			= null;
     public $app_id		= null;
@@ -55,26 +54,13 @@ class TreepersonsTable extends Table implements VersionableTableInterface
         return true;
     }
 
-    /**
-     * Method to store a row in the database from the Table instance properties.
-     * If a primary key value is set the row with that primary key value will be
-     * updated with the instance property values.  If no primary key value is set
-     * a new row will be inserted into the database with the properties from the
-     * Table instance.
-     *
-     * @param	boolean True to update fields even if they are null.
-     * @return	boolean	True on success.
-     * @since	1.0
-     * @link	http://docs.joomla.org/Table/store
-     */
     public function store($updateNulls = false)
     {
         // always an insert
         try {
             $this->_db->insertObject($this->_tbl, $this, $this->_tbl_key);
         } catch (\Exception $e) {
-            $msg = Text::sprintf('JLIB_DATABASE_ERROR_STORE_FAILED', get_class($this), $e->getMessage());
-            JoaktreeHelper::addLog($msg, 'JoaktreeTable') ;
+            $this->setError(Text::sprintf('JLIB_DATABASE_ERROR_STORE_FAILED', get_class($this), $e->getMessage()));
             return false;
         }
         return true;

@@ -186,7 +186,7 @@ class Trees extends BaseDatabaseModel
                     $treeTable->set('name', $tree_name);
                     $treeTable->set('theme_id', $tree_theme);
                     // insert the new record
-                    $ret = $treeTable->store();
+                    $treeTable->store();
 
                     // select all published trees
                     $query->clear();
@@ -282,7 +282,7 @@ class Trees extends BaseDatabaseModel
                 $query->where(' id        = :treeid');
                 $query->bind(':appid', $app_id, \Joomla\Database\ParameterType::INTEGER);
                 $query->bind(':treeid', $tree_id, \Joomla\Database\ParameterType::INTEGER);
-                
+
                 $this->_db->setQuery($query);
                 $tree = $this->_db->loadObject();
 
@@ -578,7 +578,7 @@ class Trees extends BaseDatabaseModel
                         .'AND        jan.default_tree_id IS NULL ';
 
                 $msg   = $this->_db->setQuery($quer1);
-                $msg   = $this->_db->execute(); //$this->_db->query( );
+                $msg   = $this->_db->execute();
 
                 $returnStatus = 'treedef_3';
                 break;

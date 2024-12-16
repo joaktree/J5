@@ -19,11 +19,12 @@ namespace Joaktree\Component\Joaktree\Administrator\Table;
 defined('_JEXEC') or die('Restricted access');
 
 define("EMPTY_COLUMN", "EMPTY");
-
-use Joomla\CMS\Table\Table;
+use Joomla\CMS\Language\Text;
 use Joomla\Database\DatabaseDriver;
+use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeHelper;
+use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeTable;
 
-class CitationsTable extends Table
+class CitationsTable extends JoaktreeTable
 {
     public $objectType		= null; // PK
     public $objectOrderNumber	= null; // PK
@@ -80,83 +81,21 @@ class CitationsTable extends Table
     {
         if ($person_id == null) {
             return false;
-        } else {
-            $query = $this->_db->getQuery(true);
-            $query->delete(' '.$this->_db->quoteName($this->_tbl).' ');
-            $query->where(' app_id      = :appid');
-            $query->where(' person_id_1 = :personid');
-            $query->where(' person_id_2 = '.$this->_db->quote(EMPTY_COLUMN).' ');
-            $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
-            $query->bind(':personid', $person_id, \Joomla\Database\ParameterType::STRING);
-
+        }
+        $query = $this->_db->getQuery(true);
+        $query->delete(' '.$this->_db->quoteName($this->_tbl).' ');
+        $query->where(' app_id      = :appid');
+        $query->where(' person_id_1 = :personid');
+        $query->where(' person_id_2 = '.$this->_db->quote(EMPTY_COLUMN).' ');
+        $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':personid', $person_id, \Joomla\Database\ParameterType::STRING);
+        try {
             $this->_db->setQuery($query);
-            $result = $this->_db->execute(); //$this->_db->query();
-        }
-
-        if ($result) {
-            return true;
-        } else {
-            return $this->setError($this->$table->getError()); //$this->_db->getErrorMsg());
-        }
-    }
-
-    public function deleteAllPersonCitations($person_id)
-    {
-        if ($person_id == null) {
+            $this->_db->execute();
+        } catch (\Exception $e) {
+            $msg = Text::sprintf('JLIB_DATABASE_ERROR_DELETE_FAILED', get_class($this), $e->getMessage());
+            JoaktreeHelper::addLog($msg, 'JoaktreeTable') ;
             return false;
-        } else {
-            $query = $this->_db->getQuery(true);
-            $query->delete(' '.$this->_db->quoteName($this->_tbl).' ');
-            $query->where(' app_id      = :appid');
-            $query->where(
-                ' (  person_id_1 = :personid'
-                         .'  OR person_id_2 = :personid'
-                         .'  ) '
-            );
-            $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
-            $query->bind(':personid', $person_id, \Joomla\Database\ParameterType::STRING);
-            $this->_db->setQuery($query);
-            $result = $this->_db->execute(); //$this->_db->query();
-        }
-
-        if ($result) {
-            return true;
-        } else {
-            return $this->setError($this->$table->getError()); //$this->_db->getErrorMsg());
-        }
-    }
-
-    public function deleteRelationCitations($person_id_1, $person_id_2)
-    {
-        if (($person_id_1 == null)
-           or ($person_id_2 == null)
-           or ($person_id_1 == $person_id_2)) {
-            return false;
-        } else {
-            if ($person_id_1 < $person_id_2) {
-                $pid1 = $person_id_1;
-                $pid2 = $person_id_2;
-            } else {
-                $pid1 = $person_id_2;
-                $pid2 = $person_id_1;
-            }
-
-            $query = $this->_db->getQuery(true);
-            $query->delete(' '.$this->_db->quoteName($this->_tbl).' ');
-            $query->where(' app_id      = :appid');
-            $query->where(' person_id_1 = :personid1');
-            $query->where(' person_id_2 = personid2');
-            $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
-            $query->bind(':personid1', $pid1, \Joomla\Database\ParameterType::STRING);
-            $query->bind(':personid2', $pid2, \Joomla\Database\ParameterType::STRING);
-            $this->_db->setQuery($query);
-            $result = $this->_db->execute(); //$this->_db->query();
-        }
-
-        if ($result) {
-            return true;
-        } else {
-            return $this->setError($this->$table->getError()); //$this->_db->getErrorMsg());
         }
     }
 
@@ -166,15 +105,14 @@ class CitationsTable extends Table
         $query->delete(' '.$this->_db->quoteName($this->_tbl).' ');
         $query->where(' app_id      = :appid');
         $query->where(' person_id_2 <> '.$this->_db->quote('EMPTY').' ');
-        $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
-
-        $this->_db->setQuery($query);
-        $result = $this->_db->execute(); //$this->_db->query();
-
-        if ($result) {
-            return true;
-        } else {
-            return $this->setError($this->$table->getError()); //$this->_db->getErrorMsg());
+        $query->bind(':appid', $app_id, \Joomla\Database\ParameterType::INTEGER);
+        try {
+            $this->_db->setQuery($query);
+            $this->_db->execute();
+        } catch (\Exception $e) {
+            $msg = Text::sprintf('JLIB_DATABASE_ERROR_DELETE_FAILED', get_class($this), $e->getMessage());
+            JoaktreeHelper::addLog($msg, 'JoaktreeTable') ;
+            return false;
         }
     }
     /**

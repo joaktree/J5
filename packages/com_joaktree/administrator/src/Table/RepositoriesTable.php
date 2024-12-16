@@ -18,55 +18,62 @@ namespace Joaktree\Component\Joaktree\Administrator\Table;
 
 defined('_JEXEC') or die('Restricted access');
 
-use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
+use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeTable;
 
-class RepositoriesTable extends Table
+class RepositoriesTable extends JoaktreeTable
 {
-	var $app_id		= null; // PK
-	var $id 		= null; // PK
-	var $name 		= null;
-	var $website	= null;
+    public $app_id		= null; // PK
+    public $id 		= null; // PK
+    public $name 		= null;
+    public $website	= null;
 
-	function __construct(  DatabaseDriver $db) {
+    public function __construct(DatabaseDriver $db)
+    {
         $this->typeAlias = 'com_joaktree.repositories';
-		$pk = array('app_id', 'id');
-		parent::__construct('#__joaktree_repositories', $pk, $db);
-	}
+        $pk = array('app_id', 'id');
+        parent::__construct('#__joaktree_repositories', $pk, $db);
+    }
 
-	function insert() {
-		$ret = $this->_db->insertObject( $this->_tbl, $this, $this->_tbl_key );
-		return $ret;
-	}
-	
-	function update() {
-		$ret = $this->_db->updateObject( $this->_tbl, $this, $this->_tbl_key, true );
-		return $ret;
-	}
-	
-	function check($cit=false)
-	{
-		jimport('joomla.filter.output');
-	
-		// primary key is mandatory
-		if (empty($this->app_id)) {
-			return false;
-		}
-		if (empty($this->id)) {
-			return false;
-		}
-		
-		// Set name - name is mandatory
-		$this->name = htmlspecialchars_decode($this->name, ENT_QUOTES);
-		if (empty($this->name)) {
-			return false;
-		}
+    public function insert()
+    {
+        try {
+            return $this->_db->insertObject($this->_tbl, $this, $this->_tbl_key);
+        } catch (\Exception $e) {
+            return $this->setError('Insert '.$this->_tbl.': Error -> '.$e->getMessage());
+        }
+    }
 
-		// Set website
-		$this->website = htmlspecialchars_decode($this->website, ENT_QUOTES);
+    public function update()
+    {
+        try {
+            return $this->_db->updateObject($this->_tbl, $this, $this->_tbl_key, true);
+        } catch (\Exception $e) {
+            return $this->setError('update '.$this->_tbl.': Error -> '.$e->getMessage());
+        }
+    }
 
-		return true;
-	}
+    public function check($cit = false)
+    {
+        // primary key is mandatory
+        if (empty($this->app_id)) {
+            return false;
+        }
+        if (empty($this->id)) {
+            return false;
+        }
+
+        // Set name - name is mandatory
+        $this->name = htmlspecialchars_decode($this->name, ENT_QUOTES);
+        if (empty($this->name)) {
+            return false;
+        }
+
+        // Set website
+        $this->website = htmlspecialchars_decode($this->website, ENT_QUOTES);
+
+        return true;
+    }
     /**
      * Get the type alias for the table
      *
@@ -77,6 +84,5 @@ class RepositoriesTable extends Table
     public function getTypeAlias()
     {
         return $this->typeAlias;
-    }    
+    }
 }
-?>

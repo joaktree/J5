@@ -8,6 +8,7 @@
         </note>
         <fix>
             <item>Map creation : person selection not working</item>
+            <item>Front end : sources : search/clear not working</item>
         </fix>
         <change>
             <item>Joomla 6.x compatibility</item>

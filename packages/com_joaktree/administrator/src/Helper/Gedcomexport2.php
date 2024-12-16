@@ -13,13 +13,14 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
+
 namespace Joaktree\Component\Joaktree\Administrator\Helper;
 
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Joomla\CMS\Factory;		//replace JFactory
-use Joomla\CMS\Language\Text;		// replace JText
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Joomla\Database\DatabaseInterface;
 
 class Gedcomexport2

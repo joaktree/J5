@@ -23,11 +23,9 @@ use Joomla\CMS\Access\Rules;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\AdminModel;
-use Joomla\CMS\Table\Table;
-use Joomla\Database\DatabaseInterface;
 use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeHelper;
 
-class ApplicationModel extends AdminModel 
+class ApplicationModel extends AdminModel
 {
     /**
      * Returns a reference to the a Table object, always creating it.
@@ -40,7 +38,6 @@ class ApplicationModel extends AdminModel
      */
     public function getTable($type = 'applications', $prefix = 'Table', $config = array())
     {
-        $db = Factory::getContainer()->get(DatabaseInterface::class);
         return Factory::getApplication()->bootComponent('com_joaktree')->getMVCFactory()->createTable('Applications');
 
     }
@@ -104,7 +101,7 @@ class ApplicationModel extends AdminModel
                 $tmp 	 = array();
                 $tmp[0]  = '';
 
-                foreach ($data['rules'] as $action => $identities) {
+                foreach ($form['rules'] as $action => $identities) {
                     $identities = array_diff($identities, $tmp);
                     $actions[$action] = $identities;
                 }

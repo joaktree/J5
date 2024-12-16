@@ -13,29 +13,31 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
+
 namespace Joaktree\Component\Joaktree\Administrator\Table;
 
 defined('_JEXEC') or die('Restricted access');
 
-use Joomla\CMS\Table\Table;
 use Joomla\CMS\Versioning\VersionableTableInterface;
 use Joomla\Database\DatabaseDriver;
+use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeTable;
 
-class DisplaysettingsTable extends Table implements VersionableTableInterface
+class DisplaysettingsTable extends JoaktreeTable implements VersionableTableInterface
 {
-	var $id 			= null;
-	var $code			= null;
-	var $level 			= null;
-	var $ordering		= null;
-	var $published		= null;
-	var $access 		= null;
-	var $accessLiving	= null;
-	var $altLiving		= null;
+    public $id 			= null;
+    public $code			= null;
+    public $level 			= null;
+    public $ordering		= null;
+    public $published		= null;
+    public $access 		= null;
+    public $accessLiving	= null;
+    public $altLiving		= null;
 
-	function __construct(DatabaseDriver $db) {
+    public function __construct(DatabaseDriver $db)
+    {
         $this->typeAlias = 'com_joaktree.display_settings';
-		parent::__construct('#__joaktree_display_settings', 'id', $db);
-	}
+        parent::__construct('#__joaktree_display_settings', 'id', $db);
+    }
     /**
      * Get the type alias for the table
      *
@@ -48,4 +50,3 @@ class DisplaysettingsTable extends Table implements VersionableTableInterface
         return $this->typeAlias;
     }
 }
-?>

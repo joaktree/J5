@@ -13,14 +13,15 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
+
 namespace Joaktree\Component\Joaktree\Administrator\Table;
 
 defined('_JEXEC') or die('Restricted access');
-use Joomla\CMS\Table\Table;
 use Joomla\CMS\Versioning\VersionableTableInterface;
 use Joomla\Database\DatabaseDriver;
+use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeTable;
 
-class RegistryitemsTable extends Table implements VersionableTableInterface
+class RegistryitemsTable extends JoaktreeTable implements VersionableTableInterface
 {
     public $id 		= null;
     public $regkey		= null;
@@ -87,8 +88,13 @@ class RegistryitemsTable extends Table implements VersionableTableInterface
         $query->delete(' '.$this->_tbl.' ');
         $query->where(' regkey = :regkey');
         $query->bind(':regkey', $uk, \Joomla\Database\ParameterType::STRING);
-        $this->_db->setQuery($query);
-        $tmp = $this->_db->execute(); //$this->_db->query();
+        try {
+            $this->_db->setQuery($query);
+            $this->_db->execute();
+        } catch (\Exception $e) {
+            $this->setError('DeleteUK '.$this->_tbl.': Error -> '.$e->getMessage());
+        }
+
     }
     /**
      * Get the type alias for the table

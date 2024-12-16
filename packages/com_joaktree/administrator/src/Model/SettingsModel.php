@@ -19,10 +19,10 @@ namespace Joaktree\Component\Joaktree\Administrator\Model;
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Joomla\CMS\Factory;		//replace JFactory
-use Joomla\CMS\Language\Text;		// replace JText
-use Joomla\CMS\MVC\Model\ListModel;		//replace JModelList
-use Joomla\CMS\Pagination\Pagination; 		//replace JPagination
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\CMS\Pagination\Pagination;
 use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeHelper;
 
 class SettingsModel extends ListModel
@@ -268,14 +268,18 @@ class SettingsModel extends ListModel
                         //$code 			= $input->get( 'code'.$row->id, null, 'string' );
 
                         // Make sure the table is valid
-                        if (!$row->check()) {
-                            $this->setError($this->$table->getError()); //$this->_db->getErrorMsg());
+                        try {
+                            $row->check();
+                        } catch (\Exception $e) {
+                            $row->$this->setError($e->getMessage());
                             return false;
                         }
 
                         // Store the table to the database
-                        if (!$row->store()) {
-                            $this->setError($this->$table->getError()); //$this->_db->getErrorMsg());
+                        try {
+                            $row->store();
+                        } catch (\Exception $e) {
+                            $row->$this->setError($e->getMessage());
                             return false;
                         }
 

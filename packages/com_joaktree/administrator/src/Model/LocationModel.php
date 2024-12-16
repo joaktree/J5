@@ -13,6 +13,7 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
+
 namespace Joaktree\Component\Joaktree\Administrator\Model;
 
 // No direct access.
@@ -20,7 +21,6 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Table\Table;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeHelper;
 use Joaktree\Component\Joaktree\Administrator\Mapservice\MBJGeocode;
@@ -38,7 +38,6 @@ class LocationModel extends AdminModel
      */
     public function getTable($type = 'Locations', $prefix = '', $config = array())
     {
-        // return Table::getInstance($type, 'Joaktree\\Component\\Joaktree\\Administrator\\Table\\', $config);
         return Factory::getApplication()->bootComponent('com_joaktree')->getMVCFactory()->createTable($type, $prefix, $config);
 
     }
@@ -125,13 +124,13 @@ class LocationModel extends AdminModel
             try {
                 // Bind the data.
                 if (!$table->bind($data)) {
-                    $this->setError($table->getError());
+                    $table->setError($table->getError());
                     return $msg;
                 }
 
                 // Store the data.
                 if (!$table->store(true)) {
-                    $this->setError($table->getError());
+                    $table->setError($table->getError());
                     return $msg;
                 }
 
@@ -139,7 +138,7 @@ class LocationModel extends AdminModel
                 $this->cleanCache();
 
             } catch (\Exception $e) {
-                $this->setError($e->getMessage());
+                $table->setError($e->getMessage());
                 return $msg;
             }
 

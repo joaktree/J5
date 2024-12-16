@@ -26,37 +26,10 @@ use Joomla\CMS\MVC\Controller\BaseController;
 
 class SourceController extends BaseController
 {
-    public function __construct()
-    {
-        // first check token
-        Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
-        // create an input object
-        $this->input = Factory::getApplication()->input;
-
-        //Get View
-        if ($this->input->get('view') == '') {
-            $this->input->set('view', 'source');
-        }
-
-        parent::__construct();
-    }
     public function getModel($name = 'Source', $prefix = 'Joaktree', $config = ['ignore_request' => true])
     {
         return parent::getModel($name, $prefix, $config);
-    }
-
-
-    public function display($cachable = false, $urlparams = array())
-    {
-        $action = $this->input->get('action');
-
-        if ($action == 'select') {
-            $this->input->set('tmpl', 'component');
-            $this->input->set('action', $action);
-        }
-
-        parent::display();
     }
 
     public function edit()

@@ -13,45 +13,47 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
+
 namespace Joaktree\Component\Joaktree\Administrator\Table;
 
 defined('_JEXEC') or die('Restricted access');
-use Joomla\CMS\Table\Table;		//replace JTable
 use Joomla\CMS\Versioning\VersionableTableInterface;
 use Joomla\Database\DatabaseDriver;
-use Joomla\Registry\Registry; //replace JRegistry
+use Joomla\Registry\Registry;
+use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeTable;
 
-class ThemesTable extends Table implements VersionableTableInterface
+class ThemesTable extends JoaktreeTable implements VersionableTableInterface
 {
-	var $id 						= null;
-	var $name						= null;
-	var $home						= null;
-	var $params						= null;
-	
-	function __construct( DatabaseDriver $db) {
+    public $id 						= null;
+    public $name						= null;
+    public $home						= null;
+    public $params						= null;
+
+    public function __construct(DatabaseDriver $db)
+    {
         $this->typeAlias = 'com_joaktree.themes';
-		parent::__construct('#__joaktree_themes', 'id', $db);
-	}
-	
-	/**
-	 * Overloaded bind function
-	 *
-	 * @param	array		$hash named array
-	 * @return	null|string	null is operation was satisfactory, otherwise returns an error
-	 * @see Table:bind
-	 * @since 1.5
-	 */
-	public function bind($array, $ignore = array())
-	{	
-		if (isset($array['params']) && is_array($array['params'])) {
-			$registry = new Registry();
-			$registry->loadArray($array['params']);
+        parent::__construct('#__joaktree_themes', 'id', $db);
+    }
 
-			$array['params'] = (string)$registry;
-		}
+    /**
+     * Overloaded bind function
+     *
+     * @param	array		$hash named array
+     * @return	null|string	null is operation was satisfactory, otherwise returns an error
+     * @see Table:bind
+     * @since 1.5
+     */
+    public function bind($array, $ignore = array())
+    {
+        if (isset($array['params']) && is_array($array['params'])) {
+            $registry = new Registry();
+            $registry->loadArray($array['params']);
 
-		return parent::bind($array, $ignore);
-	}
+            $array['params'] = (string)$registry;
+        }
+
+        return parent::bind($array, $ignore);
+    }
     /**
      * Get the type alias for the table
      *
@@ -62,6 +64,5 @@ class ThemesTable extends Table implements VersionableTableInterface
     public function getTypeAlias()
     {
         return $this->typeAlias;
-    }    
+    }
 }
-?>

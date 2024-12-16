@@ -18,11 +18,10 @@ namespace Joaktree\Component\Joaktree\Administrator\Table;
 
 defined('_JEXEC') or die('Restricted access');
 
-use Joomla\CMS\Table\Table;		//replace JTable
-use Joomla\CMS\Versioning\VersionableTableInterface;
 use Joomla\Database\DatabaseDriver;
+use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeTable;
 
-class PersonnotesTable extends Table
+class PersonnotesTable extends JoaktreeTable
 {
     public $app_id			= null; // PK
     public $person_id		= null; // PK

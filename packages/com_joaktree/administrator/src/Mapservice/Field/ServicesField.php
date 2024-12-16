@@ -18,7 +18,6 @@ namespace Joaktree\Component\Joaktree\Administrator\Mapservice\Field;
 
 // no direct access
 defined('_JEXEC') or die('Restricted access');
-defined('DS') or define('DS', DIRECTORY_SEPARATOR);
 
 use Joomla\CMS\Language\Text;		// replace JText
 use Joomla\CMS\Form\FormField;		//replace JFormField

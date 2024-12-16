@@ -22,7 +22,6 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\AdminModel;
-use Joomla\CMS\Table\Table;
 use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
 use Joomla\Filesystem\Path;
@@ -182,7 +181,7 @@ class ThemeModel extends AdminModel
         }
         // Try to make the file writeable.
         if (Path::isOwner($form['sourcepath']) && !Path::setPermissions($form['sourcepath'], '0755')) {
-            $this->setError(Text::_('JTTHEME_ERROR_SOURCE_FILE_NOT_WRITABLE'));
+            $this->getTable()->setError(Text::_('JTTHEME_ERROR_SOURCE_FILE_NOT_WRITABLE'));
             return false;
         }
 
@@ -190,10 +189,10 @@ class ThemeModel extends AdminModel
 
         // Try to make the file unwriteable.
         if (Path::isOwner($form['sourcepath']) && !Path::setPermissions($form['sourcepath'], '0555')) {
-            $this->setError(Text::_('JTTHEME_ERROR_SOURCE_FILE_NOT_UNWRITABLE'));
+            $this->getTable()->setError(Text::_('JTTHEME_ERROR_SOURCE_FILE_NOT_UNWRITABLE'));
             return false;
         } elseif (!$ret) {
-            $this->setError(Text::sprintf('JTTHEME_ERROR_FAILED_TO_SAVE_FILENAME', $form['sourcepath']));
+            $this->getTable()->setError(Text::sprintf('JTTHEME_ERROR_FAILED_TO_SAVE_FILENAME', $form['sourcepath']));
             return false;
         }
 

@@ -13,35 +13,37 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
+
 namespace Joaktree\Component\Joaktree\Administrator\Table;
 
 defined('_JEXEC') or die('Restricted access');
 
-use Joomla\CMS\Table\Table;
-use Joomla\CMS\Versioning\VersionableTableInterface;
-use Joomla\Database\DatabaseDriver;
+use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeTable;
 
-class NotesTable extends Table
+class NotesTable extends JoaktreeTable
 {
-	var $app_id		= null; // PK
-	var $id			= null; // PK
-	var $value		= null;
+    public $app_id		= null; // PK
+    public $id			= null; // PK
+    public $value		= null;
 
-	function __construct( &$db) {
+    public function __construct(&$db)
+    {
         $this->typeAlias = 'com_joaktree.notes';
-		$pk = array('app_id', 'id');
-		parent::__construct('#__joaktree_notes', $pk, $db);
-	}
+        $pk = array('app_id', 'id');
+        parent::__construct('#__joaktree_notes', $pk, $db);
+    }
 
-	function insert() {
-		$ret = $this->_db->insertObject( $this->_tbl, $this, $this->_tbl_key );
-		return $ret;
-	}
-	
-	function update() {
-		$ret = $this->_db->updateObject( $this->_tbl, $this, $this->_tbl_key ); 
-		return $ret;
-	}
+    public function insert()
+    {
+        $ret = $this->_db->insertObject($this->_tbl, $this, $this->_tbl_key);
+        return $ret;
+    }
+
+    public function update()
+    {
+        $ret = $this->_db->updateObject($this->_tbl, $this, $this->_tbl_key);
+        return $ret;
+    }
     /**
      * Get the type alias for the table
      *
@@ -52,7 +54,6 @@ class NotesTable extends Table
     public function getTypeAlias()
     {
         return $this->typeAlias;
-    }    
-    
+    }
+
 }
-?>

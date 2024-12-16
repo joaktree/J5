@@ -17,11 +17,11 @@
 namespace Joaktree\Component\Joaktree\Administrator\Table;
 
 defined('_JEXEC') or die('Restricted access');
-use Joomla\CMS\Table\Table;
 use Joomla\CMS\Versioning\VersionableTableInterface;
 use Joomla\Database\DatabaseDriver;
+use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeTable;
 
-class AdminpersonsTable extends Table implements VersionableTableInterface
+class AdminpersonsTable extends JoaktreeTable implements VersionableTableInterface
 {
     public $app_id      = null; // PK
     public $id          = null; // PK
@@ -57,8 +57,10 @@ class AdminpersonsTable extends Table implements VersionableTableInterface
 
         $query->select(' 1 ');
         $query->from(' '.$this->_tbl.' ');
-        $query->where(' app_id = '.$this->app_id.' ');
-        $query->where(' id     = '.$this->_db->Quote($this->id).' ');
+        $query->where(' app_id = :appid');
+        $query->where(' id     = :personid');
+        $query->bind(':appid', $app_id, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':personid', $this->id, \Joomla\Database\ParameterType::STRING);
 
         // execute query and retrieve result
         $this->_db->setQuery($query);

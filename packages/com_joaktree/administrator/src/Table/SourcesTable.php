@@ -13,42 +13,52 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
+
 namespace Joaktree\Component\Joaktree\Administrator\Table;
 
 defined('_JEXEC') or die('Restricted access');
-use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
+use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeTable;
 
-class SourcesTable extends Table 
+class SourcesTable extends JoaktreeTable
 {
-	var $app_id			= null; // PK
-	var $id				= null; // PK
-	var $title			= null;
-	var $author			= null;
-	var $publication	= null;
-	var $information	= null;
-	var $repo_id		= null;
-	var $abbr	= null;
-	var $media	= null;
-	var $note	= null;
-	var $www	= null;
+    public $app_id			= null; // PK
+    public $id				= null; // PK
+    public $title			= null;
+    public $author			= null;
+    public $publication	= null;
+    public $information	= null;
+    public $repo_id		= null;
+    public $abbr	= null;
+    public $media	= null;
+    public $note	= null;
+    public $www	= null;
 
-	function __construct( DatabaseDriver $db) {
+    public function __construct(DatabaseDriver $db)
+    {
         $this->typeAlias = 'com_joaktree.sources';
-		$pk = array('app_id', 'id');
-		parent::__construct('#__joaktree_sources', $pk, $db);
-	}
+        $pk = array('app_id', 'id');
+        parent::__construct('#__joaktree_sources', $pk, $db);
+    }
 
-	
-	function insert() {
-		$ret = $this->_db->insertObject( $this->_tbl, $this, $this->_tbl_key );
-		return $ret;
-	}
-	
-	function update() {
-		$ret = $this->_db->updateObject( $this->_tbl, $this, $this->_tbl_key );
-		return $ret;
-	}
+
+    public function insert()
+    {
+        try {
+            return $this->_db->insertObject($this->_tbl, $this, $this->_tbl_key);
+        } catch (\Exception $e) {
+            return $this->setError('Insert '.$this->_tbl.': Error -> '.$e->getMessage());
+        }
+    }
+
+    public function update()
+    {
+        try {
+            return $this->_db->updateObject($this->_tbl, $this, $this->_tbl_key);
+        } catch (\Exception $e) {
+            return $this->setError('Update '.$this->_tbl.': Error -> '.$e->getMessage());
+        }
+    }
     /**
      * Get the type alias for the table
      *
@@ -59,7 +69,6 @@ class SourcesTable extends Table
     public function getTypeAlias()
     {
         return $this->typeAlias;
-    }    
+    }
 
 }
-?>

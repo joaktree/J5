@@ -18,11 +18,11 @@ namespace Joaktree\Component\Joaktree\Administrator\Table;
 
 defined('_JEXEC') or die('Restricted access');
 use Joomla\Registry\Registry;
-use Joomla\CMS\Table\Table;
 use Joomla\CMS\Versioning\VersionableTableInterface;
 use Joomla\Database\DatabaseDriver;
+use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeTable;
 
-class MapsTable extends Table implements VersionableTableInterface
+class MapsTable extends JoaktreeTable implements VersionableTableInterface
 {
     public $id 				= null;
     public $name				= null;

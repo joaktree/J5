@@ -13,17 +13,18 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
+
 namespace Joaktree\Component\Joaktree\Administrator\Table;
 
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Table\Table;
 use Joomla\CMS\Versioning\VersionableTableInterface;
 use Joomla\Database\DatabaseDriver;
 use Joaktree\Component\Joaktree\Administrator\Helper\Relations;
+use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeTable;
 
-class PersonsTable extends Table implements VersionableTableInterface
+class PersonsTable extends JoaktreeTable implements VersionableTableInterface
 {
     public $app_id				= null; // PK
     public $id					= null; // PK
@@ -111,7 +112,12 @@ class PersonsTable extends Table implements VersionableTableInterface
             $this->indexNam = mb_strtoupper(mb_substr($this->familyName, 0, 1));
         }
         $this->lastUpdateTimeStamp = Factory::getDate()->toSql();
-        $ret = $this->_db->insertObject($this->_tbl, $this, $this->_tbl_keys);
+        try {
+            $ret = $this->_db->insertObject($this->_tbl, $this, $this->_tbl_keys);
+        } catch (\Exception $e) {
+            $ret = false;
+            $this->setError('Insert '.$this->_tbl.': Error -> '.$e->getMessage());
+        }
         return $ret;
     }
 
@@ -120,8 +126,14 @@ class PersonsTable extends Table implements VersionableTableInterface
         if (!empty($this->familyName)) {
             $this->indexNam = mb_strtoupper(mb_substr($this->familyName, 0, 1));
         }
-        $this->lastUpdateTimeStamp = Factory::getDate()->toSql();
-        $ret = $this->_db->updateObject($this->_tbl, $this, $this->_tbl_keys, true);
+        try {
+            $this->lastUpdateTimeStamp = Factory::getDate()->toSql();
+            $ret = $this->_db->updateObject($this->_tbl, $this, $this->_tbl_keys, true);
+        } catch (\Exception $e) {
+            $ret = false;
+            $this->setError('Update table '.$this->_tbl.': Error -> '.$e->getMessage());
+        }
+
         return $ret;
     }
 
@@ -149,9 +161,13 @@ class PersonsTable extends Table implements VersionableTableInterface
             $query->where(' person_id = :personid');
             $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
             $query->bind(':personid', $this->id, \Joomla\Database\ParameterType::STRING);
-            
-            $this->_db->setQuery($query);
-            $ret = $this->_db->execute(); //$this->_db->query();
+            try {
+                $this->_db->setQuery($query);
+                $ret = $this->_db->execute();
+            } catch (\Exception $e) {
+                $ret = false;
+                $this->setError('Cascading table '.$table.': Error -> '.$e->getMessage());
+            }
         }
 
         // joaktree_person_names
@@ -163,9 +179,13 @@ class PersonsTable extends Table implements VersionableTableInterface
             $query->where(' person_id = :personid');
             $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
             $query->bind(':personid', $this->id, \Joomla\Database\ParameterType::STRING);
-            
-            $this->_db->setQuery($query);
-            $ret = $this->_db->execute(); //$this->_db->query();
+            try {
+                $this->_db->setQuery($query);
+                $ret = $this->_db->execute();
+            } catch (\Exception $e) {
+                $ret = false;
+                $this->setError('Cascading table '.$table.': Error -> '.$e->getMessage());
+            }
         }
 
         // joaktree_person_notes
@@ -177,9 +197,13 @@ class PersonsTable extends Table implements VersionableTableInterface
             $query->where(' person_id = :personid');
             $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
             $query->bind(':personid', $this->id, \Joomla\Database\ParameterType::STRING);
-            
-            $this->_db->setQuery($query);
-            $ret = $this->_db->execute(); //$this->_db->query();
+            try {
+                $this->_db->setQuery($query);
+                $ret = $this->_db->execute();
+            } catch (\Exception $e) {
+                $ret = false;
+                $this->setError('Cascading table '.$table.': Error -> '.$e->getMessage());
+            }
         }
 
         // joaktree_person_documents + joaktree_documents
@@ -191,9 +215,13 @@ class PersonsTable extends Table implements VersionableTableInterface
             $query->where(' person_id = :personid');
             $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
             $query->bind(':personid', $this->id, \Joomla\Database\ParameterType::STRING);
-            
-            $this->_db->setQuery($query);
-            $ret = $this->_db->execute(); //$this->_db->query();
+            try {
+                $this->_db->setQuery($query);
+                $ret = $this->_db->execute();
+            } catch (\Exception $e) {
+                $ret = false;
+                $this->setError('Cascading table '.$table.': Error -> '.$e->getMessage());
+            }
         }
 
         if ($ret) {
@@ -210,9 +238,13 @@ class PersonsTable extends Table implements VersionableTableInterface
                          . '  ) '
             );
             $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
-            
-            $this->_db->setQuery($query);
-            $ret = $this->_db->execute(); //$this->_db->query();
+            try {
+                $this->_db->setQuery($query);
+                $ret = $this->_db->execute();
+            } catch (\Exception $e) {
+                $ret = false;
+                $this->setError('Cascading table '.$table.': Error -> '.$e->getMessage());
+            }
         }
 
         // joaktree_relations
@@ -226,21 +258,26 @@ class PersonsTable extends Table implements VersionableTableInterface
             $query->where(' person_id_2 = :personid');
             $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
             $query->bind(':personid', $this->id, \Joomla\Database\ParameterType::STRING);
-            
-            $this->_db->setQuery($query);
-            $relations = $this->_db->loadColumn();
+            try {
+                $this->_db->setQuery($query);
+                $relations = $this->_db->loadColumn();
+            } catch (\Exception $e) {
+                $this->setError('Cascading table '.$table.': Error -> '.$e->getMessage());
+            }
             $query->clear();
-
             // Second select which relations exists (second direction)
             $query->select(' person_id_2 ');
             $query->from(' #__joaktree_relations ');
             $query->where(' app_id = :appid');
             $query->where(' person_id_1 = :personid');
             $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
-            query->bind(':personid', $this->id, \Joomla\Database\ParameterType::STRING);
-            
-            $this->_db->setQuery($query);
-            $tmp = $this->_db->loadColumn();
+            $query->bind(':personid', $this->id, \Joomla\Database\ParameterType::STRING);
+            try {
+                $this->_db->setQuery($query);
+                $tmp = $this->_db->loadColumn();
+            } catch (\Exception $e) {
+                $this->setError('Cascading table '.$table.': Error -> '.$e->getMessage());
+            }
             $relations = array_merge($relations, $tmp);
             $query->clear();
 
@@ -254,10 +291,13 @@ class PersonsTable extends Table implements VersionableTableInterface
             );
             $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
             $query->bind(':personid', $this->id, \Joomla\Database\ParameterType::STRING);
-            
-            $this->_db->setQuery($query);
-            $ret = $this->_db->execute(); //$this->_db->query();
-
+            try {
+                $this->_db->setQuery($query);
+                $ret = $this->_db->execute(); //$this->_db->query();
+            } catch (\Exception $e) {
+                $ret = false;
+                $this->setError('Cascading table '.$table.': Error -> '.$e->getMessage());
+            }
             // Finally, we reset the relation indicators for the remaining relations
             if ($ret) {
                 $table = 'joaktree_persons (relationIndicators)';
@@ -278,9 +318,13 @@ class PersonsTable extends Table implements VersionableTableInterface
             );
             $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
             $query->bind(':personid', $this->id, \Joomla\Database\ParameterType::STRING);
-
-            $this->_db->setQuery($query);
-            $ret = $this->_db->execute(); //$this->_db->query();
+            try {
+                $this->_db->setQuery($query);
+                $ret = $this->_db->execute();
+            } catch (\Exception $e) {
+                $ret = false;
+                $this->setError('Cascading table '.$table.': Error -> '.$e->getMessage());
+            }
         }
 
         // joaktree_relation_notes
@@ -296,9 +340,13 @@ class PersonsTable extends Table implements VersionableTableInterface
             );
             $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
             $query->bind(':personid', $this->id, \Joomla\Database\ParameterType::STRING);
-            
-            $this->_db->setQuery($query);
-            $ret = $this->_db->execute(); //$this->_db->query();
+            try {
+                $this->_db->setQuery($query);
+                $ret = $this->_db->execute();
+            } catch (\Exception $e) {
+                $ret = false;
+                $this->setError('Cascading table '.$table.': Error -> '.$e->getMessage());
+            }
         }
 
         // joaktree_citations
@@ -314,9 +362,13 @@ class PersonsTable extends Table implements VersionableTableInterface
             );
             $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
             $query->bind(':personid', $this->id, \Joomla\Database\ParameterType::STRING);
-            
-            $this->_db->setQuery($query);
-            $ret = $this->_db->execute(); //$this->_db->query();
+            try {
+                $this->_db->setQuery($query);
+                $ret = $this->_db->execute();
+            } catch (\Exception $e) {
+                $ret = false;
+                $this->setError('Cascading table '.$table.': Error -> '.$e->getMessage());
+            }
         }
 
         // joaktree_notes
@@ -342,9 +394,13 @@ class PersonsTable extends Table implements VersionableTableInterface
                          . '  ) '
             );
             $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
-            
-            $this->_db->setQuery($query);
-            $ret = $this->_db->execute(); //$this->_db->query();
+            try {
+                $this->_db->setQuery($query);
+                $ret = $this->_db->execute();
+            } catch (\Exception $e) {
+                $ret = false;
+                $this->setError('Cascading table '.$table.': Error -> '.$e->getMessage());
+            }
         }
 
         // joaktree_tree_persons
@@ -356,9 +412,13 @@ class PersonsTable extends Table implements VersionableTableInterface
             $query->where(' person_id = :personid');
             $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
             $query->bind(':personid', $this->id, \Joomla\Database\ParameterType::STRING);
-            
-            $this->_db->setQuery($query);
-            $ret = $this->_db->execute(); //$this->_db->query();
+            try {
+                $this->_db->setQuery($query);
+                $ret = $this->_db->execute();
+            } catch (\Exception $e) {
+                $ret = false;
+                $this->setError('Cascading table '.$table.': Error -> '.$e->getMessage());
+            }
         }
 
         // joaktree_persons
@@ -370,9 +430,13 @@ class PersonsTable extends Table implements VersionableTableInterface
             $query->where(' id     = :personid');
             $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
             $query->bind(':personid', $this->id, \Joomla\Database\ParameterType::STRING);
-            
-            $this->_db->setQuery($query);
-            $ret = $this->_db->execute(); //$this->_db->query();
+            try {
+                $this->_db->setQuery($query);
+                $ret = $this->_db->execute();
+            } catch (\Exception $e) {
+                $this->setError('Cascading table '.$table.': Error -> '.$e->getMessage());
+                $ret = false;
+            }
         }
 
         // joaktree_admin_persons
@@ -384,13 +448,13 @@ class PersonsTable extends Table implements VersionableTableInterface
             $query->where(' id     = :personid');
             $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
             $query->bind(':personid', $this->id, \Joomla\Database\ParameterType::STRING);
-           
-            $this->_db->setQuery($query);
-            $ret = $this->_db->execute(); //$this->_db->query();
-        }
-
-        if (!$ret) {
-            $this->setError('Cascading table '.$table.': Error -> '.$this->_db->getErrorMsg());
+            try {
+                $this->_db->setQuery($query);
+                $ret = $this->_db->execute();
+            } catch (\Exception $e) {
+                $this->setError('Cascading table '.$table.': Error -> '.$e->getMessage());
+                $ret = false;
+            }
         }
 
         return $ret;

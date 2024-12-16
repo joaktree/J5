@@ -17,12 +17,11 @@
 namespace Joaktree\Component\Joaktree\Administrator\Table;
 
 defined('_JEXEC') or die('Restricted access');
-use Joomla\CMS\Factory;
-use Joomla\CMS\Table\Table;
 use Joomla\CMS\Versioning\VersionableTableInterface;
 use Joomla\Database\DatabaseDriver;
+use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeTable;
 
-class TreesTable extends Table implements VersionableTableInterface
+class TreesTable extends JoaktreeTable implements VersionableTableInterface
 {
     public $id 				= null;
     public $app_id				= null;
@@ -57,24 +56,6 @@ class TreesTable extends Table implements VersionableTableInterface
         return 'com_joaktree.application.'.(int) $this->app_id.'.tree.'.(int) $this->id;
     }
 
-    /**
-     * Method to get the parent asset under which to register this one.
-     * By default, all assets are registered to the ROOT node with ID 1.
-     * The extended class can define a table and id to lookup.  If the
-     * asset does not exist it will be created.
-     *
-     * @param   Table	A Table object for the asset parent.
-     *
-     * @return  integer
-     */
-    protected function _getAssetParentId(Table $table = null, $id = null)
-    {
-        $asset	= Table::getInstance('Asset');
-        //$asset	= Factory::getApplication()->bootComponent('com_joaktree')->getMVCFactory()->createTable('Assets');
-        $asset->loadByName('com_joaktree.application.'.(int) $this->app_id);
-        $parentId = empty($asset->id) ? 1 : $asset->id;
-        return $parentId;
-    }
     /**
      * Get the type alias for the table
      *

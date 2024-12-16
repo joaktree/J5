@@ -21,7 +21,6 @@ defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Factory;		//replace JFactory
 use Joomla\CMS\Language\Text;		// replace JText
-use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseInterface;
 
 class Gedcomrepos2 extends \StdClass

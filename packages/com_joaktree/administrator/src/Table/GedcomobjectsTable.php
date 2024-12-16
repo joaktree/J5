@@ -13,30 +13,33 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
+
 namespace Joaktree\Component\Joaktree\Administrator\Table;
 
 defined('_JEXEC') or die('Restricted access');
-use Joomla\CMS\Table\Table;
 use Joomla\CMS\Versioning\VersionableTableInterface;
 use Joomla\Database\DatabaseDriver;
+use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeTable;
 
-class GedcomobjectsTable extends Table implements VersionableTableInterface
+class GedcomobjectsTable extends JoaktreeTable implements VersionableTableInterface
 {
-	var $id 	= null;
-	var $tag	= null;
-	var $value	= null;
+    public $id 	= null;
+    public $tag	= null;
+    public $value	= null;
 
-	function __construct( DatabaseDriver $db) {
+    public function __construct(DatabaseDriver $db)
+    {
         $this->typeAlias = 'com_joaktree.gedcom_objects';
-		parent::__construct('#__joaktree_gedcom_objects', 'id', $db);
-	}
+        parent::__construct('#__joaktree_gedcom_objects', 'id', $db);
+    }
 
-	function truncate() {
-		$query = 'TRUNCATE ' . $this->_tbl;
-		$this->_db->setQuery( $query );
-		$result = $this->_db->loadResult();
-		return $result;
-	}
+    public function truncate()
+    {
+        $query = 'TRUNCATE ' . $this->_tbl;
+        $this->_db->setQuery($query);
+        $result = $this->_db->loadResult();
+        return $result;
+    }
     /**
      * Get the type alias for the table
      *
@@ -47,6 +50,5 @@ class GedcomobjectsTable extends Table implements VersionableTableInterface
     public function getTypeAlias()
     {
         return $this->typeAlias;
-    }  
+    }
 }
-?>

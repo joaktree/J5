@@ -13,16 +13,17 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
+
 namespace Joaktree\Component\Joaktree\Administrator\Table;
 
 defined('_JEXEC') or die('Restricted access');
 
-use Joomla\CMS\Table\Table;
 use Joomla\CMS\Versioning\VersionableTableInterface;
 use Joomla\Database\DatabaseDriver;
 use Joaktree\Component\Joaktree\Administrator\Mapservice\MBJGeocode;
+use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeTable;
 
-class LocationsTable extends Table implements VersionableTableInterface
+class LocationsTable extends JoaktreeTable implements VersionableTableInterface
 {
     public $id 				= null;
     public $indexLoc           = null;
@@ -79,7 +80,7 @@ class LocationsTable extends Table implements VersionableTableInterface
         $query->from(' #__joaktree_locations jln ');
         $query->where(' jln.value       = :value');
         $query->bind(':value', $value, \Joomla\Database\ParameterType::STRING);
-        
+
         $this->_db->setQuery($query);
         $result = $this->_db->loadResult();
         if (!$result) {

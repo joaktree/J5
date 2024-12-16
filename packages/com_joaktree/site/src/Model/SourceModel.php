@@ -111,15 +111,14 @@ class SourceModel extends FormModel
             $item = new \stdClass();
             $item->app_id = intval($this->getApplicationId());
         } else {
-            $item->title		= htmlspecialchars_decode($item->title, ENT_QUOTES);
-            $item->author		= htmlspecialchars_decode($item->author, ENT_QUOTES);
-            $item->publication	= htmlspecialchars_decode($item->publication, ENT_QUOTES);
-            $item->information	= htmlspecialchars_decode($item->information, ENT_QUOTES);
-            $item->abbr	        = htmlspecialchars_decode($item->abbr, ENT_QUOTES);
-            $item->note     	= htmlspecialchars_decode($item->note, ENT_QUOTES);
+            $item->title        = $item->title ? htmlspecialchars_decode($item->title, ENT_QUOTES) : "";
+            $item->publication	= $item->publication ? htmlspecialchars_decode($item->publication, ENT_QUOTES) : "";
+            $item->information	= $item->information ? htmlspecialchars_decode($item->information, ENT_QUOTES) : "";
+            $item->abbr	        = $item->abbr ? htmlspecialchars_decode($item->abbr, ENT_QUOTES) : "";
+            $item->note     	= $item->note ? htmlspecialchars_decode($item->note, ENT_QUOTES) : "";
             $item->note         = str_replace('&#10;&#13;', PHP_EOL, $item->note);
-            $item->media     	= htmlspecialchars_decode($item->media, ENT_QUOTES);
-            $item->www      	= htmlspecialchars_decode($item->www, ENT_QUOTES);
+            $item->media     	= $item->media ? htmlspecialchars_decode($item->media, ENT_QUOTES) : "";
+            $item->www      	= $item->www ? htmlspecialchars_decode($item->www, ENT_QUOTES) : "";
         }
 
         $item->app_repo_id = $item->app_id.'!'.((isset($item->repo_id)) ? $item->repo_id : null);
@@ -130,7 +129,6 @@ class SourceModel extends FormModel
     {
         $appId     	= intval($this->getApplicationId());
         $sourceId     = $this->getSourceId();
-        $where = array();
 
         if ($appId) {
             $query->where(' jse.app_id = :appid');
@@ -218,7 +216,7 @@ class SourceModel extends FormModel
 
             // Store the table to the database
             if (!$table->store(true)) {
-                $this->setError($this->$table->getError()); //_db->getErrorMsg());
+                $table->setError($this->$table->getError());
                 return false;
             }
 
@@ -266,12 +264,12 @@ class SourceModel extends FormModel
 
             // retrieve row - for display later on
             if (!$table->load()) {
-                $this->setError($this->$table->getError()); //_db->getErrorMsg());
+                $table->setError($this->$table->getError()); //_db->getErrorMsg());
                 return false;
             }
             // Delete the row from the database
             if (!$table->delete()) {
-                $this->setError($this->_db->getErrorMsg());
+                $table->setError($this->_db->getErrorMsg());
                 return false;
             }
 
