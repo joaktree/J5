@@ -2,6 +2,18 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
+		<version>2.1.4</version>
+        <note>
+            <item>Update : 2024-12-17</item>
+        </note>
+        <fix>
+            <item>Source delete button : Joomla 6 compatibility</item>
+            <item>Clean unused code</item>
+        </fix>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
 		<version>2.1.3</version>
         <note>
             <item>Update : 2024-12-15</item>

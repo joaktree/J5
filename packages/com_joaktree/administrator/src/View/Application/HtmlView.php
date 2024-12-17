@@ -28,7 +28,6 @@ use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeHelper;
 
 class HtmlView extends BaseHtmlView
 {
-
     protected $form;
     protected $item;
     protected $state;
@@ -45,15 +44,8 @@ class HtmlView extends BaseHtmlView
         $this->item		= $this->get('Item');
         $this->state	= $this->get('State');
 
-  		HTMLHelper::script( 'media/com_joaktree/js/jtupload_admin.js');
+        HTMLHelper::script('media/com_joaktree/js/jtupload_admin.js');
 
-        /* Check for errors.
-        if (count($errors = $this->get('Errors'))) {
-            //JError::raiseError(500, implode("\n", $errors));
-            Factory::getApplication()->enqueueMessage('500'. implode("\n", $errors), 'error');
-            return false;
-        }
-*/
         // use cookies
         $params  			= ComponentHelper::getParams('com_joaktree') ;
         $this->indCookie	= $params->get('indCookies', true);

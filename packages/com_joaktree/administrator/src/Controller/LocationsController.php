@@ -13,16 +13,17 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
+
 namespace Joaktree\Component\Joaktree\Administrator\Controller;
 
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Joomla\CMS\Factory;		//replace JFactory
-use Joomla\CMS\Language\Text;		// replace JText
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
-use Joomla\CMS\Session\Session; 		//replace JSession
+use Joomla\CMS\Session\Session;
 
 class LocationsController extends AdminController
 {

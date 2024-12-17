@@ -487,13 +487,13 @@ class Gedcomfile2
                 // remove relations
                 if (($truncate_rel_value == 1) && ($this->procObject->status == 'new')) {
                     $relation_notes  = Factory::getApplication()->bootComponent('com_joaktree')->getMVCFactory()->createTable('Relationnotes');
-                    $retdelete 		 = $relation_notes->truncateApp($this->procObject->id);
+                    $relation_notes->truncateApp($this->procObject->id);
                     $relation_events = Factory::getApplication()->bootComponent('com_joaktree')->getMVCFactory()->createTable('Relationevents');
-                    $retdelete 		 = $relation_events->truncateApp($this->procObject->id);
+                    $relation_events->truncateApp($this->procObject->id);
                     $relations		 = Factory::getApplication()->bootComponent('com_joaktree')->getMVCFactory()->createTable('Relations');
-                    $retdelete 		 = $relations->truncateApp($this->procObject->id);
+                    $relations->truncateApp($this->procObject->id);
                     $relation_citations = Factory::getApplication()->bootComponent('com_joaktree')->getMVCFactory()->createTable('Citations');
-                    $retdelete 		    = $relation_citations->truncateRelationCitations($this->procObject->id);
+                    $relation_citations->truncateRelationCitations($this->procObject->id);
                 }
                 break;
             case "source": 	$filterTag = 'SOUR';
@@ -509,17 +509,19 @@ class Gedcomfile2
                 // remove relations
                 if (($truncate_rel_value == 1) && ($this->procObject->status == 'new')) {
                     $relation_notes  = Factory::getApplication()->bootComponent('com_joaktree')->getMVCFactory()->createTable('Relationnotes');
-                    $retdelete 		 = $relation_notes->truncateApp($this->procObject->id);
+                    $relation_notes->truncateApp($this->procObject->id);
                     $relation_events = Factory::getApplication()->bootComponent('com_joaktree')->getMVCFactory()->createTable('Relationevents');
-                    $retdelete 		 = $relation_events->truncateApp($this->procObject->id);
+                    $relation_events->truncateApp($this->procObject->id);
                     $relations		 = Factory::getApplication()->bootComponent('com_joaktree')->getMVCFactory()->createTable('Relations');
-                    $retdelete 		 = $relations->truncateApp($this->procObject->id);
+                    $relations->truncateApp($this->procObject->id);
                     $relation_citations = Factory::getApplication()->bootComponent('com_joaktree')->getMVCFactory()->createTable('Citations');
-                    $retdelete 		    = $relation_citations->truncateRelationCitations($this->procObject->id);
+                    $relation_citations->truncateRelationCitations($this->procObject->id);
                 }
                 break;
         }
         $indProcess = false;
+        $indFirstLine = false;
+        $fileCursor = null;
 
         if (!$indAjax) {
             // we will not be looping back to the caller

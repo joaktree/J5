@@ -104,7 +104,7 @@ class TreeModel extends AdminModel
     public function save($data)
     {
         $canDo	= JoaktreeHelper::getActions();
-        if ((bool)Factory::getApplication()->getConfig()->get('debug')) { // Mode debug 
+        if ((bool)Factory::getApplication()->getConfig()->get('debug')) { // Mode debug
             Factory::getApplication()->enqueueMessage("Sauvegarde models/jt_tree");
         }
         Factory::getApplication()->enqueueMessage("Catégorie : " . $data['catid']);
@@ -126,13 +126,13 @@ class TreeModel extends AdminModel
             $table->robots      	= (empty($data['robots'])) ? null : $data['robots'];
             $table->catid        	= $data['catid'];
             if (!$table->bind($data)) {
-                $this->setError($this->$table->getError()); //$this->_db->getErrorMsg());
-                Factory::getApplication()->enqueueMessage($this->setError($this->$table->getError()));
+                $table->setError($this->$table->getError()); //$this->_db->getErrorMsg());
+                Factory::getApplication()->enqueueMessage($table->setError($this->$table->getError()));
                 return false;
             }
             // Make sure the table is valid
             if (!$table->check()) {
-                $this->setError($this->$table->getError()); //$this->_db->getErrorMsg());
+                $table->setError($this->$table->getError()); //$this->_db->getErrorMsg());
                 return false;
             }
             // Bind the rules.
@@ -149,7 +149,7 @@ class TreeModel extends AdminModel
             }
             // Store the table to the database
             if (!$table->store()) {
-                $this->setError($table->getError());
+                $table->setError($table->getError());
                 return false;
             }
             $msg .= 'Tree stored: ' . $table->name;
@@ -201,7 +201,7 @@ class TreeModel extends AdminModel
                         .'    AND jpn.id     = jte.root_person_id '
                         .'    ) ');
         $query->bind(':id', $pk, \Joomla\Database\ParameterType::INTEGER);
-                        
+
         return $query;
     }
 

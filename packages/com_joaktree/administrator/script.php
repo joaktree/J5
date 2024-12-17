@@ -16,37 +16,22 @@
 // No direct access to this file
 defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Language\Text;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Filesystem\Folder;
 use Joomla\Filesystem\File;
 
 class com_joaktreeInstallerScript
 {
-	private $min_joomla_version      = '4.0';
-	private $min_php_version         = '8.0';
-	private $name                    = 'Joaktree';
-	private $exttype                 = 'component';
-	private $extname                 = 'joaktree';
-	private $previous_version        = '';
-	private $dir           = null;
-	private $lang = null;
-	private $installerName = 'joaktreeinstaller';
-	public function __construct()
-	{
-		$this->dir = __DIR__;
-	}
-    
-    function uninstall($parent)
+    public function uninstall($parent)
     {
-		$db = Factory::getContainer()->get(DatabaseInterface::class);
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true)
-			->delete('#__extensions')
-		    ->where($db->quoteName('element') . ' like "%joaktree%"');
-		$db->setQuery($query);
-		$result = $db->execute();
+            ->delete('#__extensions')
+            ->where($db->quoteName('element') . ' like "%joaktree%"');
+        $db->setQuery($query);
+        $result = $db->execute();
         $obsoleteFiles = [
-            JPATH_SITE.'/plugins/content/joaktree',JPATH_SITE.'/plugins/editors-xtd/joaktreemap', 
+            JPATH_SITE.'/plugins/content/joaktree',JPATH_SITE.'/plugins/editors-xtd/joaktreemap',
             JPATH_SITE.'/plugins/editors-xtd/joaktreeperson',JPATH_SITE.'/plugins/finder/joaktree',
             JPATH_SITE.'/modules/mod_joaktree_lastpersonsviewed',JPATH_SITE.'/modules/mod_joaktree_related_items',
             JPATH_SITE.'/modules/mod_joaktree_show_update',JPATH_SITE.'/modules/mod_joaktree_todaymanyyearsago',
@@ -76,9 +61,9 @@ class com_joaktreeInstallerScript
             JPATH_ADMINISTRATOR.'/language/fr-FR/plg_editors-xtd_joaktreemap.ini',JPATH_ADMINISTRATOR.'/language/fr-FR/plg_editors-xtd_joaktreemap.sys.ini',
             JPATH_ADMINISTRATOR.'/language/fr-FR/plg_finder_joaktree.ini',JPATH_ADMINISTRATOR.'/language/fr-FR/plg_finder_joaktree.sys.ini',
             ];
-            $this->delete($obsoleteFiles);
-            
-		Factory::getApplication()->enqueueMessage('Joaktree package uninstalled.', 'notice');
+        $this->delete($obsoleteFiles);
+
+        Factory::getApplication()->enqueueMessage('Joaktree package uninstalled.', 'notice');
     }
     public function delete($files = [])
     {
@@ -92,5 +77,5 @@ class com_joaktreeInstallerScript
             }
         }
     }
-    
+
 }

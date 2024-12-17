@@ -13,6 +13,7 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
+
 namespace Joaktree\Component\Joaktree\Administrator\Controller;
 
 defined('_JEXEC') or die('Restricted access');
@@ -62,17 +63,6 @@ class PersonsController extends AdminController
         return $model;
     }
 
-    public function save($recordKey = null)
-    {
-        if ((bool)Factory::getApplication()->getConfig()->get('debug')) { // Mode debug
-            Factory::getApplication()->enqueueMessage("Sauvegarde controllers/persons");
-        }
-        $model = $this->getModel('persons');
-        $msg = $model->save($post);
-        $link = 'index.php?option=com_joaktree&view=persons';
-        $this->setRedirect($link, $msg);
-    }
-
     public function publish()
     {
         $model = $this->getModel();
@@ -80,7 +70,7 @@ class PersonsController extends AdminController
         $link = 'index.php?option=com_joaktree&view=persons';
         $this->setRedirect($link, $msg);
     }
-    
+
     public function unpublish()
     {
         $model = $this->getModel();

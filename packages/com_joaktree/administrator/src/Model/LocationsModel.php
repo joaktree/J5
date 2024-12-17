@@ -240,7 +240,6 @@ class LocationsModel extends ListModel
             $this->_db->setQuery($query);
             $this->_db->execute();
         }
-        //
         return implode("<br />", $service->getLog());
     }
 

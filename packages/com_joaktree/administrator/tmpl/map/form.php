@@ -22,23 +22,22 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Layout\LayoutHelper;
 
-
 // are these needed
 
-HtmlHelper::_('bootstrap.modal','.modal', []);
+HtmlHelper::_('bootstrap.modal', '.modal', []);
 HTMLHelper::_('bootstrap.tooltip');
 
 HTMLHelper::_('behavior.formvalidator');
-        HTMLHelper::_('behavior.core');
-        HTMLHelper::_('jquery.framework');
-        HTMLHelper::_('formbehavior.chosen');
-        HTMLHelper::_('script', 'legacy/ajax-chosen.min.js', ['version' => 'auto', 'relative' => true]);
+HTMLHelper::_('behavior.core');
+HTMLHelper::_('jquery.framework');
+HTMLHelper::_('formbehavior.chosen');
+HTMLHelper::_('script', 'legacy/ajax-chosen.min.js', ['version' => 'auto', 'relative' => true]);
 
 $linkPerson = 'index.php?option=com_joaktree&amp;view=persons&amp;layout=element&amp;task=element&amp;tmpl=component&amp;object=personId';
-$clrPerson  = 'window.parent.jClearPerson();'; 	
+$clrPerson  = 'window.parent.jClearPerson();';
 
-        $lang 	= Factory::getLanguage();
-        $lang->load('com_joaktree.gedcom', JPATH_ADMINISTRATOR);
+$lang 	= Factory::getApplication()->getLanguage();
+$lang->load('com_joaktree.gedcom', JPATH_ADMINISTRATOR);
 
 
 ?>
@@ -51,8 +50,8 @@ $clrPerson  = 'window.parent.jClearPerson();';
 >
     <div class="main-card">
         <?php echo HTMLHelper::_('uitab.startTabSet', 'myTab', ['active' => 'details', 'recall' => true, 'breakpoint' => 768]); ?>
-        <?php $titletab = (empty($this->item->id) ? "- ".Text::_('JTMAP_TITLE_NEWNAME'). '&nbsp;-&nbsp;' :  "- ".Text::sprintf('JTMAP_TITLE_EDITNAME', ucfirst($this->item->name) . '&nbsp;'));
-		echo HTMLHelper::_('uitab.addTab', 'myTab', 'details', $titletab); ?>
+        <?php $titletab = (empty($this->item->id) ? "- ".Text::_('JTMAP_TITLE_NEWNAME'). '&nbsp;-&nbsp;' : "- ".Text::sprintf('JTMAP_TITLE_EDITNAME', ucfirst($this->item->name) . '&nbsp;'));
+echo HTMLHelper::_('uitab.addTab', 'myTab', 'details', $titletab); ?>
         <div class="row">
             <div class="col-lg-9">
                <?php echo $this->form->renderField('name'); ?>
@@ -65,33 +64,33 @@ $clrPerson  = 'window.parent.jClearPerson();';
 						<?php echo $this->form->getInput('selection'); ?>
 					</div>
 				</div>                
-				<?php //echo ($this->item->selection); ?>
+				<?php //echo ($this->item->selection);?>
  				<?php switch ($this->item->selection) {
-					    case "person"	  : $classPerson     = 'jt-show';
-					    					$classTree 	     = 'jt-hide';
-					    					$classLocation   = 'jt-hide';
-					    					break;
-					    case "location"	  : $classPerson     = 'jt-hide';
-					    					$classTree 	     = 'jt-show';
-					    					$classLocation   = 'jt-show';
-					    					break;
-					    case "tree"		  : 
-						default			  : $classPerson     = 'jt-show';
-											$classTree 	     = 'jt-show';
-					    					$classLocation   = 'jt-hide';
-											break; 
-					  }
-				?>               
+ 				    case "person": $classPerson     = 'jt-show';
+ 				        $classTree 	     = 'jt-hide';
+ 				        $classLocation   = 'jt-hide';
+ 				        break;
+ 				    case "location": $classPerson     = 'jt-hide';
+ 				        $classTree 	     = 'jt-show';
+ 				        $classLocation   = 'jt-show';
+ 				        break;
+ 				    case "tree":
+ 				    default: $classPerson     = 'jt-show';
+ 				        $classTree 	     = 'jt-show';
+ 				        $classLocation   = 'jt-hide';
+ 				        break;
+ 				}
+?>               
                 <div id="tree" class="control-group <?php echo $classTree; ?>"
-                <?php //echo $this->form->renderField('tree'); ?>
+                <?php //echo $this->form->renderField('tree');?>
                 </div>
 <div id="tree" class="control-group <?php echo $classTree; ?>">
 					<div class="control-label">
 						<?php echo $this->form->getLabel('tree'); ?>
 					</div>
 					<div class="controls">
-						<?php 
-						echo $this->form->getInput('tree', null, (is_object($this->item)) ? $this->item->tree_id : null); ?>
+						<?php
+        echo $this->form->getInput('tree', null, (is_object($this->item)) ? $this->item->tree_id : null); ?>
 					</div>
 				</div> 
                 <div class="col-lg-9">
@@ -160,9 +159,9 @@ $clrPerson  = 'window.parent.jClearPerson();';
                 <legend><?php echo Text::_('JTMAP_TITLE_PARAMS'); ?></legend>
                 <div>
                 <?php echo $this->form->renderField('params'); ?>
-				<?php foreach($this->form->getFieldset('settings') as $field): 
-						    echo $this->form->renderField($field->fieldname, $field->group);
-				 endforeach; ?>
+				<?php foreach($this->form->getFieldset('settings') as $field):
+				    echo $this->form->renderField($field->fieldname, $field->group);
+				endforeach; ?>
                 </div>
             </fieldset>
         <?php echo HTMLHelper::_('uitab.endTab'); ?>
@@ -171,8 +170,8 @@ $clrPerson  = 'window.parent.jClearPerson();';
                 <legend><?php echo Text::_('JTMAP_TITLE_ADVPARAMS'); ?></legend>
                 <div>
 				<?php foreach($this->form->getFieldset('adv-settings') as $field):
-						    echo $this->form->renderField($field->fieldname, $field->group);
-				 endforeach; ?>
+				    echo $this->form->renderField($field->fieldname, $field->group);
+				endforeach; ?>
                 </div>
             </fieldset>
         <?php echo HTMLHelper::_('uitab.endTab'); ?>
@@ -180,7 +179,7 @@ $clrPerson  = 'window.parent.jClearPerson();';
         <?php echo HTMLHelper::_('uitab.endTabSet'); ?>
         </div>
 <input type="hidden" name="task" value="" />
-<input type="hidden" name="cid[]" value="<?php echo (!empty($this->item->id) ? $this->item->id : null); ?>" />
+<input type="hidden" name="cid[]" value="<?php echo(!empty($this->item->id) ? $this->item->id : null); ?>" />
 <input type="hidden" name="controller" value="maps" />
 <?php echo HtmlHelper::_('form.token'); ?>
 </form>
