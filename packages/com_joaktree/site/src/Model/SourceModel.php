@@ -45,6 +45,10 @@ class SourceModel extends FormModel
     {
         return JoaktreeHelper::getAccessGedCom();
     }
+    public function getReturnObject()
+    {
+        return JoaktreeHelper::getReturnObject();
+    }
 
     /**
      * Method to get the record form.
@@ -138,7 +142,7 @@ class SourceModel extends FormModel
 
         if ($sourceId) {
             $query->where(' jse.id = :sourceid');
-            $query->bind(':sourceid', $sourceId, \Joomla\Database\ParameterType::INTEGER);
+            $query->bind(':sourceid', $sourceId, \Joomla\Database\ParameterType::STRING);
 
         }
         return $query;
@@ -235,7 +239,7 @@ class SourceModel extends FormModel
             $ret->app_id		= $form['app_id'];
             $ret->object_id		= $form['id'];
             $ret->status		= $status;
-            $statusObj			= $this->get('returnObject');
+            $statusObj			= $this->getReturnObject();
             $ret->action		= $statusObj->action;
             $return				= base64_encode(json_encode($ret));
 

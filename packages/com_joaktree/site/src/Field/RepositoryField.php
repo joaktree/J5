@@ -20,9 +20,10 @@ namespace Joaktree\Component\Joaktree\Site\Field;
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Form\FormField;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
 
 class RepositoryField extends FormField
 {
@@ -41,6 +42,7 @@ class RepositoryField extends FormField
         HTMLHelper::_('bootstrap.modal', 'a.modal_'.$this->id);
         //HTMLHelper::_('behavior.modal', 'a.modal_'.$this->id);
 
+        $counter = $this->form->getValue('counter');
         // Build the script.
         $script = array();
         $script[] = '	function jtSelectRepo_'.$this->id.'(id, title) {';
@@ -49,7 +51,7 @@ class RepositoryField extends FormField
         $script[] = '			document.getElementById("'.$this->id.'_id").value = id;';
         $script[] = '			document.getElementById("'.$this->id.'_name").value = title;';
         $script[] = '		}';
-        $script[] = '		// SqueezeBox.close();';
+        $script[] = '		document.querySelector("#modalsrc_'.$counter.'_id").close();';
         $script[] = '	}';
         $script[] = '	function jtClearRepo_'.$this->id.'() {';
         $script[] = '		document.getElementById("'.$this->id.'_id").value = null;';
@@ -79,30 +81,72 @@ class RepositoryField extends FormField
             $html[] = '	<input type="text" id="'.$this->id.'_name"' .
                         ' value="'.htmlspecialchars($table->name, ENT_COMPAT, 'UTF-8').'"' .
                         ' disabled="disabled"'.$attr.' />';
+        } else {
+            $html[] = '	<input type="text" id="'.$this->id.'_name"' .
+                        ' value=""' .
+                        ' disabled="disabled"'.$attr.' />';
+
         }
+        $iframe = '\'iframe\'';
+        $counter = $this->form->getValue('counter');
+
+        // Load the modal behavior script.
+        HTMLHelper::_('bootstrap.modal', 'a.modal_src_'.$counter);
+        //HTMLHelper::_('behavior.modal', 'a.modal_src_'.$counter);
+
+        $link =  Route::_('index.php?option=com_joaktree'
+                .'&amp;view=repositories'
+                .'&amp;tmpl=component'
+                .'&amp;appId='.$appId
+                .'&amp;action=select'
+                .'&amp;counter='.$counter);
+
+
         // Create the select and clear buttons.
         if ($this->element['readonly'] != 'true') {
             $html[] = '<div class="jt-clearfix"></div>';
             // empty label for layout
             $html[] = '<label>&nbsp;</label>';
+            /*
+                        // button 1
+                        $link = 'index.php?option=com_joaktree&amp;view=repositories&amp;tmpl=component&amp;appId='.$appId.'&amp;action=select';
+                        $html[] = '		<a class="modal_'.$this->id.' jt-button-closed jt-buttonlabel" title="'.Text::_('JTSELECT').'"' .
+                                        ' href="'.$link.'"' .
+                                        ' rel="{handler: \'iframe\', size: {x: 800, y: 500}}">';
+                        $html[] = '			'.Text::_('JTSELECT').'</a>';
 
-            // button 1
-            $link = 'index.php?option=com_joaktree&amp;view=repositories&amp;tmpl=component&amp;appId='.$appId.'&amp;action=select';
-            $html[] = '		<a class="modal_'.$this->id.' jt-button-closed jt-buttonlabel" title="'.Text::_('JTSELECT').'"' .
-                            ' href="'.$link.'"' .
-                            ' rel="{handler: \'iframe\', size: {x: 800, y: 500}}">';
-            $html[] = '			'.Text::_('JTSELECT').'</a>';
+                        // button 2
+                        $html[] = '		<a class="jt-button-closed jt-buttonlabel" title="'.Text::_('JTCLEAR').'"' .
+                                        ' href="#"' .
+                                        ' onclick="jtClearRepo_'.$this->id.'()" >';
+                        $html[] = '			'.Text::_('JTCLEAR').'</a>';
+                        */
 
-            // button 2
+            HTMLHelper::_('bootstrap.modal', '.modal', []);
+            $html[] = '<a class="jt-button-closed jt-buttonlabel" data-bs-toggle="modal" data-bs-target="#modalsrc_'.$counter.'_id">'.Text::_('JTSELECT').'</a>';
+            $html[] = ' <div class="modal fade modal-xl"  id="modalsrc_'.$counter.'_id" tabindex="-1" aria-labelledby="modalsrc_'.$counter.'_id" aria-hidden="true">
+            <div class="modal-dialog h-75 ">
+                <div class="modal-content h-100 ">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body h-100 ">
+                        <iframe id="iframeModalsrc_'.$counter.'_id" height="100%" src="'.$link.'" name="iframe_modal"></iframe>
+                    </div>
+                </div>
+            </div>
+            </div>';
             $html[] = '		<a class="jt-button-closed jt-buttonlabel" title="'.Text::_('JTCLEAR').'"' .
                             ' href="#"' .
                             ' onclick="jtClearRepo_'.$this->id.'()" >';
             $html[] = '			'.Text::_('JTCLEAR').'</a>';
+
+
+
         }
 
         // Create the real field, hidden, that stored the user id.
         $html[] = ' <input type="hidden" id="'.$this->id.'_id" name="'.$this->name.'" value="'.$this->value.'" />';
-
         $html[] = '</div>';
         return implode("\n", $html);
     }

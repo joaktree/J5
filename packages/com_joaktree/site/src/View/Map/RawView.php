@@ -13,6 +13,7 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
+
 namespace Joaktree\Component\Joaktree\Site\View\Map;
 
 // no direct access
@@ -31,12 +32,14 @@ class RawView extends HtmlView
         $lang 	= Factory::getApplication()->getLanguage();
         $lang->load('com_joaktree.gedcom', JPATH_ADMINISTRATOR);
 
+        $model = $this->getModel();
+
         $this->lists	= array();
-        $this->map 		= $this->get('map');
+        $this->map 		= $model->getMap();
 
         if ($this->map->params['service'] == 'staticmap') {
             // Get data from the model
-            $this->mapview 				= $this->get('mapView');
+            $this->mapview 				= $model->getMapView();
             $this->lists['userAccess']	= ($this->mapview) ? true : false;
         }
 

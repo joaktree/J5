@@ -33,36 +33,38 @@ class RawView extends BaseHtmlView
         $lang 	= Factory::getApplication()->getLanguage();
         $lang->load('com_joaktree.gedcom', JPATH_ADMINISTRATOR);
 
+        $model = $this->getModel();
+
         // what is the layout
-        $layout = $this->get('layout');
+        $layout = $model->getLayout();
 
         // Person
-        $this->person			= $this->get('person');
-        $this->lists['technology']	= $this->get('technology');
+        $this->person			= $model->getPerson();
+        $this->lists['technology']	= $model->getTechnology();
 
         if (($layout == '_detailnotes') or ($layout == '_mainnotes')) {
-            $notes[ 'type' ] = 		$this->get('jttype');
-            $notes[ 'subtype' ] = 		$this->get('jtsubtype');
-            $notes[ 'orderNumber' ] = 	$this->get('orderNumber');
-            $notes[ 'relation_id' ] = 	$this->get('relationId');
+            $notes[ 'type' ] = 		$model->getJtType();
+            $notes[ 'subtype' ] = 		$model->getJtSubType();
+            $notes[ 'orderNumber' ] = 	$model->getOrderNumber();
+            $notes[ 'relation_id' ] = 	$model->getRelationId();
 
             //$this->assignRef( 'notes',	$notes );
             $this->notes = $notes;
         }
 
         if (($layout == '_detailsources') or ($layout == '_mainsources')) {
-            $sources[ 'type' ] = 		$this->get('jttype');
-            $sources[ 'subtype' ] = 	$this->get('jtsubtype');
-            $sources[ 'orderNumber' ] = 	$this->get('orderNumber');
-            $sources[ 'relation_id' ] = 	$this->get('relationId');
+            $sources[ 'type' ] = 		$model->getJtType();
+            $sources[ 'subtype' ] = 	$model->getJtSubType();
+            $sources[ 'orderNumber' ] = 	$model->getOrderNumber();
+            $sources[ 'relation_id' ] = 	$model->getRelationId();
 
             //$this->assignRef( 'sources',	$sources );
             $this->sources = $sources;
         }
 
         if ($layout == '_article') {
-            $notes[ 'type' ] 		= $this->get('jttype');
-            $notes[ 'orderNumber' ] = $this->get('orderNumber');
+            $notes[ 'type' ] 		= $model->getJtType();
+            $notes[ 'orderNumber' ] = $model->getOrderNumber();
             $notes[ 'app_id' ] 		= $this->person->app_id;
             $notes[ 'person_id' ] 	= $this->person->id;
 

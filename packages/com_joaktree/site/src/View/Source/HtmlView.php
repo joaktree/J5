@@ -38,6 +38,8 @@ class HtmlView extends BaseHtmlView
         $lang 	= Factory::getApplication()->getLanguage();
         $lang->load('com_joaktree.gedcom', JPATH_ADMINISTRATOR);
 
+        $model = $this->getModel();
+
         if ($tpl == null) {
             $this->lists = array();
             $app 			= Factory::getApplication('site');
@@ -59,11 +61,11 @@ class HtmlView extends BaseHtmlView
             HTMLHelper::stylesheet(JoaktreeHelper::joaktreecss($this->params->get('theme')));
 
             // Initialiase variables.
-            $this->form		= $this->get('Form');
-            $this->item		= $this->get('Item');
-            $this->lists['userAccess']	= $this->get('access');
+            $this->form		= $model->getForm();
+            $this->item		= $model->getItem();
+            $this->lists['userAccess']	= $model->getAccess();
 
-            $this->lists['action']		= $this->get('action');
+            $this->lists['action']		= $model->getAction();
             if ($this->lists['action'] == 'select') {
                 $this->lists['link'] = 'index.php?option=com_joaktree'
                                       .'&view=source'

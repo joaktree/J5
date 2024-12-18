@@ -13,6 +13,7 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
+
 namespace Joaktree\Component\Joaktree\Site\View\Joaktree;
 
 defined('_JEXEC') or die('Restricted access');
@@ -36,6 +37,8 @@ class HtmlView extends BaseHtmlView
         $lang 	= Factory::getApplication()->getLanguage();
         $lang->load('com_joaktree.gedcom', JPATH_ADMINISTRATOR);
 
+        $model = $this->getModel();
+
         // Load the parameters.
         $model			= $this->getModel();
         $this->params	= JoaktreeHelper::getJTParams();
@@ -46,7 +49,7 @@ class HtmlView extends BaseHtmlView
             $canDo		 	= null;
         }
         // Find the value for tech
-        $technology		= $this->get('technology');
+        $technology		= $model->getTechnology();
         // set up style sheets and javascript files
         HTMLHelper::stylesheet(JoaktreeHelper::joaktreecss());
         HTMLHelper::stylesheet(JoaktreeHelper::joaktreecss($this->params->get('theme')));
@@ -68,13 +71,13 @@ class HtmlView extends BaseHtmlView
             $document->addScript(JoaktreeHelper::joaktreejs('jtajax.js'));
         }
         // Access
-        $lists['userAccess'] 	= $this->get('access');
+        $lists['userAccess'] 	= $model->getAccess();
         $lists['technology'] 	= $technology;
-        $edit					= $this->get('action');
+        $edit					= $model->getAction();
         $lists['edit'] 			= ($edit == 'edit') ? true : false;
 
         // Person
-        $this->person			= $this->get('person');
+        $this->person			= $model->getPerson();
         $model->setCookie();
         $Html[ 'lineage' ]	= $this->showLineage();
         $lists['showAncestors']   = (int) $this->params->get('ancestorchart', 0);
@@ -160,7 +163,9 @@ class HtmlView extends BaseHtmlView
     {
         $html = '';
         // Find the value for tech
-        $technology		= $this->get('technology');
+        $model = $this->getModel();
+
+        $technology		= $model->getTechnology();
         $linkBase = 'index.php?option=com_joaktree&view=joaktree&tech='.$technology;
         $robot	  = ($technology == 'a') ? '' : 'rel="noindex, nofollow"';
         $lineageArray		= $this->person->getLineage();

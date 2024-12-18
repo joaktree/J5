@@ -9,7 +9,11 @@
         <fix>
             <item>Source delete button : Joomla 6 compatibility</item>
             <item>Clean unused code</item>
+            <item>Site Sources : use bootstrap modalbox</item>
         </fix>
+        <change>
+            <item>Joomla 7.x compatibility : views call $model gets instead of $this gets</item>
+        </change>
     </changelog>
 	<changelog>
 		<element>com_joaktree</element>

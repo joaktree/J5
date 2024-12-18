@@ -27,22 +27,7 @@ use Joomla\CMS\MVC\Controller\BaseController;
 
 class RepositoryController extends BaseController
 {
-    public function __construct()
-    {
-        // first check token
-        Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
-
-        // create an input object
-        $this->input = Factory::getApplication()->input;
-
-        //Get View
-        if ($this->input->get('view') == '') {
-            $this->input->set('view', 'repository');
-        }
-
-        parent::__construct();
-    }
-    public function getModel($name = 'Repository', $prefix = 'Joaktree', $config = ['ignore_request' => true])
+    public function getModel($name = 'Repository', $prefix = '', $config = ['ignore_request' => true])
     {
         return parent::getModel($name, $prefix, $config);
     }

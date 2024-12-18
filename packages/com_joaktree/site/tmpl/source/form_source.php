@@ -119,6 +119,10 @@ HTMLHelper::_('behavior.formvalidator');
 					<?php echo $this->form->getLabel('app_repo_id'); ?>
 					<?php echo $this->form->getInput('app_repo_id'); ?>			
 				</li>
+				<li>
+					<?php echo $this->form->getLabel('app_repo_name'); ?>
+					<?php echo $this->form->getInput('app_repo_name'); ?>			
+				</li>
 			</ul>
 			<?php echo $this->form->getInput('id'); ?>
 			<?php echo $this->form->getInput('app_id'); ?>

@@ -34,8 +34,10 @@ class RawView extends HtmlView
         $lang 	= Factory::getApplication()->getLanguage();
         $lang->load('com_joaktree.gedcom', JPATH_ADMINISTRATOR);
 
+        $model = $this->getModel();
+
         // Load the parameters.
-        $this->map 		= $this->get('map');
+        $this->map 		= $model->getMap();
 
         if ($this->map->params['service'] == 'interactivemap') {
             $this->lists	= array();

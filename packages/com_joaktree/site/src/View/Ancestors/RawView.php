@@ -35,16 +35,18 @@ class RawView extends BaseHtmlView
         $lang 	= Factory::getApplication()->getLanguage();
         $lang->load('com_joaktree.gedcom', JPATH_ADMINISTRATOR);
 
+        $model = $this->getModel();
+
         $params			= JoaktreeHelper::getJTParams();
 
         // Access
-        $lists['userAccess'] 	= $this->get('access');
-        $lists['treeId'] 		= $this->get('treeId');
-        $lists['technology'] 	= $this->get('technology');
+        $lists['userAccess'] 	= $model->getAccess();
+        $lists['treeId'] 		= $model->getTreeId();
+        $lists['technology'] 	= $model->getTechnology();
 
         // Person + generations
         $personId	 			= array();
-        $this->person			= $this->get('person');
+        $this->person			= $model->getPerson();
         $personId[]		 		= $this->person->id.'|1';
         $lists[ 'ancestorLevel'] = $params->get('ancestorlevel', 1);
         $lists[ 'startGenNum' ]	= 1;

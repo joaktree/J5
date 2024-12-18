@@ -35,6 +35,8 @@ class Htmlview extends BaseHtmlview
         $lang 	= Factory::getApplication()->getLanguage();
         $lang->load('com_joaktree.gedcom', JPATH_ADMINISTRATOR);
 
+        $model = $this->getModel();
+
         $this->lists 		= array();
 
         // Load the parameters.
@@ -43,37 +45,37 @@ class Htmlview extends BaseHtmlview
         $app 				= Factory::getApplication('site');
 
         // Get data from the model
-        $this->treeinfo		= $this->get('treeinfo');
-        $menus  			= $this->get('menus');
+        $this->treeinfo		= $model->getTreeinfo();
+        $menus  			= $model->getMenus();
 
         // set up style sheets and javascript files
         HTMLHelper::stylesheet(JoaktreeHelper::joaktreecss());
         HTMLHelper::stylesheet(JoaktreeHelper::joaktreecss($this->params->get('theme')));
 
         // add script
-        $this->lists['indFilter']	= $this->get('nameFilter');
-        $this->lists['tree_id']		= $this->get('treeId');
+        $this->lists['indFilter']	= $model->getNameFilter();
+        $this->lists['tree_id']		= $model->getTreeId();
         $this->lists['script']		= $this->addScript();
 
         // get text
         $this->articles		= Tree::getArticles($this->lists['tree_id']);
 
         // Id's and settings
-        $this->lists['userAccess'] 		= $this->get('access');
+        $this->lists['userAccess'] 		= $model->getAccess();
         $this->lists['menuItemId'] 		= $menus[ $this->lists['tree_id'] ];
 
         if ($this->treeinfo->indPersonCount) {
-            $this->lists['personCount'] 	= $this->get('personCount');
+            $this->lists['personCount'] 	= $model->getPersonCount();
         }
 
         if ($this->treeinfo->indMarriageCount) {
-            $this->lists['marriageCount']	= $this->get('marriageCount');
+            $this->lists['marriageCount']	= $model->getMarriageCount();
         }
 
         //namelist
-        $this->lists['index']		= $this->get('nameIndex');
+        $this->lists['index']		= $model->getNameIndex();
         $this->lists['columns']		= (int) $this->params->get('columns', '3');
-        $this->namelist	  			= $this->get('namelist');
+        $this->namelist	  			= $model->getNamelist();
 
         echo('<br/>');
         $this->lists['numberRows']	= (int) ceil(count($this->namelist) /  $this->lists['columns']);
@@ -84,14 +86,10 @@ class Htmlview extends BaseHtmlview
                                         .'&treeId='.$this->lists['tree_id'];
 
         // last update
-        $this->lists[ 'lastUpdate' ]	= $this->get('lastUpdate');
+        $this->lists[ 'lastUpdate' ]	= $model->getLastUpdate();
 
         // copyright
         $this->lists[ 'CR' ]		= JoaktreeHelper::getJoaktreeCR();
-
-        /*$this->assignRef('treeinfo', 	$this->treeinfo );
-        $this->assignRef('html', 	$html );
-        $this->assignRef('lists',	$this->lists);*/
 
         if ($this->lists['userAccess']) {
             // set title, meta title

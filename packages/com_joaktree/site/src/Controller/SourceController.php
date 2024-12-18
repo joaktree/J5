@@ -13,6 +13,7 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
+
 namespace Joaktree\Component\Joaktree\Site\Controller;
 
 // no direct access
@@ -20,14 +21,12 @@ defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Session\Session;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\MVC\Controller\BaseController;
 
 class SourceController extends BaseController
 {
-
-    public function getModel($name = 'Source', $prefix = 'Joaktree', $config = ['ignore_request' => true])
+    public function getModel($name = 'Source', $prefix = '', $config = ['ignore_request' => true])
     {
         return parent::getModel($name, $prefix, $config);
     }

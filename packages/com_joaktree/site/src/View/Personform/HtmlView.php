@@ -39,8 +39,10 @@ class HtmlView extends BaseHtmlView
         $lang 	= Factory::getApplication()->getLanguage();
         $lang->load('com_joaktree.gedcom', JPATH_ADMINISTRATOR);
 
+        $model = $this->getModel();
+
         // First load the treeId!
-        $this->lists['treeId']		= $this->get('treeId');
+        $this->lists['treeId']		= $model->getTreeId();
 
         // Load the parameters.
         $this->params	= JoaktreeHelper::getJTParams(true);
@@ -58,24 +60,24 @@ class HtmlView extends BaseHtmlView
         $this->lists['lineEnd'] = $document->_getLineEnd();
 
         // Initialiase variables.
-        $this->form					= $this->get('Form');
-        $this->lists['appId']		= $this->get('applicationId');
-        $this->lists['appName']		= $this->get('applicationName');
+        $this->form					= $model->getForm();
+        $this->lists['appId']		= $model->getApplicationId();
+        $this->lists['appName']		= $model->getApplicationName();
 
-        $relationId					= $this->get('relationId');
+        $relationId					= $model->getRelationId();
         if (isset($relationId)) {
-            $this->relation					= $this->get('relation');
-            $this->lists['action']			= $this->get('action');
+            $this->relation					= $model->getRelation();
+            $this->lists['action']			= $model->getAction();
         }
         $this->lists['action'] = (isset($this->lists['action'])) ? $this->lists['action'] : 'new';
 
 
-        $this->picture			= $this->get('picture');
+        $this->picture			= $model->getPicture();
 
-        $personId = $this->get('personId');
+        $personId = $model->getPersonId();
         if (isset($personId)) {
-            $this->lists['userAccess'] 	= $this->get('access');
-            $this->item					= $this->get('Item');
+            $this->lists['userAccess'] 	= $model->getAccess();
+            $this->item					= $model->getItem();
             $this->lists['indLiving']	= $this->item->living;
         } else {
             $this->lists['userAccess'] 	= true;

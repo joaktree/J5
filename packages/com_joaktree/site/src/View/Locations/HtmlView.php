@@ -41,6 +41,8 @@ class HtmlView extends BaseHtmlView
         $lang 	= Factory::getApplication()->getLanguage();
         $lang->load('com_joaktree.gedcom', JPATH_ADMINISTRATOR);
 
+        $model = $this->getModel();
+
         $this->lists 		= array();
 
         // Load the parameters.
@@ -58,27 +60,27 @@ class HtmlView extends BaseHtmlView
         $app 				= Factory::getApplication('site');
         $input              = $app->input;
         // Get data from the model
-        $this->treeinfo		= $this->get('treeinfo');
-        $menus  			= $this->get('menus');
+        $this->treeinfo		= $model->getTreeinfo();
+        $menus  			= $model->getMenus();
 
         // set up style sheets and javascript files
         HTMLHelper::stylesheet(JoaktreeHelper::joaktreecss());
         HTMLHelper::stylesheet(JoaktreeHelper::joaktreecss($this->params->get('theme')));
 
         // add script
-        $this->lists['interactiveMap'] 	= $this->get('interactiveMap');
-        $this->lists['indFilter']	= $this->get('locationFilter');
-        $this->lists['tree_id']		= $this->get('treeId');
+        $this->lists['interactiveMap'] 	= $model->getInteractiveMap();
+        $this->lists['indFilter']	= $model->getLocationFilter();
+        $this->lists['tree_id']		= $model->getTreeId();
         $this->lists['script']		= $this->addScript();
 
         // get text
         $this->articles				= Tree::getArticles($this->lists['tree_id']);
 
         // Id's and settings
-        $this->lists['userAccess'] 	= $this->get('access');
+        $this->lists['userAccess'] 	= $model->getAccess();
         $this->lists['menuItemId'] 	= $menus[ $this->lists['tree_id'] ];
         $this->lists['indMap']		= false;
-        $tmp						= $this->get('mapUrl');
+        $tmp						= $model->getMapUrl();
         if ($tmp) {
             $this->lists['indMap']	= true;
             $this->lists['map']		= explode("|", $tmp);
@@ -91,9 +93,9 @@ class HtmlView extends BaseHtmlView
         }
 
         //location list
-        $this->lists['index']		= $this->get('locationIndex');
+        $this->lists['index']		= $model->getLocationIndex();
         $this->lists['columns']		= (int) $this->params->get('columnsLoc', '3');
-        $this->locationlist  		= $this->get('locationlist');
+        $this->locationlist  		= $model->getLocationlist();
         $this->lists['numberRows']	= (int) ceil(count($this->locationlist) /  $this->lists['columns']);
 
         $this->lists['linkMap'] 	= 'index.php?option=com_joaktree'
@@ -108,7 +110,7 @@ class HtmlView extends BaseHtmlView
                                         .'&treeId='.$this->lists['tree_id'];
 
         // last update
-        $this->lists[ 'lastUpdate' ] = $this->get('lastUpdate');
+        $this->lists[ 'lastUpdate' ] = $model->getLastUpdate();
 
         // copyright
         $this->lists[ 'CR' ]		= JoaktreeHelper::getJoaktreeCR();

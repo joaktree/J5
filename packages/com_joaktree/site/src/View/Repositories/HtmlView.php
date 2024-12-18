@@ -34,6 +34,8 @@ class HtmlView extends BaseHtmlView
         $lang 	= Factory::getApplication()->getLanguage();
         $lang->load('com_joaktree.gedcom', JPATH_ADMINISTRATOR);
 
+        $model = $this->getModel();
+
         $this->lists	= array();
         $app 			= Factory::getApplication('site');
         $document = Factory::getApplication()->getDocument();
@@ -48,24 +50,24 @@ class HtmlView extends BaseHtmlView
         HTMLHelper::stylesheet(JoaktreeHelper::joaktreecss($params->get('theme')));
 
         // get user info
-        $userId			= $this->get('userId');
+        $userId			= Factory::getApplication()->getIdentity()->id;
         if (!$userId || $userId == 0) {
             $document->addScript(JoaktreeHelper::joaktreejs('jtform.js'));
         }
 
         // Get data from the model
-        $this->items				= $this->get('items');
-        $this->pagination			= $this->get('pagination');
-        $this->lists['app_id']		= $this->get('applicationId');
-        $this->lists['userAccess']	= $this->get('access');
+        $this->items				= $model->getItems();
+        $this->pagination			= $model->getPagination();
+        $this->lists['app_id']		= $model->getApplicationId();
+        $this->lists['userAccess']	= $model->getAccess();
 
-        $statusObj					= $this->get('returnObject');
+        $statusObj					= $model->getReturnObject();
         $this->lists['repo_id']		= (is_object($statusObj)) ? $statusObj->object_id : null;
         $this->lists['status']		= (is_object($statusObj)) ? $statusObj->status : null;
         if ($this->lists['status'] == 'new') {
-            $this->newItem			= $this->get('newlyAddedItem');
+            $this->newItem			= $model->getNewlyAddedItem();
         }
-        $this->lists['action']		= $this->get('action');
+        $this->lists['action']		= $model->getAction();
         if ($this->lists['action'] == 'select') {
             $this->lists['link'] = 'index.php?option=com_joaktree'
                                   .'&view=repositories'
@@ -93,7 +95,7 @@ class HtmlView extends BaseHtmlView
         $this->lists['search1']		= $search1;
 
         // Find the value for tech
-        $this->lists[ 'technology' ] = $this->get('technology');
+        $this->lists[ 'technology' ] = $model->getTechnology();
 
         // copyright
         $this->lists[ 'CR' ]		 = JoaktreeHelper::getJoaktreeCR();

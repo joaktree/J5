@@ -13,6 +13,7 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
+
 namespace Joaktree\Component\Joaktree\Site\View\Descendants;
 
 // no direct access
@@ -34,6 +35,8 @@ class HtmlView extends BaseHtmlView
         $lang 	= Factory::getApplication()->getLanguage();
         $lang->load('com_joaktree.gedcom', JPATH_ADMINISTRATOR);
 
+        $model = $this->getModel();
+
         $params			= JoaktreeHelper::getJTParams();
         $document		= Factory::getApplication()->getDocument();
 
@@ -42,13 +45,13 @@ class HtmlView extends BaseHtmlView
         HTMLHelper::stylesheet(JoaktreeHelper::joaktreecss($params->get('theme')));
 
         // Access
-        $lists['userAccess'] 	= $this->get('access');
-        $lists['treeId'] 		= $this->get('treeId');
-        $lists['technology'] 	= $this->get('technology');
+        $lists['userAccess'] 	= $model->getAccess();
+        $lists['treeId'] 		= $model->getTreeId();
+        $lists['technology'] 	= $model->getTechnology();
 
         // Person + generations
         $personId	 			= array();
-        $this->person			= $this->get('person');
+        $this->person			= $model->getPerson();
         $personId[]		 		= $this->person->id.'|1';
         $lists[ 'startGenNum' ]	= 1;
         $lists[ 'endGenNum' ]	= (int) $params->get('descendantlevel', 20);
@@ -60,8 +63,6 @@ class HtmlView extends BaseHtmlView
         // copyright
         $lists[ 'CR' ]		= JoaktreeHelper::getJoaktreeCR();
 
-        //$this->assignRef( 'personId', $personId);
-        //$this->assignRef( 'lists',	  $lists);
         $this->personId = $personId;
         $this->lists = $lists;
         if ($lists['userAccess']) {

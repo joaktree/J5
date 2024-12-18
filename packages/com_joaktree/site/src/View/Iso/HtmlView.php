@@ -35,36 +35,35 @@ class HtmlView extends BaseHtmlView
         $lang 	= Factory::getApplication()->getLanguage();
         $lang->load('com_joaktree.gedcom', JPATH_ADMINISTRATOR);
 
-        // Load the parameters.
+        $model = $this->getModel();
+
         $app 			= Factory::getApplication('site');
         $params			= JoaktreeHelper::getJTParams();
         $document = Factory::getApplication()->getDocument();
 
         // Find the value for tech
-        $technology	= $this->get('technology');
+        $technology	= $model->getTechnology();
 
         // set up style sheets and javascript files
         HTMLHelper::stylesheet(JoaktreeHelper::joaktreecss());
         HTMLHelper::stylesheet(JoaktreeHelper::joaktreecss($params->get('theme')));
 
         // get user info
-        $userId			= $this->get('userId');
+        $userId			= Factory::getApplication()->getIdentity()->id;
         if (!$userId || $userId == 0) {
             $document->addScript(JoaktreeHelper::joaktreejs('jtform.js'));
         }
 
         // Get data from the model
-        $personlist			= $this->get('personlist');
-        $pagination			= $this->get('Pagination');
-        $tree_id			= $this->get('treeId');
-        $patronymSetting	= $this->get('patronymSetting');
-        $userAccess			= $this->get('access');
-        $menus1  			= $this->get('menusJoaktree');
-        $menus2  			= $this->get('menusList');
+        $personlist			= $model->getPersonlist();
+        $pagination			= $model->getPagination();
+        $tree_id			= $model->getTreeId();
+        $patronymSetting	= $model->getPatronymSetting();
+        $userAccess			= $model->getAccess();
 
         // Id's and settings
         $lists['tree_id']		= $tree_id;
-        $lists['relationId']	= $this->get('relationId');
+        $lists['relationId']	= $model->getRelationId();
         $lists['patronym'] 		= $patronymSetting;
         $lists['userAccess'] 	= $userAccess;
         $lists['technology'] 	= $technology;
@@ -75,7 +74,7 @@ class HtmlView extends BaseHtmlView
         $filter_order		= $app->getUserStateFromRequest($context.'filter_order', 'filter_order', 'jpn.familyName', 'cmd');
         $filter_order_Dir	= $app->getUserStateFromRequest($context.'filter_order_Dir', 'filter_order_Dir', '', 'word');
         $search1			= $app->getUserStateFromRequest($context.'search1', 'search1', '', 'string');
-        $search1			= strtolower($search1);
+        $search1			= \strtolower($search1);
 
         // table ordering
         $lists['order_Dir']	= $filter_order_Dir;
@@ -86,7 +85,7 @@ class HtmlView extends BaseHtmlView
         $lists['search1']		= $search1;
 
         // last update
-        $lists[ 'lastUpdate' ]	= $this->get('lastUpdate');
+        $lists[ 'lastUpdate' ]	= $model->getLastUpdate();
 
         // copyright
         $lists[ 'CR' ]		= JoaktreeHelper::getJoaktreeCR();

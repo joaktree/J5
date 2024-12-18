@@ -13,6 +13,7 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
+
 namespace Joaktree\Component\Joaktree\Site\View\List;
 
 // no direct access
@@ -34,36 +35,38 @@ class HtmlView extends BaseHtmlView
         $lang 	= Factory::getApplication()->getLanguage();
         $lang->load('com_joaktree.gedcom', JPATH_ADMINISTRATOR);
 
+        $model = $this->getModel();
+
         // Load the parameters.
         $app 			= Factory::getApplication('site');
         $params			= JoaktreeHelper::getJTParams();
         $document = Factory::getApplication()->getDocument();
 
         // Find the value for tech
-        $technology	= $this->get('technology');
+        $technology	= $model->getTechnology();
 
         // set up style sheets and javascript files
         HTMLHelper::stylesheet(JoaktreeHelper::joaktreecss());
         HTMLHelper::stylesheet(JoaktreeHelper::joaktreecss($params->get('theme')));
 
         // get user info
-        $userId			= $this->get('userId');
+        $userId			= Factory::getApplication()->getIdentity()->id;
         if (!$userId || $userId == 0) {
             $document->addScript(JoaktreeHelper::joaktreejs('jtform.js'));
         }
 
         // Get data from the model
-        $personlist			= $this->get('personlist');
-        $pagination			= $this->get('Pagination');
-        $tree_id			= $this->get('treeId');
-        $patronymSetting	= $this->get('patronymSetting');
-        $userAccess			= $this->get('access');
-        $menus1  			= $this->get('menusJoaktree');
-        $menus2  			= $this->get('menusList');
+        $personlist			= $model->getPersonlist();
+        $pagination			= $model->getPagination();
+        $tree_id			= $model->getTreeId();
+        $patronymSetting	= $model->getPatronymSetting();
+        $userAccess			= $model->getAccess();
+        $menus1  			= $model->getMenusJoaktree();
+        $menus2  			= $model->getMenusList();
 
         // Id's and settings
         $lists['tree_id']		= $tree_id;
-        $lists['relationId']	= $this->get('relationId');
+        $lists['relationId']	= $model->getRelationId();
         $lists['menuItemId'] 	= $menus1[ $tree_id ];
         $lists['menuItemId2'] 	= $menus2[ $tree_id ];
         $lists['patronym'] 		= $patronymSetting;
@@ -96,7 +99,7 @@ class HtmlView extends BaseHtmlView
         $lists['search4']		= $search4;
 
         // last update
-        $lists[ 'lastUpdate' ]	= $this->get('lastUpdate');
+        $lists[ 'lastUpdate' ]	= $model->getLastUpdate();
 
         // copyright
         $lists[ 'CR' ]		= JoaktreeHelper::getJoaktreeCR();

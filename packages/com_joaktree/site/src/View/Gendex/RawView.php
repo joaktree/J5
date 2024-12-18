@@ -33,8 +33,10 @@ class RawView extends HtmlView
         $lang 	= Factory::getApplication()->getLanguage();
         $lang->load('com_joaktree.gedcom', JPATH_ADMINISTRATOR);
 
+        $model = $this->getModel();
+
         // Get data from the model
-        $items	= $this->get('Items');
+        $items	= $model->getItems();
         $menus	= JoaktreeHelper::getMenus('joaktree');
 
         $this->items = $items;

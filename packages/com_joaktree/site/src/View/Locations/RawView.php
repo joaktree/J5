@@ -34,6 +34,8 @@ class RawView extends HtmlView
         $lang 	= Factory::getApplication()->getLanguage();
         $lang->load('com_joaktree.gedcom', JPATH_ADMINISTRATOR);
 
+        $model = $this->getModel();
+
         $this->lists 		= array();
 
         // Load the parameters.
@@ -47,18 +49,18 @@ class RawView extends HtmlView
             $format = "html";
         }
         // Get data from the model
-        $this->treeinfo		= $this->get('treeinfo');
-        $menus  			= $this->get('menus');
+        $this->treeinfo		= $model->getTreeinfo();
+        $menus  			= $model->getMenus();
 
         // Id's and settings
-        $this->lists['tree_id']		= $this->get('treeId');
-        $this->lists['userAccess'] 	= $this->get('access');
+        $this->lists['tree_id']		= $model->getTreeId();
+        $this->lists['userAccess'] 	= $model->getAccess();
         $this->lists['menuItemId'] 	= $menus[ $this->lists['tree_id'] ];
-        $this->lists['interactiveMap'] 	= $this->get('interactiveMap');
+        $this->lists['interactiveMap'] 	= $model->getInteractiveMap();
 
         //location list
         $this->lists['columns']		= (int) $this->params->get('columnsLoc', '3');
-        $this->locationlist  		= $this->get('locationlist');
+        $this->locationlist  		= $model->getLocationlist();
         $this->lists['numberRows']	= (int) ceil(count($this->locationlist) /  $this->lists['columns']);
 
         $this->lists['linkMap'] 	= 'index.php?option=com_joaktree'
