@@ -30,11 +30,6 @@ class PersonformModel extends FormModel
 {
     protected $errors = [];
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function getApplicationId()
     {
         return JoaktreeHelper::getApplicationId();

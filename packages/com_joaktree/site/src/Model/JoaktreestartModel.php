@@ -26,11 +26,6 @@ use Joaktree\Component\Joaktree\Site\Helper\JoaktreeHelper;
 
 class JoaktreestartModel extends BaseDatabaseModel
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function getTreeId()
     {
         return JoaktreeHelper::getTreeId();

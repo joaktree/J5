@@ -36,11 +36,6 @@ class SettingsModel extends ListModel
     public $_relationPagination = null;
     public $_total         = null;
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     private function _buildquery()
     {
         $query = $this->_db->getQuery(true);

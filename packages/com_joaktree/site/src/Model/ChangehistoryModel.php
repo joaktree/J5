@@ -24,11 +24,6 @@ use Joaktree\Component\Joaktree\Site\Helper\JoaktreeHelper;
 
 class ChangehistoryModel extends ListModel
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function getTmpl()
     {
         return JoaktreeHelper::getTmpl();

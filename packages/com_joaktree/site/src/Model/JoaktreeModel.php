@@ -13,6 +13,7 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
+
 namespace Joaktree\Component\Joaktree\Site\Model;
 
 // no direct access
@@ -26,11 +27,6 @@ use Joaktree\Component\Joaktree\Site\Helper\Person;
 
 class JoaktreeModel extends BaseDatabaseModel
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function getUserAccess()
     {
         return JoaktreeHelper::getUserAccess();

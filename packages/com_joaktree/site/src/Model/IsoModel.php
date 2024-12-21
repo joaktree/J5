@@ -20,15 +20,16 @@ namespace Joaktree\Component\Joaktree\Site\Model;
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel ;
 use Joomla\CMS\Pagination\Pagination;
 use Joaktree\Component\Joaktree\Site\Helper\JoaktreeHelper;
 
 class IsoModel extends BaseDatabaseModel
 {
-    public function __construct()
+    public function __construct($config = [], ?MVCFactoryInterface $factory = null)
     {
-        parent::__construct();
+        parent::__construct($config, $factory);
 
         $app 		= Factory::getApplication('site');
 
@@ -114,7 +115,7 @@ class IsoModel extends BaseDatabaseModel
 
         if ($treeId) {
             $query->where('jtp.tree_id = :treeid');
-            $query->bind(':treeid',$treeId,\Joomla\Database\ParameterType::INTEGER);
+            $query->bind(':treeid', $treeId, \Joomla\Database\ParameterType::INTEGER);
         }
 
         $query->group(' jpn.id ');

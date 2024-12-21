@@ -21,6 +21,7 @@ defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Pagination\Pagination;
 use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeHelper;
@@ -45,9 +46,9 @@ class TreesModel extends ListModel
     public $_pagination = null;
     public $_total         = null;
 
-    public function __construct()
+    public function __construct($config = [], ?MVCFactoryInterface $factory = null)
     {
-        parent::__construct();
+        parent::__construct($config, $factory);
 
         $app = Factory::getApplication();
         $context    = 'com_joaktree.trees.list.';

@@ -27,11 +27,6 @@ use Joaktree\Component\Joaktree\Administrator\Mapservice\MBJInteractivemap;
 
 class LocationsModel extends BaseDatabaseModel
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function getTreeId()
     {
         return JoaktreeHelper::getTreeId();

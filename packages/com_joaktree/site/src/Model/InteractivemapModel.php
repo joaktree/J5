@@ -13,43 +13,48 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
+
 namespace Joaktree\Component\Joaktree\Site\Model;
+
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel ;
-
 use Joaktree\Component\Joaktree\Site\Helper\JoaktreeHelper;
 use Joaktree\Component\Joaktree\Site\Helper\Map;
 
-class InteractivemapModel extends BaseDatabaseModel {
-	
-	protected $map;
-	
-	function __construct() {
-		$id = array();
-		$id['map']		= Map::getMapId(true);
-		$id['location']	= Map::getLocationId(true);
-		$id['distance']	= Map::getDistance(true);
-		$id['person']	= JoaktreeHelper::getPersonId(false, true);
-		$id['tree']		= JoaktreeHelper::getTreeId(false, true);
-		$id['app']		= JoaktreeHelper::getApplicationId(false, true);
+class InteractivemapModel extends BaseDatabaseModel
+{
+    protected $map;
 
-		$this->map 	= new Map($id);
-		parent::__construct();            		
-	} 
-	
-	private function getMapId() {
-		return Map::getMapId();
-	}
-					
-	public function getMap() {
-		return $this->map;
-	}
-	
-	public function getMapView() {
-		return $this->map->getMapView();
-	}
+    public function __construct($config = [], ?MVCFactoryInterface $factory = null)
+    {
+        $id = array();
+        $id['map']		= Map::getMapId(true);
+        $id['location']	= Map::getLocationId(true);
+        $id['distance']	= Map::getDistance(true);
+        $id['person']	= JoaktreeHelper::getPersonId(false, true);
+        $id['tree']		= JoaktreeHelper::getTreeId(false, true);
+        $id['app']		= JoaktreeHelper::getApplicationId(false, true);
+
+        $this->map 	= new Map($id);
+        parent::__construct($config, $factory);
+    }
+
+    private function getMapId()
+    {
+        return Map::getMapId();
+    }
+
+    public function getMap()
+    {
+        return $this->map;
+    }
+
+    public function getMapView()
+    {
+        return $this->map->getMapView();
+    }
 
 }
-?>

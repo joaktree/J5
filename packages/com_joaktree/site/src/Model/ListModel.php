@@ -21,6 +21,7 @@ defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel ;
 use Joomla\CMS\Pagination\Pagination;
 use Joomla\Database\DatabaseInterface;
@@ -28,9 +29,9 @@ use Joaktree\Component\Joaktree\Site\Helper\JoaktreeHelper;
 
 class ListModel extends BaseDatabaseModel
 {
-    public function __construct()
+    public function __construct($config = [], ?MVCFactoryInterface $factory = null)
     {
-        parent::__construct();
+        parent::__construct($config, $factory);
 
         $app 		= Factory::getApplication('site');
 

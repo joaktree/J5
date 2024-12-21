@@ -19,6 +19,7 @@ namespace Joaktree\Component\Joaktree\Site\Model;
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel ;
 use Joaktree\Component\Joaktree\Site\Helper\JoaktreeHelper;
 use Joaktree\Component\Joaktree\Site\Helper\Map;
@@ -27,7 +28,7 @@ class MapModel extends BaseDatabaseModel
 {
     protected $map;
 
-    public function __construct()
+    public function __construct($config = [], ?MVCFactoryInterface $factory = null)
     {
         $id = array();
         $id['map']		= Map::getMapId(true);
@@ -38,7 +39,7 @@ class MapModel extends BaseDatabaseModel
         $id['app']		= JoaktreeHelper::getApplicationId(false, true);
 
         $this->map 	= new Map($id);
-        parent::__construct();
+        parent::__construct($config, $factory);
     }
 
 

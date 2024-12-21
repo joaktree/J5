@@ -23,6 +23,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Event\Finder as FinderEvent;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Pagination\Pagination;
 use Joomla\Registry\Registry;
@@ -35,9 +36,9 @@ class PersonsModel extends ListModel
     public $_pagination = null;
     public $_total         = null;
 
-    public function __construct()
+    public function __construct($config = [], ?MVCFactoryInterface $factory = null)
     {
-        parent::__construct();
+        parent::__construct($config, $factory);
 
         $app = Factory::getApplication();
 

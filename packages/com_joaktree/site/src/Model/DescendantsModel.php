@@ -15,61 +15,61 @@
  */
 
 namespace Joaktree\Component\Joaktree\Site\Model;
+
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
-
 use Joaktree\Component\Joaktree\Site\Helper\JoaktreeHelper;
 use Joaktree\Component\Joaktree\Site\Helper\Person;
 
-class DescendantsModel extends BaseDatabaseModel {
+class DescendantsModel extends BaseDatabaseModel
+{
+    public function getUserAccess()
+    {
+        return JoaktreeHelper::getUserAccess();
+    }
 
-	function __construct() {
-		parent::__construct();            
-	} 
-	
-	public function getUserAccess() {
-		return JoaktreeHelper::getUserAccess();
-	}
-		
- 	public function getTreeId() {
-		return JoaktreeHelper::getTreeId();
- 	}
-		
-	public function getTechnology() {
-		return JoaktreeHelper::getTechnology();
-	}
-	
-	public function getAccess() {
-		static $_access;
-		
-		if (!isset($_access)) {
-			$params = JoaktreeHelper::getJTParams();
-			$descendantEnabled = $params->get('descendantchart', 0);
-			
-			if ($descendantEnabled != 1) {
-				// chart is not enabled
-				$_access = false;
-			} else {
-				// chart is enabled
-				$_access = JoaktreeHelper::getAccess();	
-			}				
-		}
-				
-		return $_access;
-	}
-	
-	public function getPerson() {
-		static $person;
-		
-		if (!isset($person)) {
-			$id[ 'app_id' ] 	= JoaktreeHelper::getApplicationId();
-			$id[ 'person_id' ] 	= JoaktreeHelper::getPersonId(); 
-			$person	  =  new Person($id, 'basic');
-		}
-		
-		return $person;
-	}
+    public function getTreeId()
+    {
+        return JoaktreeHelper::getTreeId();
+    }
+
+    public function getTechnology()
+    {
+        return JoaktreeHelper::getTechnology();
+    }
+
+    public function getAccess()
+    {
+        static $_access;
+
+        if (!isset($_access)) {
+            $params = JoaktreeHelper::getJTParams();
+            $descendantEnabled = $params->get('descendantchart', 0);
+
+            if ($descendantEnabled != 1) {
+                // chart is not enabled
+                $_access = false;
+            } else {
+                // chart is enabled
+                $_access = JoaktreeHelper::getAccess();
+            }
+        }
+
+        return $_access;
+    }
+
+    public function getPerson()
+    {
+        static $person;
+
+        if (!isset($person)) {
+            $id[ 'app_id' ] 	= JoaktreeHelper::getApplicationId();
+            $id[ 'person_id' ] 	= JoaktreeHelper::getPersonId();
+            $person	  =  new Person($id, 'basic');
+        }
+
+        return $person;
+    }
 }
-?>

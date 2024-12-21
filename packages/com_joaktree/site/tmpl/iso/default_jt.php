@@ -52,7 +52,7 @@ $layouts_order = [];
 $width = 1;
 $line = 1;
 $pos = 0;
-if ($displaysort == "true") {
+// if ($displaysort == "true") {
     $values = new \stdClass();
     $values->div = "sort";
     $values->div_line = $line;
@@ -62,8 +62,8 @@ if ($displaysort == "true") {
     $values->div_align = "";
     $width += 3;
     $layouts['sort'] = $values;
-}
-if ($displaysearch == "true") {
+//}
+// if ($displaysearch == "true") {
     $values = new \stdClass();
     $values->div = "search";
     $pos += 1;
@@ -73,25 +73,37 @@ if ($displaysearch == "true") {
     $values->div_width = "4";
     $values->div_align = "";
     $layouts['search'] = $values;
-}
+// }
+// if ($displayalpha != "false") {
+    $values = new stdClass();
+    $values->div = "alpha";
+    $line += 1;
+    $values->div_pos = 1;
+    $values->div_width = "12";
+    $values->div_align = "text-center";
+    $values->div_line = $line;
+    $layouts['alpha'] = $values;
+// }
 if ($displayfamily != "hide") {
     $values = new \stdClass();
     $values->div = "family";
     $pos += 1;
     $values->div_line = $line;
-    if ($displayfamily == 'list' || $displayfamily == "listmulti") {
+    if ($displayfamily == 'list' || $displayfamily == "listmulti") { // sur 1ere ligne
+        $values->div_line = 1; 
         $values->div_pos = $pos;
         $width = 5;
         $values->div_width = "5";
-    } else { // buttons
+        $values->div_align = "";
+    } else { // buttons : on a new line
         $pos = 1;
-        $line = 2;
+        $line += 1;
         $width = 12;
-        $values->div_line = 2;
+        $values->div_line = $line;
         $values->div_width = "12";
         $values->div_pos = $pos;
+        $values->div_align = "text-center";        
     }
-    $values->div_align = "";
     $layouts['family'] = $values;
 }
 if ($displayrange == "true") {
@@ -103,16 +115,6 @@ if ($displayrange == "true") {
     $values->div_width = "12";
     $values->div_align = "";
     $layouts['range'] = $values;
-}
-if ($displayalpha != "false") {
-    $values = new stdClass();
-    $line += 1;
-    $values->div = "alpha";
-    $values->div_line = $line;
-    $values->div_pos = "1";
-    $values->div_width = "12";
-    $values->div_align = "";
-    $layouts['alpha'] = $values;
 }
 
 $values = new \stdClass();
@@ -209,10 +211,10 @@ if (($displayfamily != "hide")) {
         $app->getDocument()->getWebAssetManager()
              ->useScript('webcomponent.field-fancy-select')
              ->usePreset('choicesjs');
-         $attributes = array(
-             'class="isotope_select"',
-             ' data-fg="family"',
-             ' id="isotope-select-family"'
+        $attributes = array(
+            'class="isotope_select"',
+            ' data-fg="family"',
+            ' id="isotope-select-family"'
         );
         $selectAttr = array();
         $multiple = "";

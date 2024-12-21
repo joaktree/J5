@@ -21,6 +21,7 @@ defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Event\Finder as FinderEvent;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel ;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
@@ -53,9 +54,9 @@ class ImportgedcomModel extends BaseDatabaseModel
     public $_pagination = null;
     public $_total      = null;
 
-    public function __construct()
+    public function __construct($config = [], ?MVCFactoryInterface $factory = null)
     {
-        parent::__construct();
+        parent::__construct($config, $factory);
         $this->jt_registry = Factory::getApplication()->bootComponent('com_joaktree')->getMVCFactory()->createTable('Registryitems');
     }
 

@@ -2,6 +2,20 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
+		<version>2.1.5</version>
+        <note>
+            <item>Update : 2024-12-21</item>
+        </note>
+        <change>
+            <item>Isotope view : change buttons order</item>
+        </change>
+        <fix>
+            <item>Add missing MVCFactoryInterface into model constructors</item>
+        </fix>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
 		<version>2.1.4</version>
         <note>
             <item>Update : 2024-12-17</item>

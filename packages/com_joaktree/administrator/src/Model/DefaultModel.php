@@ -14,24 +14,19 @@
  *
  */
 
- namespace Joaktree\Component\Joaktree\Administrator\Model;
- 
+namespace Joaktree\Component\Joaktree\Administrator\Model;
+
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\MVC\Model\BaseDatabaseModel ; 	//replace JModelLegacy
-
 use Joaktree\Component\Joaktree\Administrator\Mapservice\MBJProvider;
 
-class DefaultModel extends BaseDatabaseModel {
+class DefaultModel extends BaseDatabaseModel
+{
+    public $_persons;
 
-	var $_persons;
-
-	function __construct() {
-		parent::__construct();
-	}
-	
-	public static function getProviders() {
-		return MBJProvider::getConnectors();
-	}
+    public static function getProviders()
+    {
+        return MBJProvider::getConnectors();
+    }
 }
-?>

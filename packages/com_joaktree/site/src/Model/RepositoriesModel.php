@@ -20,15 +20,16 @@ namespace Joaktree\Component\Joaktree\Site\Model;
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joaktree\Component\Joaktree\Site\Helper\JoaktreeHelper;
 
 class RepositoriesModel extends ListModel
 {
-    public function __construct()
+    public function __construct($config = [], ?MVCFactoryInterface $factory = null)
     {
         $this->context			= 'com_joaktree.repo.list.';
-        parent::__construct();
+        parent::__construct($config, $factory);
     }
 
     public function getApplicationId()

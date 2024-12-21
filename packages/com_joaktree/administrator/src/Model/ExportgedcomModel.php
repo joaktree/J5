@@ -21,6 +21,7 @@ defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel ;
 use Joaktree\Component\Joaktree\Administrator\Helper\Gedcomexport2;
 use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeHelper;
@@ -51,9 +52,9 @@ class ExportgedcomModel extends BaseDatabaseModel
     public $_total         = null;
     public $jt_registry;
 
-    public function __construct()
+    public function __construct($config = [], ?MVCFactoryInterface $factory = null)
     {
-        parent::__construct();
+        parent::__construct($config, $factory);
 
         // 		$this->jt_registry	= Table::getInstance('RegistryitemsTable','Joaktree\\Component\\Joaktree\\Administrator\\Table\\');
         $this->jt_registry    = Factory::getApplication()->bootComponent('com_joaktree')->getMVCFactory()->createTable('Registryitems');
