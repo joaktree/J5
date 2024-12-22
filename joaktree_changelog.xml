@@ -8,6 +8,7 @@
         </note>
         <fix>
             <item>fix issue 4 : frontend : add events</item>
+            <item>frontend : event update : show event listbox</item>
         </fix>
     </changelog>
 	<changelog>
