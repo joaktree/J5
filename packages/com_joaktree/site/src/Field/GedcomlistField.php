@@ -24,7 +24,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\Database\DatabaseInterface;
 use Joaktree\Component\Joaktree\Site\Helper\JoaktreeHelper;
 
-class GedcomListField extends ListField
+class GedcomlistField extends ListField
 {
     /**
      * The form field type.

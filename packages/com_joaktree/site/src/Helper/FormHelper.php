@@ -625,6 +625,7 @@ class FormHelper extends \StdClass
 
     public static function getNameEventRowScript($type, &$form, $appId)
     {
+        $base	= 'media/com_joaktree/';
         $tmp   = self::getNameEventRow(false, $type, $form, null, null, $appId, null);
         $rows = explode("\n", $tmp);
 

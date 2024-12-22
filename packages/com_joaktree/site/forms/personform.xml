@@ -242,7 +242,7 @@
 			
 					<field 	name="code" 
 							multiple="true"
-							type="gedcomList"
+							type="gedcomlist"
 							gedcom="person"
 							class="inputbox"
 							size="1"
@@ -253,7 +253,7 @@
 				
 					<field 	name="relcode" 
 							multiple="true"
-							type="gedcomList"
+							type="gedcomlist"
 							gedcom="relation"
 							class="inputbox"
 							size="1"
