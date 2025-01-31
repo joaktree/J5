@@ -4,7 +4,7 @@
 		<type>package</type>
 		<version>2.1.7</version>
         <note>
-            <item>Update : 2024-12-22</item>
+            <item>Update : 2025-01-31</item>
         </note>
         <fix>
             <item>fix issue 5 : The language file doesn't get picked up on install</item>
