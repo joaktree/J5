@@ -4,7 +4,7 @@
  * file		script.php
  *
  * @version	2.0.0
- * @author	Niels van Dantzig (2009-2014) - Robert Gastaud 
+ * @author	Niels van Dantzig (2009-2014) - Robert Gastaud
  * @package	Joomla
  * @subpackage	Joaktree
  * @license	GNU/GPL
@@ -96,6 +96,8 @@ class PlgSystemJoaktreeInstallerInstallerScript
         if (! file_exists($this->dir . '/' . $this->installerName . '.xml')) {
             return true;
         }
+        $this->lang->load('joaktreeinstaller', JPATH_ADMINISTRATOR, null, true);
+
         if (! $this->passMinimumJoomlaVersion()) {
             $this->uninstallInstaller();
             return false;
@@ -131,7 +133,6 @@ class PlgSystemJoaktreeInstallerInstallerScript
     public function postflight($route, $installer)
     {
         $this->lang->load($this->extname);
-
         if (! in_array($route, ['install', 'update'])) {
             return true;
         }
@@ -149,6 +150,7 @@ class PlgSystemJoaktreeInstallerInstallerScript
             return false;
         }
         $this->postInstall();
+        $this->lang->load('joaktreeinstaller', JPATH_ADMINISTRATOR, null, true);
         Factory::getApplication()->enqueueMessage(Text::_('PLG_JOAKTREE_INSTALL_END'), 'notice');
 
         // Uninstall this installer
@@ -161,22 +163,22 @@ class PlgSystemJoaktreeInstallerInstallerScript
         $db = Factory::getContainer()->get(DatabaseInterface::class);
 
         // MYSQL 8 : ALTER IGNORE deprecated
-		$sql = "SHOW COLUMNS FROM #__joaktree_trees";
-		$db->setQuery($sql);
-		$cols = @$db->loadObjectList("Field");
+        $sql = "SHOW COLUMNS FROM #__joaktree_trees";
+        $db->setQuery($sql);
+        $cols = @$db->loadObjectList("Field");
 
-		if (!array_key_exists("catid", $cols)) {
+        if (!array_key_exists("catid", $cols)) {
             $sql = "ALTER TABLE #__joaktree_trees ADD catid int(11) NULL AFTER  root_person_id ";
-			$db->setQuery($sql);
-			$db->execute();
+            $db->setQuery($sql);
+            $db->execute();
         }
-		$obsoleteFiles = [
+        $obsoleteFiles = [
         // from 1.5
-			JPATH_ADMINISTRATOR."/components/com_joaktree/conrollers",
-			JPATH_ADMINISTRATOR."/components/com_joaktree/help",
-			JPATH_ADMINISTRATOR."/components/com_joaktree/helpers",
-			JPATH_ADMINISTRATOR."/components/com_joaktree/models",
-            JPATH_ADMINISTRATOR."/components/com_joaktree/services/_notes",            
+            JPATH_ADMINISTRATOR."/components/com_joaktree/conrollers",
+            JPATH_ADMINISTRATOR."/components/com_joaktree/help",
+            JPATH_ADMINISTRATOR."/components/com_joaktree/helpers",
+            JPATH_ADMINISTRATOR."/components/com_joaktree/models",
+            JPATH_ADMINISTRATOR."/components/com_joaktree/services/_notes",
             JPATH_ADMINISTRATOR."/components/com_joaktree/services/fields",
             JPATH_ADMINISTRATOR."/components/com_joaktree/services/geocode",
             JPATH_ADMINISTRATOR."/components/com_joaktree/services/images",
@@ -191,49 +193,49 @@ class PlgSystemJoaktreeInstallerInstallerScript
             JPATH_ADMINISTRATOR."/components/com_joaktree/tables",
             JPATH_ADMINISTRATOR."/components/com_joaktree/services/views",
             JPATH_ADMINISTRATOR."/components/com_joaktree/controller.php",
-            JPATH_ADMINISTRATOR."/components/com_joaktree/joaktree.php", 
-            JPATH_SITE."/components/com_joaktree/controllers", 
-            JPATH_SITE."/components/com_joaktree/helper", 
-            JPATH_SITE."/components/com_joaktree/models", 
-            JPATH_SITE."/components/com_joaktree/views", 
-            JPATH_SITE."/components/com_joaktree/themes/_notes", 
-            JPATH_SITE."/components/com_joaktree/themes/Blue/_notes", 
-            JPATH_SITE."/components/com_joaktree/themes/Green/_notes", 
-            JPATH_SITE."/components/com_joaktree/themes/Jaune/_notes", 
-            JPATH_SITE."/components/com_joaktree/themes/Joaktree/_notes", 
-            JPATH_SITE."/components/com_joaktree/themes/Red/_notes", 
-            JPATH_SITE."/modules/mod_joaktree_lastpersonsviewed/mod_joaktree_lastpersonsviewed.php", 
+            JPATH_ADMINISTRATOR."/components/com_joaktree/joaktree.php",
+            JPATH_SITE."/components/com_joaktree/controllers",
+            JPATH_SITE."/components/com_joaktree/helper",
+            JPATH_SITE."/components/com_joaktree/models",
+            JPATH_SITE."/components/com_joaktree/views",
+            JPATH_SITE."/components/com_joaktree/themes/_notes",
+            JPATH_SITE."/components/com_joaktree/themes/Blue/_notes",
+            JPATH_SITE."/components/com_joaktree/themes/Green/_notes",
+            JPATH_SITE."/components/com_joaktree/themes/Jaune/_notes",
+            JPATH_SITE."/components/com_joaktree/themes/Joaktree/_notes",
+            JPATH_SITE."/components/com_joaktree/themes/Red/_notes",
+            JPATH_SITE."/modules/mod_joaktree_lastpersonsviewed/mod_joaktree_lastpersonsviewed.php",
             JPATH_SITE."/modules/mod_joaktree_lastpersonsviewed/helper.php",
-            JPATH_SITE."/modules/mod_joaktree_related_items/mod_joaktree_related_items.php", 
+            JPATH_SITE."/modules/mod_joaktree_related_items/mod_joaktree_related_items.php",
             JPATH_SITE."/modules/mod_joaktree_related_items/helper.php",
-            JPATH_SITE."/modules/mod_joaktree_show_update/mod_joaktree_show_update.php", 
+            JPATH_SITE."/modules/mod_joaktree_show_update/mod_joaktree_show_update.php",
             JPATH_SITE."/modules/mod_joaktree_show_update/helper.php",
-            JPATH_SITE."/modules/mod_joaktree_todaymanyyearsago/mod_joaktree_todaymanyyearsago.php", 
+            JPATH_SITE."/modules/mod_joaktree_todaymanyyearsago/mod_joaktree_todaymanyyearsago.php",
             JPATH_SITE."/modules/mod_joaktree_todaymanyyearsago/helper.php",
             JPATH_SITE."/plugins/editors-xtd/joaktree_link",
             JPATH_SITE."/plugins/editors-xtd/joaktree_map",
             JPATH_SITE."/plugins/search/joaktree",
         // from 2.0.0
-			JPATH_ADMINISTRATOR."/components/com_joaktree/src/Mapservice/Staticmap/Mapquest.php",
+            JPATH_ADMINISTRATOR."/components/com_joaktree/src/Mapservice/Staticmap/Mapquest.php",
             JPATH_ADMINISTRATOR."/components/com_joaktree/src/Mapservice/Interactivemap/Mapquest.php",
             JPATH_ADMINISTRATOR."/components/com_joaktree/src/Mapservice/Geocode/Yahoo.php",
             JPATH_ADMINISTRATOR."/components/com_joaktree/src/Mapservice/Provider/Yahoo.php",
             JPATH_ADMINISTRATOR."/components/com_joaktree/src/Mapservice/Provider/Mapquest.php",
             JPATH_ADMINISTRATOR."/components/com_joaktree/src/Mapservice/Geocode/Geocode.php",
-			JPATH_ADMINISTRATOR."/components/com_joaktree/assets", // assets to media
+            JPATH_ADMINISTRATOR."/components/com_joaktree/assets", // assets to media
             JPATH_SITE."/components/com_joaktree/assets", // assets to media
             JPATH_SITE."/components/com_joaktree/tmpl/start", // duplicate with joaktreestart
             JPATH_SITE."/components/com_joaktree/src/View/Start", // duplicate with joaktreestart
-         // 2.0.2 : rename editors-xtd/joaktree to editors-xtd/joaktreeperson   
+         // 2.0.2 : rename editors-xtd/joaktree to editors-xtd/joaktreeperson
             JPATH_SITE."/plugins/editors-xtd/joaktree",
             JPATH_SITE."/media/com_joaktree/js/admin-article-joaktree.js",
-			JPATH_ADMINISTRATOR."/language/fr-FR/plg_editors-xtd_joaktree.sys.ini",
-			JPATH_ADMINISTRATOR."/language/fr-FR/plg_editors-xtd_joaktree.ini",
-			JPATH_ADMINISTRATOR."/language/en-GB/plg_editors-xtd_joaktree.sys.ini",
-			JPATH_ADMINISTRATOR."/language/en-GB/plg_editors-xtd_joaktree.ini",
-			JPATH_ADMINISTRATOR."/components/com_joaktree/src/Table/JMFPKTable.php",
-		];
-		$this->delete($obsoleteFiles);
+            JPATH_ADMINISTRATOR."/language/fr-FR/plg_editors-xtd_joaktree.sys.ini",
+            JPATH_ADMINISTRATOR."/language/fr-FR/plg_editors-xtd_joaktree.ini",
+            JPATH_ADMINISTRATOR."/language/en-GB/plg_editors-xtd_joaktree.sys.ini",
+            JPATH_ADMINISTRATOR."/language/en-GB/plg_editors-xtd_joaktree.ini",
+            JPATH_ADMINISTRATOR."/components/com_joaktree/src/Table/JMFPKTable.php",
+        ];
+        $this->delete($obsoleteFiles);
         // remove 1.5 obsolete plugins
         $query = $db->getQuery(true)
             ->delete('#__extensions')
@@ -269,7 +271,7 @@ class PlgSystemJoaktreeInstallerInstallerScript
         $conditions = array(
             $db->qn('type') . ' = ' . $db->q('plugin'),
             $db->qn('element') . ' LIKE ' . $db->quote('joaktree%'),
-            $db->qn('folder') . ' IN (' . $db->quote('content').','.$db->quote('editors-xtd').')' 
+            $db->qn('folder') . ' IN (' . $db->quote('content').','.$db->quote('editors-xtd').')'
         );
         $fields = array($db->qn('enabled') . ' = 1');
 
@@ -291,7 +293,7 @@ class PlgSystemJoaktreeInstallerInstallerScript
         if (version_compare($version, $this->min_joomla_version, '<')) {
             Factory::getApplication()->enqueueMessage(
                 Text::sprintf(
-                    'NOT_COMPATIBLE_UPDATE',
+                    'Incompatible Joomla version %s. Minimum should be %s.',
                     '<strong>' . JVERSION . '</strong>',
                     '<strong>' . $this->min_joomla_version . '</strong>'
                 ),
@@ -311,7 +313,7 @@ class PlgSystemJoaktreeInstallerInstallerScript
         if (version_compare(PHP_VERSION, $this->min_php_version, '<')) {
             Factory::getApplication()->enqueueMessage(
                 Text::sprintf(
-                    'NOT_COMPATIBLE_PHP',
+                    'Incompatible PHP version %s. Minimum should be %s.',
                     '<strong>' . PHP_VERSION . '</strong>',
                     '<strong>' . $this->min_php_version . '</strong>'
                 ),
@@ -347,8 +349,11 @@ class PlgSystemJoaktreeInstallerInstallerScript
             return;
         }
         $this->delete([
-            JPATH_PLUGINS . '/system/' . $this->installerName . '/language',
             JPATH_PLUGINS . '/system/' . $this->installerName,
+            JPATH_ADMINISTRATOR."/language/en-GB/joaktreeinstaller.sys.ini",
+            JPATH_ADMINISTRATOR."/language/en-GB/joaktreeinstaller.ini",
+            JPATH_ADMINISTRATOR."/language/fr-FR/joaktreeinstaller.sys.ini",
+            JPATH_ADMINISTRATOR."/language/fr-FR/joaktreeinstaller.ini"
         ]);
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true)
