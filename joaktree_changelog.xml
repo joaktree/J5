@@ -2,6 +2,17 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
+		<version>2.1.8</version>
+        <note>
+            <item>Update : 2025-02-14</item>
+        </note>
+        <fix>
+            <item>fix issue 6 : Not able to add persons</item>
+        </fix>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
 		<version>2.1.7</version>
         <note>
             <item>Update : 2025-01-31</item>

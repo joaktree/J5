@@ -437,10 +437,10 @@ class JoaktreeHelper
 
     public static function generateJTId()
     {
-        $config = array();
-        // $table	= Table::getInstance('RegistryItemsTable', 'Joaktree\\Component\\Joaktree\\Administrator\\Table\\', $config);
-        $table	= Factory::getApplication()->bootComponent('com_joaktree')->getMVCFactory()->createTable('RegistryItems');
-
+        $table	= Factory::getApplication()->bootComponent('com_joaktree')->getMVCFactory()->createTable('Registryitems');
+        if (!$table) { // can't access RegistryItems table
+            return false;
+        }
         // retrieve the value of the counter
         $table->loadUK('ID_COUNTER');
         // set the counter for the new record
