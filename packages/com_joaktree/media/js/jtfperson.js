@@ -94,9 +94,9 @@ function jtSelectPerson(appId, personId) {
 }
 
 function jtSavePerson() {
-    if (document.getElementById("save1").style.display != 'none') { // still opened : close it
+    if (document.getElementById("save1").style.display == 'block') { // still opened : close it
         document.getElementById("save1").close(); // SqueezeBox.close();
-        jtsubmitbutton("save");
     }
+    jtsubmitbutton("save");
 }
     

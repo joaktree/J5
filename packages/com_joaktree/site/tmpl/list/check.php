@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Joomla! component Joaktree
  *
@@ -20,21 +20,21 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\HTML\HTMLHelper;
 
 ?>
-<form action="<?php echo Route::_( 'index.php?option=com_joaktree&view=list&treeId='.$this->lists['tree_id'] ); ?>" method="post" id="adminForm" name="adminForm">
-<?php echo HTMLHelper::_( 'form.token' ); ?>
+<form action="<?php echo Route::_('index.php?option=com_joaktree&view=list&treeId='.$this->lists['tree_id']); ?>" method="post" id="adminForm" name="adminForm">
+<?php echo HTMLHelper::_('form.token'); ?>
 
 <?php if ($this->lists['userAccess']) { ?> 
 <!-- user has access to information -->
-	<?php $colspanValue = ($this->lists['patronym']!= 0)?7:6; ?>
+	<?php $colspanValue = ($this->lists['patronym'] != 0) ? 7 : 6; ?>
 	<div id="jt-content">
 	<fieldset class="joaktreeform">
 		<legend>
 			<?php echo Text::_('JT_CHECKEDNAME').':&nbsp;'; ?>
-				<?php 
-					echo $this->lists['search1'].'&nbsp;'
-						.(($this->lists['patronym'] != 0) ? $this->lists['search2'].'&nbsp;' : null)
-						.$this->lists['search3']; 
-				?>
+				<?php
+                    echo $this->lists['search1'].'&nbsp;'
+                        .(($this->lists['patronym'] != 0) ? $this->lists['search2'].'&nbsp;' : null)
+                        .$this->lists['search3'];
+    ?>
 		</legend>
 		
 		<?php if (count($this->personlist) > 0) { ?>
@@ -62,40 +62,40 @@ use Joomla\CMS\HTML\HTMLHelper;
 				<thead>				
 					<tr>
 						<th class="jt-content-th" width="5" rowspan="2" align="center">
-							<?php echo Text::_( 'JT_NUM' ); ?>
+							<?php echo Text::_('JT_NUM'); ?>
 						</th>
 						<th class="jt-content-th">
 							<div class="jt-h3-list">
-								<?php echo Text::_( 'JT_FIRSTNAME' ); ?>
+								<?php echo Text::_('JT_FIRSTNAME'); ?>
 							</div>
 						</th>				
 						<?php if ($this->lists['patronym'] != 0) { ?>
 							<th class="jt-content-th">
 								<div class="jt-h3-list">
-									<?php echo Text::_( 'JT_PATRONYM' ); ?>
+									<?php echo Text::_('JT_PATRONYM'); ?>
 								</div>
 							</th>
 						<?php } ?>
 						<th class="jt-content-th">
 							<div class="jt-h3-list">
-								<?php echo Text::_( 'JT_FAMILYNAME' ); ?>
+								<?php echo Text::_('JT_FAMILYNAME'); ?>
 							</div>
 						</th>				
 						<th class="jt-content-th" align="center">
 							<div class="jt-h3-list">
-								<?php echo Text::_( 'JT_PERIOD' ); ?>
+								<?php echo Text::_('JT_PERIOD'); ?>
 							</div>
 						</th>
 						<?php if ($this->lists['action'] == 'saveparent1') { ?>
 							<th class="jt-content-th" align="center">
 								<div class="jt-h3-list">
-									<?php echo Text::_( 'JT_PARTNER' ); ?>
+									<?php echo Text::_('JT_PARTNER'); ?>
 								</div>
 							</th>
 						<?php } ?>
 						<th class="jt-content-th" align="center">
 							<div class="jt-h3-list">
-								<?php echo Text::_( 'JT_ACTIONS' ); ?>
+								<?php echo Text::_('JT_ACTIONS'); ?>
 							</div>
 						</th>
 					</tr>
@@ -111,16 +111,16 @@ use Joomla\CMS\HTML\HTMLHelper;
 				<!-- table body -->
 				<tbody>
 				<?php
-				$k = 2;
-				for ($i=0, $n=count( $this->personlist ); $i < $n; $i++)	{
-					$row 				= $this->personlist[$i];					
-					$numberOfPartners 	= ($this->lists['action'] == 'saveparent1') ? count($row->partners) : 0;
-					$numberOfRows     	= ($numberOfPartners) ? $numberOfPartners : 1;
-					$rowclass 			= 'jt-table-entry' . $k;
-				?>
+    $k = 2;
+		    for ($i = 0, $n = count($this->personlist); $i < $n; $i++) {
+		        $row 				= $this->personlist[$i];
+		        $numberOfPartners 	= ($this->lists['action'] == 'saveparent1') ? count($row->partners) : 0;
+		        $numberOfRows     	= ($numberOfPartners) ? $numberOfPartners : 1;
+		        $rowclass 			= 'jt-table-entry' . $k;
+		        ?>
 					<tr class="<?php echo $rowclass; ?>" >
 						<td align="center" rowspan="<?php echo $numberOfRows; ?>">
-							<?php echo $this->pagination->getRowOffset( $i ); ?>
+							<?php echo $this->pagination->getRowOffset($i); ?>
 						</td>
 						<td rowspan="<?php echo $numberOfRows; ?>"><?php echo $row->firstName; ?></td>
 						<?php if ($this->lists['patronym'] != 0) { ?>
@@ -135,12 +135,12 @@ use Joomla\CMS\HTML\HTMLHelper;
 						<?php } ?>
 						
 						<?php
-						if ($this->lists['action'] == 'saveparent1') { 
-							$function =  'window.parent.jtSelectPerson(\''.$row->app_id.'\', \''.$row->id.'\', \''.$row->partners[0]['relation_id'].'\', \''.$row->partners[0]['family_id'].'\')';
-						} else {
-							$function =  'window.parent.jtSelectPerson(\''.$row->app_id.'\', \''.$row->id.'\')';
-						} 
-						?>
+		                if ($this->lists['action'] == 'saveparent1') {
+		                    $function =  'window.parent.jtSelectPerson(\''.$row->app_id.'\', \''.$row->id.'\', \''.$row->partners[0]['relation_id'].'\', \''.$row->partners[0]['family_id'].'\')';
+		                } else {
+		                    $function =  'window.parent.jtSelectPerson(\''.$row->app_id.'\', \''.$row->id.'\')';
+		                }
+		        ?>
 						<td><span class="jt-edit">
 								<a 	href="#"
 									onclick="if (window.parent) <?php echo $function; ?>;"
@@ -151,18 +151,18 @@ use Joomla\CMS\HTML\HTMLHelper;
 							</span>	
 						</td>
 					</tr>
-					<?php 
-					for ($j=1, $m=$numberOfRows; $j<$m; $j++) {
-					?>
+					<?php
+		            for ($j = 1, $m = $numberOfRows; $j < $m; $j++) {
+		                ?>
 						<tr class="<?php echo $rowclass; ?>" >
 							<td><?php echo (isset($row->partners[$j]['fullName'])) ? $row->partners[$j]['fullName'] : null ;?></td>
-							<?php 	
-							if ($this->lists['action'] == 'saveparent1') { 
-								$function =  'window.parent.jtSelectPerson(\''.$row->app_id.'\', \''.$row->id.'\', \''.$row->partners[$j]['relation_id'].'\', \''.$row->partners[$j]['family_id'].'\')';
-							} else {
-								$function =  'window.parent.jtSelectPerson(\''.$row->app_id.'\', \''.$row->id.'\')';
-							} 
-							?>
+							<?php
+		                        if ($this->lists['action'] == 'saveparent1') {
+		                            $function =  'window.parent.jtSelectPerson(\''.$row->app_id.'\', \''.$row->id.'\', \''.$row->partners[$j]['relation_id'].'\', \''.$row->partners[$j]['family_id'].'\')';
+		                        } else {
+		                            $function =  'window.parent.jtSelectPerson(\''.$row->app_id.'\', \''.$row->id.'\')';
+		                        }
+		                ?>
 							<td><span class="jt-edit">
 									<a 	href="#"
 										onclick="if (window.parent) <?php echo $function; ?>;"
@@ -173,18 +173,30 @@ use Joomla\CMS\HTML\HTMLHelper;
 								</span>	
 							</td>
 						</tr>
-					<?php 
-					}
-					$k = 3 - $k;
-				}
-				?>
+					<?php
+		            }
+		        $k = 3 - $k;
+		    }
+		    ?>
 				</tbody>
 			</table>
 		<?php } else { ?>
 		<!--  there are records in the list -->
 			<div class="jt-content-th" >
-				<div class="jt-noaccess"><?php echo Text::_( 'JT_NOMATCHES' ); ?></div>
+				<div class="jt-noaccess"><?php echo Text::_('JT_NOMATCHES'); ?></div>
+				<?php $function = (($this->lists['action'] == 'save') || ($this->lists['action'] == 'saveparent1')) ? 'jtSavePerson()' : 'jtNewPerson()' ; ?>
 			</div>
+			<div class="jt-buttonbar" style="margin-left: 10px;">
+				<a 	href="#"
+					id="new"
+					class="jt-button-closed jt-buttonlabel"
+					title="<?php echo Text::_('JNEW'); ?>" 
+					onclick="if (window.parent) {window.parent.<?php echo $function; ?>; }"
+				>
+					<?php echo Text::_('JNEW'); ?>
+				</a>&nbsp;
+			</div>
+
 		<?php } ?>
 	</fieldset>
 	</div> <!-- jt-content -->
@@ -192,7 +204,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 <?php } else { ?>
 <!-- user has NO access to information -->
 	<div class="jt-content-th" >
-		<div class="jt-noaccess"><?php echo Text::_( 'JT_NOACCESS' ); ?></div>
+		<div class="jt-noaccess"><?php echo Text::_('JT_NOACCESS'); ?></div>
 	</div>
 <?php } ?>
 
