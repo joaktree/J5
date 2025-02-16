@@ -13,16 +13,40 @@
  *
  */
  var jtfpoptions;
+ var link = "",link1 = "",link2 = "";
+
 window.addEventListener('DOMContentLoaded',function(){
     
   	jtfpoptions = Joomla.getOptions('jtfperson');
 	if (typeof jtfpoptions === 'undefined' ) {return false}
     setCheckValue(jtfpoptions);
+    
+    check = document.getElementById("check1");
+    if (check)
+        check.addEventListener('click', function() {
+            if (link) {
+                document.getElementById('iframeModalWindowcheck1').src = link1 + link;
+            }
+        });
+    save1 = document.getElementById("btn-save-1");
+    if (save1)
+        save1.addEventListener('click', function() {
+            if (link) {
+                document.getElementById('iframeModalWindowsave1').src = link2 + link;
+            }
+        }) 
+    save2 = document.getElementById("btn-save-2");
+    if (save2)
+        save2.addEventListener('click', function() {
+            if (link) {
+                document.getElementById('iframeModalWindowsave2').src = link2 + link;
+            }
+        }) 
 })
 function setCheckValue() {
-    var link1 = jtfpoptions.link1;
-    var link2 = jtfpoptions.link2;
-    var link  = "";
+    link1 = jtfpoptions.link1;
+    link2 = jtfpoptions.link2;
+
     var search1 = document.getElementById("jform_person_firstName").value;
     if (jtfpoptions.patronym) {
         var search2 = document.getElementById("jform_person_patronym").value;
@@ -55,14 +79,9 @@ function setCheckValue() {
             }
         }
     }
-    if (link) {
-        document.getElementById('iframeModalWindowcheck1').src = link1 + link;
-        document.getElementById('iframeModalWindowsave1').src = link2 + link;
-        document.getElementById('iframeModalWindowsave2').src = link2 + link;
-    }
-    //document.getElementById("check1").href = link1 + link;
-    //document.getElementById("save1").href =  link2 + link;
-    //document.getElementById("save2").href = link2 + link;
+    document.getElementById("check1").href = link1 + link;
+    document.getElementById("save1").href =  link2 + link;
+    document.getElementById("save2").href = link2 + link;
 }
 
 function jtNewPerson() {
@@ -95,8 +114,13 @@ function jtSelectPerson(appId, personId) {
 
 function jtSavePerson() {
     if (document.getElementById("save1").style.display == 'block') { // still opened : close it
-        document.getElementById("save1").close(); // SqueezeBox.close();
+        document.getElementById("save1").close(); 
+    }
+    if (document.getElementById("save2").style.display == 'block') { // still opened : close it
+        document.getElementById("save2").close(); 
     }
     jtsubmitbutton("save");
 }
+
+
     

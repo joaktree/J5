@@ -108,10 +108,9 @@ class HtmlView extends BaseHtmlView
         $this->personlist = $personlist;
         $this->lists = $lists;
 
-        //if ((($lists['action'] == 'save') || ($lists['action'] == 'saveparent1')) && (count($personlist) == 0)) {
-            //            Factory::getApplication()->getDocument()->addScriptDeclaration('window.parent.jtSavePerson();');
-            //        } else {
-
+        if ((($lists['action'] == 'save') || ($lists['action'] == 'saveparent1')) && (count($personlist) == 0)) {
+            Factory::getApplication()->getDocument()->addScriptDeclaration('window.parent.jtSavePerson();');
+        } else {
             if ($lists['userAccess']) {
                 // set title, meta title
                 if ($params->get('treeName')) {
@@ -138,6 +137,6 @@ class HtmlView extends BaseHtmlView
             }
 
             parent::display($tpl);
-       // }
+       }
     }
 }

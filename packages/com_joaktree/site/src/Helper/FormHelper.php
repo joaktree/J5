@@ -734,7 +734,7 @@ class FormHelper extends \StdClass
             $html[] = '		id="save'.$counter.'"';
             $html[] = '		class="jt-button-closed jt-buttonlabel"';
             $html[] = '		title="'.Text::_('JSAVE').'" ';
-            $html[] = '		onclick="jtsubmitbutton(\'save\');"';
+            // $html[] = '		onclick="jtsubmitbutton(\'save\');"';
             $html[] = '	>';
             $html[] =       Text::_('JSAVE');
             $html[] = '	</a>';
@@ -750,7 +750,7 @@ class FormHelper extends \StdClass
                      .'&amp;action='.(($indParent1) ? 'saveparent1' : 'save');
 
             HTMLHelper::_('bootstrap.modal', '.modal');
-            $html[] = '<a class="jt-button-closed jt-buttonlabel" data-bs-toggle="modal" data-bs-target="#save'.$counter.'">'.Text::_('JSAVE').'</a>';
+            $html[] = '<a class="jt-button-closed jt-buttonlabel" data-bs-toggle="modal" id="btn-save-'.$counter.'" data-bs-target="#save'.$counter.'">'.Text::_('JSAVE').'</a>';
             $html[] = ' <div class="modal fade modal-xl"  id="save'.$counter.'" tabindex="-1" aria-labelledby="newstatus" aria-hidden="true">
             <div class="modal-dialog h-75">
                 <div class="modal-content h-100">

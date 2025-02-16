@@ -78,6 +78,7 @@
 					class="inputbox"
 					size="50"
 					maxlength="50"
+					onchange="setCheckValue();"
 					label="JT_LABEL_FIRSTNAME" 	
 					description ="JT_DESC_FIRSTNAME" 
 			/>
