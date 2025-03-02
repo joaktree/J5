@@ -2,6 +2,17 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
+		<version>2.1.12</version>
+        <note>
+            <item>Update : 2025-03-02</item>
+        </note>
+        <fix>
+            <item>Wrong version number in modules/component</item>
+        </fix>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
 		<version>2.1.11</version>
         <note>
             <item>Update : 2025-03-02</item>
