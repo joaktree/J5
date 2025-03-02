@@ -734,7 +734,7 @@ class FormHelper extends \StdClass
             $html[] = '		id="save'.$counter.'"';
             $html[] = '		class="jt-button-closed jt-buttonlabel"';
             $html[] = '		title="'.Text::_('JSAVE').'" ';
-            // $html[] = '		onclick="jtsubmitbutton(\'save\');"';
+            $html[] = '		onclick="jtsubmitbutton(\'save\');"';
             $html[] = '	>';
             $html[] =       Text::_('JSAVE');
             $html[] = '	</a>';

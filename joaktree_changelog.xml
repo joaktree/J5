@@ -2,6 +2,17 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
+		<version>2.1.11</version>
+        <note>
+            <item>Update : 2025-03-02</item>
+        </note>
+        <fix>
+            <item>Issue 9 : front end : save button no longer when editing records</item>
+        </fix>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
 		<version>2.1.10</version>
         <note>
             <item>Update : 2025-02-22</item>

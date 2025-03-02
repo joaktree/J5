@@ -411,8 +411,9 @@ class PersonformModel extends FormModel
                     $query->update(' #__joaktree_relations ');
                     $query->set(' type        = :sextype');
                     $query->where(' app_id      = :appid');
-                    $query->where(' person_id_2 = :personid'.$this->_db->quote($tabPerson->id).' ');
+                    $query->where(' person_id_2 = :personid');
                     $query->where(' type        IN ('.$this->_db->quote('father').', '.$this->_db->quote('mother').') ');
+                    $query->bind(':sextype', $sextype, \Joomla\Database\ParameterType::STRING);
                     $query->bind(':appid', $tabPerson->app_id, \Joomla\Database\ParameterType::INTEGER);
                     $query->bind(':personid', $tabPerson->id, \Joomla\Database\ParameterType::STRING);
                     $query->bind(':treeid', $sextype, \Joomla\Database\ParameterType::STRING);
