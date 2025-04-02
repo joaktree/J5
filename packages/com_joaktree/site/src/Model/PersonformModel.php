@@ -2,7 +2,6 @@
 /**
  * Joomla! component Joaktree
  *
- * @version	2.0.0
  * @author	Niels van Dantzig (2009-2014) - Robert Gastaud (2017-2024)
  * @package	Joomla
  * @subpackage	Joaktree
@@ -1631,7 +1630,7 @@ class PersonformModel extends FormModel
         $query->select(' jrn.person_id_1 AS id ');
         $query->from(' #__joaktree_relations  jrn ');
         $query->where(' jrn.app_id      = :appid');
-        $query->where(' jrn.family_id   = :familyid)');
+        $query->where(' jrn.family_id   = :familyid');
         $query->where(' jrn.type        IN ('.$this->_db->quote('father').', '.$this->_db->quote('mother').') ');
 
         $query->bind(':appid', $appId, \Joomla\Database\ParameterType::INTEGER);
