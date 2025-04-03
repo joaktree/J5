@@ -5,7 +5,7 @@
 		<description>Joaktree J5 package</description>
 		<element>com_joaktree</element>
 		<type>component</type>
-		<version>2.1.15</version>
+		<version>2.1.16</version>
         <client>administrator</client>
 		<changelogurl>https://raw.githubusercontent.com/joaktree/J5/master/joaktree_changelog.xml</changelogurl>
 		<downloads>
@@ -14,6 +14,6 @@
 		<maintainer>ConseilGouz</maintainer>
 		<maintainerurl>https://www.conseilgouz.com</maintainerurl>
 		<targetplatform name="joomla" version="((4\.(0|1|2|3|4))|(5\.(0|1|2|3|4|5|6|7|8|9)))"/>
-		<sha256>2118e105c10f65351f1ea6ceed5845d3ce6323f67c25b4940a0c938bafda9f1a</sha256>
+		<sha256>f36bfdf6e50016d300ff1c3b859728f970bec26e377f4289ee77630076f2dfd4</sha256>
 	</update>
 </updates>
