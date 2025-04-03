@@ -1595,7 +1595,7 @@ class PersonformModel extends FormModel
         $query->bind(':appid', $appId, \Joomla\Database\ParameterType::INTEGER);
         $query->bind(':pid1', $pid1, \Joomla\Database\ParameterType::STRING);
         $query->bind(':pid2', $pid2, \Joomla\Database\ParameterType::STRING);
-        $query->bind(':familyid', $familyId, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':familyid', $familyId, \Joomla\Database\ParameterType::STRING);
 
         $this->_db->setquery($query);
         $result = $this->_db->loadResult();
@@ -1634,7 +1634,7 @@ class PersonformModel extends FormModel
         $query->where(' jrn.type        IN ('.$this->_db->quote('father').', '.$this->_db->quote('mother').') ');
 
         $query->bind(':appid', $appId, \Joomla\Database\ParameterType::INTEGER);
-        $query->bind(':familyid', $familyId, \Joomla\Database\ParameterType::INTEGER);
+        $query->bind(':familyid', $familyId, \Joomla\Database\ParameterType::STRING);
 
         $this->_db->setquery($query);
         $result = $this->_db->loadObjectList();
