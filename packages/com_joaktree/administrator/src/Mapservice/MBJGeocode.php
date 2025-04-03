@@ -19,8 +19,8 @@ namespace Joaktree\Component\Joaktree\Administrator\Mapservice;
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Joomla\CMS\Factory;		//replace JFactory
-use Joomla\CMS\Language\Text;		// replace JText
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Component\ComponentHelper;
 use Joaktree\Component\Joaktree\Administrator\Mapservice\MBJService;
 use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeHelper;
@@ -58,10 +58,7 @@ class MBJGeocode extends MBJService
     protected static $myProvider;
     protected static $path;
     protected static $myGeoclass;
-    //protected static $resultSet = array();
     protected $resultSet = array();
-    //protected $log = array();
-
 
     /**
      * Test to see if service exists.
@@ -93,6 +90,10 @@ class MBJGeocode extends MBJService
     protected function __construct($options)
     {
         $keys = $this->getKeys();
+        $params 	=	ComponentHelper::getParams(self::$component);
+        // load component's language file
+        $lang       = Factory::getApplication()->getLanguage();
+        $lang->load('com_joaktree');
 
         // Initialise object variables.
         self::$maxLoadSize = (isset($options['size']))
@@ -132,7 +133,7 @@ class MBJGeocode extends MBJService
             // no object
             return false;
         }
-        $params 	=	ComponentHelper::getParams(self::$component);
+
 
         // set the parameters
         static $delay 		= 0;
@@ -165,7 +166,7 @@ class MBJGeocode extends MBJService
                 $url = '';
                 $i = 0;
                 while ($i < count($loc_url) - 2) {
-                    $url .= $loc_url[$i] . "%2C"; 
+                    $url .= $loc_url[$i] . "%2C";
                     $i++;
                 };
                 if (!$url) { // not enough info: restore
