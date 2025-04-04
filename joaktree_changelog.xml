@@ -2,7 +2,19 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
-		<version>2.1.17</version>
+		<version>2.1.18/version>
+        <note>
+            <item>Update : 2025-04-04</item>
+        </note>
+        <fix>
+            <item>Issue 12 : GED Export fails</item>
+            <item>Issue 10 : disable subdivision in findLocation function</item>
+        </fix>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
+		<version>2.1.18</version>
         <note>
             <item>Update : 2025-04-04</item>
         </note>

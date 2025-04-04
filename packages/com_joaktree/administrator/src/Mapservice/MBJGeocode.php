@@ -140,7 +140,7 @@ class MBJGeocode extends MBJService
         $geocode_pending = true;
         while ($geocode_pending) {
             $request_url = $this->getUrl($data);
-
+            /*
             // RRG 02/01/2017 si paramétré à 0, on supprime la subdivision pour faciliter la géolocalisation
             // indsubdiv est dans les paramètres du composant sous forme 0 ou 1
             if (self::$indSubdiv == 0 && strpos($request_url, 'google')) {
@@ -178,10 +178,9 @@ class MBJGeocode extends MBJService
                     $request_url .= $key_url[$i];
                 }
                 $request_url .= '&'.$url;
-            }; // */
+            }; */
 
             // Try to fetch a response from the service.
-            //$xml = simplexml_load_file($request_url) or die($this->service.": url not loading");
             if (!($xml = simplexml_load_file($request_url))) {
                 // it is not a file - perhaps a string
                 if (!($xml = simplexml_load_string($request_url))) {

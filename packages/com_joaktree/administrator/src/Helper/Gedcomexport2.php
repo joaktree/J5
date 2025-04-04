@@ -282,7 +282,7 @@ class Gedcomexport2
         $query->select(' jne.* ');
         $query->from(' #__joaktree_person_names  jne ');
         $query->where(' jne.app_id = :appid');
-        $query->where(' jne.person_id = '.$db->quote($personId).' ');
+        $query->where(' jne.person_id = :personid');
         $query->order(' jne.orderNumber ');
         $query->bind(':appid', $this->procObject->id, \Joomla\Database\ParameterType::INTEGER);
         $query->bind(':personid', $personId, \Joomla\Database\ParameterType::STRING);
@@ -749,6 +749,8 @@ class Gedcomexport2
             $query->where(' jrn.person_id_1 = :personid');
             $query->where(' jrn.type IN ('.$db->quote('father').', '.$db->quote('mother').') ');
             $query->order(' jrn.orderNumber_1 ');
+            $query->bind(':appid', $this->procObject->id, \Joomla\Database\ParameterType::INTEGER);
+            $query->bind(':personid', $personId, \Joomla\Database\ParameterType::STRING);
         } else {
             // adult
             $query = 'SELECT DISTINCT iv_jrn.family_id '
@@ -756,29 +758,27 @@ class Gedcomexport2
                     .'( SELECT  jrn.family_id '
                     .'  ,       jrn.orderNumber_1 AS orderNumber '
                     .'  FROM    #__joaktree_relations  jrn '
-                    .'  WHERE   jrn.app_id      = :appid'
-                    .'  AND     jrn.person_id_1 = :personid'
+                    .'  WHERE   jrn.app_id      = '.$this->procObject->id
+                    .'  AND     jrn.person_id_1 = '.$db->quote($personId)
                     .'  AND     jrn.type        = '.$db->quote('partner').' '
                     .'  UNION   '
                     .'  SELECT  jrn.family_id '
                     .'  ,       jrn.orderNumber_2 AS orderNumber '
                     .'  FROM    #__joaktree_relations  jrn '
-                    .'  WHERE   jrn.app_id      = :appid'
-                    .'  AND     jrn.person_id_2 = :personid'
+                    .'  WHERE   jrn.app_id      = '.$this->procObject->id
+                    .'  AND     jrn.person_id_2 = '.$db->quote($personId)
                     .'  AND     jrn.type        = '.$db->quote('partner').' '
                     .'  UNION   '
                     .'  SELECT  jrn.family_id '
                     .'  ,       jrn.orderNumber_2 AS orderNumber '
                     .'  FROM    #__joaktree_relations  jrn '
-                    .'  WHERE   jrn.app_id      = :appid'
-                    .'  AND     jrn.person_id_2 = :personid'
+                    .'  WHERE   jrn.app_id      = '.$this->procObject->id
+                    .'  AND     jrn.person_id_2 = '.$db->quote($personId)
                     .'  AND     jrn.type        IN ('.$db->quote('father').', '.$db->quote('mother').') '
                     .') iv_jrn '
                     .'ORDER BY  iv_jrn.orderNumber ';
 
         }
-        $query->bind(':appid', $this->procObject->id, \Joomla\Database\ParameterType::INTEGER);
-        $query->bind(':personid', $personId, \Joomla\Database\ParameterType::STRING);
 
         $db->setQuery($query);
         $fams = $db->loadAssocList();
