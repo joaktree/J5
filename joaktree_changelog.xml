@@ -2,6 +2,21 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
+		<version>2.1.19/version>
+        <note>
+            <item>Update : 2025-04-05</item>
+        </note>
+        <fix>
+            <item>Issue 12 : GED Export : error message in red if fails</item>
+            <item>GED Export : remove unuse JS libraries</item>
+        </fix>
+        <addition>
+            <item>GED Export : new buttons : download/delete export file</item>
+        </addition>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
 		<version>2.1.18/version>
         <note>
             <item>Update : 2025-04-04</item>
@@ -14,7 +29,7 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
-		<version>2.1.18</version>
+		<version>2.1.19</version>
         <note>
             <item>Update : 2025-04-04</item>
         </note>

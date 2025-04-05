@@ -881,8 +881,8 @@ class Gedcomexport2
         // check if gedcom file exists, when status is new
         if (@is_file($filename) && ($this->procObject->status == 'new')) {
             //unlink($filename);
-            $this->procObject->msg .= '<br />'.Text::sprintf('JTGEDCOM_MESSAGE_GEDCOM', $filename);
-            $this->procObject->status = 'end';
+            $this->procObject->msg .= '<br /><span style="color:red">'.Text::sprintf('JTGEDCOM_MESSAGE_GEDCOM', $filename).'</span>';
+            $this->procObject->status = 'error';
             return $this->procObject;
         }
 

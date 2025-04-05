@@ -241,6 +241,32 @@ function exportGedcom() {
 			console.log('Error occured for url: ' + url);
         });
 }
+
+function delExportFile(id) {
+	var url = 'index.php?option=com_joaktree&view=exportgedcom&format=raw&tmpl=component&task=del&id='+id;
+    fetch(url)
+		.then(response => {
+           	if (!response.ok) {
+               	throw new Error('Network response was not ok');
+           	}
+			console.log('Response: ' + response.ok);
+                return response.text();
+        	})
+        .	then(responseText => {
+           		console.log('Response: ' + responseText);
+				btn = document.getElementById("btndelexport");
+				btn.style.display = "none";
+				btn = document.getElementById("btngetexport");
+				btn.style.display = "none";
+                curmsg = document.getElementById('procmsg').innerHTML;
+                document.getElementById('procmsg').innerHTML = curmsg + '<br />' + responseText;
+	        })
+       		.catch(error => {
+           		console.log('Error occurred for url');
+      		});
+}
+
+
 function HandleResponseGedcom(type, response) {
 	var curmsg = document.getElementById('procmsg').innerHTML;
 	//console.log(response);
@@ -262,14 +288,31 @@ function HandleResponseGedcom(type, response) {
             document.getElementById('head_finished').style.display = 'block';
 			// document.getElementById('end_' + r.id).value = r.end;
 			// document.getElementById('procmsg').innerHTML = r.msg;
-            document.getElementById('iframeModalWindow').src = "index.php?option=com_joaktree&view=viewlogs&tmpl=component&appId="+r.id;
-            document.getElementById('btnviewlog').style.display = 'block';
+            if (document.getElementById('iframeModalWindow')) {
+                document.getElementById('iframeModalWindow').src = "index.php?option=com_joaktree&view=viewlogs&tmpl=component&appId="+r.id;
+            }
+            if (document.getElementById('btnviewlog')) { // import GED : view log button
+                document.getElementById('btnviewlog').style.display = 'block';
+            }
+            if (document.getElementById('btnviewlog')) { // import GED : view log button
+                document.getElementById('btnviewlog').style.display = 'block';
+            } 
+            if (document.getElementById('btngetexport')) { // export GED : copy file from server
+                document.getElementById('btngetexport').style.display = 'block';
+            } 
+            if (document.getElementById('btndelexport')) { // export GED : delete file from server
+                document.getElementById('btndelexport').style.display = 'block';
+            } 
 			return true;
 		}
 
 		if (r.status == 'error') {
 			document.getElementById('head_process').style.display  = 'none';
 			document.getElementById('head_error').style.display    = 'block';
+            if (r.msg.indexOf('jt_export_present')) { // export error : file exists
+                btn = document.getElementById("btndelexport");
+				btn.style.display = "block";
+            }
 		}
 
 		if (r.status != 'stop') {

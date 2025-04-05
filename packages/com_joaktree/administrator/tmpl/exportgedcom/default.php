@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Joomla! component Joaktree
  *
@@ -13,17 +13,14 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
-defined('_JEXEC') or die('Restricted access'); 
-
+defined('_JEXEC') or die('Restricted access');
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeHelper;
 
 HTMLHelper::_('bootstrap.framework');
-HTMLHelper::_('bootstrap.tooltip');
-echo HTMLHelper::_( 'form.token' ); 
-
-$wa = Joomla\CMS\Factory::getApplication()->getDocument()->getWebAssetManager();
-$wa->useScript('jquery');
+echo HTMLHelper::_('form.token');
 ?>
 
 
@@ -98,7 +95,14 @@ $wa->useScript('jquery');
 	</fieldset>
 </div>
 
-<?php foreach($this->items as $item) { ?>
+<?php foreach ($this->items as $item) {
+
+    $params		= JoaktreeHelper::getJTParams($item->id);
+    $path  		= '../'.$params->get('gedcomfile_path');
+    $file 		= 'export_'.$params->get('gedcomfile_name');
+    $fullname	= $path.'/'.$file;
+
+    ?>
 
 <div class="form-horizontal" style="width: 40%;">
 	<fieldset>
@@ -251,16 +255,30 @@ $wa->useScript('jquery');
 
 			</div>
 		</div>
-		
 		<div class="clr"> </div>
 	</fieldset>	
+</div>
+<div >
+	<a href="<?php echo $fullname;?>" class="btn btn-primary" id="btngetexport" download="<?php echo $file;?>" style="display:none;width:40%;float:left">
+		<?php echo Text::_('JTFIELD_DWNLOADEXPORT_BUTTON'); ?>
+	</a>
+	<a href="#" class="btn btn-primary" id="btndelexport" style="display:none;float:right;width:40%">
+        <?php echo Text::_('JTFIELD_DELEXPORT_BUTTON'); ?>
+	</a>
 </div>
 <script>
 try{
 	//window.addEventListener('domready', function() {
 	window.addEventListener('DOMContentLoaded', function() {
+
+		btn = document.getElementById("btndelexport");
+		btn.addEventListener('click', function() {
+			delExportFile(<?php echo $item->id; ?>)
+		});
+
 		//console.log('export gedcom');
 		exportGedcom();
+
 	});
 } catch (err) {
   	console.log('erreur');
