@@ -21,6 +21,26 @@ use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeHelper;
 
 HTMLHelper::_('bootstrap.framework');
 echo HTMLHelper::_('form.token');
+
+if (count($this->items) > 1){
+?>    
+		<div id="head_error" style="display: block;">
+			<div style="float: left">
+                <h1><?php echo Text::_('JTPROCGEDCOM_ONE_ONLY'); ?></h1>
+			</div>
+			<div style="float: right">
+				<div class="jt-icon">
+					<a href="index.php?option=com_joaktree&view=applications">
+						<img src="../media/com_joaktree/images/icon-48-app.png" />
+						<br />
+						<span><?php echo Text::_('JT_SUBMENU_APPLICATIONS'); ?></span>
+					</a>
+				</div>
+			</div>
+		</div>
+ <?php  
+    return false;
+}
 ?>
 
 

@@ -10,6 +10,9 @@
             <item>Issue 12 : GED Export : error message in red if fails</item>
             <item>GED Export : remove unuse JS libraries</item>
         </fix>
+        <change>
+            <item>GED Export : export one ged at a time</item>
+        </change>
         <addition>
             <item>GED Export : new buttons : download/delete export file</item>
         </addition>
