@@ -13,6 +13,7 @@
         <change>
             <item>GED Export : export one ged at a time</item>
             <item>Issue 13 : re-implement subdivision in findLocation function</item>
+            <item>Locations : administration : use icons menu</item>
         </change>
         <addition>
             <item>GED Export : new buttons : download/delete export file</item>
