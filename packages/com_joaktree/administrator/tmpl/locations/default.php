@@ -49,43 +49,96 @@ $geocodeAPIkey    = (isset($this->mapSettings->geocode)) ? $this->mapSettings->g
 	id="adminForm" 
 	name="adminForm"
 >
-
-<?php if(!empty( $this->sidebar)) { ?>
-	<div id="j-sidebar-container" class="span2">
-		<?php echo $this->sidebar; ?>
+	<!-- ========= Icons menus  ========= -->
+	<div id="cpanel" width="100%">
+		<div class="jt-icon">
+			<a href="index.php?option=com_joaktree&view=applications">
+				<img src="../media/com_joaktree/images/icon-48-app.png" />
+				<br />
+				<span><?php echo Text::_('JT_SUBMENU_APPLICATIONS'); ?></span>
+			</a>
+		</div>
+		<div class="jt-icon">
+			<a href="index.php?option=com_joaktree&view=trees">
+				<img src="../media/com_joaktree/images/icon-48-familytree.png" />
+				<br />
+				<span><?php echo Text::_('JT_SUBMENU_FAMILYTREES'); ?></span>
+			</a>
+		</div>
+		<div class="jt-icon">
+			<a href="index.php?option=com_joaktree&view=maps">
+				<img src="../media/com_joaktree/images/icon-48-map.png" />
+				<br />
+				<span><?php echo Text::_('JT_SUBMENU_MAPS'); ?></span>
+			</a>
+		</div>
+		<div class="jt-icon">
+			<a href="index.php?option=com_joaktree&view=persons">
+				<img src="../media/com_joaktree/images/icon-48-person.png" />
+				<br />
+				<span><?php echo Text::_('JT_SUBMENU_PERSONS'); ?></span>
+			</a>
+		</div>
+		<div class="jt-icon">
+			<a href="index.php?option=com_joaktree&view=settings&layout=personname">
+				<img src="../media/com_joaktree/images/icon-48-display2.png" />
+				<br />
+				<span><?php echo Text::_('JT_SUBMENU_PERSON_NAMEDISPLAY'); ?></span>
+			</a>
+		</div>
+		<div class="jt-icon">
+			<a href="index.php?option=com_joaktree&view=settings&layout=personevent">
+				<img src="../media/com_joaktree/images/icon-48-display1.png" />
+				<br />
+				<span><?php echo Text::_('JT_SUBMENU_PERSON_EVENTDISPLAY'); ?></span>
+			</a>
+		</div>
+		<div class="jt-icon">
+			<a href="index.php?option=com_joaktree&view=settings&layout=relationevent">
+				<img src="../media/com_joaktree/images/icon-48-display3.png" />
+				<br />
+				<span><?php echo Text::_('JT_SUBMENU_RELATION_EVENTDISPLAY'); ?></span>
+			</a>
+		</div>
+		<div class="jt-icon">
+			<a href="index.php?option=com_joaktree&view=themes">
+				<img src="../media/com_joaktree/images/icon-48-theme.png" />
+				<br />
+				<span><?php echo Text::_('JT_SUBMENU_THEMES'); ?></span>
+			</a>
+		</div>
 	</div>
-	<?php  $divClassSpan = 'span10'; ?>
-<?php } else { ?>
-	<?php  $divClassSpan = ''; ?>	
-<?php } ?>
-	<div id="j-main-container" class="<?php echo $divClassSpan; ?>">
+	<div style="clear:both"></div>
+
+	<div id="j-main-container" width="100%" style="margin-top:1em">
 
 		<!-- ========= Showing map and service settings ========= -->
-		<?php if (  (empty($this->mapSettings->geocode)) 
-		 		 || ((!empty($this->mapSettings->geocode))   && isset($this->mapSettings->$geocodeAPIkey) && empty($this->mapSettings->$geocodeAPIkey))		 
-		 		 ) {
-		?>
+		<?php if ((empty($this->mapSettings->geocode))
+                 || ((!empty($this->mapSettings->geocode))   && isset($this->mapSettings->$geocodeAPIkey) && empty($this->mapSettings->$geocodeAPIkey))
+		) {
+		    ?>
 			<fieldset class="adminform">
 				<legend><?php echo Text::_('JTMAP_TITLE_PARAMS');?></legend>
 				<table >
 					<tr class="row0">
 						<th class="pull-left" style="padding-right: 20px;"><?php echo Text::_('MBJ_GEOCODE'); ?></th>
 					    <td><?php echo (empty($this->mapSettings->geocode))
-		    						? '<strong style="color: red">'.Text::_('JNO').'</strong>'
-		    						: ucfirst($this->mapSettings->geocode); ?>
+		                                ? '<strong style="color: red">'.Text::_('JNO').'</strong>'
+		                                : ucfirst($this->mapSettings->geocode); ?>
 						</td>
 						<th class="pull-left" style="padding-right: 20px; padding-left: 35px;"><?php echo Text::_('COM_JOAKTREE_API_LABEL'); ?></th>
-					    <td><?php echo (isset($this->mapSettings->$geocodeAPIkey) && !empty($this->mapSettings->$geocodeAPIkey)) 
-					    			? Text::_('JYES')
-					    			: ( (!isset($this->mapSettings->$geocodeAPIkey))
-					    			  ? '...'
-					    			  : '<strong style="color: red">'.Text::_('JNO').'</strong>'
-					    			);?>
+					    <td><?php echo (isset($this->mapSettings->$geocodeAPIkey) && !empty($this->mapSettings->$geocodeAPIkey))
+		                                ? Text::_('JYES')
+		                                : (
+		                                    (!isset($this->mapSettings->$geocodeAPIkey))
+                                      ? '...'
+                                      : '<strong style="color: red">'.Text::_('JNO').'</strong>'
+		                                );?>
 						</td>
 						<th class="pull-left" style="padding-right: 20px; padding-left: 35px;"><?php echo Text::_('MBJ_LABEL_LOADSIZE'); ?></th>
-					    <td><?php echo (isset($this->mapSettings->maxloadsize)) 
-					    			? $this->mapSettings->maxloadsize 
-					    			: ''; ?>
+					    <td><?php echo (isset($this->mapSettings->maxloadsize))
+		                                ? $this->mapSettings->maxloadsize
+		                                : ''; ?>
 						</td>
 					</tr>			
 					<tr class="row1">
@@ -101,7 +154,7 @@ $geocodeAPIkey    = (isset($this->mapSettings->geocode)) ? $this->mapSettings->g
 						<th class="pull-left" style="padding-right: 20px; padding-left: 35px;"><?php echo Text::_('MBJ_LABEL_INDHTTPS'); ?></th>
 					    <td><?php echo (isset($this->mapSettings->indHttps) && $this->mapSettings->indHttps) ? Text::_('JYES') : Text::_('JNO'); ?></td>
 					</tr>			
-				
+
 				</table>
 			</fieldset>
 			<div>&nbsp;<br />&nbsp;</div>
@@ -145,8 +198,12 @@ $geocodeAPIkey    = (isset($this->mapSettings->geocode)) ? $this->mapSettings->g
 				<label for="directionTable" class="element-invisible"><?php echo Text::_('JFIELD_ORDERING_DESC');?></label>
 				<select name="directionTable" id="directionTable" class="input-medium" onchange="Joomla.orderTable()">
 					<option value=""><?php echo Text::_('JFIELD_ORDERING_DESC');?></option>
-					<option value="asc" <?php if ($this->lists['order_Dir'] == 'asc') echo 'selected="selected"'; ?>><?php echo Text::_('JGLOBAL_ORDER_ASCENDING');?></option>
-					<option value="desc" <?php if ($this->lists['order_Dir'] == 'desc') echo 'selected="selected"'; ?>><?php echo Text::_('JGLOBAL_ORDER_DESCENDING');?></option>
+					<option value="asc" <?php if ($this->lists['order_Dir'] == 'asc') {
+					    echo 'selected="selected"';
+					} ?>><?php echo Text::_('JGLOBAL_ORDER_ASCENDING');?></option>
+					<option value="desc" <?php if ($this->lists['order_Dir'] == 'desc') {
+					    echo 'selected="selected"';
+					} ?>><?php echo Text::_('JGLOBAL_ORDER_DESCENDING');?></option>
 				</select>
 			</div>
 			<div class="btn-group pull-right">
@@ -156,7 +213,20 @@ $geocodeAPIkey    = (isset($this->mapSettings->geocode)) ? $this->mapSettings->g
 					<?php echo HTMLHelper::_('select.options', $sortFields, 'value', 'text', $this->lists['order']);?>
 				</select>
 			</div>
-
+			<div class="btn-group pull-right">
+				<label for="filter_server" class="element-invisible"><?php echo Text::_('JGLOBAL_FILTER_BY');?></label>
+				<select name="filter_server" id="filter_server" class="input-medium" onchange="this.form.submit()">
+					<option value=""><?php echo Text::_('JT_FILTER_SERVER');?></option>
+					<?php echo HTMLHelper::_('select.options', $this->server, 'value', 'text', $this->lists['server'], true); ?>
+			</select>
+			</div>
+			<div class="btn-group pull-right">
+				<label for="filter_status" class="element-invisible"><?php echo Text::_('JGLOBAL_FILTER_BY');?></label>
+				<select name="filter_status" id="filter_status" class="input-medium" onchange="this.form.submit()">
+					<option value=""><?php echo Text::_('JT_FILTER_STATUS_ALL');?></option>
+					<?php echo HTMLHelper::_('select.options', $this->status, 'value', 'text', $this->lists['status'], true);?>
+			</select>
+			</div>
 		</div>
 		<div class="clearfix"> </div>
 		
@@ -165,31 +235,31 @@ $geocodeAPIkey    = (isset($this->mapSettings->geocode)) ? $this->mapSettings->g
 			<thead>
 				<tr>
 					<th width="1%" class="nowrap center hidden-phone">
-						<?php echo Text::_( 'JT_HEADING_NUMBER' ); ?>
+						<?php echo Text::_('JT_HEADING_NUMBER'); ?>
 					</th>
 					<th width="1%" class="hidden-phone">
 						<input type="checkbox" name="checkall-toggle" value="" title="<?php echo Text::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
 					</th>		
 					<th class="nowrap hidden-phone">
-						<?php echo HTMLHelper::_('grid.sort', 'JT_LABEL_LOCATION', 'jln.value', $this->lists['order_Dir'], $this->lists['order'] ); ?>
+						<?php echo HTMLHelper::_('grid.sort', 'JT_LABEL_LOCATION', 'jln.value', $this->lists['order_Dir'], $this->lists['order']); ?>
 					</th>
 					<th class="nowrap hidden-phone">
-						<?php echo HTMLHelper::_('grid.sort', 'JT_LABEL_GEOCODELOCATION', 'jln.resultValue', $this->lists['order_Dir'], $this->lists['order'] ); ?>
+						<?php echo HTMLHelper::_('grid.sort', 'JT_LABEL_GEOCODELOCATION', 'jln.resultValue', $this->lists['order_Dir'], $this->lists['order']); ?>
 					</th>
 					<th class="nowrap hidden-phone">
-						<?php echo HTMLHelper::_('grid.sort', 'JT_LABEL_LATITUDE', 'jln.latitude', $this->lists['order_Dir'], $this->lists['order'] ); ?>
+						<?php echo HTMLHelper::_('grid.sort', 'JT_LABEL_LATITUDE', 'jln.latitude', $this->lists['order_Dir'], $this->lists['order']); ?>
 					</th>
 					<th class="nowrap hidden-phone">
-						<?php echo HTMLHelper::_('grid.sort', 'JT_LABEL_LONGITUDE', 'jln.longitude', $this->lists['order_Dir'], $this->lists['order'] ); ?>
+						<?php echo HTMLHelper::_('grid.sort', 'JT_LABEL_LONGITUDE', 'jln.longitude', $this->lists['order_Dir'], $this->lists['order']); ?>
 					</th>
 					<th class="nowrap hidden-phone"> 
-						<?php echo Text::_( 'JT_LABEL_SERVER' ); ?>
+						<?php echo Text::_('JT_LABEL_SERVER'); ?>
 					</th>	
 					<th class="nowrap hidden-phone">
-						<?php echo HTMLHelper::_('grid.sort', 'JT_LABEL_RESULTS', 'jln.results', $this->lists['order_Dir'], $this->lists['order'] ); ?>
+						<?php echo HTMLHelper::_('grid.sort', 'JT_LABEL_RESULTS', 'jln.results', $this->lists['order_Dir'], $this->lists['order']); ?>
 					</th>
 					<th width="2%" class="nowrap center hidden-phone">
-						<?php echo Text::_( 'JT_HEADING_ID' ); ?>
+						<?php echo Text::_('JT_HEADING_ID'); ?>
 					</th>
 				</tr>		
 			</thead>
@@ -202,26 +272,26 @@ $geocodeAPIkey    = (isset($this->mapSettings->geocode)) ? $this->mapSettings->g
 			</tfoot>
 			<tbody>
 				<?php foreach ($this->items as $i => $row) {
-					$click  = 'return Joomla.listItemTask(\'cb'.$i.'\', \'edit\')';
-					//$click  = 'return listItemTask(\'cb'.$i.'\', \'edit\')';
-					if ($row->indServerProcessed) {
-						$server = '<span class="icon-publish" aria-hidden="true" style="color:green;font-size:150%" title="'.Text::_("JYES").'"></span>';
-					} else {
-						$server =  '<span class="icon-unpublish" aria-hidden="true" style="color:red;font-size:150%" title="'.Text::_("JNO").'"></span>';
-					}
-					
-					?>
+				    $click  = 'return Joomla.listItemTask(\'cb'.$i.'\', \'edit\')';
+				    //$click  = 'return listItemTask(\'cb'.$i.'\', \'edit\')';
+				    if ($row->indServerProcessed) {
+				        $server = '<span class="icon-publish" aria-hidden="true" style="color:green;font-size:150%" title="'.Text::_("JYES").'"></span>';
+				    } else {
+				        $server =  '<span class="icon-unpublish" aria-hidden="true" style="color:red;font-size:150%" title="'.Text::_("JNO").'"></span>';
+				    }
+
+				    ?>
 					<tr class="row<?php echo $i % 2; ?>">
 						<td class="nowrap center hidden-phone">
-							<?php echo $this->pagination->getRowOffset( $i ); ?>
+							<?php echo $this->pagination->getRowOffset($i); ?>
 						</td>
 						<td class="center hidden-phone">
-							<?php echo HtmlHelper::_('grid.id',   $i, $row->id ); ?>
+							<?php echo HtmlHelper::_('grid.id', $i, $row->id); ?>
 						</td>
 						<td class="nowrap hidden-phone">
 							<?php if ($this->canDo->get('core.edit')) { ?>
                             
-								<a href="javascript:void(0);" onclick="<?php echo $click; ?>" title="<?php echo Text::_( 'JTTHEMES_TOOLTIP_EDIT' ); ?>">
+								<a href="javascript:void(0);" onclick="<?php echo $click; ?>" title="<?php echo Text::_('JTTHEMES_TOOLTIP_EDIT'); ?>">
 									<?php echo $this->escape($row->value); ?>
 								</a>
 							<?php } else { ?>

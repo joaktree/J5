@@ -138,47 +138,11 @@ class MBJGeocode extends MBJService
         // set the parameters
         static $delay 		= 0;
         $geocode_pending = true;
+        $subdiv = false;
         while ($geocode_pending) {
-            $request_url = $this->getUrl($data);
-            /*
-            // RRG 02/01/2017 si paramétré à 0, on supprime la subdivision pour faciliter la géolocalisation
-            // indsubdiv est dans les paramètres du composant sous forme 0 ou 1
-            if (self::$indSubdiv == 0 && strpos($request_url, 'google')) {
-                $key_url = explode("&", $request_url);
-                $key1_url = '&' . $key_url[1];
-                $loc_url = explode(",", $key_url[0]);
-                $request_url = '';
-                $i = 0;
-                //while ($i <= 4) { /// RRG 20/04/2017
-                while ($i < count($loc_url) - 2) {
-                    $locurl = !empty($loc_url[$i]) ? $loc_url[$i] : ''; /// RRG 20/04/2017
-                    //$request_url .= $loc_url[$i] . "%2C"; /// RRG 20/04/2017
-                    $request_url .= $loc_url[$i] . ",";
-                    //$request_url .= $loc_url[$i] . "%2C";
-                    $i++;
-                };
-                $request_url .= $key1_url;
-            };
-            if (self::$indSubdiv == 0 && strpos($request_url, 'openstreetmap')) {
-                $key_url = explode("&", $request_url);
-                $loc_url = explode("%2C", $key_url[count($key_url) - 1]); // address
-                //$loc_url = explode("%2C",$request_url);
-                $url = '';
-                $i = 0;
-                while ($i < count($loc_url) - 2) {
-                    $url .= $loc_url[$i] . "%2C";
-                    $i++;
-                };
-                if (!$url) { // not enough info: restore
-                    $url = $key_url[count($key_url) - 1];
-                }
-                $request_url = "";
-                for ($i = 0; $i <= count($key_url) - 2; $i++) {
-                    $request_url .= $request_url ? "&" : '';
-                    $request_url .= $key_url[$i];
-                }
-                $request_url .= '&'.$url;
-            }; */
+            if (!$subdiv) {
+                $request_url = $this->getUrl($data);
+            }
 
             // Try to fetch a response from the service.
             if (!($xml = simplexml_load_file($request_url))) {
@@ -208,6 +172,58 @@ class MBJGeocode extends MBJService
                 // sent geocodes too fast
                 $delay += 100000;
             } else {
+                // RRG 02/01/2017 si paramétré à 0, on supprime la subdivision pour faciliter la géolocalisation
+                // indsubdiv est dans les paramètres du composant sous forme 0 ou 1
+                if (!$subdiv) { // not found, try to remove subdivision
+                    $subdiv = true;// retry it once if $indSubdiv = 0
+                    if (self::$indSubdiv == 0 && strpos($request_url, 'google')) {
+                        $key_url = explode("&", $request_url);
+                        $googlekey = '&' . $key_url[count($key_url) - 1]; // google key
+                        $loc_url = explode(",", $key_url[count($key_url) - 2]);
+                        $request_url = '';
+                        $i = 0;
+                        // rebuild beginning of url
+                        while ($i < count($key_url) - 2) {
+                            $request_url .= $key_url[$i] . "&";
+                            $i++;
+                        };
+                        $i = 0;
+                        // remove subdivision in last position
+                        while ($i < count($loc_url) - 1) {
+                            if ($i > 0) {
+                                $request_url .= ',';
+                            }
+                            $request_url .= $loc_url[$i] ;
+                            $i++;
+                        };
+                        $request_url .= $googlekey;
+                        continue; // try again
+                    }
+                    if (self::$indSubdiv == 0 && strpos($request_url, 'openstreetmap')) {
+                        $key_url = explode("&", $request_url);
+                        $loc_url = explode("%2C", $key_url[count($key_url) - 1]); // address
+                        $url = '';
+                        $i = 0;
+                        // remove subdivision in last position
+                        while ($i < count($loc_url) - 1) {
+                            if ($i > 0) {
+                                $url .= "%2C";
+                            }
+                            $url .= $loc_url[$i] ;
+                            $i++;
+                        };
+                        if (!$url) { // not enough info: restore
+                            $url = $key_url[count($key_url) - 1];
+                        }
+                        $request_url = "";
+                        for ($i = 0; $i <= count($key_url) - 2; $i++) {
+                            $request_url .= $request_url ? "&" : '';
+                            $request_url .= $key_url[$i];
+                        }
+                        $request_url .= '&'.$url;
+                        continue; // try again
+                    };
+                }
                 // failure to geocode
                 $geocode_pending = false;
                 //$this->errorNum++;		  		/// RRG 25/07/2024
