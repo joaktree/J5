@@ -37,7 +37,7 @@ if ($this->lists['userAccess']) { ?>
 						<?php 		if (($this->lists['interactiveMap']) && ($cell->indGeocode)) {
 										$link = $this->lists['linkMap'].'&locId='.(int) ($cell->loc_id);
 						?>
-										<a href="javascript:void(0);" onclick="jt_show_map('<?php echo addslashes($cell->location); ?>','<?php echo $link; ?>');"><?php echo $cell->location; ?></a>
+										<a href="javascript:void(0);" onclick="jt_show_map('<?php echo addslashes($cell->location); ?>','<?php echo $link; ?>');topFunction();"><?php echo $cell->location; ?></a>
 						<?php 
 									} else {
 										//$link = Route::_($this->lists['linkList'].'&search4='.base64_encode($cell->location));
