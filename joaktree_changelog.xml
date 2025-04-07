@@ -9,16 +9,10 @@
         <fix>
             <item>GED import : set IndName to "" if familyname is missing</item>
             <item>GED import : set Sex to "" if sex is missing</item>
-            <item>Locations : go to top  after selecting a location</item>
         </fix>
         <change>
-            <item>GED Export : export one ged at a time</item>
-            <item>Issue 13 : re-implement subdivision in findLocation function</item>
-            <item>Locations : administration : use icons menu</item>
+            <item>Locations : go to top  after selecting a location</item>
         </change>
-        <addition>
-            <item>GED Export : new buttons : download/delete export file</item>
-        </addition>
     </changelog>
 	<changelog>
 		<element>com_joaktree</element>
