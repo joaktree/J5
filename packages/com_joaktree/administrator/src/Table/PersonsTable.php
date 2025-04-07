@@ -110,6 +110,11 @@ class PersonsTable extends JoaktreeTable implements VersionableTableInterface
     {
         if (!empty($this->familyName)) {
             $this->indexNam = mb_strtoupper(mb_substr($this->familyName, 0, 1));
+        } else {
+            $this->indexNam = "";
+        }
+        if (!isset($this->sex)) {
+            $this->sex= "";
         }
         $this->lastUpdateTimeStamp = Factory::getDate()->toSql();
         try {
@@ -125,6 +130,11 @@ class PersonsTable extends JoaktreeTable implements VersionableTableInterface
     {
         if (!empty($this->familyName)) {
             $this->indexNam = mb_strtoupper(mb_substr($this->familyName, 0, 1));
+        } else {
+            $this->indexNam = "";
+        }
+        if (!isset($this->sex)) {
+            $this->sex= "";
         }
         try {
             $this->lastUpdateTimeStamp = Factory::getDate()->toSql();
@@ -141,6 +151,11 @@ class PersonsTable extends JoaktreeTable implements VersionableTableInterface
     {
         if (!empty($this->familyName)) {
             $this->indexNam = mb_strtoupper(mb_substr($this->familyName, 0, 1));
+        } else {
+            $this->indexNam = "";
+        }
+        if (!isset($this->sex)) {
+            $this->sex = "";
         }
         $this->lastUpdateTimeStamp = Factory::getDate()->toSql();
         return parent::store($updateNulls);

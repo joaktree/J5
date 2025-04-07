@@ -2,7 +2,27 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
-		<version>2.1.19</version>
+		<version>2.1.20</version>
+        <note>
+            <item>Update : 2025-04-07</item>
+        </note>
+        <fix>
+            <item>GED import : set IndName to "" if familyname is missing</item>
+            <item>GED import : set Sex to "" if sex is missing</item>
+        </fix>
+        <change>
+            <item>GED Export : export one ged at a time</item>
+            <item>Issue 13 : re-implement subdivision in findLocation function</item>
+            <item>Locations : administration : use icons menu</item>
+        </change>
+        <addition>
+            <item>GED Export : new buttons : download/delete export file</item>
+        </addition>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
+		<version>2.1.20</version>
         <note>
             <item>Update : 2025-04-06</item>
         </note>
