@@ -64,8 +64,9 @@ class HtmlView extends BaseHtmlView
         $menus  			= $model->getMenus();
 
         // set up style sheets and javascript files
-        HTMLHelper::stylesheet(JoaktreeHelper::joaktreecss());
-        HTMLHelper::stylesheet(JoaktreeHelper::joaktreecss($this->params->get('theme')));
+        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+        $wa->registerAndUseStyle('jtcss',JoaktreeHelper::joaktreecss());
+        $wa->registerAndUseStyle('jtthemecss',JoaktreeHelper::joaktreecss($params->get('theme')));
 
         // add script
         $this->lists['interactiveMap'] 	= $model->getInteractiveMap();

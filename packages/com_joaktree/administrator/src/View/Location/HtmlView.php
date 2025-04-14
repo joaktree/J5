@@ -40,7 +40,9 @@ class HtmlView extends BaseHtmlView {
 	 */
 	public function display($tpl = null)
 	{	
-		HTMLHelper::stylesheet( JoaktreeHelper::joaktreecss() );
+        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+        $wa->registerAndUseStyle('jtcss',JoaktreeHelper::joaktreecss());
+        $wa->registerAndUseScript('jtjs',JoaktreeHelper::jsfile());
 				
 		// Initialiase variables.
 		$this->form			= $this->get('Form');

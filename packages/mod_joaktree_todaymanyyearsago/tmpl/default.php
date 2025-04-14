@@ -23,12 +23,13 @@ use Joaktree\Component\Joaktree\Site\Helper\JoaktreeHelper;
 $model = new TodaymanyyearsagoModel();
 $theme = $model->getThemeName();
 
-HTMLHelper::stylesheet(JoaktreeHelper::joaktreecss());
-HTMLHelper::stylesheet(JoaktreeHelper::joaktreecss($theme));
-
 // scripts
 $base	= 'media/com_joaktree/';
 $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+
+$wa->registerAndUseStyle('jtcss',JoaktreeHelper::joaktreecss());
+$wa->registerAndUseStyle('jtthemecss',JoaktreeHelper::joaktreecss($params->get('theme')));
+
 $wa->registerAndUseScript('toggle', $base.'js/toggle.js');
 $wa->registerAndUseScript('jtajax', $base.'js/jtajax.js');
 

@@ -16,12 +16,12 @@
 namespace Joaktree\Component\Joaktree\Administrator\View\Default;
 // no direct access
 defined('_JEXEC') or die('Restricted access');
-
-use Joomla\CMS\Language\Text;
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\HTML\Helpers\Sidebar;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Joomla\CMS\Toolbar\ToolbarHelper;
 
 use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeHelper;
 use Joaktree\Component\Joaktree\Administrator\Mapservice\MBJService;
@@ -30,7 +30,9 @@ class HtmlView extends BaseHtmlView {
 	function display($tpl = null) {
 		$this->lists = array();
 		
-		HTMLHelper::stylesheet( JoaktreeHelper::joaktreecss() );
+        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+        $wa->registerAndUseStyle('jtcss',JoaktreeHelper::joaktreecss());
+        $wa->registerAndUseScript('jtjs',JoaktreeHelper::jsfile());
 		
 		//load the language file
 		MBJService::setLanguage();

@@ -51,24 +51,25 @@ class HtmlView extends BaseHtmlView
         // Find the value for tech
         $technology		= $model->getTechnology();
         // set up style sheets and javascript files
-        HTMLHelper::stylesheet(JoaktreeHelper::joaktreecss());
-        HTMLHelper::stylesheet(JoaktreeHelper::joaktreecss($this->params->get('theme')));
+        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+        $wa->registerAndUseStyle('jtcss',JoaktreeHelper::joaktreecss());
+        $wa->registerAndUseStyle('jtthemecss',JoaktreeHelper::joaktreecss($params->get('theme')));
         // Set up shadowbox
-        HTMLHelper::stylesheet(JoaktreeHelper::shadowboxcss());
-        $document->addScript(JoaktreeHelper::shadowboxjs());
+        $wa->registerAndUseStyle('jtshadowcss',JoaktreeHelper::shadowboxcss());
+        $wa->registerAndUseScript('jtshadowjs',JoaktreeHelper::shadowboxjs());
 
         // Set up modal behavior
         HTMLHelper::_('bootstrap.modal', 'a.modal');
         if ($technology != 'b') {
             // javascript template - no ajax
             // default template includes ajax
-            HTMLHelper::stylesheet(JoaktreeHelper::briaskcss());
-            $document->addScript(JoaktreeHelper::joaktreejs('mod_briaskISS.js'));
-            $document->addScript(JoaktreeHelper::joaktreejs('toggle.js'));
+            $wa->registerAndUseStyle('briaskcss',JoaktreeHelper::briaskcss());
+            $wa->registerAndUseScript('briaskjs',JoaktreeHelper::joaktreejs('mod_briaskISS.js'));
+            $wa->registerAndUseScript('togglejs',JoaktreeHelper::joaktreejs('toggle.js'));
         }
         if (($technology != 'b') and ($technology != 'j')) {
             // default template includes ajax
-            $document->addScript(JoaktreeHelper::joaktreejs('jtajax.js'));
+            $wa->registerAndUseScript('jtajaxjs',JoaktreeHelper::joaktreejs('jtajax.js'));
         }
         // Access
         $lists['userAccess'] 	= $model->getAccess();

@@ -27,11 +27,14 @@ use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeHelper;
 
 class HtmlView extends BaseHtmlView {
 	function display($tpl = null) {
+		$app = Factory::getApplication();				
+
         $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
         $wa->useScript('jquery');
 	
-		$app = Factory::getApplication();				
-		HTMLHelper::stylesheet( JoaktreeHelper::joaktreecss() );
+        $wa->registerAndUseStyle('jtcss',JoaktreeHelper::joaktreecss());
+        $wa->registerAndUseScript('jtjs',JoaktreeHelper::jsfile());
+
 		$this->canDo	= JoaktreeHelper::getActions();
 				
 		// Get data from the model

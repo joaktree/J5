@@ -47,8 +47,9 @@ class HtmlView extends BaseHtmlView
 
 
         // set up style sheets and javascript files
-        HTMLHelper::stylesheet(JoaktreeHelper::joaktreecss());
-        HTMLHelper::stylesheet(JoaktreeHelper::joaktreecss($this->params->get('theme')));
+        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+        $wa->registerAndUseStyle('jtcss',JoaktreeHelper::joaktreecss());
+        $wa->registerAndUseStyle('jtthemecss',JoaktreeHelper::joaktreecss($params->get('theme')));
 
         if (isset($this->map->params) && $this->map->params['service'] == 'staticmap') {
             // Get data from the model

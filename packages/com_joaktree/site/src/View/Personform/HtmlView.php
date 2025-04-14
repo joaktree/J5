@@ -53,10 +53,12 @@ class HtmlView extends BaseHtmlView
         }
 
         // set up style sheets and javascript files
-        HTMLHelper::stylesheet(JoaktreeHelper::joaktreecss());
-        HTMLHelper::stylesheet(JoaktreeHelper::joaktreecss($this->params->get('theme')));
+        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+        $wa->registerAndUseStyle('jtcss',JoaktreeHelper::joaktreecss());
+        $wa->registerAndUseStyle('jtthemecss',JoaktreeHelper::joaktreecss($params->get('theme')));
         $document		= Factory::getApplication()->getDocument();
-        $document->addScript(JoaktreeHelper::joaktreejs('toggle.js'));
+        $wa->registerAndUseScript('togglejs',JoaktreeHelper::joaktreejs('toggle.js'));
+
         $this->lists['lineEnd'] = $document->_getLineEnd();
 
         // Initialiase variables.

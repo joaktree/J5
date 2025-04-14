@@ -865,12 +865,11 @@ class Map extends \StdClass
             $script = array();
             $html   = array();
 
-            $document	= Factory::getApplication()->getDocument();
-            $document->addScript(JoaktreeHelper::joaktreejs('jtmap.js'));
-
             // set up style sheets and javascript files
-            HTMLHelper::stylesheet('media/com_joaktree/css/joaktree.map.css');
-
+            $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+            $wa->registerAndUseStyle('jtmapcss','media/com_joaktree/css/joaktree.map.css');
+            $wa->registerAndUseScript('jtmapjs',JoaktreeHelper::joaktreejs('jtmap.js'));
+            
             //HTMLHelper::_('behavior.formvalidation');
             HTMLHelper::_('behavior.formvalidator');
             HTMLHelper::_('bootstrap.modal', 'a.modal_person');

@@ -46,9 +46,10 @@ class HtmlView extends BaseHtmlView
         $params->merge(JoaktreeHelper::getTheme(true, true));
 
         // set up style sheets and javascript files
-        HTMLHelper::stylesheet(JoaktreeHelper::joaktreecss());
-        HTMLHelper::stylesheet(JoaktreeHelper::joaktreecss($params->get('theme')));
-
+        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+        $wa->registerAndUseStyle('jtcss',JoaktreeHelper::joaktreecss());
+        $wa->registerAndUseStyle('jtthemecss',JoaktreeHelper::joaktreecss($params->get('theme')));
+        
         // get user info
         $userId			= Factory::getApplication()->getIdentity()->id;
         if (!$userId || $userId == 0) {
