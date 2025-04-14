@@ -41,10 +41,10 @@ class HtmlView extends BaseHtmlView
     public function display($tpl = null)
     {
         $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-        
-        $wa->addInlineStyle(JoaktreeHelper::joaktreecss());
-        $wa->addInlineScript(JoaktreeHelper::jsfile());
-        // Initialiase variables.
+        $wa->registerAndUseStyle('jtcss',JoaktreeHelper::joaktreecss());
+        $wa->registerAndUseScript('jtjs',JoaktreeHelper::jsfile());
+
+        // Initialise variables.
         $this->form		= $this->get('Form');
         $this->item		= $this->get('Item');
         $this->state	= $this->get('State');

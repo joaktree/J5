@@ -37,8 +37,8 @@ class HtmlView extends BaseHtmlView
 
         $app = Factory::getApplication();
         $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-        $wa->addInlineStyle(JoaktreeHelper::joaktreecss());
-        $wa->addInlineScript(JoaktreeHelper::jsfile());
+        $wa->registerAndUseStyle('jtcss',JoaktreeHelper::joaktreecss());
+        $wa->registerAndUseScript('jtjs',JoaktreeHelper::jsfile());
 
         // add script
         $document 		= Factory::getApplication()->getDocument();
