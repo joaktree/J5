@@ -36,8 +36,9 @@ class HtmlView extends BaseHtmlView
         $lang->load('com_joaktree.gedcom', JPATH_ADMINISTRATOR);
 
         $app = Factory::getApplication();
-        HTMLHelper::stylesheet(JoaktreeHelper::joaktreecss());
-        HTMLHelper::script(JoaktreeHelper::jsfile());
+        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+        $wa->addInlineStyle(JoaktreeHelper::joaktreecss());
+        $wa->addInlineScript(JoaktreeHelper::jsfile());
 
         // add script
         $document 		= Factory::getApplication()->getDocument();

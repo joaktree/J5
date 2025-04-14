@@ -126,6 +126,7 @@ if ($this->columns['rob']) {
 						title="<?php echo Text::_('JTPERSONS_HEADING_FIRSTNAME');?>" 
 						placeholder="<?php echo Text::_('JTPERSONS_HEADING_FIRSTNAME');?>" 
 						value="<?php echo $this->escape($this->lists['search1']); ?>" 
+                        onkeypress="checkenter(event);"
 					/>
 				</div>
 				<div class="btn-group pull-left">
@@ -151,6 +152,7 @@ if ($this->columns['rob']) {
 							title="<?php echo Text::_('JTPERSONS_HEADING_PATRONYM');?>" 
 							placeholder="<?php echo Text::_('JTPERSONS_HEADING_PATRONYM');?>" 
 							value="<?php echo $this->escape($this->lists['search2']); ?>" 
+                            onkeypress="checkenter(event);"
 						/>
 					</div>
 					<div class="btn-group pull-left">
@@ -176,6 +178,7 @@ if ($this->columns['rob']) {
 						title="<?php echo Text::_('JTPERSONS_HEADING_FAMNAME');?>" 
 						placeholder="<?php echo Text::_('JTPERSONS_HEADING_FAMNAME');?>" 
 						value="<?php echo $this->escape($this->lists['search3']); ?>" 
+                        onkeypress="checkenter(event);"
 					/>
 				</div>
 				<div class="btn-group pull-left">

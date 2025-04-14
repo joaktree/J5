@@ -78,6 +78,7 @@ $sortFields = $this->getSortFields();
 					id="search"
 					placeholder="<?php echo Text::_('JT_LABEL_FILTER');?>"  
 					value="<?php echo $this->escape($this->lists['search']); ?>" 
+                    onkeypress="checkenter(event);"
 				/>
 			</div>
 			<div class="btn-group pull-left">

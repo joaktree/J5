@@ -33,8 +33,10 @@ class HtmlView extends BaseHtmlView {
 	 */
 	public function display($tpl = null)
 	{	
-		HtmlHelper::stylesheet( JoaktreeHelper::joaktreecss() );
-		HtmlHelper::script( JoaktreeHelper::jsfile() );		
+        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+        $wa->addInlineStyle(JoaktreeHelper::joaktreecss());
+        $wa->addInlineScript(JoaktreeHelper::jsfile());
+
 		$this->addToolbar();
 
 		$items			= $this->get( 'Data' );		

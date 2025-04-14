@@ -44,7 +44,8 @@ class HtmlView extends BaseHtmlView
         $this->item		= $this->get('Item');
         $this->state	= $this->get('State');
 
-        HTMLHelper::script('media/com_joaktree/js/jtupload_admin.js');
+        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+        $wa->registerAndUseScript('jtuploadadmin','media/com_joaktree/js/jtupload_admin.js');
 
         // use cookies
         $params  			= ComponentHelper::getParams('com_joaktree') ;

@@ -2,7 +2,19 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
-		<version>2.1.20</version>
+		<version>2.1.21</version>
+        <note>
+            <item>Update : 2025-04-14</item>
+        </note>
+        <change>
+            <item>Allow enter key on search field</item>
+            <item>Joomla 5.3 : replace HTMLHelper::script and style by webassets</item>
+        </change>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
+		<version>2.1.21</version>
         <note>
             <item>Update : 2025-04-07</item>
         </note>
@@ -17,7 +29,7 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
-		<version>2.1.20</version>
+		<version>2.1.21</version>
         <note>
             <item>Update : 2025-04-06</item>
         </note>

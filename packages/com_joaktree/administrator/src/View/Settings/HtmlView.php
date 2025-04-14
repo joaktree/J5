@@ -36,8 +36,10 @@ class HtmlView extends BaseHtmlView
         $lang 	= Factory::getApplication()->getLanguage();
         $lang->load('com_joaktree.gedcom', JPATH_ADMINISTRATOR);
 
-        HTMLHelper::stylesheet(JoaktreeHelper::joaktreecss());
-        HTMLHelper::script(JoaktreeHelper::jsfile());
+        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+        $wa->addInlineStyle(JoaktreeHelper::joaktreecss());
+        $wa->addInlineScript(JoaktreeHelper::jsfile());
+
         // what is the layout
         $this->layout = Factory::getApplication()->input->get('layout');
         // Get data from the model

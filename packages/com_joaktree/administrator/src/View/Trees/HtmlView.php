@@ -13,6 +13,7 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
+
 namespace Joaktree\Component\Joaktree\Administrator\View\Trees;
 
 // no direct access
@@ -34,8 +35,9 @@ class HtmlView extends BaseHtmlView
     {
 
         $app = Factory::getApplication();
-        HtmlHelper::stylesheet(JoaktreeHelper::joaktreecss());
-        HtmlHelper::script(JoaktreeHelper::jsfile());
+        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+        $wa->addInlineStyle(JoaktreeHelper::joaktreecss());
+        $wa->addInlineScript(JoaktreeHelper::jsfile());
         $this->canDo	= JoaktreeHelper::getActions();
 
         // Get data from the model

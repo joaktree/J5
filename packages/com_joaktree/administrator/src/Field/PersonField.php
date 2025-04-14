@@ -46,7 +46,10 @@ class PersonField extends FormField	//JFormField
             $person->firstName 	= Text::_('JTFIELD_PERSON_SELECTPERSON');
         }
         HtmlHelper::_('bootstrap.modal', '.modal', []);
-        HTMLHelper::script(JoaktreeHelper::jsfile());
+        
+        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+        $wa->addInlineScript(JoaktreeHelper::jsfile());
+
         $apps = JoaktreeHelper::getApplications();
 
         $linkTree   = 'index.php?option=com_joaktree&amp;view=trees&amp;layout=element&amp;task=element&amp;tmpl=component&amp;object='.$this->fieldname;

@@ -425,4 +425,10 @@ function HandleResponseAssignft(response) {
         }
 	}
 }
+function checkenter(event) {
+    if (event.key == "Enter") {
+      	var form = document.adminForm;
+        form.submit()
+    }
+}
 
