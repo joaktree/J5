@@ -33,7 +33,10 @@ class HtmlView extends BaseHtmlView
     {
 
         $app = Factory::getApplication();
-        HTMLHelper::stylesheet(JoaktreeHelper::joaktreecss());
+        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+        $wa->registerAndUseStyle('jtcss',JoaktreeHelper::joaktreecss());
+        $wa->registerAndUseScript('jtjs',JoaktreeHelper::jsfile());
+
         $this->canDo	= JoaktreeHelper::getActions();
 
         // Get data from the model
@@ -43,7 +46,7 @@ class HtmlView extends BaseHtmlView
         //Filter
         $context		= 'com_joaktree.applications.list.';
 
-        $filter_order		= $app->getUserStateFromRequest($context.'filter_order', 'filter_order', 'jte.id', 'cmd');
+        $filter_order		= $app->getUserStateFromRequest($context.'filter_order', 'filter_order', 'japp.id', 'cmd');
         $filter_order_Dir	= $app->getUserStateFromRequest($context.'filter_order_Dir', 'filter_order_Dir', '', 'word');
         $search				= $app->getUserStateFromRequest($context.'search', 'search', '', 'string');
         $search				= strtolower($search);

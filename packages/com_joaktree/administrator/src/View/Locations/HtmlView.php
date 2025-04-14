@@ -35,7 +35,9 @@ class HtmlView extends BaseHtmlView
     {
 
         $app = Factory::getApplication();
-        HTMLHelper::stylesheet(JoaktreeHelper::joaktreecss());
+        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+        $wa->registerAndUseStyle('jtcss',JoaktreeHelper::joaktreecss());
+        $wa->registerAndUseScript('jtjs',JoaktreeHelper::jsfile());
         $this->canDo	= JoaktreeHelper::getActions();
 
         // Get data from the model

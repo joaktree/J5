@@ -10,6 +10,9 @@
             <item>Allow enter key on search field</item>
             <item>Joomla 5.3 : replace HTMLHelper::script and style by webassets</item>
         </change>
+        <fix>
+            <item>Sources : search causes jte.id error</item>
+        </fix>
     </changelog>
 	<changelog>
 		<element>com_joaktree</element>

@@ -100,8 +100,8 @@ if ($this->columns['rob']) {
 	<div id="j-main-container" class="<?php echo $divClassSpan; ?>">
 
 		<!--  filter row -->
-		<div id="filter-bar" class="btn-toolbar">
-			<div class="filter-search btn-group pull-left">
+		<div id="filter-bar" class="btn-toolbar" style="float:left">
+			<div class="filter-search btn-group" >
 				<div class="btn-group pull-left">
 					<button 
 						type="button" 
@@ -194,8 +194,6 @@ if ($this->columns['rob']) {
 			</div>
 
 		</div>
-		<div class="clearfix"> </div>
-
 		<!--  show columns row row -->
 		<div id="columns-bar" class="btn-toolbar">
 			<div class="btn-group pull-left" style="display:none">
