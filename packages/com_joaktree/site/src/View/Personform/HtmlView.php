@@ -55,7 +55,7 @@ class HtmlView extends BaseHtmlView
         // set up style sheets and javascript files
         $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
         $wa->registerAndUseStyle('jtcss',JoaktreeHelper::joaktreecss());
-        $wa->registerAndUseStyle('jtthemecss',JoaktreeHelper::joaktreecss($params->get('theme')));
+        $wa->registerAndUseStyle('jtthemecss',JoaktreeHelper::joaktreecss($this->params->get('theme')));
         $document		= Factory::getApplication()->getDocument();
         $wa->registerAndUseScript('togglejs',JoaktreeHelper::joaktreejs('toggle.js'));
 
