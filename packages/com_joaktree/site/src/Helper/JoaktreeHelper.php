@@ -783,13 +783,13 @@ class JoaktreeHelper
     // javascript
     public static function joaktreejs($jtscript)
     {
-        return Uri::base(true).'/media/com_joaktree/js/'.$jtscript;
+        return 'media/com_joaktree/js/'.$jtscript;
 
     }
 
     public static function shadowboxjs()
     {
-        return Uri::base(true).'/media/com_joaktree/shadowbox/shadowbox.js';
+        return 'media/com_joaktree/shadowbox/shadowbox.js';
     }
 
     public static function getMenus($view)

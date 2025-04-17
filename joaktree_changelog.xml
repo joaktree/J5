@@ -2,6 +2,17 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
+		<version>2.2.1</version>
+        <note>
+            <item>Update : 2025-04-17</item>
+        </note>
+        <fix>
+            <item>Joaktreejs and shadowbowjs not loaded</item>
+        </fix>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
 		<version>2.2.0</version>
         <note>
             <item>Update : 2025-04-17</item>
