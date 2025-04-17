@@ -580,7 +580,7 @@ class PersonformModel extends FormModel
                 // create string for eventdate
 
                 // set the location
-                $tabEvent->location	 	= htmlspecialchars($form['person']['events']['location'][$i], ENT_QUOTES, 'UTF-8');
+                $tabEvent->location	 	= $form['person']['events']['location'][$i];
 
                 // set the value
                 $tabEvent->value		= htmlspecialchars($form['person']['events']['value'][$i], ENT_QUOTES, 'UTF-8');

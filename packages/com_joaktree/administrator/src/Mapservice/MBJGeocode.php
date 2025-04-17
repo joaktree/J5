@@ -143,7 +143,6 @@ class MBJGeocode extends MBJService
             if (!$subdiv) {
                 $request_url = $this->getUrl($data);
             }
-
             // Try to fetch a response from the service.
             if (!($xml = simplexml_load_file($request_url))) {
                 // it is not a file - perhaps a string

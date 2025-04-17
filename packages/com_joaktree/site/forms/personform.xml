@@ -392,7 +392,7 @@
 							type="jttext" 
 							class="inputbox"
 							size="40"
-							maxlength="75"
+							maxlength="500"
 							label="JT_LABEL_LOCATION" 	
 							description ="JT_DESC_LOCATION" 
 					/>

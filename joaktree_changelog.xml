@@ -2,6 +2,20 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
+		<version>2.2.0</version>
+        <note>
+            <item>Update : 2025-04-17</item>
+        </note>
+        <change>
+            <item>Increase location size to 500 characters</item>
+        </change>
+        <fix>
+            <item>Person form : location : allow quotes</item>
+        </fix>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
 		<version>2.1.21</version>
         <note>
             <item>Update : 2025-04-14</item>
@@ -17,7 +31,7 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
-		<version>2.1.21</version>
+		<version>2.1.20</version>
         <note>
             <item>Update : 2025-04-07</item>
         </note>
@@ -32,7 +46,7 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
-		<version>2.1.21</version>
+		<version>2.1.19</version>
         <note>
             <item>Update : 2025-04-06</item>
         </note>
