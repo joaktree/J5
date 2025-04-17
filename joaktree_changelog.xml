@@ -7,7 +7,7 @@
             <item>Update : 2025-04-17</item>
         </note>
         <change>
-            <item>Increase location size to 500 characters</item>
+            <item>Increase location size to 300 characters</item>
         </change>
         <fix>
             <item>Person form : location : allow quotes</item>
