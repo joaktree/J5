@@ -2,6 +2,18 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
+		<version>2.2.2</version>
+        <note>
+            <item>Update : 2025-04-17</item>
+        </note>
+        <fix>
+            <item>Issue 18 : delete map error</item>
+            <item>GeoCode : PLAC must contains more than one jurisdiction if subdivision false</item>
+        </fix>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
 		<version>2.2.1</version>
         <note>
             <item>Update : 2025-04-17</item>

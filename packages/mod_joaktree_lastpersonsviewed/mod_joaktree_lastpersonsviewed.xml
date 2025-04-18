@@ -13,7 +13,7 @@
 	<copyright>(C) 2017 JoomXtensions.com</copyright>
 	<authorEmail>rg-consultant@robertg-conseil.fr</authorEmail>
 	<authorUrl>www.joomxtensions.com</authorUrl>	
-   <version>2.2.1</version>
+   <version>2.2.2</version>
 	<description>MOD_JOAKTREE_LASTPERSONSVIEWED_XML_DESCRIPTION</description>
     <namespace path="src">Joaktree\Module\Lastpersonsviewed</namespace>	
 	<!-- user part -->

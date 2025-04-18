@@ -186,42 +186,46 @@ class MBJGeocode extends MBJService
                             $request_url .= $key_url[$i] . "&";
                             $i++;
                         };
-                        $i = 0;
-                        // remove subdivision in last position
-                        while ($i < count($loc_url) - 1) {
-                            if ($i > 0) {
-                                $request_url .= ',';
-                            }
-                            $request_url .= $loc_url[$i] ;
-                            $i++;
-                        };
-                        $request_url .= $googlekey;
-                        continue; // try again
+                        if (count($loc_url) > 1) { // more than one field
+                            $i = 0;
+                            // remove subdivision in last position
+                            while ($i < count($loc_url) - 1) {
+                                if ($i > 0) {
+                                    $request_url .= ',';
+                                }
+                                $request_url .= $loc_url[$i] ;
+                                $i++;
+                            };
+                            $request_url .= $googlekey;
+                            continue; // try again
+                        }
                     }
                     if (self::$indSubdiv == 0 && strpos($request_url, 'openstreetmap')) {
                         $key_url = explode("&", $request_url);
                         $loc_url = explode("%2C", $key_url[count($key_url) - 1]); // address
                         $url = '';
                         $i = 0;
-                        // remove subdivision in last position
-                        while ($i < count($loc_url) - 1) {
-                            if ($i > 0) {
-                                $url .= "%2C";
+                        if (count($loc_url) > 1) {
+                            // remove subdivision in last position
+                            while ($i < count($loc_url) - 1) {
+                                if ($i > 0) {
+                                    $url .= "%2C";
+                                }
+                                $url .= $loc_url[$i] ;
+                                $i++;
+                            };
+                            if (!$url) { // not enough info: restore
+                                $url = $key_url[count($key_url) - 1];
                             }
-                            $url .= $loc_url[$i] ;
-                            $i++;
-                        };
-                        if (!$url) { // not enough info: restore
-                            $url = $key_url[count($key_url) - 1];
+                            $request_url = "";
+                            for ($i = 0; $i <= count($key_url) - 2; $i++) {
+                                $request_url .= $request_url ? "&" : '';
+                                $request_url .= $key_url[$i];
+                            }
+                            $request_url .= '&'.$url;
+                            continue; // try again
                         }
-                        $request_url = "";
-                        for ($i = 0; $i <= count($key_url) - 2; $i++) {
-                            $request_url .= $request_url ? "&" : '';
-                            $request_url .= $key_url[$i];
-                        }
-                        $request_url .= '&'.$url;
-                        continue; // try again
-                    };
+                    }
                 }
                 // failure to geocode
                 $geocode_pending = false;

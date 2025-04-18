@@ -67,7 +67,7 @@ class MapsController extends AdminController
     public function delete($id = null)
     {
         $cids	= $this->input->get('cid', [], 'array');
-        $model = $this->getModel();
+        $model = $this->getModel('Map');
         $msg 	= $model->delete($cids);
         $link = 'index.php?option=com_joaktree&view=maps';
         $this->setRedirect($link, $msg);
