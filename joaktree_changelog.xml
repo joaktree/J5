@@ -2,6 +2,17 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
+		<version>2.2.3</version>
+        <note>
+            <item>Update : 2025-04-24</item>
+        </note>
+        <fix>
+            <item>Issue 19 : menu : select person/tree</item>
+        </fix>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
 		<version>2.2.2</version>
         <note>
             <item>Update : 2025-04-17</item>

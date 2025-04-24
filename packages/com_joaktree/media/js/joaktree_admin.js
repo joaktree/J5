@@ -57,6 +57,16 @@ function jSelectPerson(id, title, appid, apptitle, treeid) {
 	if (El5 != null) { El5.value = apptitle; }
 	if (El6 != null) { El6.value = treeid; }
 	if (El7 != null) { El7.value = treeid; }
+    if (treeid && El5) {
+        options = El5.options;
+        for (var opt, j = 0; opt = options[j]; j++) {
+            if (opt.value == treeid) {
+            //Select the option and break out of the for loop.
+                options.selectedIndex = j;
+                break;
+            }
+        }
+    }
 	document.querySelector('#selectperson').close();
     document.querySelector('#selecttree').close();
     

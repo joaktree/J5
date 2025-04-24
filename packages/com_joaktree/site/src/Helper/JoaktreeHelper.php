@@ -511,7 +511,7 @@ class JoaktreeHelper
                 $query = $db->getquery(true);
                 $query->select(' jte.access ');
                 $query->from(' #__joaktree_trees  jte ');
-                $query->where(' jte.published = true ');
+                $query->where(' jte.published = 1 ');
                 $query->where(' jte.id = :treeid');
                 $query->bind(':treeid', $treeId, \Joomla\Database\ParameterType::INTEGER);
                 try {

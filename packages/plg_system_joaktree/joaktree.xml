@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE extension>
-<extension version="4.0" type="plugin" group="editors-xtd" method="upgrade">
-	<name>plg_editor-xtd_joaktreemap</name>
+<extension version="4.0" type="plugin" group="system" method="upgrade">
+	<name>plg_system_joaktree</name>
     <old_author>joaktree.com</old_author>
     <old_creationDate>June 2013</old_creationDate>
 	<old_copyright>(C) 2009 - 2013 Joaktree.com</old_copyright>
@@ -10,26 +10,25 @@
 	<old_authorUrl>www.joaktree.com</old_authorUrl>
     <author>Robert Gastaud</author>
 	<creationDate>2025-04-17</creationDate>
-	<copyright>(C) 2017 - 2020 JoomXtensions.com</copyright>
+	<copyright>(C) 2017 JoomXtensions.com</copyright>
 	<authorEmail>rg-consultant@robertg-conseil.fr</authorEmail>
 	<authorUrl>www.joomxtensions.com</authorUrl>	
    <version>2.2.3</version>
-	<description>PLG_EDITOR-XTD_JOAKTREE_MAP_XML_DESCRIPTION</description>
-    <namespace path="src">Joaktree\Plugin\EditorsXtd\Joaktreemap</namespace>
+	<description>PLG_SYSTEM_JOAKTREE_XML_DESCRIPTION</description>
+	<namespace path="src">Joaktree\Plugin\System\Joaktree</namespace>
+
 	<files>
-		<folder plugin="joaktreemap">services</folder>
-        <folder>src</folder>
-		<filename>index.html</filename>
+		<folder plugin="joaktree">services</folder>
+		<folder>src</folder>
+		<filename >index.html</filename>
 	</files>
-	<media destination="com_joaktree" folder="media">
-		<folder>js</folder>
-    </media>
+
     <languages>
-        <language tag="en-GB">language/en-GB/plg_editors-xtd_joaktreemap.sys.ini</language>
-        <language tag="en-GB">language/en-GB/plg_editors-xtd_joaktreemap.ini</language>
-        <language tag="fr-FR">language/fr-FR/plg_editors-xtd_joaktreemap.sys.ini</language>
-        <language tag="fr-FR">language/fr-FR/plg_editors-xtd_joaktreemap.ini</language>
-	</languages>
+        <language tag="en-GB">language/en-GB/plg_system_joaktree.sys.ini</language>
+        <language tag="en-GB">language/en-GB/plg_system_joaktree.ini</language>
+		<language tag="fr-FR">language/fr-FR/plg_system_joaktree.sys.ini</language>
+        <language tag="fr-FR">language/fr-FR/plg_system_joaktree.ini</language>
+    </languages>
     
 	<config>
 		<fields name="params">			

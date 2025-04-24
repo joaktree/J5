@@ -50,7 +50,7 @@ class PersonField extends FormField	//JFormField
         $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
         $wa->addInlineScript(JoaktreeHelper::jsfile());
 
-        $apps = JoaktreeHelper::getApplications();
+        $trees = JoaktreeHelper::getTrees();
 
         $linkTree   = 'index.php?option=com_joaktree&amp;view=trees&amp;layout=element&amp;task=element&amp;tmpl=component&amp;object='.$this->fieldname;
         $linkPerson = 'index.php?option=com_joaktree&amp;view=persons&amp;layout=element&amp;task=element&amp;tmpl=component&amp;object='.$this->fieldname;
@@ -59,7 +59,7 @@ class PersonField extends FormField	//JFormField
         $html .= '<input style="background: #ffffff;" type="text" size="50" id="jform_personName" value="'.htmlspecialchars($person->firstName.' '.$person->familyName, ENT_QUOTES, 'UTF-8').'" disabled="disabled" title="'.Text::_('JTFIELD_PERSON_DESC_PERSON').'" />';
 
         $html .= '<select class="inputbox" id="jform_appTitle" name="apptitle" disabled="disabled">';
-        $html .= HTMLHelper::_('select.options', $apps, 'value', 'text', $person->app_id);
+        $html .= HTMLHelper::_('select.options', $trees, 'value', 'text', $person->app_id);
         $html .= '</select>';
         $html .= '</div>';
 

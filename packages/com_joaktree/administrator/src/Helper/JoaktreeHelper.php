@@ -182,6 +182,21 @@ class JoaktreeHelper
         return $applications;
     }
 
+    public static function getTrees()
+    {
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $query	= $db->getQuery(true);
+
+        // retrieve the names
+        $query->select(' id AS value ');
+        $query->select(' name AS text ');
+        $query->from(' #__joaktree_trees ');
+        // $query->where($db->quotename('published').' = 1');
+        $db->setQuery($query);
+        $trees = $db->loadObjectList();
+
+        return $trees;
+    }
     public function getThemes()
     {
         $db = Factory::getContainer()->get(DatabaseInterface::class);
