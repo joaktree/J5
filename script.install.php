@@ -234,6 +234,8 @@ class PlgSystemJoaktreeInstallerInstallerScript
             JPATH_ADMINISTRATOR."/language/en-GB/plg_editors-xtd_joaktree.sys.ini",
             JPATH_ADMINISTRATOR."/language/en-GB/plg_editors-xtd_joaktree.ini",
             JPATH_ADMINISTRATOR."/components/com_joaktree/src/Table/JMFPKTable.php",
+         // 2.2.4 : don't use system plugin, 
+            JPATH_SITE."/plugins/system/joaktree",
         ];
         $this->delete($obsoleteFiles);
         // remove 1.5 obsolete plugins
@@ -271,7 +273,7 @@ class PlgSystemJoaktreeInstallerInstallerScript
         $conditions = array(
             $db->qn('type') . ' = ' . $db->q('plugin'),
             $db->qn('element') . ' LIKE ' . $db->quote('joaktree%'),
-            $db->qn('folder') . ' IN (' . $db->quote('content').','.$db->quote('editors-xtd').','.$db->quote('system').')'
+            $db->qn('folder') . ' IN (' . $db->quote('content').','.$db->quote('editors-xtd').')'
         );
         $fields = array($db->qn('enabled') . ' = 1');
 
