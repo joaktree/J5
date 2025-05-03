@@ -2,6 +2,17 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
+		<version>2.2.5</version>
+        <note>
+            <item>Update : 2025-05-03</item>
+        </note>
+        <fix>
+            <item>Issue 20 : </item>
+        </fix>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
 		<version>2.2.4</version>
         <note>
             <item>Update : 2025-04-27</item>

@@ -572,9 +572,9 @@ class Gedcompersons2 extends \StdClass
     private function setRelationEvent($event, $value)
     {
         $ret = true;
-        if (!$value) {
+        /*if (!$value) {
             return $ret;
-        }
+        }*/
         if ($this->relation_events->get('person_id_2') ==  null) {
             return $ret;
         }
@@ -591,7 +591,7 @@ class Gedcompersons2 extends \StdClass
             $this->eventRelationCounter++;
             $this->relation_events->set('code', $event);
             $this->relation_events->set('orderNumber', $this->eventRelationCounter);
-            if (strlen($value) > 1) {
+            if ($value && strlen($value) > 1) {
                 $this->relation_events->set('value', $value);
             }
         } else {
@@ -608,9 +608,9 @@ class Gedcompersons2 extends \StdClass
     private function setRelationNote($objectType, $value)
     {
         $ret = true;
-        if (!$value) {
+        /* if (!$value) {
             return $ret;
-        }
+        }*/
         if ($this->relation_notes->get('person_id_2') ==  null) {
             return $ret;
         }
@@ -893,8 +893,11 @@ class Gedcompersons2 extends \StdClass
                             $this->relations->set('person_id_1', $person_id_1);
                             $this->relations->set('person_id_2', $person_id_2);
 
+                            $this->relation_events->reset();
+
                             $this->relation_events->set('app_id', $this->app_id);
                             $this->relation_events->set('person_id_1', $person_id_1);
+                            $this->relation_events->set('person_id_2', $person_id_2);
                             $this->relation_events->set('person_id_2', $person_id_2);
 
                             $this->relation_notes->set('app_id', $this->app_id);
@@ -1207,10 +1210,10 @@ class Gedcompersons2 extends \StdClass
 
 
         if ($ret) {
-            $ret = $this->setRelationEvent(null, null);
+            $ret = $this->setRelationEvent(null, '');
         }
         if ($ret) {
-            $ret = $this->setRelationNote(null, null);
+            $ret = $this->setRelationNote(null, '');
         }
         if ($ret) {
             $ret = $this->setRelationCitation('none', null);
@@ -1295,6 +1298,9 @@ class Gedcompersons2 extends \StdClass
         // loop through lines related to the person
         foreach ($row_lines as $row_line_num => $row_line) {
             $information = $row_line['tag']; // pascal
+            if (strpos($information, '_') === 0) {
+                $information = substr($information, 1, strlen($information));
+            }
             switch ($row_line['level']) {
                 case "1": // set $information to be used for level 2 info
                     switch ($information) {
@@ -1387,23 +1393,20 @@ class Gedcompersons2 extends \StdClass
                         case "GRAD":	// do nothing
                         case "RETI":	// do nothing
                         case "EVEN":	// do nothing
-                        case "CAST":	// do nothing
                         case "DSCR":	// do nothing
                         case "EDUC":	// do nothing
                         case "NATI":	// do nothing
                         case "OCCU":	// do nothing
                         case "RELI":	// do nothing
                         case "RESI":	// do nothing
-                        case "_BRTM":	if ($information == '_BRTM') {
-                            $information = 'BRTM';
-                        }
-                            // no break
+                        case "BRTM":	// do nothing
+                        case "CAST":	// do nothing
+                        case "ELEC":	// do noting
                         case "CIRC":	if ($information == 'CIRC') {
                             $information = 'BRTM';
                         }
                             // no break
-                        case "_YART":	if ($information == '_YART') {
-                            $information = 'YART';
+                        case "YART":	if ($information == 'YART') {
                             $this->indLiving  = false;
                         }
                             // no break

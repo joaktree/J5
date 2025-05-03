@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Joomla! component Joaktree
  *
@@ -34,81 +34,85 @@ $i = 0;
 $n = count($lines);
 
 foreach ($lines as $line) {
-	if ( ($line->quotation) or ($line->note) ) {
-		$pstyle = '<p class="jt-nobottom-row">';
-	} else {
-		$pstyle = '<p>';
-	}
-	
-	$html .= $pstyle;
-	// if more than 1 source, a number is shown
-	if ($n > 1) {
-		$i++;
-		$html .= $i.'.&nbsp;';
-	}
-		
-	// set up empty line
-	$htmlline = '';
-	
-	if ($line->title) {
-		$htmlline .= '<span class="jt-source-title">' . $line->title . '</span>';
-	}
-	
-	if ($line->publication) {
-		if ($htmlline != '') {
-			$htmlline .= ', ';
-		}		
-		$htmlline .= $line->publication;
-	}
-	
-	if ($line->author) {
-		if ($htmlline != '') {
-			$htmlline .= '&nbsp;';
-		}
-		$htmlline .= '(' . $line->author . ')';
-	}
-	
-	if ($line->page) {
-		if ($htmlline != '') {
-			$htmlline .= ', ';
-		}
-		$htmlline .= $line->page;
-	}
-	
-	// if line is not empty, produce html
-	if ($htmlline != '') {
-		$html .=  wordwrap($htmlline, $width, '<br />');
-	} 
-	
-	if ($line->information) {
-		$html .=  wordwrap($line->information, $width, '<br />');
-	}
-	
-	if ($line->repository) {
-		$html .= '&nbsp;[';
-		if ($line->website) {
-			$html .= '<a href="' . $line->website . '" target="_repository">';
-		}
-		$html .= $line->repository;
-		if ($line->website) {
-			$html .= '</a>';
-		}
-		$html .= ']';
-	}
-	
-	$html .= '</p>';
-	
-	if ($line->quotation) {
-		$html .= '<p class="jt-nomargin-row">&nbsp;&nbsp;&nbsp;<span class="jt-label">'; 
-		$html .= Text::_('JT_QUOTE') . ': </span>' . wordwrap($line->quotation, $width, '<br />');
-		$html .= '</p>';
-	}
 
-	if ($line->note) {
-		$html .= '<p class="jt-nomargin-row">&nbsp;&nbsp;&nbsp;<span class="jt-label">';
-		$html .= Text::_('JT_NOTE') . ': </span>' . wordwrap($line->note, $width, '<br />') ;
-		$html .= '</p>';
-	}
+    if (!$line->published) {
+        continue;
+    }
+
+    if (($line->quotation) or ($line->note)) {
+        $pstyle = '<p class="jt-nobottom-row">';
+    } else {
+        $pstyle = '<p>';
+    }
+    $html .= $pstyle;
+    // if more than 1 source, a number is shown
+    if ($n > 1) {
+        $i++;
+        $html .= $i.'.&nbsp;';
+    }
+
+    // set up empty line
+    $htmlline = '';
+
+    if ($line->title) {
+        $htmlline .= '<span class="jt-source-title">' . $line->title . '</span>';
+    }
+
+    if ($line->publication) {
+        if ($htmlline != '') {
+            $htmlline .= ', ';
+        }
+        $htmlline .= $line->publication;
+    }
+
+    if ($line->author) {
+        if ($htmlline != '') {
+            $htmlline .= '&nbsp;';
+        }
+        $htmlline .= '(' . $line->author . ')';
+    }
+
+    if ($line->page) {
+        if ($htmlline != '') {
+            $htmlline .= ', ';
+        }
+        $htmlline .= $line->page;
+    }
+
+    // if line is not empty, produce html
+    if ($htmlline != '') {
+        $html .=  wordwrap($htmlline, $width, '<br />');
+    }
+
+    if ($line->information) {
+        $html .=  wordwrap($line->information, $width, '<br />');
+    }
+
+    if ($line->repository) {
+        $html .= '&nbsp;[';
+        if ($line->website) {
+            $html .= '<a href="' . $line->website . '" target="_repository">';
+        }
+        $html .= $line->repository;
+        if ($line->website) {
+            $html .= '</a>';
+        }
+        $html .= ']';
+    }
+
+    $html .= '</p>';
+
+    if ($line->quotation) {
+        $html .= '<p class="jt-nomargin-row">&nbsp;&nbsp;&nbsp;<span class="jt-label">';
+        $html .= Text::_('JT_QUOTE') . ': </span>' . wordwrap($line->quotation, $width, '<br />');
+        $html .= '</p>';
+    }
+
+    if ($line->note && $line->note_value) {
+        $html .= '<p class="jt-nomargin-row">&nbsp;&nbsp;&nbsp;<span class="jt-label">';
+        $html .= Text::_('JT_NOTE') . ': </span>' . wordwrap($line->note_value, $width, '<br />') ;
+        $html .= '</p>';
+    }
 
 } // end of loop
 

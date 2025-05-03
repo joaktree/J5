@@ -97,6 +97,7 @@ INSERT IGNORE INTO #__joaktree_display_settings (code, level, ordering, publishe
 INSERT IGNORE INTO #__joaktree_display_settings (code, level, ordering, published, access, accessLiving, altLiving ) VALUES ("ENOT", "person", 31, 1, 1, 3, 0);
 INSERT IGNORE INTO #__joaktree_display_settings (code, level, ordering, published, access, accessLiving, altLiving ) VALUES ("SOUR", "person", 32, 1, 1, 3, 0);
 INSERT IGNORE INTO #__joaktree_display_settings (code, level, ordering, published, access, accessLiving, altLiving ) VALUES ("ESOU", "person", 33, 1, 1, 3, 0);
+INSERT IGNORE INTO #__joaktree_display_settings (code, level, ordering, published, access, accessLiving, altLiving ) VALUES ("ELEC", "person", 34, 0, 1, 3, 0);
 INSERT IGNORE INTO #__joaktree_display_settings (code, level, ordering, published, access, accessLiving, altLiving ) VALUES ("NAME", "name", 1, 1, 1, 1, 1);
 INSERT IGNORE INTO #__joaktree_display_settings (code, level, ordering, published, access, accessLiving, altLiving ) VALUES ("GIVN", "name", 2, 0, 1, 3, 0);
 INSERT IGNORE INTO #__joaktree_display_settings (code, level, ordering, published, access, accessLiving, altLiving ) VALUES ("NICK", "name", 3, 0, 1, 3, 0);
@@ -119,7 +120,7 @@ CREATE TABLE IF NOT EXISTS #__joaktree_documents (
 app_id           tinyint(4)            NOT NULL,
 id               varchar(20)           NOT NULL,
 file             varchar(200)          NOT NULL,
-fileformat       varchar(10)           NOT NULL,
+fileformat       varchar(10)           NULL,
 indCitation      tinyint(1)   unsigned default 0,
 note_id          varchar(20)               NULL,
 title            varchar(100)              NULL,
@@ -314,10 +315,10 @@ orderNumber      smallint(2)           NOT NULL ,
 code             varchar(4)            NOT NULL ,
 indNote          tinyint(1)   unsigned default 0 ,
 indCitation      tinyint(1)   unsigned default 0 ,
-type             varchar(30)  default      NULL ,
+type             varchar(300) default      NULL ,
 eventDate        varchar(40)  default      NULL ,
 loc_id           int(11)      default      NULL ,
-location         varchar(300)  default     NULL ,
+location         varchar(300) default     NULL ,
 value            varchar(100) default      NULL ,
 PRIMARY KEY  (app_id,person_id_1,person_id_2,orderNumber) ,
 KEY LOC2     (location) ,
