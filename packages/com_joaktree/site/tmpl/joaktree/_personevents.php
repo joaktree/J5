@@ -59,7 +59,7 @@ foreach ($events as $event) {
 		$indEvents = true;
 		$html .= '<span class="jt-high-row jt-label">' . Text::_($event->code);
 		if ($event->type) {
-			$tmpType = str_replace(' ', '+', $event->type);
+			$tmpType = str_replace(' ', ' ', $event->type);
 			$html .= ' - ' . Text::_($tmpType);
 		}
 		$html .=': </span>';
@@ -145,9 +145,9 @@ foreach ($events as $event) {
 	if ($event->indNote == true) {
 		if ($this->lists['technology'] != 'b') {
 			if (($this->lists['technology'] == 'j') or ($event->indAltNote == true)) {
-				$html .= '<div id="'.$njtid2.'" class="jt-hide" style="position: absolute; z-index: 50;">';
+				$html .= '<div id="'.$njtid2.'" class="jt-hide" style="position: absolute; z-index: 500;">';
 			} else {
-				$html .= '<div id="'.$njtid2.'" class="jt-ajax" style="position: absolute; z-index: 50;">';
+				$html .= '<div id="'.$njtid2.'" class="jt-ajax" style="position: absolute; z-index: 500;">';
 			} 
 			
 			if ($event->indAltNote == true) {
@@ -175,9 +175,9 @@ foreach ($events as $event) {
 	if ($event->indCitation == true) {
 		if ($this->lists['technology'] != 'b') {
 			if (($this->lists['technology'] == 'j') or ($event->indAltSource == true)) {
-				$html .= '<div id="'.$sjtid2.'" class="jt-hide" style="position: absolute; z-index: 50;">';
+				$html .= '<div id="'.$sjtid2.'" class="jt-hide" style="position: absolute; z-index: 500;">';
 			} else {
-				$html .= '<div id="'.$sjtid2.'" class="jt-ajax" style="position: absolute; z-index: 50;">';
+				$html .= '<div id="'.$sjtid2.'" class="jt-ajax" style="position: absolute; z-index: 500;">';
 			} 
 			
 			if ($event->indAltSource == true) {

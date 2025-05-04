@@ -7,7 +7,8 @@
             <item>Update : 2025-05-03</item>
         </note>
         <fix>
-            <item>Issue 20 : </item>
+            <item>Fix issue 20 : sources filtering, marriage display,... </item>
+            <item>Event display : remove + symbol</item>
         </fix>
     </changelog>
 	<changelog>

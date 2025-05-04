@@ -36,7 +36,7 @@ foreach ($events as $event) {
     if (($event->eventDate != null) or ($event->location != null) or ($event->value != null)) {
         $html .= '<span class="jt-high-row jt-label">' . Text::_($event->code);
         if ($event->type) {
-            $tmpType = str_replace(' ', '+', $event->type);
+            $tmpType = str_replace(' ', ' ', $event->type);
             $html .= ' - ' . Text::_($tmpType);
         }
         $html .= ': </span>';
