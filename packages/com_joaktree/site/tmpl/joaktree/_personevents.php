@@ -84,7 +84,7 @@ foreach ($events as $event) {
 					$html .= 'onMouseOver="ShowAjaxPopup(\''.$njtid1.'\', \''.$njtid2.'\', \''.$link.'\');return false;"';
 				}
 				
-				$html .= 'onMouseOut="HidePopup(\''.$njtid2.'\');return false;">';
+				$html .= 'onClick="HidePopup(\''.$njtid2.'\');return false;">';
 				$html .= '&nbsp;</a>';
 			}
 		} else {
@@ -108,7 +108,7 @@ foreach ($events as $event) {
 						);
 					$html .= 'onMouseOver="ShowAjaxPopup(\''.$sjtid1.'\', \''.$sjtid2.'\', \''.$link.'\');return false;"';
 				}
-				$html .= 'onMouseOut="HidePopup(\''.$sjtid2.'\');return false;">';
+				$html .= 'onClick="HidePopup(\''.$sjtid2.'\');return false;">';
 				$html .= '&nbsp;</a>';
 			}
 		} else {

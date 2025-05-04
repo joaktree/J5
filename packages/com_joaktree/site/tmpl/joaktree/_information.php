@@ -67,7 +67,7 @@ if ((count($lines) + count($items)) == 1) {
 			
 			$html1 .= '<a href="#" id="'.$buttonId.'" class="jt-sources-icon" ';
 			$html1 .= 'onMouseOver="ShowAjaxPopup(\''.$buttonId.'\', \''.$divId.'\', \''.$link.'\');return false;" ';
-			$html1 .= 'onMouseOut="HidePopup(\''.$divId.'\');return false;">';							
+			$html1 .= 'onClick="HidePopup(\''.$divId.'\');return false;">';	
 			$html1 .= '&nbsp;</a>';
 		}
 		
@@ -77,7 +77,7 @@ if ((count($lines) + count($items)) == 1) {
 		$html .= '<h2 class="contentheading">'.$lines[0]->title.$html1.'</h2>';
 		$html .= '<div class="article-content">'.$lines[0]->text.'</div>';	
 		
-		if (count($sources) > 0) {			
+		if (count($sources) > 0) {
 			// show text
 			if ($this->person->indAltSource == true) {
 				$html .= '<div id="'.$divId.'" class="jt-hide" style="position: absolute; z-index: 50;">';

@@ -9,6 +9,7 @@
         <fix>
             <item>Fix issue 20 : sources filtering, marriage display,... </item>
             <item>Event display : remove + symbol</item>
+            <item>Person : use click to close popups</item>
         </fix>
     </changelog>
 	<changelog>
