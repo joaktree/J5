@@ -1401,7 +1401,6 @@ class Gedcompersons2 extends \StdClass
                         case "RESI":	// do nothing
                         case "BRTM":	// do nothing
                         case "CAST":	// do nothing
-                        case "ELEC":	// do noting
                         case "CIRC":	if ($information == 'CIRC') {
                             $information = 'BRTM';
                         }
@@ -1446,7 +1445,12 @@ class Gedcompersons2 extends \StdClass
                         case "CHAN": // changeDateTime
                             $event1Type = 'changeDateTime';
                             break;
-                        default:	$event1Type = 'none';
+                        default:	// unknown : assume event
+                            $event1Type = 'personEvent';
+                            if ($ret) {
+                                $ret = $this->setPersonEvent('EVEN', '');
+                                $this->person_events->set('type', $information);
+                            }
                             break;
                     }
                     break;
@@ -1458,71 +1462,38 @@ class Gedcompersons2 extends \StdClass
                             case "GIVN":	// do nothing
                             case "SURN":	// do nothing
                             case "NICK":	// do nothing
-                            case "_ADPN": 	if ($nameTag == '_ADPN') {
-                                $nameTag = 'ADPN';
-                            }
-                                // no break
-                            case "_AKA": 	if ($nameTag == '_AKA') {
+                            case "ADPN":
+                            case "AKA":
+                            case "AKAN":	if ($nameTag == 'AKAN') {
                                 $nameTag = 'AKA';
                             }
                                 // no break
-                            case "_AKAN":	if ($nameTag == '_AKAN') {
-                                $nameTag = 'AKA';
-                            }
-                                // no break
-                            case "_CALL":	if ($nameTag == '_CALL') {
+                            case "CALL":	if ($nameTag == 'CALL') {
                                 $nameTag = 'AKA';
                             }
                                 // no break
                             case "AKA":	// do nothing
-                            case "_BIRN":	if ($nameTag == '_BIRN') {
-                                $nameTag = 'BIRN';
-                            }
-                                // no break
-                            case "_CENN":	if ($nameTag == '_CENN') {
-                                $nameTag = 'CENN';
-                            }
-                                // no break
-                            case "_CURN":	if ($nameTag == '_CURN') {
-                                $nameTag = 'CURN';
-                            }
-                                // no break
-                            case "_FKAN":	if ($nameTag == '_FKAN') {
+                            case "BIRN":
+                            case "CENN":
+                            case "CURN":
+                            case "FKAN":	if ($nameTag == 'FKAN') {
                                 $nameTag = 'FRKA';
                             }
                                 // no break
-                            case "_FRKA":	if ($nameTag == '_FRKA') {
-                                $nameTag = 'FRKA';
-                            }
-                                // no break
-                            case "_HEBN":	if ($nameTag == '_HEBN') {
-                                $nameTag = 'HEBN';
-                            }
-                                // no break
-                            case "_INDN":	if ($nameTag == '_INDN') {
+                            case "FRKA":
+                            case "HEBN":
+                            case "INDN":	if ($nameTag == 'INDN') {
                                 $nameTag = 'INDG';
                             }
                                 // no break
-                            case "_INDG":	if ($nameTag == '_INDG') {
-                                $nameTag = 'INDG';
-                            }
-                                // no break
-                            case "_MARN":	if ($nameTag == '_MARN') {
+                            case "INDG":
+                            case "MARN":
+                            case "MARNM":	if ($nameTag == 'MARNM') {
                                 $nameTag = 'MARN';
                             }
                                 // no break
-                            case "_MARNM":	if ($nameTag == '_MARNM') {
-                                $nameTag = 'MARN';
-                            }
-                                // no break
-                            case "_OTHN":	if ($nameTag == '_OTHN') {
-                                $nameTag = 'OTHN';
-                            }
-                                // no break
-                            case "_RELN":	if ($nameTag == '_RELN') {
-                                $nameTag = 'RELN';
-                            }
-                                // no break
+                            case "OTHN":
+                            case "RELN":
                             case "NAMR":	if ($nameTag == 'NAMR') {
                                 $nameTag = 'RELN';
                             }
@@ -1531,7 +1502,7 @@ class Gedcompersons2 extends \StdClass
                                     $ret = $this->setPersonName($nameTag, $row_line['value']);
                                 }
                                 break;
-                            case "_PATR":	if ($this->patronymSetting == 2) {
+                            case "PATR":	if ($this->patronymSetting == 2) {
                                 $this->persons->set('patronym', $row_line['value']);
                             }
                                 break;
@@ -1588,7 +1559,11 @@ class Gedcompersons2 extends \StdClass
                         case "TYPE":	// all other events
                             $event2Type = 'none';
                             if ($event1Type == 'personEvent') {
-                                $this->person_events->set('type', $row_line['value']);
+                                if ($this->person_events->get('type')) { // unknow type converted to event
+                                    $this->person_events->set('value', $row_line['value']);
+                                } else {
+                                    $this->person_events->set('type', $row_line['value']);
+                                }
                             }
                             break;
                         case "PAGE":	$event2Type = 'none';
@@ -1851,7 +1826,6 @@ class Gedcompersons2 extends \StdClass
 
         // if insert or update went ok, continue with next source; else stop
         if (!$ret) {
-            // $this->application->enqueueMessage(Text::sprintf('JTGEDCOM_MESSAGE_NOSUCPERSON', $person_id, $errors[0]), 'notice') ;
             $this->application->enqueueMessage(Text::sprintf('JTGEDCOM_MESSAGE_NOSUCPERSON', $person_id, ''), 'notice') ;
         }
 
