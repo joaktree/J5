@@ -73,6 +73,13 @@ function HandleResponse(response, respid) {
 //
 function ShowAjaxPopup(hoverid, popupid, url) {
 	if (!jte) var jte = window.event;
+
+	// Close other popups
+    popups = document.querySelectorAll('.jt-popup');
+    for (var i = 0; i < popups.length; i++) {
+        HidePopup(popups[i].id);
+    }
+
 	var browser=navigator.appName;
 	
 	hEl = document.getElementById(hoverid);

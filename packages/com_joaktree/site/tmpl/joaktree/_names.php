@@ -200,9 +200,9 @@ foreach ($names as $name) {
 	if ($name->indNote == true) {
 		if ($this->lists['technology'] != 'b') {
 			if (($this->lists['technology'] == 'j') or ($name->indAltNote == true)) {
-				$html .= '<div id="'.$njtid2.'" class="jt-hide" style="position: absolute; z-index: 50;">';
+				$html .= '<div id="'.$njtid2.'" class="jt-hide jt-popup" style="position: absolute; z-index: 50;">';
 			} else {
-				$html .= '<div id="'.$njtid2.'" class="jt-ajax" style="position: absolute; z-index: 50;">';
+				$html .= '<div id="'.$njtid2.'" class="jt-ajax jt-popup" style="position: absolute; z-index: 50;">';
 			} 
 			
 			if ($name->indAltNote == true) {
@@ -230,9 +230,9 @@ foreach ($names as $name) {
 	if ($name->indCitation == true) {
 		if ($this->lists['technology'] != 'b') {
 			if (($this->lists['technology'] == 'j') or ($name->indAltSource == true)) {
-				$html .= '<div id="'.$sjtid2.'" class="jt-hide" style="position: absolute; z-index: 50;">';
+				$html .= '<div id="'.$sjtid2.'" class="jt-hide jt-popup" style="position: absolute; z-index: 50;">';
 			} else {
-				$html .= '<div id="'.$sjtid2.'" class="jt-ajax" style="position: absolute; z-index: 50;">';
+				$html .= '<div id="'.$sjtid2.'" class="jt-ajax jt-popup" style="position: absolute; z-index: 50;">';
 			} 
 			
 			if ($name->indAltSource == true) {

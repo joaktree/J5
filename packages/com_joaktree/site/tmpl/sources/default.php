@@ -142,7 +142,7 @@ HTMLHelper::_('bootstrap.modal', 'a.modal');
 						<?php echo $this->newItem->title; ?>
 						<?php if ($this->lists['action'] != 'select') { ?>
 							<!-- specification for the popup -->
-							<div id="addsrcdet" class="jt-hide" style="position: absolute; z-index: 50;">
+							<div id="addsrcdet" class="jt-hide jt-popup" style="position: absolute; z-index: 50;">
 								<div class="jt-note" style="padding-bottom: 10px;">
 									<?php if (!empty($this->newItem->publication)) { ?>
 										<div class="jt-h3"><?php echo Text::_('JT_PUBLICATION'); ?></div>
@@ -289,7 +289,7 @@ HTMLHelper::_('bootstrap.modal', 'a.modal');
                         <?php }?>
 						<?php if ($this->lists['action'] != 'select') { ?>
 							<!-- specification for the popup -->
-							<div id="srcdet<?php echo $i; ?>" class="jt-hide" style="position: absolute; z-index: 50;">
+							<div id="srcdet<?php echo $i; ?>" class="jt-hide jt-popup" style="position: absolute; z-index: 50;">
 								<div class="jt-note" style="padding-bottom: 10px;">
 									<?php if (!empty($row->publication)) { ?>
 										<div class="jt-h3"><?php echo Text::_('JT_PUBLICATION'); ?></div>

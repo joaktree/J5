@@ -192,7 +192,11 @@ function ShowPopup(hoverid, popupid, lpx, dpx) {
 		oEl.style.top =  hEl.offsetTop  + dpx + 'px';
 		oEl.style.left = hEl.offsetLeft - lpx + 'px';
 	}
-	
+	// Close other popups
+    popups = document.querySelectorAll('.jt-popup');
+    for (var i = 0; i < popups.length; i++) {
+        HidePopup(popups[i].id);
+    }
 	// Set popup to visible
 	if(isClassInElement(oEl, 'jt-hide')) 
 		swapClassInElement(oEl,'jt-hide','jt-show');
