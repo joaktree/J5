@@ -2,6 +2,18 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
+		<version>2.2.6</version>
+        <note>
+            <item>Update : 2025-05-05</item>
+        </note>
+        <fix>
+            <item>Fix issue 20 : don't display relation events in person's sources</item>
+            <item>Display events value in person's sources</item>
+        </fix>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
 		<version>2.2.5</version>
         <note>
             <item>Update : 2025-05-03</item>

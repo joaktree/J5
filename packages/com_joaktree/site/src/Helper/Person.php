@@ -1045,7 +1045,7 @@ class Person extends \StdClass
     {
         $query =  $this->_db->getquery(true);
         // select from citations
-        $query->select(' jcn.* ');
+        $query->select('DISTINCT jcn.* ');
         $query->from(' #__joaktree_citations      jcn ');
         // select from sources
         $query->select(' jse.title ');
@@ -1074,19 +1074,29 @@ class Person extends \StdClass
                         .'    AND jry.id     = jse.repo_id '
                         .'    ) '
         );
-        $query->select(' jevt.code ');
         $query->leftJoin(
-            ' #__joaktree_person_events   jevt '
-                        .' ON (   jevt.app_id = jse.app_id '
-                        .'    AND jevt.person_id     = jcn.person_id_1 '
-                        .'    AND jevt.orderNumber     = jcn.orderNumber '
+            ' #__joaktree_person_events   jevtp '
+                        .' ON ( jcn.objectType = "personEvent"'
+                        .'    AND jevtp.app_id = jse.app_id '
+                        .'    AND jevtp.person_id     = jcn.person_id_1 '
+                        .'    AND jevtp.orderNumber     = jcn.orderNumber '
                         .'    ) '
         );
+        $query->leftJoin(
+            ' #__joaktree_relation_events   jevtr '
+                        .' ON ( jcn.objectType = "relationEvent"'
+                        .'    AND jevtr.app_id = jse.app_id '
+                        .'    AND jevtr.person_id_1     = jcn.person_id_1 '
+                        .'    AND jevtr.orderNumber     = jcn.orderNumber '
+                        .'    ) '
+        );
+        $query->select('jevtp.code as pcode,jevtp.type as ptype');
+        $query->select('jevtr.code as rcode,jevtr.type as rtype');
         $query->select('jds.published,jds.accessLiving');
         $query->leftJoin(
             ' #__joaktree_display_settings  jds '
-                         .' ON (   jds.code  = jevt.code '
-                         .'    AND jds.level = '.$this->_db->Quote('person').' '
+                         .' ON (   (   (jds.code = jevtp.code  AND jds.level = "person")'
+                         .'         OR (jds.code = jevtr.code AND jds.level = "relation") )'
                          .'    AND jds.published = true '
                          .'    ) '
         );
@@ -1095,7 +1105,6 @@ class Person extends \StdClass
             $query->where(' '.$where.' ');
         }
         $this->_db->setquery($query);
-
         $sources = $this->_db->loadObjectList();
         return $sources;
     }
@@ -1114,7 +1123,8 @@ class Person extends \StdClass
             case "personAll":
                 $wheres[] = ' (  jcn.person_id_1 = '.$this->_db->Quote($this->id).' '
                            .' OR jcn.person_id_2 = '.$this->_db->Quote($this->id).' '
-                           .' ) ';
+                           .' ) '
+                           .' AND jcn.objectType = '.$this->_db->Quote("personEvent");
                 break;
             case "person":
                 $wheres[] = ' jcn.person_id_1 = '.$this->_db->Quote($this->id).' ';

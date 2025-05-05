@@ -56,8 +56,14 @@ foreach ($lines as $line) {
         $pstyle = '<p>';
     }
     $html .= $pstyle;
-    if ($line->code) {
-        $html .= '<b>'.Text::_($line->code).'</b> : ';
+    if ($line->pcode || $line->rcode) {
+        $code = $line->pcode ? $line->pcode : $line->rcode;
+        if ($code == "EVEN") {
+            if ($line->ptype || $line->rtype) {
+                $code = $line->ptype ? $line->ptype : $line->rtype;
+            }
+        }
+        $html .= '<b>'.Text::_($code).'</b> : ';
     }
 
     $emptyline = true;
