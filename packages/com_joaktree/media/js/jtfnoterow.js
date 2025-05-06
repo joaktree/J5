@@ -38,6 +38,7 @@ function inject_notrow(table_body, table_row, appid, obj_type, obj_number){
         $html = $html.replaceAll("+orderNumber+",orderNumber);
         $html = $html.replaceAll("'+rownot+'",rownot);
         $html = $html.replaceAll("+rownot+",rownot);
+        $html = $html.replaceAll("\'+obj_number+\'",obj_number);
         row_str += $html;
         if ($html.indexOf($html, '<!-- end row -->') > 0) { 
         //convert string to table wrapped in a div element

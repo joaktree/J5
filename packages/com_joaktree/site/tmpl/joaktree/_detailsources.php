@@ -18,7 +18,7 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Language\Text;
 
 $html = '';
-$width = 100;
+$width = 150;
 $lines = $this->person->getSources($this->sources[ 'subtype' ], $this->sources[ 'orderNumber' ], $this->sources[ 'relation_id' ]);
 
 
@@ -55,32 +55,32 @@ foreach ($lines as $line) {
     $htmlline = '';
 
     if ($line->title) {
-        $htmlline .= '<span class="jt-source-title">' . $line->title . '</span>';
+        $html .= '<span class="jt-source-title">' . $line->title . '</span>';
     }
 
     if ($line->publication) {
-        if ($htmlline != '') {
+        if (($htmlline != '') || ($html != '')) {
             $htmlline .= ', ';
         }
         $htmlline .= $line->publication;
     }
 
     if ($line->author) {
-        if ($htmlline != '') {
+        if (($htmlline != '') || ($html != '')) {
             $htmlline .= '&nbsp;';
         }
         $htmlline .= '(' . $line->author . ')';
     }
 
     if ($line->page) {
-        if ($htmlline != '') {
+        if (($htmlline != '') || ($html != '')) {
             $htmlline .= ', ';
         }
         $htmlline .= $line->page;
     }
 
     // if line is not empty, produce html
-    if ($htmlline != '') {
+    if (($htmlline != '') || ($html != '')) {
         $html .=  wordwrap($htmlline, $width, '<br />');
     }
 

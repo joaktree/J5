@@ -44,8 +44,8 @@ foreach ($events as $event) {
         $html .= '<span class="jt-high-row jt-iconlabel">';
 
         if ($event->indNote == true) {
-            $njtid1 = 'jt1notpev'.$i.$this->person->id.$this->partner[ 'id' ];
-            $njtid2 = 'jt2notpev'.$i.$this->person->id.$this->partner[ 'id' ];
+            $njtid1 = 'jt1notpev'.$i.$this->person->id.$this->partner->id;
+            $njtid2 = 'jt2notpev'.$i.$this->person->id.$this->partner->id;
             if ($this->lists['technology'] != 'b') {
 
                 $html .= '<a href="#" id="'.$njtid1.'" class="jt-notes-icon"';
@@ -57,7 +57,7 @@ foreach ($events as $event) {
                         'index.php?format=raw&option=com_joaktree'
                         .'&view=joaktree&layout=_detailnotes'
                         .'&tmpl=component&type=relation&subtype=revent&orderNumber='.$event->orderNumber
-                        .'&relationId='.$this->partner[ 'id' ]
+                        .'&relationId='.$this->partner->id
                         .'&personId='.$this->person->app_id.'!'.$this->person->id
                         .'&treeId='.$this->person->tree_id
                     );

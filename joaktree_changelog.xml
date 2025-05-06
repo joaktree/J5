@@ -2,7 +2,20 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
-		<version>2.2.6</version>
+		<version>2.2.7</version>
+        <note>
+            <item>Update : 2025-05-06</item>
+        </note>
+        <fix>
+            <item>Detail source : wrong wordwrap if source just contains a title</item>
+            <item>Note : error saving note (1) when creating a new note</item>
+            <item>Issue 21 : error when displaying event notes</item>
+        </fix>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
+		<version>2.2.7</version>
         <note>
             <item>Update : 2025-05-05</item>
         </note>
