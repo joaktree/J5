@@ -75,14 +75,14 @@ HTMLHelper::_('bootstrap.modal', 'a.modal');
 						<iframe 
 							id="jt-map-frame"
 							src="<?php echo array_shift($this->lists['map']); ?>" 
-							height="250px" 
+							height="500px" 
 							style="border: 1px solid #dddddd;" >
 						</iframe>
 					<?php } else {
 					    ?>
 						<iframe 
 							id="jt-map-frame"
-							height="250px" 
+							height="500px" 
 							style="border: 1px solid #dddddd;display:none" >
 						</iframe>
 
