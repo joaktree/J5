@@ -76,10 +76,18 @@ document.addEventListener('DOMContentLoaded', function() {
                     number: marker.label
             });                
             let jtmarker = L.marker([marker.latitude, marker.longitude],{icon: myMarker}).addTo(jtmap[mapix]);
+            popup = null;
             if (marker.text) {
-                createPopup(mapix,jtmarker, jtlat[mapix], jtlong[mapix],marker.text);
+                popup = createPopup(mapix,jtmarker, jtlat[mapix], jtlong[mapix],marker.text);
             }
-
+            if (popup) {
+                popup.on({
+                    popupclose: (e) => {
+                       //  e.sourceTarget._map.fitBounds(e.sourceTarget._map.getCenter());
+                        e.sourceTarget._map.panTo(new L.LatLng(e.sourceTarget._map._lastCenter.lat, e.sourceTarget._map._lastCenter.lng));
+                    }
+                })                  
+            }
         })
         mapix +=1;
     });
@@ -91,5 +99,5 @@ function createPopup(mapid,jtmarker, alat,along,atext) {
     if (jtiti[mapid] == 'true') { // affiche un lien Venir ici
         popuptext += '<br><a href="https://www.openstreetmap.org/directions?route=%3B'+alat+'%2C'+along+'#map=14/'+alat+'/'+along+'" target="_blank" rel="noopener">Venir ici</a>'; 
     }
-    jtmarker.bindPopup(popuptext,{maxWidth: max,keepInView:true});
+    return jtmarker.bindPopup(popuptext,{maxWidth: max,keepInView:true});
 }

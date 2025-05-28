@@ -346,7 +346,7 @@ class Map extends \StdClass
             $robot = (JoaktreeHelper::getTechnology() == 'a') ? '' : 'rel="noindex, nofollow"';
 
             for ($i = 0; $i < count($mapItems); $i++) {
-                $indMore = 	(strlen($mapItems[$i]->information) > $maxInfo);
+                $indMore = 	(strlen($mapItems[$i]->information) > 1024);
                 $tmps1 = explode('|', $mapItems[$i]->information);
 
                 if ($indMore) {
@@ -355,7 +355,13 @@ class Map extends \StdClass
                 }
 
                 $info  = array();
+                $lines = 0;
                 foreach ($tmps1 as $tmp1) {
+                    $lines++;
+                    if ($lines > 24) {
+                        $indMore = true;
+                        break;
+                    }
                     $tmps2 = explode('#', $tmp1);
 
                     $name  = (count($tmps2)) ? htmlspecialchars(array_shift($tmps2), ENT_QUOTES) : '....';
@@ -450,7 +456,7 @@ class Map extends \StdClass
                     .'   ,      NULL              AS person_id_2 '
                     .'   ,      jpe.code          AS code '
                     .'   ,      '.$this->_db->Quote('person').' AS level '
-                    .'   ,      jpe.eventDate     AS eventDate '
+                    .'   ,      IFNULL(jpe.eventDate,'.$this->_db->quote(Text::_("JT_NO_DATE")).')    AS eventDate '
                     .'   ,      jpe.loc_id        AS loc_id '
                     .'   ,      jpe.app_id        AS app_id '
                     .'   ,      jdsp.access       AS access '
@@ -470,7 +476,7 @@ class Map extends \StdClass
                     .'   ,      jre.person_id_2   AS person_id_2 '
                     .'   ,      jre.code          AS code '
                     .'   ,      '.$this->_db->Quote('relation').' AS level '
-                    .'   ,      jre.eventDate     AS eventDate '
+                    .'   ,      IFNULL(jre.eventDate,'.$this->_db->quote(Text::_("JT_NO_DATE")).')    AS eventDate '
                     .'   ,      jre.loc_id        AS loc_id '
                     .'   ,      jre.app_id        AS app_id '
                     .'   ,      jdsr.access       AS access '
@@ -616,7 +622,7 @@ class Map extends \StdClass
         $query->group(' jln.latitude ');
         $query->order(' COUNT( iv_event.code ) ');
         $query->order(' jln.value ');
-
+        // echo $query->__toString();
         return $query;
 
     }
@@ -867,9 +873,9 @@ class Map extends \StdClass
 
             // set up style sheets and javascript files
             $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-            $wa->registerAndUseStyle('jtmapcss','media/com_joaktree/css/joaktree.map.css');
-            $wa->registerAndUseScript('jtmapjs',JoaktreeHelper::joaktreejs('jtmap.js'));
-            
+            $wa->registerAndUseStyle('jtmapcss', 'media/com_joaktree/css/joaktree.map.css');
+            $wa->registerAndUseScript('jtmapjs', JoaktreeHelper::joaktreejs('jtmap.js'));
+
             //HTMLHelper::_('behavior.formvalidation');
             HTMLHelper::_('behavior.formvalidator');
             HTMLHelper::_('bootstrap.modal', 'a.modal_person');

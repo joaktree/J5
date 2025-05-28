@@ -2,6 +2,19 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
+		<version>2.2.9</version>
+        <note>
+            <item>Update : 2025-05-28</item>
+        </note>
+        <fix>
+             <item>Issue 22 : Locations : limit events list to 22</item>
+             <item>Issue 22 : openstreetmap : recenter marker after closing popup</item>
+             <item>Issue 22 : Locations : replace unknown date per ? </item>
+        </fix>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
 		<version>2.2.8</version>
         <note>
             <item>Update : 2025-05-26</item>
