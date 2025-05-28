@@ -344,21 +344,16 @@ class Map extends \StdClass
                         .'&tech='.JoaktreeHelper::getTechnology()
                         .'&Itemid='.$menus[$this->params['tree_id']];
             $robot = (JoaktreeHelper::getTechnology() == 'a') ? '' : 'rel="noindex, nofollow"';
+            $lines = 0;
 
             for ($i = 0; $i < count($mapItems); $i++) {
-                $indMore = 	(strlen($mapItems[$i]->information) > 1024);
+
                 $tmps1 = explode('|', $mapItems[$i]->information);
 
-                if ($indMore) {
-                    // remove the last element
-                    array_pop($tmps1);
-                }
-
                 $info  = array();
-                $lines = 0;
                 foreach ($tmps1 as $tmp1) {
                     $lines++;
-                    if ($lines > 24) {
+                    if ($lines > 20) {
                         $indMore = true;
                         break;
                     }
