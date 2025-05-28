@@ -20,7 +20,7 @@
         <fix>
              <item>Issue 22 : Locations : limit events list to 22</item>
              <item>Issue 22 : openstreetmap : recenter marker after closing popup</item>
-             <item>Issue 22 : Locations : replace unknown date per ? </item>
+             <item>Issue 22 : Locations : replace unknown date by ? </item>
         </fix>
     </changelog>
 	<changelog>
