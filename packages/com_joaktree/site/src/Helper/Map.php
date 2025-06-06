@@ -345,7 +345,8 @@ class Map extends \StdClass
                         .'&Itemid='.$menus[$this->params['tree_id']];
             $robot = (JoaktreeHelper::getTechnology() == 'a') ? '' : 'rel="noindex, nofollow"';
             $lines = 0;
-
+            $indMore = false; // assume no more message
+            
             for ($i = 0; $i < count($mapItems); $i++) {
 
                 $tmps1 = explode('|', $mapItems[$i]->information);

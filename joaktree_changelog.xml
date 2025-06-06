@@ -2,6 +2,17 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
+		<version>2.2.11</version>
+        <note>
+            <item>Update : 2025-06-06</item>
+        </note>
+        <fix>
+             <item>Issue 23 : Map : undefined variable $indMore</item>
+        </fix>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
 		<version>2.2.10</version>
         <note>
             <item>Update : 2025-05-28</item>
