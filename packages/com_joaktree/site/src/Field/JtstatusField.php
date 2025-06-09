@@ -15,7 +15,7 @@
  */
 namespace Joaktree\Component\Joaktree\Site\Field;
 
-defined('JPATH_PLATFORM') or die;
+defined('_JEXEC') or die;
 use Joomla\CMS\Form\FormField;		//replace JFormField
 
 class JtstatusField extends FormField

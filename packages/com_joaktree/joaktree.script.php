@@ -21,6 +21,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Installer\Installer;
 use Joomla\Filesystem\Folder;
 use Joomla\Filesystem\File;
+use Joomla\Database\DatabaseInterface;
 
 /* 
  * An optional script file (PHP code that is run before, during and/or after installation, 
@@ -49,7 +50,7 @@ class com_joaktreeInstallerScript
 			$version = (string) Installer::getInstance()->getManifest()->version;
 			
 			// Initialize the database
-			$db 			= Factory::getDBO();
+			$db 			= Factory::getContainer()->get(DatabaseInterface::class);
         	$update_queries = array();
 			$application 	= Factory::getApplication();
 			
@@ -78,7 +79,7 @@ class com_joaktreeInstallerScript
         	//$new_version = $parent->getManifest()->version; //JInstallerAdapter::getManifest()->version;
 			$new_version = (string) Installer::getInstance()->getManifest()->version;
 			// Initialize the database
-			$db 			= Factory::getDBO();
+			$db 			= Factory::getContainer()->get(DatabaseInterface::class);
         	$update_queries = array();
 			$application 	= Factory::getApplication();
 			
@@ -259,7 +260,7 @@ class com_joaktreeInstallerScript
 			// Un-installation
 			
 			// Initialize the database
-			$db 			= Factory::getDBO();
+			$db 			= Factory::getContainer()->get(DatabaseInterface::class);
         	$update_queries = array();
 			$application 	= Factory::getApplication();
 
