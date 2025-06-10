@@ -2,6 +2,18 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
+		<version>2.2.13</version>
+        <note>
+            <item>Update : 2025-06-10</item>
+        </note>
+        <fix>
+             <item>Issue 23 : Google Map not displayed on french website</item>
+             <item>Map : and more message in persons popups</item>
+        </fix>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
 		<version>2.2.12</version>
         <note>
             <item>Update : 2025-06-08</item>

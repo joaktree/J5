@@ -344,17 +344,17 @@ class Map extends \StdClass
                         .'&tech='.JoaktreeHelper::getTechnology()
                         .'&Itemid='.$menus[$this->params['tree_id']];
             $robot = (JoaktreeHelper::getTechnology() == 'a') ? '' : 'rel="noindex, nofollow"';
-            $lines = 0;
-            $indMore = false; // assume no more message
             
             for ($i = 0; $i < count($mapItems); $i++) {
-
+                $lines = 0;
+                $indMore = false;
+                
                 $tmps1 = explode('|', $mapItems[$i]->information);
 
                 $info  = array();
                 foreach ($tmps1 as $tmp1) {
                     $lines++;
-                    if ($lines > 20) {
+                    if ($lines > 20) { // 20 lines max per popup box
                         $indMore = true;
                         break;
                     }
