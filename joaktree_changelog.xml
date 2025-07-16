@@ -13,7 +13,7 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
-		<version>2.2.15</version>
+		<version>2.2.14</version>
         <note>
             <item>Update : 2025-07-16</item>
         </note>
