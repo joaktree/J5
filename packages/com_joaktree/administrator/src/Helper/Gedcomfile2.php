@@ -392,6 +392,8 @@ class Gedcomfile2
         $ansel = false;
         $char_done = false;
         $vers_done = false;
+        $ind_header = false;
+        $ind_get_vers = false;
 
         // open file
         $handle = @fopen($filename, "r");
@@ -466,7 +468,11 @@ class Gedcomfile2
                             return $this->procObject;
                         }
                     }
-                } // end of if ind_header == true
+                } else {// end of if ind_header == true
+                    $this->procObject->msg = (isset($this->procObject->msg) ? $this->procObject->msg : '') . '<br />'.Text::_('JTGEDCOM_MESSAGE_NOHEAD');
+                    $this->procObject->status = 'error';
+                    return $this->procObject;
+                }
             } // end of loop
         }
 
