@@ -392,9 +392,8 @@ class Gedcomfile2
         $ansel = false;
         $char_done = false;
         $vers_done = false;
-        $ind_header = false;
+        $ind_header = 0;
         $ind_get_vers = false;
-
         // open file
         $handle = @fopen($filename, "r");
         if (($handle) && ($this->procObject->status == 'new')) {
@@ -434,14 +433,12 @@ class Gedcomfile2
                 // process only the header: so is this the header
                 if ($level == 0) {
                     if ($elements[1] == 'HEAD') {
-                        $ind_header = true;
-                    } else {
-                        $ind_header = false;
+                        $ind_header++;
                     }
                 }
 
                 // process only the header
-                if ($ind_header == true) {
+                if ($ind_header == 1) {
                     // see whether we have to transer ANSEL to UTF-8
                     // other character sets are left alone.
                     if ($elements[1] == 'CHAR') {
