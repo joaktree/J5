@@ -1787,6 +1787,7 @@ class Person extends \StdClass
                                        || strpos($uprFile, '.JPG', 1)
                                        || strpos($uprFile, '.PNG', 1)
                                        || strpos($uprFile, '.BMP', 1)
+                                       || strpos($uprFile, '.WEBP', 1)
                                     ) {
                                         $picture 				= new \StdClass();
                                         $position = strpos(str_replace('\\', '/', $base), $imagesPath.'/');
