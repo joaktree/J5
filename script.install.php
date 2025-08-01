@@ -284,7 +284,15 @@ class PlgSystemJoaktreeInstallerInstallerScript
             $db->execute();
         } catch (\RuntimeException $e) {
         }
-
+        // 2.2.16 : default GED directory 
+        $destination = JPATH_ROOT . '/files/com_joaktree';
+        Folder::create($destination);
+        File::copy($this->dir . '/index.html',$destination . '/index.html');
+        $from = JPATH_SITE."/media/com_joaktree/files/com_joaktree/.htaccess";
+        File::copy($from,$destination.'/.htaccess');
+        $destination = JPATH_ROOT . '/files/com_joaktree/gedfiles';
+        Folder::create($destination);
+        File::copy($this->dir . '/index.html',$destination . '/index.html');
     }
 
     // Check if Joomla version passes minimum requirement

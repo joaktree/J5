@@ -97,6 +97,7 @@ INSERT IGNORE INTO #__joaktree_display_settings (code, level, ordering, publishe
 INSERT IGNORE INTO #__joaktree_display_settings (code, level, ordering, published, access, accessLiving, altLiving ) VALUES ("ENOT", "person", 31, 1, 1, 3, 0);
 INSERT IGNORE INTO #__joaktree_display_settings (code, level, ordering, published, access, accessLiving, altLiving ) VALUES ("SOUR", "person", 32, 1, 1, 3, 0);
 INSERT IGNORE INTO #__joaktree_display_settings (code, level, ordering, published, access, accessLiving, altLiving ) VALUES ("ESOU", "person", 33, 1, 1, 3, 0);
+INSERT IGNORE INTO #__joaktree_display_settings (code, level, ordering, published, access, accessLiving, altLiving ) VALUES ("IMAG", "person", 34, 1, 1, 3, 0);
 INSERT IGNORE INTO #__joaktree_display_settings (code, level, ordering, published, access, accessLiving, altLiving ) VALUES ("NAME", "name", 1, 1, 1, 1, 1);
 INSERT IGNORE INTO #__joaktree_display_settings (code, level, ordering, published, access, accessLiving, altLiving ) VALUES ("GIVN", "name", 2, 0, 1, 3, 0);
 INSERT IGNORE INTO #__joaktree_display_settings (code, level, ordering, published, access, accessLiving, altLiving ) VALUES ("NICK", "name", 3, 0, 1, 3, 0);

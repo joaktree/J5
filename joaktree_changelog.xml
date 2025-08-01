@@ -2,6 +2,25 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
+		<version>2.2.16</version>
+        <note>
+            <item>Update : 2025-08-01</item>
+        </note>
+        <fix>
+             <item>Issue 28 : prepared statement error</item>
+             <item>Issue 29 : save a new application resets form values</item>
+             <item>Issue 29 : set default ged directory to files/com_joaktree/gedfiles</item>
+        </fix>
+        <change>
+            <item>Application form : use radio button instead of list to allow showon</item>
+        </change>
+        <addition>
+            <item>issue 26 : Person form display : new line IMAG</item>
+        </addition>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
 		<version>2.2.15</version>
         <note>
             <item>Update : 2025-07-16</item>

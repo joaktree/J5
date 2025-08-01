@@ -330,7 +330,19 @@ class Gedcomfile2
         array_splice($this->objectLines, 0);
 
     }
-
+    /*
+    ** Check BOM file
+    */
+    function check_BOM($filename) { 
+        $file = @fopen($filename, "r"); 
+        $bom = fread($file, 3); 
+        fclose($file);
+        if ($bom != b"\xEF\xBB\xBF") { 
+            return false; 
+        } else { 
+            return true; 
+        } 
+    } 
     /*
     ** Main function to import the gedcom file.
     */
@@ -353,6 +365,11 @@ class Gedcomfile2
         // check if gedcom file exists
         if (!@is_file($filename)) {
             $this->procObject->msg = (isset($this->procObject->msg) ? $this->procObject->msg : '') . '<br />'.Text::sprintf('JTGEDCOM_MESSAGE_NOGEDCOM', $filename);
+            $this->procObject->status = 'error';
+            return $this->procObject;
+        }
+        if ($this->check_BOM($filename)) {
+            $this->procObject->msg = (isset($this->procObject->msg) ? $this->procObject->msg : '') . '<br />'.Text::sprintf('JTGEDCOM_MESSAGE_BOMGEDCOM', $filename);
             $this->procObject->status = 'error';
             return $this->procObject;
         }

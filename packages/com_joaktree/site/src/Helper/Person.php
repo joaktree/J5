@@ -1671,9 +1671,27 @@ class Person extends \StdClass
             $docsFromGedcom	= (int) $params->get('indDocuments', 0);
             $ds				= '/';
             $imagesPath		= ComponentHelper::getParams('com_media')->get('image_path', 'images');
+            $code = "IMAG";
+            $level = "person";
+            $published = 1;
             $query 	  = $this->_db->getquery(true);
+            $query->select('access,accessLiving')
+                  ->from(' #__joaktree_display_settings  jds ')
+                  ->where('jds.code  = :code')
+                  ->where('jds.level = :level')
+                  ->where('jds.published = :published')
+                  ->where('jds.access IN '.$this->_levels.' ')
+                  ->where('jds.accessLiving IN '.$this->_levels.' ');
+            $query->bind(':code', $code, \Joomla\Database\ParameterType::STRING);
+            $query->bind(':level', $level, \Joomla\Database\ParameterType::STRING);
+            $query->bind(':published', $published, \Joomla\Database\ParameterType::INTEGER);
+            $this->_db->setquery($query);
+            $result = $this->_db->loadResult();
             // sequence == 0: Disable pictures
             $picArray = array();
+            if (!$result) { // not allowed
+                $sequence = 0;
+            }
             if ($sequence != 0) {
                 // docsFromGedcom = 1 => get the pictures from the GedCom file (document table)
                 if ($docsFromGedcom == 1) {
@@ -1880,4 +1898,3 @@ class Person extends \StdClass
 }
 
 ?>
-

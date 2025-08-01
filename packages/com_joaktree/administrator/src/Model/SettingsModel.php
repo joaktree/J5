@@ -211,7 +211,7 @@ class SettingsModel extends ListModel
 
             $query->update(' #__joaktree_display_settings ');
             $query->set(' ordering = '.$i.' ');
-            $query->where(' id = '.(int) $jtid.' ');
+            $query->where(' id = :id');
             $query->where(' '.$where.' ');
             $query->bind(':id', $jtid, \Joomla\Database\ParameterType::INTEGER);
 

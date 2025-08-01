@@ -50,7 +50,7 @@
 				type="text"
 				label="COM_JOAKTREE_GEDCOM_PATH_LABEL"
 				description="COM_JOAKTREE_GEDCOM_PATH_DESC"
-				default="tmp"
+				default="files/com_joaktree/gedfiles"
 				size="50"
 				class="inputbox"
 				required="true"
@@ -70,7 +70,8 @@
 			<field
 				id="unicode2utf"
 				name="unicode2utf"
-				type="list"
+				type="radio"
+                class="btn-group"
 				label="COM_JOAKTREE_CONVERSION_LABEL"
 				description="COM_JOAKTREE_CONVERSION_DESC"
 				default="0"
@@ -83,7 +84,8 @@
 			<field
 				id="familyname"
 				name="familyname"
-				type="list"
+				type="radio"
+                class="btn-group"
 				label="COM_JOAKTREE_FAMILYNAME_LABEL"
 				description="COM_JOAKTREE_FAMILYNAME_DESC"
 				default="0"
@@ -95,7 +97,8 @@
 			<field
 				id="patronym"
 				name="patronym"
-				type="list"
+				type="radio"
+                class="btn-group"
 				label="COM_JOAKTREE_PATRONYM_LABEL"
 				description="COM_JOAKTREE_PATRONYM_DESC"
 				default="1"
@@ -107,6 +110,7 @@
 			</field>
 
 			<field
+                showon="patronym!:0"
 				id="patronymSeparation"
 				name="patronymSeparation"
 				type="text"
@@ -142,7 +146,8 @@
 			<field
 				id="truncrelations"
 				name="truncrelations"
-				type="list"
+				type="radio"
+                class="btn-group"
 				label="COM_JOAKTREE_TRUNCRELATIONS_LABEL"
 				description="COM_JOAKTREE_TRUNCRELATIONS_DESC"
 				default="0"
@@ -154,7 +159,8 @@
 			<field
 				id="indDocuments"
 				name="indDocuments"
-				type="list"
+				type="radio"
+                class="btn-group"
 				label="COM_JOAKTREE_INDDOC_LABEL"
 				description="COM_JOAKTREE_INDDOC_DESC"
 				default="1"
@@ -163,7 +169,7 @@
 				<option value="1">JYES</option>
 			</field>
 	
-			<field
+			<field showon="indDocuments:1"
 				id="gedcomDocumentRoot"
 				name="gedcomDocumentRoot"
 				type="text"
@@ -173,7 +179,7 @@
 				class="inputbox"
 			/>
 	
-			<field
+			<field showon="indDocuments:0"
 				id="joomlaDocumentRoot"
 				name="joomlaDocumentRoot"
 				type="text"
@@ -186,7 +192,8 @@
 			<field
 				id="colon"
 				name="colon"
-				type="list"
+				type="radio"
+                class="btn-group btn-group-yesno"
 				label="COM_JOAKTREE_COLON_LABEL"
 				description="COM_JOAKTREE_COLON_DESC"
 				default="0"
@@ -198,7 +205,8 @@
 			<field
 				id="indLogging"
 				name="indLogging"
-				type="list"
+				type="radio"
+                class="btn-group btn-group-yesno"
 				label="COM_JOAKTREE_INDLOG_LABEL"
 				description="COM_JOAKTREE_INDLOG_DESC"
 				default="1"
@@ -208,7 +216,8 @@
 			</field>
 
             <field name="map"
-                type="list"
+				type="radio"
+                class="btn-group"
                 label="JT_LABEL_TYPE"
                 description="JT_DESC_TYPE"
             >

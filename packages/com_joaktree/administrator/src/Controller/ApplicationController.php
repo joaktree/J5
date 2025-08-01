@@ -37,6 +37,9 @@ class ApplicationController extends FormController
             case 'apply':
                 $cids = $this->input->get('cid', null, 'array');
                 $cid  = (int) $cids[0];
+                if (!$cid) { // creation mode
+                    $cid = $model->getState($this->context . '.id');
+                }
                 $link = 'index.php?option=com_joaktree&view=application&layout=form&id='.$cid;
                 break;
             case 'save':

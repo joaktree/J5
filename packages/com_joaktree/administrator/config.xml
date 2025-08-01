@@ -69,7 +69,7 @@
 				name="defaultdir"
 				label="COM_JOAKTREE_DEFAULTDIR_LABEL"
 				description="COM_JOAKTREE_DEFAULTDIR_DESC"
-				default="tmp"
+				default="files/com_joaktree/gedfiles"
 				size="50"
 				class="inputbox"
 			/>
