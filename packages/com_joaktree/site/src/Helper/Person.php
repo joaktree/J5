@@ -1692,6 +1692,7 @@ class Person extends \StdClass
             if (!$result) { // not allowed
                 $sequence = 0;
             }
+            $query 	  = $this->_db->getquery(true);
             if ($sequence != 0) {
                 // docsFromGedcom = 1 => get the pictures from the GedCom file (document table)
                 if ($docsFromGedcom == 1) {
