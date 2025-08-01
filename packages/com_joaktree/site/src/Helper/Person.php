@@ -1708,6 +1708,7 @@ class Person extends \StdClass
                                   .'   ,'.$this->_db->quote('JPEG').' '
                                   .'   ,'.$this->_db->quote('PNG').' '
                                   .'   ,'.$this->_db->quote('BMP').' '
+                                  .'   ,'.$this->_db->quote('WEBP').' '
                                   .'   ) '
                     );
                     $query->innerJoin(
@@ -1785,6 +1786,7 @@ class Person extends \StdClass
                                 if ($uprFile != '.' && $uprFile != '..') {
                                     if (strpos($uprFile, '.GIF', 1)
                                        || strpos($uprFile, '.JPG', 1)
+                                       || strpos($uprFile, '.JPEG', 1)
                                        || strpos($uprFile, '.PNG', 1)
                                        || strpos($uprFile, '.BMP', 1)
                                        || strpos($uprFile, '.WEBP', 1)
