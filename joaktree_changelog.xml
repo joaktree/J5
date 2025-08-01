@@ -10,6 +10,7 @@
              <item>Issue 28 : prepared statement error</item>
              <item>Issue 29 : save a new application resets form values</item>
              <item>Issue 29 : set default ged directory to files/com_joaktree/gedfiles</item>
+             <item>Issue 24 : Import GED : check file for BOM</item>
         </fix>
         <change>
             <item>Application form : use radio button instead of list to allow showon</item>
