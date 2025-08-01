@@ -2,6 +2,17 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
+		<version>2.2.20</version>
+        <note>
+            <item>Update : 2025-08-01</item>
+        </note>
+        <fix>
+             <item>Person : optimize living display image</item>
+        </fix>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
 		<version>2.2.19</version>
         <note>
             <item>Update : 2025-08-01</item>

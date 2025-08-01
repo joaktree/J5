@@ -1675,13 +1675,15 @@ class Person extends \StdClass
             $level = "person";
             $published = 1;
             $query 	  = $this->_db->getquery(true);
-            $query->select('access,accessLiving')
+            $query->select('accessLiving')
                   ->from(' #__joaktree_display_settings  jds ')
                   ->where('jds.code  = :code')
                   ->where('jds.level = :level')
                   ->where('jds.published = :published')
-                  ->where('jds.access IN '.$this->_levels.' ')
-                  ->where('jds.accessLiving IN '.$this->_levels.' ');
+                  ->where('jds.access IN '.$this->_levels);
+            if ($this->living) {
+                $query->where('jds.accessLiving IN '.$this->_levels.' ');
+            }
             $query->bind(':code', $code, \Joomla\Database\ParameterType::STRING);
             $query->bind(':level', $level, \Joomla\Database\ParameterType::STRING);
             $query->bind(':published', $published, \Joomla\Database\ParameterType::INTEGER);
@@ -1900,5 +1902,3 @@ class Person extends \StdClass
         }
     }
 }
-
-?>
