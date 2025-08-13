@@ -2,6 +2,23 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
+		<version>2.3.0</version>
+        <note>
+            <item>Update : 2025-08-11</item>
+        </note>
+        <fix>
+             <item>Files folder : remove .htaccess file</item>
+             <item>Issue 31 : Places view in backend</item>
+             <item>Issue 34 : Admin Persons: selecting published-unpublished state causes a sql error</item>
+        </fix>
+        <addition>
+            <item>Issue 33 : Add Dutch translation</item>
+            <item>Joaktree Iso : add all button in alpha list</item>
+        </addition>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
 		<version>2.2.20</version>
         <note>
             <item>Update : 2025-08-01</item>

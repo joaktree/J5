@@ -192,7 +192,7 @@ class PersonsModel extends ListModel
         }
 
         if (!($filter_state === '')) {
-            $query->where('jan.published = :filter'. (int) $filter_state);
+            $query->where('jan.published = :filter');
             $query->bind(':filter', $filter_state, \Joomla\Database\ParameterType::INTEGER);
         }
 

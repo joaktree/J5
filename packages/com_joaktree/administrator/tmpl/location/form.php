@@ -37,14 +37,14 @@ HTMLHelper::_('formbehavior.chosen', 'select');
 	}
 	function clearResultValue() {
 		document.getElementById('jform_resultValue').value  = null;
-		document.getElementById('jform_resultValue2').value = null;
+        document.getElementById('jform_resultValue').setAttribute('readonly','true');
 	}
 
 	function setResult(lat,lon,adr) {
 		document.getElementById('jform_latitude').value     = lat;
 		document.getElementById('jform_longitude').value    = lon;
 		document.getElementById('jform_resultValue').value  = adr;
-		document.getElementById('jform_resultValue2').value = adr;
+        document.getElementById('jform_resultValue').setAttribute('readonly','false');
 	}
 	function setDeleteCheckbox() {
 		var El = document.getElementById('jform_indDeleted');

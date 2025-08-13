@@ -118,7 +118,7 @@ JTIsotope.prototype.goisotope = function(isoid) {
         $button =  document.querySelector( $myiso.me+'.iso_btn_alpha_'+ $myiso.filters['alpha']);
         if ($button)    $myiso.addClass($button,'is-checked');
         $button = document.querySelector( this.me+'.iso_btn_alpha_tout');
-        if ($button)    $myiso.addClass($button,'hidden');
+        if ($button)    $myiso.removeClass($button,'is-checked');
         $myiso.updateselectfamily($myiso,$myiso.filters['alpha']);
     }
 	$items = document.querySelectorAll('#isotope-main-' + $myiso.isoid + ' .iso_itm');
@@ -256,6 +256,8 @@ JTIsotope.prototype.goisotope = function(isoid) {
                 isoobj.filters['alpha'] = [isoobj.options.default_letter];
                 $button =  document.querySelector( isoobj.me+'.iso_btn_alpha_'+ isoobj.options.default_letter);
                 if ($button)    isoobj.addClass($button,'is-checked');
+		        $button = document.querySelector( isoobj.me+'.iso_btn_alpha_tout');
+        		if ($button)    $myiso.removeClass($button,'is-checked');
                 isoobj.updateselectfamily(isoobj,isoobj.options.default_letter);
             }
             

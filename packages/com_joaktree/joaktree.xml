@@ -10,11 +10,11 @@
 	<old_authorUrl>www.joaktree.com</old_authorUrl>
     <author>Robert Gastaud</author>
     <rrgcreationDate>November 2017</rrgcreationDate>
-	<creationDate>2025-08-01</creationDate>
+	<creationDate>2025-08-13</creationDate>
 	<copyright>(C) 2017-2025 JoomXtensions.com</copyright>
 	<authorEmail>rg-consultant@robertg-conseil.fr</authorEmail>
 	<authorUrl>www.joomxtensions.com</authorUrl>	
-    <version>2.2.20</version>
+    <version>2.3.0</version>
     <description>COM_JOAKTREE_XML_DESC</description>
 	<namespace path="src">Joaktree\Component\Joaktree</namespace>
     <scriptfile>script.php</scriptfile>
@@ -55,6 +55,7 @@
     <languages folder="language">
         <language tag="en-GB">en-GB/com_joaktree.ini</language>
 		<language tag="fr-FR">fr-FR/com_joaktree.ini</language>
+        <language tag="nl-NL">nl-NL/com_joaktree.ini</language>
     </languages>
     <!-- end: site -->
     
@@ -151,6 +152,10 @@
 			<language tag="fr-FR">administrator/language/fr-FR/com_joaktree.gedcom.ini</language>
 			<language tag="fr-FR">administrator/language/fr-FR/com_joaktree.services.ini</language>
 			<language tag="fr-FR">administrator/language/fr-FR/com_joaktree.sys.ini</language>
+			<language tag="nl-NL">administrator/language/nl-NL/com_joaktree.ini</language>
+			<language tag="nl-NL">administrator/language/nl-NL/com_joaktree.gedcom.ini</language>
+			<language tag="nl-NL">administrator/language/nl-NL/com_joaktree.services.ini</language>
+			<language tag="nl-NL">administrator/language/nl-NL/com_joaktree.sys.ini</language>
 	    </languages>
 	</administration>
     <!-- end: administration -->

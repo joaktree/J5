@@ -236,6 +236,8 @@ class PlgSystemJoaktreeInstallerInstallerScript
             JPATH_ADMINISTRATOR."/components/com_joaktree/src/Table/JMFPKTable.php",
          // 2.2.4 : don't use system plugin, 
             JPATH_SITE."/plugins/system/joaktree",
+         // 2.3.0 : from files/joaktree/.htaccess file   
+            JPATH_SITE."/media/com_joaktree/files/com_joaktree/.htaccess"
         ];
         $this->delete($obsoleteFiles);
         // remove 1.5 obsolete plugins
@@ -288,8 +290,8 @@ class PlgSystemJoaktreeInstallerInstallerScript
         $destination = JPATH_ROOT . '/files/com_joaktree';
         Folder::create($destination);
         File::copy($this->dir . '/index.html',$destination . '/index.html');
-        $from = JPATH_SITE."/media/com_joaktree/files/com_joaktree/.htaccess";
-        File::copy($from,$destination.'/.htaccess');
+        //$from = JPATH_SITE."/media/com_joaktree/files/com_joaktree/.htaccess";
+        //File::copy($from,$destination.'/.htaccess');
         $destination = JPATH_ROOT . '/files/com_joaktree/gedfiles';
         Folder::create($destination);
         File::copy($this->dir . '/index.html',$destination . '/index.html');
