@@ -189,7 +189,7 @@ if (($displayfamily != "hide")) {
         if ($this->default_family == "") {
             $checked = "is-checked";
         }
-        $filter_family_div .= '<button class="'.$button_bootstrap.'  iso_btn_family_tout '.$checked.'" data-sv="*" />'.$liball.'</button>';
+        $filter_family_div .= '<button class="'.$button_bootstrap.'  iso_btn_family_tout '.$checked.'" data-sv="*" >'.$liball.'</button>';
         foreach ($this->sortFilter as $key => $filter) {
             $aff = $this->families[$key];
             $aff_alias = $this->families_alias[$key];
@@ -202,7 +202,7 @@ if (($displayfamily != "hide")) {
                 if ($familyfiltercount == 'true') {
                     $familycount = '<span class="family-count badge bg-info">'.$this->family_count[$aff_alias].'</span>';
                 }
-                $filter_family_div .= '<button class="'.$button_bootstrap.'  iso_btn_family_'.$aff_alias.' '.$checked.'" data-sv="'.$aff_alias.'" title="'.$this->families[$key].'"/>'.Text::_($aff).$familycount.'</button>';
+                $filter_family_div .= '<button class="'.$button_bootstrap.'  iso_btn_family_'.$aff_alias.' '.$checked.'" data-sv="'.$aff_alias.'" title="'.$this->families[$key].'">'.Text::_($aff).$familycount.'</button>';
             }
         }
         $filter_family_div .= '</div>';

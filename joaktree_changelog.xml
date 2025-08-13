@@ -10,6 +10,7 @@
              <item>Files folder : remove .htaccess file</item>
              <item>Issue 31 : Places view in backend</item>
              <item>Issue 34 : Admin Persons: selecting published-unpublished state causes a sql error</item>
+             <item>Joatree Iso : fix family buttons error</item>
         </fix>
         <addition>
             <item>Issue 33 : Add Dutch translation</item>
