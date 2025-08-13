@@ -107,9 +107,9 @@ if (($this->displayrange == "true") && ($this->rangestep == "auto")) {
     }
     $this->rangestep = $step;
 }
-// if (count($this->personlist) > 300) {
-//$this->default_letter = $first;
-// }
+//if (count($this->personlist) > 300) {
+    $this->default_letter = $first;
+//}
 $document->addScriptOptions(
     'com_joaktree_'.$com_id,
     array(  'layout' => $this->iso_layout, 'nbcol' => $this->iso_params->get('iso_nbcol', 2),
