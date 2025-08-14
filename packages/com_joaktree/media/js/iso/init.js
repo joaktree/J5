@@ -553,9 +553,9 @@ JTIsotope.prototype.filter_button = function(obj,evt) {
 		$grdparent = obj.parentNode.parentNode;
 		if (sortValue == '*') {
             $myiso.filters[$parent] = ['*'];
-            if ($parent == 'alpha' && $myiso.options.default_letter) {
-                $myiso.filters[$parent] = [$myiso.options.default_letter];
-			}
+            //if ($parent == 'alpha' && $myiso.options.default_letter) {
+            //    $myiso.filters[$parent] = [$myiso.options.default_letter];
+			//}
 		} else { 
 			$myiso.filters[$parent]= [sortValue];
 			if (child) {
