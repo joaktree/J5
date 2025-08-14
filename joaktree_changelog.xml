@@ -15,7 +15,13 @@
         <addition>
             <item>Issue 33 : Add Dutch translation</item>
             <item>Joaktree Iso : add all button in alpha list</item>
+            <item>Config : add default map mode</item>
+            <item>Config : application : use default directory</item>
         </addition>
+        <change>
+            <item>Merge com_joaktree.services.ini in com_joaktree.ini</item>
+            <item>Remove com_joaktree.services.ini</item>
+        </change>
     </changelog>
 	<changelog>
 		<element>com_joaktree</element>

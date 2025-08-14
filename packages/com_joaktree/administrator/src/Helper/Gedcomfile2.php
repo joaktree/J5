@@ -358,9 +358,7 @@ class Gedcomfile2
         //		$procStep			= (int) $params->get('processStep', 1);
         $procStepSize		= (int) $params->get('procStepSize', 50);
         $ret				= true;
-        //		$indAjax 			= ($procStep == 1);
         $indAjax 			= true;
-        $map_def            = $params->get('map');
 
         // check if gedcom file exists
         if (!@is_file($filename)) {

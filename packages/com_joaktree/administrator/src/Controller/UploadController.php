@@ -42,7 +42,7 @@ class UploadController extends FormController
             $path   = JPATH_ROOT.'/'.$params->get('gedcomfile_path');
         } else {
             $params = ComponentHelper::getParams('com_joaktree') ;
-            $path   = JPATH_ROOT.'/'. $params->get('defaultdir', 'tmp');
+            $path   = JPATH_ROOT.'/'. $params->get('gedcomfile_path', 'files/com_joaktree/gedfiles');
         }
         $dest = $path ."/" . $filename;
 

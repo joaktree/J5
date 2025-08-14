@@ -65,14 +65,26 @@
 				<option value="9">COM_JOAKTREE_ARTICLELINKMETHOD_VALUE_9</option>
 			</field>
 			<field
-				id="defaultdir"
-				name="defaultdir"
+				id="gedcomfile_path"
+				name="gedcomfile_path"
 				label="COM_JOAKTREE_DEFAULTDIR_LABEL"
 				description="COM_JOAKTREE_DEFAULTDIR_DESC"
 				default="files/com_joaktree/gedfiles"
 				size="50"
 				class="inputbox"
 			/>
+            <field name="map"
+				type="radio"
+                class="btn-group"
+                label="COM_JOAKTREE_DEFAULTMAP_LABEL"
+                description="COM_JOAKTREE_DEFAULTMAP_DESC"
+                default="2"
+                >
+                <option value="0">JT_FILTER_VAL_NOMAP</option>
+                <option value="1">JT_FILTER_VAL_STATMAP</option>
+                <option value="2">JT_FILTER_VAL_DYNMAP</option>
+            </field>
+
 	</fieldset>
 	
 	<fieldset name="services"

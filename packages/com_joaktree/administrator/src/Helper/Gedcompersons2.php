@@ -19,6 +19,7 @@ namespace Joaktree\Component\Joaktree\Administrator\Helper;
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\Database\DatabaseInterface;
@@ -156,8 +157,10 @@ class Gedcompersons2 extends \StdClass
        */
     private function admin_map_person()
     {
-        $params           = JoaktreeHelper::getJTParams($this->app_id);
-        $map      = (int) $params->get('map', 0);
+        $params = JoaktreeHelper::getJTParams($this->app_id);
+        $config = ComponentHelper::getParams('com_joaktree');
+        $defmap = $config->get('map',2); 
+        $map    = (int) $params->get('map', $defmap);
         return $map;
     }
 

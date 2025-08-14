@@ -146,15 +146,12 @@
 	    <languages>
 			<language tag="en-GB">administrator/language/en-GB/com_joaktree.ini</language>
 			<language tag="en-GB">administrator/language/en-GB/com_joaktree.gedcom.ini</language>
-			<language tag="en-GB">administrator/language/en-GB/com_joaktree.services.ini</language>
 			<language tag="en-GB">administrator/language/en-GB/com_joaktree.sys.ini</language>
 			<language tag="fr-FR">administrator/language/fr-FR/com_joaktree.ini</language>
 			<language tag="fr-FR">administrator/language/fr-FR/com_joaktree.gedcom.ini</language>
-			<language tag="fr-FR">administrator/language/fr-FR/com_joaktree.services.ini</language>
 			<language tag="fr-FR">administrator/language/fr-FR/com_joaktree.sys.ini</language>
 			<language tag="nl-NL">administrator/language/nl-NL/com_joaktree.ini</language>
 			<language tag="nl-NL">administrator/language/nl-NL/com_joaktree.gedcom.ini</language>
-			<language tag="nl-NL">administrator/language/nl-NL/com_joaktree.services.ini</language>
 			<language tag="nl-NL">administrator/language/nl-NL/com_joaktree.sys.ini</language>
 	    </languages>
 	</administration>

@@ -43,16 +43,17 @@
 	</fieldset>
 
 	<fields name="params">
-		<fieldset name="settings">	
+		<fieldset name="settings" addfieldprefix="Joaktree\Component\Joaktree\Administrator\Field">	
 			<field
 				id="gedcomfile_path"
 				name="gedcomfile_path"
-				type="text"
+				type="textglobal"
 				label="COM_JOAKTREE_GEDCOM_PATH_LABEL"
 				description="COM_JOAKTREE_GEDCOM_PATH_DESC"
 				default="files/com_joaktree/gedfiles"
 				size="50"
 				class="inputbox"
+                useglobal="true"
 				required="true"
 			/>
 			<field
@@ -220,6 +221,7 @@
                 class="btn-group"
                 label="JT_LABEL_TYPE"
                 description="JT_DESC_TYPE"
+                useglobal="true"
             >
                 <option value="0">JT_FILTER_VAL_NOMAP</option>
                 <option value="1">JT_FILTER_VAL_STATMAP</option>
