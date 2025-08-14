@@ -19,6 +19,7 @@ namespace Joaktree\Component\Joaktree\Administrator\View\Exportgedcom;
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
@@ -35,7 +36,9 @@ class RawView extends BaseHtmlView
         if ($input->get('task') && ($input->get('task') == 'del')) {
 
             $params		= JoaktreeHelper::getJTParams($input->get('id'));
-            $path  		= JPATH_ROOT.'/'.$params->get('gedcomfile_path');
+            $config     = ComponentHelper::getParams('com_joaktree') ;
+            $defpath    = $params->get('gedcomfile_path', 'files/com_joaktree/gedfiles');
+            $path  		= JPATH_ROOT.'/'.$params->get('gedcomfile_path',$defpath);
             $file       = 'export_' .$params->get('gedcomfile_name');
             $filename	= $path.'/' .$file;
             unlink($filename);

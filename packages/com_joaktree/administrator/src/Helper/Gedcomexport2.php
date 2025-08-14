@@ -19,6 +19,7 @@ namespace Joaktree\Component\Joaktree\Administrator\Helper;
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\Database\DatabaseInterface;
@@ -865,7 +866,11 @@ class Gedcomexport2
     {
         // initialize parameters and paths / filename
         $params				= JoaktreeHelper::getJTParams($this->procObject->id);
-        $path  				= JPATH_ROOT.'/'.$params->get('gedcomfile_path');
+        
+        $config             = ComponentHelper::getParams('com_joaktree') ;
+        $defpath            = $params->get('gedcomfile_path', 'files/com_joaktree/gedfiles');
+
+        $path  				= JPATH_ROOT.'/'.$params->get('gedcomfile_path',$defpath);
         $filename			= $path.'/export_' .$params->get('gedcomfile_name');
         $patronymSetting	= (int) $params->get('patronym');
         $patronymString		= $params->get('patronymSeparation', '-');

@@ -19,6 +19,7 @@ namespace Joaktree\Component\Joaktree\Administrator\Helper;
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Event\Finder as FinderEvent;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -351,7 +352,9 @@ class Gedcomfile2
         // initialize parameters and paths / filename
         $params				= JoaktreeHelper::getJTParams($this->procObject->id);
         $conversion_type 	= $params->get('unicode2utf');
-        $path  				= JPATH_ROOT.'/'.$params->get('gedcomfile_path');
+        $config             = ComponentHelper::getParams('com_joaktree',$defpath) ;
+        $defpath            = $params->get('gedcomfile_path', 'files/com_joaktree/gedfiles');
+        $path  				= JPATH_ROOT.'/'.$params->get('gedcomfile_path',$defpath);
         $filename			= $path.'/'.$params->get('gedcomfile_name');
         $patronymSetting	= (int) $params->get('patronym');
         $truncate_rel_value	= (int) $params->get('truncrelations');

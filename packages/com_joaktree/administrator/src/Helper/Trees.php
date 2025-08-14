@@ -19,6 +19,7 @@ namespace Joaktree\Component\Joaktree\Administrator\Helper;
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel ;
@@ -50,8 +51,10 @@ class Trees extends BaseDatabaseModel
 
         $this->procObject = $procObject;
 
+        $config             = ComponentHelper::getParams('com_joaktree') ;
+        $defpath            = $params->get('gedcomfile_path', 'files/com_joaktree/gedfiles');
         $params				= JoaktreeHelper::getJTParams($this->procObject->id);
-        $path  				= JPATH_ROOT.'/'.$params->get('gedcomfile_path');
+        $path  				= JPATH_ROOT.'/'.$params->get('gedcomfile_path',$defpath);
         $this->file			= $path.'/personObject.txt';
     }
 

@@ -14,6 +14,7 @@
  *
  */
 defined('_JEXEC') or die('Restricted access');
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -21,6 +22,9 @@ use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeHelper;
 
 HTMLHelper::_('bootstrap.framework');
 echo HTMLHelper::_('form.token');
+
+$config     = ComponentHelper::getParams('com_joaktree') ;
+$defpath    = $params->get('gedcomfile_path', 'files/com_joaktree/gedfiles');
 
 if (count($this->items) > 1){
 ?>    
@@ -118,7 +122,7 @@ if (count($this->items) > 1){
 <?php foreach ($this->items as $item) {
 
     $params		= JoaktreeHelper::getJTParams($item->id);
-    $path  		= '../'.$params->get('gedcomfile_path');
+    $path  		= '../'.$params->get('gedcomfile_path',$defpath);
     $file 		= 'export_'.$params->get('gedcomfile_name');
     $fullname	= $path.'/'.$file;
 
