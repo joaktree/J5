@@ -86,23 +86,24 @@ if (($this->lists['technology'] != 'b') && ($this->lists['technology'] != 'j')) 
     }
 }
 if (count($partners) > 0) {
+    $first = array_key_first($partners);
     if (count($partners) == 1) {
-        switch ($partners[0]->sex) {
-            case "M":	$label = ($partners[0]->relationtype == 'partner')
+        switch ($partners[$first]->sex) {
+            case "M":	$label = ($partners[$first]->relationtype == 'partner')
                                     ? Text::_('JT_PARTNER') : Text::_('JT_HUSBAND');
                 break;
-            case "F": 	$label = ($partners[0]->relationtype == 'partner')
+            case "F": 	$label = ($partners[$first]->relationtype == 'partner')
                                     ? Text::_('JT_PARTNER') : Text::_('JT_WIFE');
                 break;
             default: 	$label = Text::_('JT_PARTNER');
                 break;
         }
     } else {
-        switch ($partners[0]->sex) {
-            case "M":	$label = ($partners[0]->relationtype == 'partner')
+        switch ($partners[$first]->sex) {
+            case "M":	$label = ($partners[$first]->relationtype == 'partner')
                                     ? Text::_('JT_PARTNERS') : Text::_('JT_HUSBANDS');
                 break;
-            case "F": 	$label = ($partners[0]->relationtype == 'partner')
+            case "F": 	$label = ($partners[$first]->relationtype == 'partner')
                                     ? Text::_('JT_PARTNERS') : Text::_('JT_WIFES');
                 break;
             default: 	$label = Text::_('JT_PARTNERS');
