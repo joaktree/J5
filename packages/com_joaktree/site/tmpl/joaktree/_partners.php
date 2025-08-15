@@ -15,8 +15,9 @@
  */
 defined('_JEXEC') or die('Restricted access');
 
-use Joomla\CMS\Language\Text;
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Language\Text;
 use Joaktree\Component\Joaktree\Site\Helper\FormHelper;
 
 $html = '';
@@ -25,6 +26,35 @@ $linkBase = 'index.php?option=com_joaktree&view=joaktree&tech='.$this->lists['te
 $linkBaseRaw = 'index.php?format=raw&tmpl=component&option=com_joaktree&view=joaktree&tech='.$this->lists['technology'].'';
 $robot = ($this->lists['technology'] == 'a') ? '' : 'rel="noindex, nofollow"';
 $partners = $this->person->getPartners('full');
+// sort
+$partnersbymarr = array();
+foreach ($partners as $partner) {
+    $events = $this->person->getPartnerEvents($partner->id, $partner->living);
+    $marr = "";
+    foreach ($events as $event) {
+        if ($event->code == 'MARR') {
+            if (is_numeric(strtotime($event->eventDate))) {
+                $marr = HtmlHelper::date($event->eventDate, 'Y-m-d');
+            } else {
+                preg_match_all('!\d+!', $event->eventDate, $matches);
+                foreach ($matches as $match) {
+                    foreach ($match as $one) {
+                        if ($one > 1000 and $one < date("Y")) {
+                            $marr = $one.'-01-01';
+                        }
+                    }
+                }
+            }
+        }
+    }
+    if ($marr) {
+        $partnersbymarr[$marr] = $partner;
+    } else {
+        $partnersbymarr[] = $partner;
+    }
+}
+ksort($partnersbymarr);
+$partners = $partnersbymarr;
 // Button for editing (only active with AJAX)
 if (($this->lists['technology'] != 'b') && ($this->lists['technology'] != 'j')) {
     if (is_object($this->canDo)) {

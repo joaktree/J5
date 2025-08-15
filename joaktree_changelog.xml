@@ -2,9 +2,21 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
+		<version>2.3.1</version>
+        <note>
+            <item>Update : 2025-08-15</item>
+        </note>
+        <fix>
+             <item>Issue 32 : sorting marriage by date</item>
+             <item>remove htaccess file from files/com_joaktree folder</item>
+        </fix>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
 		<version>2.3.0</version>
         <note>
-            <item>Update : 2025-08-11</item>
+            <item>Update : 2025-08-13</item>
         </note>
         <fix>
              <item>Files folder : remove .htaccess file</item>
