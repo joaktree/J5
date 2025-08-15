@@ -237,7 +237,7 @@ class PlgSystemJoaktreeInstallerInstallerScript
          // 2.2.4 : don't use system plugin, 
             JPATH_SITE."/plugins/system/joaktree",
          // 2.3.0 : from files/joaktree/.htaccess file   
-            JPATH_SITE."/media/com_joaktree/files/com_joaktree/.htaccess"
+            JPATH_SITE."/media/com_joaktree/files/com_joaktree/.htaccess",
             JPATH_SITE."/files/com_joaktree/.htaccess"
         ];
         $this->delete($obsoleteFiles);
