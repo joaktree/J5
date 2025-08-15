@@ -24,7 +24,7 @@ HTMLHelper::_('bootstrap.framework');
 echo HTMLHelper::_('form.token');
 
 $config     = ComponentHelper::getParams('com_joaktree') ;
-$defpath    = $params->get('gedcomfile_path', 'files/com_joaktree/gedfiles');
+$defpath    = $config->get('gedcomfile_path', 'files/com_joaktree/gedfiles');
 
 if (count($this->items) > 1){
 ?>    

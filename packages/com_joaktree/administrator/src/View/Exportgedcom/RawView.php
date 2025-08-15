@@ -37,7 +37,7 @@ class RawView extends BaseHtmlView
 
             $params		= JoaktreeHelper::getJTParams($input->get('id'));
             $config     = ComponentHelper::getParams('com_joaktree') ;
-            $defpath    = $params->get('gedcomfile_path', 'files/com_joaktree/gedfiles');
+            $defpath    = $config->get('gedcomfile_path', 'files/com_joaktree/gedfiles');
             $path  		= JPATH_ROOT.'/'.$params->get('gedcomfile_path',$defpath);
             $file       = 'export_' .$params->get('gedcomfile_name');
             $filename	= $path.'/' .$file;
