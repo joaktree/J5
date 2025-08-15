@@ -2,6 +2,17 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
+		<version>2.3.4</version>
+        <note>
+            <item>Update : 2025-08-15</item>
+        </note>
+        <fix>
+             <item>GED Import : error during tree creation</item>
+        </fix>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
 		<version>2.3.3</version>
         <note>
             <item>Update : 2025-08-15</item>

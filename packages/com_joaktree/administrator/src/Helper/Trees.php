@@ -52,7 +52,7 @@ class Trees extends BaseDatabaseModel
         $this->procObject = $procObject;
 
         $config             = ComponentHelper::getParams('com_joaktree') ;
-        $defpath            = $params->get('gedcomfile_path', 'files/com_joaktree/gedfiles');
+        $defpath            = $config->get('gedcomfile_path', 'files/com_joaktree/gedfiles');
         $params				= JoaktreeHelper::getJTParams($this->procObject->id);
         $path  				= JPATH_ROOT.'/'.$params->get('gedcomfile_path',$defpath);
         $this->file			= $path.'/personObject.txt';
