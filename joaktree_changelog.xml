@@ -7,7 +7,7 @@
             <item>Update : 2025-08-15</item>
         </note>
         <fix>
-             <item>GED Import : error during tree creation</item>
+             <item>Config : application : fix default directory</item>
         </fix>
     </changelog>
 	<changelog>
