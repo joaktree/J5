@@ -242,7 +242,7 @@ if (($displayfamily != "hide")) {
                 if ($this->default_family == $aff_alias) {
                     $selected = "selected";
                 }
-                $options['']['items'][] = ModulesHelper::createOption($aff_alias, Text::_($aff).$familycount);
+                $options['']['items'][] = ModulesHelper::createOption($aff_alias, htmlentities($aff).$familycount);
             }
         }
         $filter_family_div .= '<joomla-field-fancy-select '.implode(' ', $attributes).'>';
@@ -297,7 +297,7 @@ foreach ($this->personlist as $item) {
 
     $arr_css = array("title" => $title);
     foreach ($arr_css as $key_c => $val_c) {
-        $perso = str_replace($key_c, Text::_($val_c), $perso);
+        $perso = str_replace($key_c, htmlentities(Text::_($val_c)), $perso);
     }
     $perso = $title;
     if ($item->birthDate || $item->deathDate) {
