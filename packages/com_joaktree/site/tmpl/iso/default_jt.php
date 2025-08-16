@@ -17,6 +17,8 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\Component\Modules\Administrator\Helper\ModulesHelper;
 use Joaktree\Component\Joaktree\Site\Helper\JoaktreeHelper;
 
+header('Content-Type: text/html; charset=utf-8');
+
 $uri = Uri::getInstance();
 $app = Factory::getApplication();
 $user = $app->getIdentity();
@@ -53,36 +55,36 @@ $width = 1;
 $line = 1;
 $pos = 0;
 // if ($displaysort == "true") {
-    $values = new \stdClass();
-    $values->div = "sort";
-    $values->div_line = $line;
-    $values->div_pos = "1";
-    $pos = $values->div_pos;
-    $values->div_width = "3";
-    $values->div_align = "";
-    $width += 3;
-    $layouts['sort'] = $values;
+$values = new \stdClass();
+$values->div = "sort";
+$values->div_line = $line;
+$values->div_pos = "1";
+$pos = $values->div_pos;
+$values->div_width = "3";
+$values->div_align = "";
+$width += 3;
+$layouts['sort'] = $values;
 //}
 // if ($displaysearch == "true") {
-    $values = new \stdClass();
-    $values->div = "search";
-    $pos += 1;
-    $values->div_pos = $pos;
-    $values->div_line = $line;
-    $width += 4;
-    $values->div_width = "4";
-    $values->div_align = "";
-    $layouts['search'] = $values;
+$values = new \stdClass();
+$values->div = "search";
+$pos += 1;
+$values->div_pos = $pos;
+$values->div_line = $line;
+$width += 4;
+$values->div_width = "4";
+$values->div_align = "";
+$layouts['search'] = $values;
 // }
 // if ($displayalpha != "false") {
-    $values = new stdClass();
-    $values->div = "alpha";
-    $line += 1;
-    $values->div_pos = 1;
-    $values->div_width = "12";
-    $values->div_align = "text-center";
-    $values->div_line = $line;
-    $layouts['alpha'] = $values;
+$values = new stdClass();
+$values->div = "alpha";
+$line += 1;
+$values->div_pos = 1;
+$values->div_width = "12";
+$values->div_align = "text-center";
+$values->div_line = $line;
+$layouts['alpha'] = $values;
 // }
 if ($displayfamily != "hide") {
     $values = new \stdClass();
@@ -90,7 +92,7 @@ if ($displayfamily != "hide") {
     $pos += 1;
     $values->div_line = $line;
     if ($displayfamily == 'list' || $displayfamily == "listmulti") { // sur 1ere ligne
-        $values->div_line = 1; 
+        $values->div_line = 1;
         $values->div_pos = $pos;
         $width = 5;
         $values->div_width = "5";
@@ -102,7 +104,7 @@ if ($displayfamily != "hide") {
         $values->div_line = $line;
         $values->div_width = "12";
         $values->div_pos = $pos;
-        $values->div_align = "text-center";        
+        $values->div_align = "text-center";
     }
     $layouts['family'] = $values;
 }
@@ -202,7 +204,7 @@ if (($displayfamily != "hide")) {
                 if ($familyfiltercount == 'true') {
                     $familycount = '<span class="family-count badge bg-info">'.$this->family_count[$aff_alias].'</span>';
                 }
-                $filter_family_div .= '<button class="'.$button_bootstrap.'  iso_btn_family_'.$aff_alias.' '.$checked.'" data-sv="'.$aff_alias.'" title="'.$this->families[$key].'">'.Text::_($aff).$familycount.'</button>';
+                $filter_family_div .= '<button class="'.$button_bootstrap.'  iso_btn_family_'.$aff_alias.' '.$checked.'" data-sv="'.$aff_alias.'" title="'.$this->families[$key].'">'.htmlentities($aff).$familycount.'</button>';
             }
         }
         $filter_family_div .= '</div>';
@@ -285,11 +287,11 @@ foreach ($this->personlist as $item) {
     if ($this->lists['patronym'] != 0) {
         $sep = $this->iso_params->get('patronymSeparation');
         if ($item->patronym) {
-            $pat = $sep.$item->patronym.$sep.' ';
+            $pat = $sep.htmlentities($item->patronym).$sep.' ';
         }
     }
 
-    $title = '<a href="'.$link.'" target="_blank">'.$item->firstName.' '.$pat.$item->familyName.'</a>';
+    $title = '<a href="'.$link.'" target="_blank">'.htmlentities($item->firstName).' '.$pat.htmlentities($item->familyName).'</a>';
 
     $perso = "";// $this->iso_params->get('perso');
 

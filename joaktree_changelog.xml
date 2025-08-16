@@ -8,6 +8,7 @@
         </note>
         <fix>
              <item>GED Import : person's notes and relation events notes are not stored in database</item>
+             <item>Iso : names with accents may be displayed with wrong characters</item>
         </fix>
     </changelog>
 	<changelog>
