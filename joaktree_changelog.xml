@@ -2,12 +2,23 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
+		<version>2.3.5</version>
+        <note>
+            <item>Update : 2025-08-16</item>
+        </note>
+        <fix>
+             <item>GED Import : person's notes and relation events notes are not stored in database</item>
+        </fix>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
 		<version>2.3.4</version>
         <note>
             <item>Update : 2025-08-15</item>
         </note>
         <fix>
-             <item>Config : application : fix default directory</item>
+             <item>Config : application : fix default directory uses</item>
         </fix>
     </changelog>
 	<changelog>

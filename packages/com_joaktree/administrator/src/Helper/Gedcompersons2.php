@@ -427,9 +427,10 @@ class Gedcompersons2 extends \StdClass
     private function setPersonNote($objectType, $value)
     {
         $ret = true;
-        if (is_null($value)) {
-            return $ret;
-        }
+        // force store last note
+        //if (is_null($value)) { 
+        //    return $ret;
+        //}
         if (($this->person_notes->get('value') != null) or ($this->person_notes->get('note_id') != null)) {
             $ret = $this->person_notes->store();
             if (!$ret) {
@@ -954,7 +955,7 @@ class Gedcompersons2 extends \StdClass
                             if ($ret) {
                                 $ret = $this->setRelationNote('relation', $fam_line['value']);
                             }
-                            if ($ret === 1) {
+                            if ($ret) {
                                 $this->relations->set('indNote', 1); // pascal
                             } else {
                                 $this->relations->set('indNote', 0); // pascal
@@ -1075,7 +1076,7 @@ class Gedcompersons2 extends \StdClass
                                 $ret = $this->setRelationNote($event1Type, $fam_line['value']);
                             }
                             if ($event1Type == 'relationEvent') {
-                                if ($ret === 1) {
+                                if ($ret) {
                                     $this->relation_events->set('indNote', 1); // pascal
                                 } else {
                                     $this->relation_events->set('indNote', 0); // pascal
@@ -1433,7 +1434,7 @@ class Gedcompersons2 extends \StdClass
                             if ($ret) {
                                 $ret = $this->setPersonNote('person', $row_line['value']);
                             }
-                            if ($ret === 1) {
+                            if ($ret) {
                                 $this->persons->set('indNote', 1);  // pascal
                             } else {
                                 $this->persons->set('indNote', 0); // pascal
@@ -1619,7 +1620,7 @@ class Gedcompersons2 extends \StdClass
                                 $ret = $this->setPersonNote($event1Type, $row_line['value']);
                             }
                             if ($event1Type == 'personEvent') {
-                                if ($ret === 1) {
+                                if ($ret) {
                                     $this->person_events->set('indNote', 1);
                                 } else {
                                     $this->person_events->set('indNote', 0);
@@ -1709,7 +1710,7 @@ class Gedcompersons2 extends \StdClass
                             $ret = $this->setPersonNote($event2Type, $row_line['value']);
                         }
                         if ($event2Type == 'personName') {
-                            if ($ret === 1) {
+                            if ($ret) {
                                 $this->person_names->set('indNote', 1);
                             } else {
                                 $this->persons_names->set('indNote', 0);
