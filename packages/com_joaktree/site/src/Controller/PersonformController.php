@@ -13,6 +13,7 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
+
 namespace Joaktree\Component\Joaktree\Site\Controller;
 
 // no direct access
@@ -255,6 +256,9 @@ class PersonformController extends BaseController
                                     .'&layout=form_medialist';
                 break;
             default:
+                $link .= '&view=joaktree'
+                        .'&personId='.$form['person']['app_id'].'!'.$form['person']['id']
+                        .'&action=edit';
                 break;
         }
         if (!isset($msg)) {

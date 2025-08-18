@@ -211,7 +211,7 @@ HtmlHelper::_('bootstrap.framework', true);
 		<!-- two columns for basic information and picture -->
 		<div class="jt-clearfix">
 			<div class="jt-person-info">
-				<div style="min-height: 12em;">
+				<div style="min-height: 6em;">
 				<!-- Show person -->
 				<?php
                         $layout = $this->setLayout('');

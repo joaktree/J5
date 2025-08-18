@@ -31,6 +31,7 @@ class PlgSystemJoaktreeInstallerInstallerScript
     private $min_joomla_version     = '4.0.0';
     private $min_php_version        = '8.0';
     private $name                   = 'Joaktree';
+    private $db                     = null; 
     private $dir                    = null;
     private $lang                   = null;
     private $previous_version        = "";
@@ -41,11 +42,12 @@ class PlgSystemJoaktreeInstallerInstallerScript
         $this->dir = __DIR__;
         $this->lang = Factory::getApplication()->getLanguage();
         $this->lang->load('joaktreeinstaller');
+        $this->db = Factory::getContainer()->get(DatabaseInterface::class);
     }
     public function uninstall($parent)
     {
         // Initialize the database
-        $db 			= Factory::getContainer()->get(DatabaseInterface::class);
+        $db 			= $this->db;
         $update_queries = array();
         $application 	= Factory::getApplication();
 
@@ -160,7 +162,7 @@ class PlgSystemJoaktreeInstallerInstallerScript
     }
     private function postInstall()
     {
-        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $db = $this->db;
 
         // MYSQL 8 : ALTER IGNORE deprecated
         $sql = "SHOW COLUMNS FROM #__joaktree_trees";
@@ -352,6 +354,7 @@ class PlgSystemJoaktreeInstallerInstallerScript
     private function installPackage($package)
     {
         $tmpInstaller = new Installer();
+        $tmpInstaller->setDatabase($this->db);
         $installed = $tmpInstaller->install($this->dir . '/packages/' . $package);
         return $installed;
     }
@@ -368,7 +371,7 @@ class PlgSystemJoaktreeInstallerInstallerScript
             JPATH_ADMINISTRATOR."/language/fr-FR/joaktreeinstaller.sys.ini",
             JPATH_ADMINISTRATOR."/language/fr-FR/joaktreeinstaller.ini"
         ]);
-        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $db = $this->db;
         $query = $db->getQuery(true)
             ->delete('#__extensions')
             ->where($db->quoteName('element') . ' = ' . $db->quote($this->installerName))

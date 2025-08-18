@@ -2,6 +2,19 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
+		<version>2.3.6</version>
+        <note>
+            <item>Update : 2025-08-18</item>
+        </note>
+        <fix>
+             <item>Joomla 6 : installer : add setDabase</item>
+             <item>Person : reduce space between header and other infos</item>
+             <item>Person : cancel on update goes back to person display</item>
+        </fix>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
 		<version>2.3.5</version>
         <note>
             <item>Update : 2025-08-16</item>
