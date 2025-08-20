@@ -427,8 +427,7 @@ class Gedcompersons2 extends \StdClass
     private function setPersonNote($objectType, $value)
     {
         $ret = true;
-        // force store last note
-        //if (is_null($value)) { 
+        //if (is_null($value)) { // last note ?
         //    return $ret;
         //}
         if (($this->person_notes->get('value') != null) or ($this->person_notes->get('note_id') != null)) {
@@ -445,7 +444,10 @@ class Gedcompersons2 extends \StdClass
         $this->person_notes->set('orderNumber', $this->notePersonCounter);
 
         // try to strip @ and save in local value
-        $tmpValue = ltrim(rtrim($value, '@'), '@');
+        $tmpValue = $value;
+        if ($value) {
+            $tmpValue = ltrim(rtrim($value, '@'), '@');
+        }
         if ($value && $value != $tmpValue) {
             // @ are stripped and local value is therefore different than value
             // this is an note_id
@@ -634,7 +636,10 @@ class Gedcompersons2 extends \StdClass
         $this->relation_notes->set('orderNumber', $this->noteRelationCounter);
 
         // try to strip @ and save in local value
-        $tmpValue = ltrim(rtrim($value, '@'), '@');
+        $tmpValue = $value;
+        if ($value) {
+            $tmpValue = ltrim(rtrim($value, '@'), '@');
+        }
         if ($value != $tmpValue) {
             // @ are stripped and local value is therefore different than value
             // this is an note_id

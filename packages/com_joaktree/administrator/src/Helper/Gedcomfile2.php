@@ -352,7 +352,7 @@ class Gedcomfile2
         // initialize parameters and paths / filename
         $params				= JoaktreeHelper::getJTParams($this->procObject->id);
         $conversion_type 	= $params->get('unicode2utf');
-        $config             = ComponentHelper::getParams('com_joaktree',$defpath) ;
+        $config             = ComponentHelper::getParams('com_joaktree') ;
         $defpath            = $config->get('gedcomfile_path', 'files/com_joaktree/gedfiles');
         $path  				= JPATH_ROOT.'/'.$params->get('gedcomfile_path',$defpath);
         $filename			= $path.'/'.$params->get('gedcomfile_name');

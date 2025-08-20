@@ -2,6 +2,17 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
+		<version>2.3.8</version>
+        <note>
+            <item>Update : 2025-08-20</item>
+        </note>
+        <fix>
+             <item>Issue 29 : suppress notices caused by 2.3.4/2.3.5 fixes</item>
+        </fix>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
 		<version>2.3.6</version>
         <note>
             <item>Update : 2025-08-18</item>
