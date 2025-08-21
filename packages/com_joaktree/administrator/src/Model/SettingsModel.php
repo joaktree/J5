@@ -115,7 +115,7 @@ class SettingsModel extends ListModel
         $canDo	= JoaktreeHelper::getActions();
 
         if ($canDo->get('core.edit')) {
-            $cids	= Factory::getApplication()->input->get('cid', null, 'array');
+            $cids	= Factory::getApplication()->getInput()->get('cid', null, 'array');
 
             foreach ($cids as $cid_num => $cid) {
                 $cid = intval($cid);
@@ -200,7 +200,7 @@ class SettingsModel extends ListModel
 
         // $settings 	= Table::getInstance('DisplaysettingsTable','Joaktree\\Component\\Joaktree\\Administrator\\Table\\');
         $settings = Factory::getApplication()->bootComponent('com_joaktree')->getMVCFactory()->createTable('Displaysettings');
-        $jtids		= Factory::getApplication()->input->get('jtid', null, 'array');
+        $jtids		= Factory::getApplication()->getInput()->get('jtid', null, 'array');
 
         $query = $this->_db->getQuery(true);
         $i = 0;
@@ -238,7 +238,7 @@ class SettingsModel extends ListModel
             $row = Factory::getApplication()->bootComponent('com_joaktree')->getMVCFactory()->createTable('Displaysettings');
 
             // get the input object
-            $input = Factory::getApplication()->input;
+            $input = Factory::getApplication()->getInput();
 
             $cids	= $input->get('cid', null, 'array');
             if (!is_null($cids)) {

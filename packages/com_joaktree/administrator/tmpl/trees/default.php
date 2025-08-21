@@ -20,8 +20,6 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 
-HtmlHelper::_('formbehavior.chosen', 'select');
-
 $sortFields = $this->getSortFields();
 
 ?>

@@ -98,7 +98,7 @@ class PersonformModel extends FormModel
     {
         static $picture;
         if (!isset($picture)) {
-            $input	= Factory::getApplication()->input;
+            $input	= Factory::getApplication()->getInput();
             $tmp 	= $input->get('picture', null, 'string');
             if ($tmp) {
                 $picture =  json_decode(base64_decode($tmp));

@@ -69,7 +69,7 @@ class HtmlView extends BaseHtmlView {
 	 */
 	protected function addToolbar()
 	{
-		Factory::getApplication()->input->set('hidemainmenu', true);
+		// Factory::getApplication()->input->set('hidemainmenu', true);
 
 		ToolbarHelper::title(Text::_('JTLOC_TITLE_EDIT'), 'location');
 

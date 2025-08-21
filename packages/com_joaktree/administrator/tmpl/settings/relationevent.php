@@ -17,7 +17,6 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\HTML\HTMLHelper;		// replace JHtml
 
 HTMLHelper::_('bootstrap.tooltip');
-HTMLHelper::_('formbehavior.chosen', 'select');
 ?>
 
 <?php echo $this->html; ?>

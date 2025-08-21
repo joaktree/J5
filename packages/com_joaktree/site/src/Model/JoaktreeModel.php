@@ -136,7 +136,7 @@ class JoaktreeModel extends BaseDatabaseModel
     public function getLayout()
     {
         if (!isset($this->_layout)) {
-            $input = Factory::getApplication()->input;
+            $input = Factory::getApplication()->getInput();
             $tmp   = $input->get('layout', null, 'word');
 
             if (isset($tmp)) {
@@ -173,7 +173,7 @@ class JoaktreeModel extends BaseDatabaseModel
     public function getJtType()
     {
         if (!isset($this->_jttype)) {
-            $input = Factory::getApplication()->input;
+            $input = Factory::getApplication()->getInput();
             $tmp   = $input->get('type', null, 'word');
 
             if (isset($tmp)) {
@@ -198,7 +198,7 @@ class JoaktreeModel extends BaseDatabaseModel
     public function getJtSubType()
     {
         if (!isset($this->_jtsubtype)) {
-            $input = Factory::getApplication()->input;
+            $input = Factory::getApplication()->getInput();
             $tmp   = $input->get('subtype', null, 'word');
 
             if (isset($tmp)) {
@@ -225,7 +225,7 @@ class JoaktreeModel extends BaseDatabaseModel
     public function getOrderNumber()
     {
         if (!isset($this->_orderNumber)) {
-            $input = Factory::getApplication()->input;
+            $input = Factory::getApplication()->getInput();
             $tmp   = $input->get('orderNumber', 0, 'int');
 
             $this->_orderNumber = intval($tmp);

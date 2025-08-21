@@ -22,8 +22,6 @@ use Joomla\CMS\Router\Route;
 
 HTMLHelper::_('bootstrap.tooltip');
 
-HTMLHelper::_('formbehavior.chosen', 'select');
-
 $sortFields = $this->getSortFields();
 
 $geocodeAPIkey    = (isset($this->mapSettings->geocode)) ? $this->mapSettings->geocode.'APIkey' : '';

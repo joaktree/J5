@@ -29,8 +29,9 @@ class ViewlogsController extends FormController
     public function upload($key = null, $urlVar = null)
     {
         // Retrieve file details from uploaded file, sent from upload form
-        $file = Factory::getApplication()->input->files->get('fileupload');
-        $id = (int)Factory::getApplication()->input->get('appid');
+        $this->input = Factory::getApplication()->getInput();
+        $file = $this->input->files->get('fileupload');
+        $id = (int)$this->input->get('appid');
 
         // Clean up filename to get rid of strange characters like spaces etc.
         $filename = File::makeSafe($file['name']);

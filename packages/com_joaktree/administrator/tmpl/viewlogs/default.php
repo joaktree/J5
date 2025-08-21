@@ -24,7 +24,7 @@ use Joomla\CMS\Router\Route;
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('keepalive')
     ->useScript('form.validate');
-$input = Factory::getApplication()->input;
+$input = Factory::getApplication()->getInput();
 $id = $input->getInt('appId', 0);
 $filename = Factory::getApplication()->getConfig()->get('log_path').'/joaktreeged.log.php';
 $log = [];

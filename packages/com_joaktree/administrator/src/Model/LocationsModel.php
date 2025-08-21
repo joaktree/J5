@@ -249,7 +249,7 @@ class LocationsModel extends ListModel
         $canDo	= JoaktreeHelper::getActions();
 
         if ($canDo->get('core.edit')) {
-            $cids	= Factory::getApplication()->input->get('cid', null, 'array');
+            $cids	= Factory::getApplication()->getInput()->get('cid', null, 'array');
             $query 	= $this->_db->getQuery(true);
 
             foreach ($cids as $cid_num => $cid) {

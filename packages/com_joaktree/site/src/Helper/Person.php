@@ -1379,7 +1379,6 @@ class Person extends \StdClass
         $params     = JoaktreeHelper::getJTParams();
         $indArticleLink = (int) $params->get('indArticleLink', 9);
         if ($indArticleLink != 0) {
-            $nullDate	= $this->_db->getNullDate();
             $date		= Factory::getDate();
             $now  		= $date->toSql();
             $likes 		= array();
@@ -1466,12 +1465,12 @@ class Person extends \StdClass
                              . ' ) '
                 );
                 $query->where(
-                    ' (   a.publish_up   =  '.$this->_db->Quote($nullDate).' '
+                    ' (   a.publish_up   IS NULL '
                              .'  OR  a.publish_up   <= '.$this->_db->Quote($now).' '
                              .'  ) '
                 );
                 $query->where(
-                    ' (   a.publish_down =  '.$this->_db->Quote($nullDate).' '
+                    ' (   a.publish_down IS NULL'
                              .'  OR  a.publish_down >= '.$this->_db->Quote($now).' '
                              .'  ) '
                 );
@@ -1623,11 +1622,10 @@ class Person extends \StdClass
             $query->where(' jpn.app_id       = :appid');
             $query->where(' jpn.person_id    = :personid');
             $query->where(' jpn.orderNumber  = :articleid');
+            $query->bind(':appid', $app_id, \Joomla\Database\ParameterType::INTEGER);
+            $query->bind(':personid', $person_id, \Joomla\Database\ParameterType::STRING);
         }
-        $query->bind(':appid', $app_id, \Joomla\Database\ParameterType::INTEGER);
-        $query->bind(':personid', $person_id, \Joomla\Database\ParameterType::STRING);
         $query->bind(':articleid', $articleId, \Joomla\Database\ParameterType::INTEGER);
-
         $this->_db->setquery($query);
         $article = $this->_db->loadObject();
         // Convert parameter fields to objects for article.

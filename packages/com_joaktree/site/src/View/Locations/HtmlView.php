@@ -58,7 +58,7 @@ class HtmlView extends BaseHtmlView
         }
         $document			= Factory::getApplication()->getDocument();
         $app 				= Factory::getApplication('site');
-        $input              = $app->input;
+        $input              = $app->getInput();
         // Get data from the model
         $this->treeinfo		= $model->getTreeinfo();
         $menus  			= $model->getMenus();

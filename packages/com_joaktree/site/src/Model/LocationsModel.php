@@ -86,7 +86,7 @@ class LocationsModel extends BaseDatabaseModel
             $app 		= Factory::getApplication('site');
             $params 	= $app->getParams();
             $indCookie  = $params->get('indCookies', true);
-            $input      = $app->input;
+            $input      = $app->getInput();
 
             if ($indCookie) {
                 // we return the cookie
@@ -109,7 +109,7 @@ class LocationsModel extends BaseDatabaseModel
             $app 		= Factory::getApplication('site');
             $params 	= $app->getParams();
             $indCookie  = $params->get('indCookies', true);
-            $input      = $app->input;
+            $input      = $app->getInput();
             if ($indCookie) {
                 // we return the cookie
                 $cookie = new Cookie();
@@ -235,7 +235,7 @@ class LocationsModel extends BaseDatabaseModel
         $app 		= Factory::getApplication('site');
 
         // always from the request
-        $tmp		= $app->input->get('filter', null, 'string');
+        $tmp		= $app->getInput()->get('filter', null, 'string');
 
         // if nothing found, check the cookie -- only when we use cookies
         if (!isset($tmp)) {

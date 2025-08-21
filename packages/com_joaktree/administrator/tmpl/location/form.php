@@ -22,7 +22,6 @@ use Joomla\CMS\Router\Route;
 // are these needed
 HTMLHelper::_('bootstrap.tooltip');
 HTMLHelper::_('behavior.formvalidator');
-HTMLHelper::_('formbehavior.chosen', 'select');
 
 ?>
 

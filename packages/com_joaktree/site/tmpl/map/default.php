@@ -18,8 +18,6 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
 
-HTMLHelper::_('formbehavior.chosen', 'select');
-
 if (isset($this->map->params) && $this->map->params['service'] == 'staticmap') {
     if ($this->map->getService()->getProvider()->getName() == 'OpenStreetMap') {
         $ascript = $this->map->getMapScript();

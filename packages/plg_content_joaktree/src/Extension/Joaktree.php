@@ -178,7 +178,7 @@ final class Joaktree extends CMSPlugin
         }
 
         $app = Factory::getApplication('site');
-        $app->input->set('personId', $id[ 'app_id' ].'!'.$id[ 'person_id' ]);
+        $app->getInput()->set('personId', $id[ 'app_id' ].'!'.$id[ 'person_id' ]);
 
         $person = new Person($id, 'ancestor'); // retrieve dates
         //$person = new Person($id);           // no dates
@@ -197,7 +197,7 @@ final class Joaktree extends CMSPlugin
         }
 
         $app = Factory::getApplication('site');
-        $app->input->set('mapId', $mapId);
+        $app->getInput()->set('mapId', $mapId);
 
         $id = array();
         $id['map'] = $mapId;

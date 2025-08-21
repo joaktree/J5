@@ -26,7 +26,6 @@ use Joomla\CMS\Router\Route;
 HtmlHelper::_('bootstrap.tooltip');
 HtmlHelper::_('bootstrap.modal','.modal', []);
 HtmlHelper::_('behavior.formvalidator');
-HtmlHelper::_('formbehavior.chosen', 'select');
 
 /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
 $wa = $this->document->getWebAssetManager();

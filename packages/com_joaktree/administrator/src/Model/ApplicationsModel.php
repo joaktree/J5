@@ -175,9 +175,9 @@ class ApplicationsModel extends ListModel
     {
         $canDo	= JoaktreeHelper::getActions();
         $localMsg = '';
-
+        $this->input = Factory::getApplication()->getInput();
         if (($canDo->get('core.create')) && ($canDo->get('core.edit'))) {
-            $cids = Factory::getApplication()->input->get('cid', null, 'array');
+            $cids = $this->input->get('cid', null, 'array');
 
             if (count($cids) == 0) {
                 // no applications are selected
@@ -286,9 +286,9 @@ class ApplicationsModel extends ListModel
     public function clearGedCom()
     {
         $canDo	= JoaktreeHelper::getActions();
-
+        $this->input = Factory::getApplication()->getInput();
         if ($canDo->get('core.delete')) {
-            $cids = Factory::getApplication()->input->get('cid', null, 'array');
+            $cids = $this->input->get('cid', null, 'array');
             $msg = '';
 
             foreach ($cids as $cid_num => $app_id) {
@@ -311,9 +311,9 @@ class ApplicationsModel extends ListModel
     public function deleteGedCom()
     {
         $canDo	= JoaktreeHelper::getActions();
-
+        $this->input = Factory::getApplication()->getInput();
         if ($canDo->get('core.delete')) {
-            $cids = Factory::getApplication()->input->get('cid', null, 'array');
+            $cids = $this->input->get('cid', null, 'array');
             $msg = '';
 
             foreach ($cids as $cid_num => $app_id) {

@@ -53,8 +53,6 @@ class HtmlView extends BaseHtmlView {
 	 */
 	protected function addToolbar()
 	{
-		//Factory::getApplication()->input->set('hidemainmenu', true);
-
 		ToolbarHelper::title(Text::_('JTEXPORTGEDCOM_TITLE'), 'application');
 
 	}

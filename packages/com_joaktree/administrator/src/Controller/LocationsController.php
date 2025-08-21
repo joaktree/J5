@@ -32,7 +32,7 @@ class LocationsController extends AdminController
         // check token first
         Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
         // create an input object
-        $this->input = Factory::getApplication()->input;
+        $this->input = Factory::getApplication()->getInput();
         //Get View
         if ($this->input->get('view') == '') {
             $this->input->set('view', 'locations');

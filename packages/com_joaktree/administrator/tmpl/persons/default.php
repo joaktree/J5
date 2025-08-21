@@ -21,7 +21,6 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 
-HTMLHelper::_('formbehavior.chosen', 'select');
 $sortFields = $this->getSortFields();
 
 ?>

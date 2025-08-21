@@ -31,7 +31,7 @@ class DisplayController extends BaseController
     {
         // Make sure we have a default view
         // create an input object
-        $input = Factory::getApplication()->input;
+        $input = Factory::getApplication()->getInput();
         if ($input->get('view') == '') {
             $input->set('view', 'joaktreestart');
         }

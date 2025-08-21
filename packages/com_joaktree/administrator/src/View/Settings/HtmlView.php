@@ -41,7 +41,7 @@ class HtmlView extends BaseHtmlView
         $wa->registerAndUseScript('jtjs',JoaktreeHelper::jsfile());
 
         // what is the layout
-        $this->layout = Factory::getApplication()->input->get('layout');
+        $this->layout = Factory::getApplication()->getInput()->get('layout');
         // Get data from the model
         if ($this->layout == 'personevent') {
             $this->items		= $this->get('DataPersEvent');

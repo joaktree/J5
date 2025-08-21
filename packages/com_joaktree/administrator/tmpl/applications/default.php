@@ -19,7 +19,6 @@ use Joomla\CMS\HTML\HTMLHelper;		//replace JHtml
 use Joomla\CMS\Router\Route;		//replace JRoute
 
 HtmlHelper::_('bootstrap.framework');
-HtmlHelper::_('formbehavior.chosen', 'select');
 
 $sortFields = $this->getSortFields();
 ?>

@@ -26,7 +26,7 @@ use Joaktree\Component\Joaktree\Site\Helper\JoaktreeHelper;
 $comfield	= 'media/com_joaktree/';
 $app = Factory::getApplication();
 
-$com_id = $app->input->getInt('Itemid');
+$com_id = $app->getInput()->getInt('Itemid');
 $document = $app->getDocument();
 
 $this->iso_params = JoaktreeHelper::getJTParams();

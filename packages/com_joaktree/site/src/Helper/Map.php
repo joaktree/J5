@@ -153,7 +153,7 @@ class Map extends \StdClass
         static $mapId;
 
         if (!isset($mapId)) {
-            $input	= Factory::getApplication()->input;
+            $input	= Factory::getApplication()->getInput();
             $tmp 	= $input->get('mapId', null, 'int');
 
             if (empty($tmp)) {
@@ -185,7 +185,7 @@ class Map extends \StdClass
         static $_locId;
 
         if (!isset($_locId)) {
-            $input = Factory::getApplication()->input;
+            $input = Factory::getApplication()->getInput();
             $tmp   = $input->get('locId', null, 'int');
 
             if (empty($tmp)) {
@@ -270,7 +270,7 @@ class Map extends \StdClass
     private function checkOptions()
     {
         // look for options
-        $input = Factory::getApplication()->input;
+        $input = Factory::getApplication()->getInput();
         $tmp   = $input->get('options', null, 'string');
 
         if (!$tmp) {

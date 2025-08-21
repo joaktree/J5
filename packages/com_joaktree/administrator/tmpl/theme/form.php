@@ -24,9 +24,6 @@ use Joomla\CMS\Router\Route;
 HTMLHelper::_('bootstrap.tooltip');
 
 HTMLHelper::_('behavior.formvalidator');
-// The chosen selector doesn't work properly with the map-icons selection box.
-// It is disabled here.
-//JHtml::_('formbehavior.chosen', 'select');
 ?>
 
 <script type="text/javascript">

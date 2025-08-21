@@ -636,10 +636,7 @@ class Gedcompersons2 extends \StdClass
         $this->relation_notes->set('orderNumber', $this->noteRelationCounter);
 
         // try to strip @ and save in local value
-        $tmpValue = $value;
-        if ($value) {
-            $tmpValue = ltrim(rtrim($value, '@'), '@');
-        }
+        $tmpValue = ltrim(rtrim($value, '@'), '@');
         if ($value != $tmpValue) {
             // @ are stripped and local value is therefore different than value
             // this is an note_id

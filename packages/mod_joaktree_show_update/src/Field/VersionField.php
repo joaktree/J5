@@ -42,7 +42,7 @@ class VersionField extends FormField
 
 		$version = '';
 
-		$jinput = Factory::getApplication()->input;
+		$jinput = Factory::getApplication()->getInput();
 		$db = Factory::getContainer()->get(DatabaseInterface::class);
 		$query = $db->getQuery(true);
 		$query

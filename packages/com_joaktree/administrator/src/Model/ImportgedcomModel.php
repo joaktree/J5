@@ -120,7 +120,7 @@ class ImportgedcomModel extends BaseDatabaseModel
     */
     public function initialize()
     {
-        $cids = Factory::getApplication()->input->get('cid', null, 'array');
+        $cids = Factory::getApplication()->getInput()->get('cid', null, 'array');
 
         // make sure the input consists of integers
         for ($i = 0;$i < count($cids);$i++) {

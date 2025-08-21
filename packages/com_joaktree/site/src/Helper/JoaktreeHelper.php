@@ -103,7 +103,7 @@ class JoaktreeHelper
         static $_treeId;
         if (!isset($_treeId)) {
             $db = Factory::getContainer()->get(DatabaseInterface::class);
-            $input = Factory::getApplication()->input;
+            $input = Factory::getApplication()->getInput();
             $tmp1 = $input->get('treeId', null, 'string');
             $tmp2 = $input->get('treeId', null, 'int');
             if (empty($tmp2) && (!$requestonly)) {
@@ -172,7 +172,7 @@ class JoaktreeHelper
     {
         static $_personId;
         if (!isset($_personId)) {
-            $input = Factory::getApplication()->input;
+            $input = Factory::getApplication()->getInput();
             $tmp = $input->get('personId', null, 'string');
             // Load the parameters.
             $db = Factory::getContainer()->get(DatabaseInterface::class);
@@ -238,7 +238,7 @@ class JoaktreeHelper
             $db = Factory::getContainer()->get(DatabaseInterface::class);
             $app = Factory::getApplication('site');
             $params = $app->getParams();
-            $input  = $app->input;
+            $input  = $app->getInput();
             $tmp = $input->get('personId', null, 'string');
             if (empty($tmp) && (!$requestonly)) {
                 // no person id in request, try the parameters.
@@ -327,7 +327,7 @@ class JoaktreeHelper
     {
         static $_relationId;
         if (!isset($_relationId)) {
-            $input = Factory::getApplication()->input;
+            $input = Factory::getApplication()->getInput();
             $tmp = $input->get('relationId', null, 'string');
             if (empty($tmp)) {
                 // no relationId is given in request
@@ -345,7 +345,7 @@ class JoaktreeHelper
     {
         static $_repoId;
         if (!isset($_repoId)) {
-            $input = Factory::getApplication()->input;
+            $input = Factory::getApplication()->getInput();
             $tmp   = $input->get('repoId', null, 'string');
             if (empty($tmp)) {
                 // no repo Id is given in request
@@ -367,7 +367,7 @@ class JoaktreeHelper
     {
         static $_sourceId;
         if (!isset($_sourceId)) {
-            $input = Factory::getApplication()->input;
+            $input = Factory::getApplication()->getInput();
             $tmp   = $input->get('sourceId', null, 'string');
             if (empty($tmp)) {
                 // no source Id is given in request
@@ -389,7 +389,7 @@ class JoaktreeHelper
     {
         static $_action;
         if (!isset($_action)) {
-            $input = Factory::getApplication()->input;
+            $input = Factory::getApplication()->getInput();
             $tmp = $input->get('action');
             if ($tmp == 'select') {
                 $_action = $tmp;
@@ -416,7 +416,7 @@ class JoaktreeHelper
     {
         static $_returnObject;
         if (!isset($_returnObject)) {
-            $input = Factory::getApplication()->input;
+            $input = Factory::getApplication()->getInput();
             $tmp   = $input->get('retId', null, 'string');
             $_returnObject = json_decode(base64_decode($tmp ?? ''));
         }
@@ -428,7 +428,7 @@ class JoaktreeHelper
     {
         static $_tmpl;
         if (!isset($_tmpl)) {
-            $input = Factory::getApplication()->input;
+            $input = Factory::getApplication()->getInput();
             $tmp   = $input->get('tmpl');
             $_tmpl = ($tmp == 'component') ? $tmp : null;
         }
@@ -456,7 +456,7 @@ class JoaktreeHelper
     {
         static $_technology;
         $app 		= Factory::getApplication('site');
-        $input 		= $app->input;
+        $input 		= $app->getInput();
         $params 	= $app->getParams();
         $indCookie 	= $params->get('indCookies', true);
         if ($indCookie) {
@@ -610,7 +610,7 @@ class JoaktreeHelper
     {
         static $moduleId;
         if (!isset($moduleId)) {
-            $input = Factory::getApplication()->input;
+            $input = Factory::getApplication()->getInput();
             $tmp1  = $input->get('module', null, 'int');
             if (isset($tmp1)) {
                 $tmp2 = (int) $tmp1;

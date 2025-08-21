@@ -2,6 +2,19 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
+		<version>2.4.0</version>
+        <note>
+            <item>Update : 2025-08-20</item>
+        </note>
+        <fix>
+            <item>Joomla 6.x compatibility : HTMLHelper::_('formbehavior.chosen', 'select'); removed</item>
+            <item>Joomla 6.x compatibility : Factory::getApplication()->input becomes Factory::getApplication()->getInput()</item>
+            <item>Issue 36/38 : Related item not displayed</item> 
+        </fix>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
 		<version>2.3.8</version>
         <note>
             <item>Update : 2025-08-20</item>

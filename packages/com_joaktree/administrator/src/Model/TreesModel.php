@@ -225,13 +225,13 @@ class TreesModel extends ListModel
 
     public function getAction()
     {
-        $tmp = Factory::getApplication()->input->get('action');
+        $tmp = Factory::getApplication()->getInput()->get('action');
         return ($tmp == 'assign') ? $tmp : null;
     }
 
     public function getTreeId()
     {
-        $tmp = Factory::getApplication()->input->get('treeId', null, 'int');
+        $tmp = Factory::getApplication()->getInput()->get('treeId', null, 'int');
 
         if (empty($tmp)) {
             $query = $this->_db->getQuery(true);
@@ -250,7 +250,7 @@ class TreesModel extends ListModel
         $canDo	= JoaktreeHelper::getActions();
 
         if ($canDo->get('core.edit')) {
-            $cids = Factory::getApplication()->input->get('cid', null, 'array');
+            $cids = Factory::getApplication()->getInput()->get('cid', null, 'array');
             $apps = array();
 
             foreach ($cids as $cid_num => $cid) {
@@ -306,7 +306,7 @@ class TreesModel extends ListModel
         } else {
             $procObject 			= new processObject();
 
-            $tmp     = Factory::getApplication()->input->get('treeId', null, 'string');
+            $tmp     = Factory::getApplication()->getInput()->get('treeId', null, 'string');
             $treeIds = explode('!', $tmp);
             $tmp	 = array_pop($treeIds);
 
@@ -381,7 +381,7 @@ class TreesModel extends ListModel
     {
         $canDo	= JoaktreeHelper::getActions();
 
-        $tmp     = Factory::getApplication()->input->get('init', null, 'int');
+        $tmp     = Factory::getApplication()->getInput()->get('init', null, 'int');
         $procObject =  ((int) $tmp == 1) ? $this->initProcessObject() : $this->getProcessObject();
 
         if (($canDo->get('core.create')) && ($canDo->get('core.edit'))) {

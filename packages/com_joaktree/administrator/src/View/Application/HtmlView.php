@@ -66,8 +66,6 @@ class HtmlView extends BaseHtmlView
      */
     protected function addToolbar()
     {
-        Factory::getApplication()->input->set('hidemainmenu', true);
-
         $isNew		= ($this->item->id == 0);
 
         // If not checked out, can save the item.

@@ -24,7 +24,7 @@ HTMLHelper::_('bootstrap.framework');
 HTMLHelper::_('bootstrap.tooltip');
 
 HtmlHelper::_('behavior.formvalidator');
-HtmlHelper::_('formbehavior.chosen', 'select');
+
 /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('keepalive')

@@ -211,7 +211,7 @@ class JoaktreestartModel extends BaseDatabaseModel
         $app 		= Factory::getApplication('site');
 
         // always from the request
-        $tmp		= $app->input->get('filter', null, 'string');
+        $tmp		= $app->getInput()->get('filter', null, 'string');
 
         // if nothing found, check the cookie -- only when we use cookies
         if (!isset($tmp)) {

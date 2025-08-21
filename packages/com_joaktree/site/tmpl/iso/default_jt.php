@@ -22,7 +22,7 @@ header('Content-Type: text/html; charset=utf-8');
 $uri = Uri::getInstance();
 $app = Factory::getApplication();
 $user = $app->getIdentity();
-$com_id = $app->input->getInt('Itemid');
+$com_id = $app->getInput()->getInt('Itemid');
 
 $comfield = ''.URI::base(true).'/media/com_joaktree/iso';
 $displaysort = "true";

@@ -30,7 +30,6 @@ HTMLHelper::_('bootstrap.tooltip');
 HTMLHelper::_('behavior.formvalidator');
 HTMLHelper::_('behavior.core');
 HTMLHelper::_('jquery.framework');
-HTMLHelper::_('formbehavior.chosen');
 HTMLHelper::_('script', 'legacy/ajax-chosen.min.js', ['version' => 'auto', 'relative' => true]);
 
 $linkPerson = 'index.php?option=com_joaktree&amp;view=persons&amp;layout=element&amp;task=element&amp;tmpl=component&amp;object=personId';

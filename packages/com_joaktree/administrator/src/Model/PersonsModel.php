@@ -281,9 +281,9 @@ class PersonsModel extends ListModel
     public function publish()
     {
         $canDo	= JoaktreeHelper::getActions();
-
+        $this->input = Factory::getApplication()->getInput(); 
         if ($canDo->get('core.edit')) {
-            $cids	= Factory::getApplication()->input->get('cid', null, 'array');
+            $cids	= $this->input->get('cid', null, 'array');
             foreach ($cids as $cid_num => $cid) {
                 $id	 = explode('!', $cid);
                 $id[0] = (int) $id[0];         // This is app_id
@@ -321,9 +321,9 @@ class PersonsModel extends ListModel
     public function unpublish()
     {
         $canDo	= JoaktreeHelper::getActions();
-
+        $this->input = Factory::getApplication()->getInput();
         if ($canDo->get('core.edit')) {
-            $cids	= Factory::getApplication()->input->get('cid', null, 'array');
+            $cids	= $this->input->get('cid', null, 'array');
             foreach ($cids as $cid_num => $cid) {
                 $id	 = explode('!', $cid);
                 $id[0] = (int) $id[0];         // This is app_id
@@ -360,9 +360,9 @@ class PersonsModel extends ListModel
     public function publishAll()
     {
         $canDo	= JoaktreeHelper::getActions();
-
+        $this->input = Factory::getApplication()->getInput();
         if ($canDo->get('core.edit')) {
-            $cids	= Factory::getApplication()->input->get('cid', null, 'array');
+            $cids	= $this->input->get('cid', null, 'array');
 
             foreach ($cids as $cid_num => $cid) {
                 $id	 = explode('!', $cid);
@@ -400,9 +400,9 @@ class PersonsModel extends ListModel
     public function unpublishAll()
     {
         $canDo	= JoaktreeHelper::getActions();
-
+        $this->input = Factory::getApplication()->getInput();
         if ($canDo->get('core.edit')) {
-            $cids	= Factory::getApplication()->input->get('cid', null, 'array');
+            $cids	= $this->input->get('cid', null, 'array');
 
             foreach ($cids as $cid_num => $cid) {
                 $id	 = explode('!', $cid);
@@ -440,9 +440,9 @@ class PersonsModel extends ListModel
     public function living()
     {
         $canDo	= JoaktreeHelper::getActions();
-
+        $this->input = Factory::getApplication()->getInput();
         if ($canDo->get('core.edit')) {
-            $cids	= Factory::getApplication()->input->get('cid', null, 'array');
+            $cids	= $this->input->get('cid', null, 'array');
 
             foreach ($cids as $cid_num => $cid) {
                 $id	 = explode('!', $cid);
@@ -472,9 +472,9 @@ class PersonsModel extends ListModel
     public function livingAll()
     {
         $canDo	= JoaktreeHelper::getActions();
-
+        $this->input = Factory::getApplication()->getInput();
         if ($canDo->get('core.edit')) {
-            $cids	= Factory::getApplication()->input->get('cid', null, 'array');
+            $cids	= $this->input->get('cid', null, 'array');
 
             foreach ($cids as $cid_num => $cid) {
                 $id	 = explode('!', $cid);
@@ -504,9 +504,9 @@ class PersonsModel extends ListModel
     public function notLivingAll()
     {
         $canDo	= JoaktreeHelper::getActions();
-
+        $this->input = Factory::getApplication()->getInput();
         if ($canDo->get('core.edit')) {
-            $cids	= Factory::getApplication()->input->get('cid', null, 'array');
+            $cids	= $this->input->get('cid', null, 'array');
 
             foreach ($cids as $cid_num => $cid) {
                 $id	 = explode('!', $cid);
@@ -536,9 +536,9 @@ class PersonsModel extends ListModel
     public function page()
     {
         $canDo	= JoaktreeHelper::getActions();
-
+        $this->input = Factory::getApplication()->getInput();
         if ($canDo->get('core.edit')) {
-            $cids	= Factory::getApplication()->input->get('cid', null, 'array');
+            $cids	= $this->input->get('cid', null, 'array');
 
             foreach ($cids as $cid_num => $cid) {
                 $id	 = explode('!', $cid);
@@ -567,9 +567,9 @@ class PersonsModel extends ListModel
     public function pageAll()
     {
         $canDo	= JoaktreeHelper::getActions();
-
+        $this->input = Factory::getApplication()->getInput();
         if ($canDo->get('core.edit')) {
-            $cids	= Factory::getApplication()->input->get('cid', null, 'array');
+            $cids	= $this->input->get('cid', null, 'array');
 
             foreach ($cids as $cid_num => $cid) {
                 $id	 = explode('!', $cid);
@@ -599,9 +599,9 @@ class PersonsModel extends ListModel
     public function noPageAll()
     {
         $canDo	= JoaktreeHelper::getActions();
-
+        $this->input = Factory::getApplication()->getInput();
         if ($canDo->get('core.edit')) {
-            $cids	= Factory::getApplication()->input->get('cid', null, 'array');
+            $cids	= $this->input->get('cid', null, 'array');
 
             foreach ($cids as $cid_num => $cid) {
                 $id	 = explode('!', $cid);
@@ -631,9 +631,9 @@ class PersonsModel extends ListModel
     public function mapStatAll()
     {
         $canDo	= JoaktreeHelper::getActions();
-
+        $this->input = Factory::getApplication()->getInput();
         if ($canDo->get('core.edit')) {
-            $cids	= Factory::getApplication()->input->get('cid', null, 'array');
+            $cids	= $this->input->get('cid', null, 'array');
 
             foreach ($cids as $cid_num => $cid) {
                 $id	 = explode('!', $cid);
@@ -663,9 +663,9 @@ class PersonsModel extends ListModel
     public function mapDynAll()
     {
         $canDo	= JoaktreeHelper::getActions();
-
+        $this->input = Factory::getApplication()->getInput();
         if ($canDo->get('core.edit')) {
-            $cids	= Factory::getApplication()->input->get('cid', null, 'array');
+            $cids	= $this->input->get('cid', null, 'array');
 
             foreach ($cids as $cid_num => $cid) {
                 $id	 = explode('!', $cid);
@@ -695,9 +695,9 @@ class PersonsModel extends ListModel
     public function noMapAll()
     {
         $canDo	= JoaktreeHelper::getActions();
-
+        $this->input = Factory::getApplication()->getInput();
         if ($canDo->get('core.edit')) {
-            $cids	= Factory::getApplication()->input->get('cid', null, 'array');
+            $cids	= $this->input->get('cid', null, 'array');
 
             foreach ($cids as $cid_num => $cid) {
                 $id	 = explode('!', $cid);
@@ -729,8 +729,8 @@ class PersonsModel extends ListModel
         $canDo	= JoaktreeHelper::getActions();
         Factory::getApplication()->enqueueMessage("Sauvegarde models/persons");
         if ($canDo->get('core.edit')) {
-            $input	= Factory::getApplication()->input;
-            $cids	= $input->get('cid', null, 'array');
+            $this->input = Factory::getApplication()->getInput();
+            $cids	= $this->input->get('cid', null, 'array');
 
             foreach ($cids as $cid) {
                 $id	 = explode('!', $cid);
@@ -824,7 +824,7 @@ class PersonsModel extends ListModel
 
         if ($indCookie) {
             // retrieve info from cookies
-            $input = Factory::getApplication()->input;
+            $input = Factory::getApplication()->getInput();
 
             // column GedCom = applications
             $tmp	= $input->cookie->getString('app', null);
