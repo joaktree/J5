@@ -33,6 +33,9 @@ foreach ($partners as $partner) {
     $marr = "";
     foreach ($events as $event) {
         if ($event->code == 'MARR') {
+            if (!isset($event->eventDate)) {
+                continue;
+            }
             if (is_numeric(strtotime($event->eventDate))) {
                 $marr = HtmlHelper::date($event->eventDate, 'Y-m-d');
             } else {

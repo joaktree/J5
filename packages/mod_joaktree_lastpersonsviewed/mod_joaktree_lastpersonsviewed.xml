@@ -9,11 +9,11 @@
 	<old_authorEmail>info@joaktree.com</old_authorEmail>
 	<old_authorUrl>www.joaktree.com</old_authorUrl>
     <author>Robert Gastaud</author>
-	<creationDate>2025-08-20</creationDate>
+	<creationDate>2025-08-21</creationDate>
 	<copyright>(C) 2017 JoomXtensions.com</copyright>
 	<authorEmail>rg-consultant@robertg-conseil.fr</authorEmail>
 	<authorUrl>www.joomxtensions.com</authorUrl>	
-   <version>2.3.8</version>
+   <version>2.4.0</version>
 	<description>MOD_JOAKTREE_LASTPERSONSVIEWED_XML_DESCRIPTION</description>
     <namespace path="src">Joaktree\Module\Lastpersonsviewed</namespace>	
 	<!-- user part -->

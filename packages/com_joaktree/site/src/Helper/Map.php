@@ -123,8 +123,11 @@ class Map extends \StdClass
                                                  : ''
                                             );
             unset($this->params['map']);
-
-            $this->params['tree_id'] = $this->params['default_tree_id'];
+            if ($this->params['default_tree_id']) {
+                $this->params['tree_id'] = $this->params['default_tree_id'];
+            } else {
+                $this->params['tree_id'] = $id['tree'];
+            }
             unset($this->params['default_tree_id']);
 
             $this->params['person_id'] = $this->params['id'];
@@ -344,11 +347,11 @@ class Map extends \StdClass
                         .'&tech='.JoaktreeHelper::getTechnology()
                         .'&Itemid='.$menus[$this->params['tree_id']];
             $robot = (JoaktreeHelper::getTechnology() == 'a') ? '' : 'rel="noindex, nofollow"';
-            
+
             for ($i = 0; $i < count($mapItems); $i++) {
                 $lines = 0;
                 $indMore = false;
-                
+
                 $tmps1 = explode('|', $mapItems[$i]->information);
 
                 $info  = array();
