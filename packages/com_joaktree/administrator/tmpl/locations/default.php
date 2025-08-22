@@ -22,6 +22,10 @@ use Joomla\CMS\Router\Route;
 
 HTMLHelper::_('bootstrap.tooltip');
 
+// Joomla 6.0 : list-view.js might not be loaded 
+$wa = $this->getDocument()->getWebAssetManager(); 
+$wa->useScript('list-view');
+
 $sortFields = $this->getSortFields();
 
 $geocodeAPIkey    = (isset($this->mapSettings->geocode)) ? $this->mapSettings->geocode.'APIkey' : '';

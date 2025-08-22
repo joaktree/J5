@@ -20,6 +20,10 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 
+// Joomla 6.0 : list-view.js might not be loaded 
+$wa = $this->getDocument()->getWebAssetManager();
+$wa->useScript('list-view');
+
 $sortFields = $this->getSortFields();
 
 $staticmapAPIkey  = (isset($this->mapSettings->staticmap)) ? $this->mapSettings->staticmap.'APIkey' : '';

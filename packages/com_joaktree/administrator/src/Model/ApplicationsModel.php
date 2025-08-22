@@ -27,25 +27,6 @@ use Joomla\CMS\Pagination\Pagination;
 use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeHelper;
 use Joaktree\Component\Joaktree\Administrator\Helper\Gedcomfile2;
 
-class processObject
-{
-    public $id			= null;
-    public $start		= null;
-    public $current	= null;
-    public $end		= null;
-    public $cursor		= 0;
-    public $persons	= 0;
-    public $families	= 0;
-    public $sources	= 0;
-    public $repos		= 0;
-    public $notes		= 0;
-    public $docs  		= 0;
-    public $unknown	= 0;
-    public $japp_ids	= null;
-    public $status		= 'new';
-    public $msg		= null;
-}
-
 class ApplicationsModel extends ListModel
 {
     public $_data;
@@ -354,3 +335,22 @@ class ApplicationsModel extends ListModel
         $this->_db->execute(); //$this->_db->query();
     }
 }
+class processObject
+{
+    public $id			= null;
+    public $start		= null;
+    public $current	= null;
+    public $end		= null;
+    public $cursor		= 0;
+    public $persons	= 0;
+    public $families	= 0;
+    public $sources	= 0;
+    public $repos		= 0;
+    public $notes		= 0;
+    public $docs  		= 0;
+    public $unknown	= 0;
+    public $japp_ids	= null;
+    public $status		= 'new';
+    public $msg		= null;
+}
+

@@ -19,6 +19,9 @@ use Joomla\CMS\HTML\HTMLHelper;		//replace JHtml
 use Joomla\CMS\Router\Route;		//replace JRoute
 
 HtmlHelper::_('bootstrap.framework');
+// Joomla 6.0 : list-view.js might not be loaded 
+$wa = $this->getDocument()->getWebAssetManager();
+$wa->useScript('list-view');
 
 $sortFields = $this->getSortFields();
 ?>
@@ -82,10 +85,6 @@ $sortFields = $this->getSortFields();
 					onclick="document.getElementById('search').value='';this.form.submit();">
 					<i class="icon-remove"></i>
 				</button>
-			</div>
-			<div class="btn-group pull-right hidden-phone">
-				<label for="limit" class="element-invisible"><?php //echo Text::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC');?></label>
-				<?php //echo $this->pagination->getLimitBox(); ?>
 			</div>
 			<div class="btn-group pull-right hidden-phone">
 				<label for="directionTable" class="element-invisible"><?php echo Text::_('JFIELD_ORDERING_DESC');?></label>

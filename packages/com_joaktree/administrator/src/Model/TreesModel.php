@@ -27,19 +27,6 @@ use Joomla\CMS\Pagination\Pagination;
 use Joaktree\Component\Joaktree\Administrator\Helper\JoaktreeHelper;
 use Joaktree\Component\Joaktree\Administrator\Helper\Trees;
 
-class processObject
-{
-    public $id			= null;
-    public $japp_ids	= null;
-    public $treeIds	= null;
-    public $status		= null;
-    public $msg		= null;
-    public $start		= null;
-    public $current	= null;
-    public $end		= null;
-}
-
-
 class TreesModel extends ListModel
 {
     public $_data;
@@ -432,3 +419,16 @@ class TreesModel extends ListModel
     }
 
 }
+class processObject
+{
+    public $id			= null;
+    public $japp_ids	= null;
+    public $treeIds	= null;
+    public $status		= null;
+    public $msg		= null;
+    public $start		= null;
+    public $current	= null;
+    public $end		= null;
+}
+
+
