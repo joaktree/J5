@@ -291,7 +291,7 @@ class TreesModel extends ListModel
             $save_app_id			= $procObject->id;
             $app_ids				= $japp_ids;
         } else {
-            $procObject 			= new processObject();
+            $procObject 			= new processTreeObject();
 
             $tmp     = Factory::getApplication()->getInput()->get('treeId', null, 'string');
             $treeIds = explode('!', $tmp);
@@ -419,7 +419,7 @@ class TreesModel extends ListModel
     }
 
 }
-class processObject
+class processTreeObject
 {
     public $id			= null;
     public $japp_ids	= null;
