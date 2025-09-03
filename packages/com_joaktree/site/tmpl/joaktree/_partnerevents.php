@@ -125,6 +125,8 @@ foreach ($events as $event) {
     $html .= '</div>';
 
     if ($event->indNote == true) {
+        $njtid1 = 'jt1notpev'.$i.$this->person->id.$this->partner->id;
+        $njtid2 = 'jt2notpev'.$i.$this->person->id.$this->partner->id;
         if ($this->lists['technology'] != 'b') {
             if (($this->lists['technology'] == 'j') or ($event->indAltNote == true)) {
                 $html .= '<div id="'.$njtid2.'" class="jt-hide jt-popup" style="position: absolute; z-index: 50;">';
@@ -155,6 +157,8 @@ foreach ($events as $event) {
     }
 
     if ($event->indCitation == true) {
+        $sjtid1 = 'jt1srcpev'.$i.$this->person->id.$this->partner->id;
+        $sjtid2 = 'jt2srcpev'.$i.$this->person->id.$this->partner->id;
         if ($this->lists['technology'] != 'b') {
             if (($this->lists['technology'] == 'j') or ($event->indAltSource == true)) {
                 $html .= '<div id="'.$sjtid2.'" class="jt-hide jt-popup" style="position: absolute; z-index: 50;">';
