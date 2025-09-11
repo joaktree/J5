@@ -52,7 +52,8 @@ class PersonsController extends AdminController
         $this->registerTask('updatePage', 'page');
         $this->registerTask('pageAll', 'pageAll');
         $this->registerTask('noPageAll', 'noPageAll');
-        // three tasks for map switch
+        // four tasks for map switch
+        $this->registerTask('changeMap', 'changeMap');
         $this->registerTask('mapStatAll', 'mapStatAll');
         $this->registerTask('mapDynAll', 'mapDynAll');
         $this->registerTask('noMapAll', 'noMapAll');
@@ -62,7 +63,6 @@ class PersonsController extends AdminController
         $model = parent::getModel($name, $prefix, $config);
         return $model;
     }
-
     public function publish()
     {
         $model = $this->getModel();
@@ -143,6 +143,13 @@ class PersonsController extends AdminController
         $this->setRedirect($link, $msg);
     }
 
+    public function changeMap()
+    {
+        $model = $this->getModel();
+        $msg = $model->changeMap();
+        $link = 'index.php?option=com_joaktree&view=persons';
+        $this->setRedirect($link, $msg);
+    }
     public function mapStatAll()
     {
         $model = $this->getModel();
@@ -150,7 +157,6 @@ class PersonsController extends AdminController
         $link = 'index.php?option=com_joaktree&view=persons';
         $this->setRedirect($link, $msg);
     }
-
     public function mapDynAll()
     {
         $model = $this->getModel();
@@ -158,7 +164,6 @@ class PersonsController extends AdminController
         $link = 'index.php?option=com_joaktree&view=persons';
         $this->setRedirect($link, $msg);
     }
-
     public function noMapAll()
     {
         $model = $this->getModel();

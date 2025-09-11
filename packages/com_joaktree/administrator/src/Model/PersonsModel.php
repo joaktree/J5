@@ -213,8 +213,9 @@ class PersonsModel extends ListModel
         }
 
         if ($filter_map >= 1) {
+            $filter = $filter_map - 1;
             $query->where('jan.map = :filtermap');
-            $query->bind(':filtermap', $filter_map - 1, \Joomla\Database\ParameterType::INTEGER);
+            $query->bind(':filtermap', $filter, \Joomla\Database\ParameterType::INTEGER);
         }
 
         if ($filter_tree != 0) {
@@ -228,8 +229,9 @@ class PersonsModel extends ListModel
         }
 
         if ($filter_robots >= 1) {
+            $filter =  $filter_robots - 1;
             $query->where('jan.robots = :robots');
-            $query->bind(':robots', $filter_robots - 1, \Joomla\Database\ParameterType::INTEGER);
+            $query->bind(':robots', $filter, \Joomla\Database\ParameterType::INTEGER);
         }
 
         return $query;
@@ -281,7 +283,7 @@ class PersonsModel extends ListModel
     public function publish()
     {
         $canDo	= JoaktreeHelper::getActions();
-        $this->input = Factory::getApplication()->getInput(); 
+        $this->input = Factory::getApplication()->getInput();
         if ($canDo->get('core.edit')) {
             $cids	= $this->input->get('cid', null, 'array');
             foreach ($cids as $cid_num => $cid) {
@@ -627,7 +629,31 @@ class PersonsModel extends ListModel
 
         return $return;
     }
-
+    public function changeMap()
+    {
+        $canDo	= JoaktreeHelper::getActions();
+        $this->input = Factory::getApplication()->getInput();
+        if ($canDo->get('core.edit')) {
+            $cids	= $this->input->get('cid', null, 'array');
+            foreach ($cids as $cid_num => $cid) {
+                $id	 = explode('!', $cid);
+                $value = (int)$this->input->get('map'.$cid) - 1;
+                $query = $this->_db->getQuery(true);
+                $query->update(' #__joaktree_admin_persons ');
+                $query->set(' map = '.$value);
+                $query->where(' app_id = :appid');
+                $query->where(' id     = :personid');
+                $query->bind(':appid', $id[0], \Joomla\Database\ParameterType::INTEGER);
+                $query->bind(':personid', $id[1], \Joomla\Database\ParameterType::STRING);
+                $this->_db->setQuery($query);
+                $res = $this->_db->execute();
+                $return = Text::sprintf('JTADMIN_PERSONS_UPDATED', 1);
+            }
+        } else {
+            $return = Text::_('JT_NOTAUTHORISED');
+        }
+        return $return;
+    }
     public function mapStatAll()
     {
         $canDo	= JoaktreeHelper::getActions();

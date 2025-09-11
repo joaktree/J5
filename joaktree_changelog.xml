@@ -2,6 +2,18 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
+		<version>2.4.4</version>
+        <note>
+            <item>Update : 2025-09-11</item>
+        </note>
+        <fix>
+            <item>Issue 40 : admin : person view : change map type</item> 
+            <item>Issue 39 : admin : person view : Map filtering error</item> 
+        </fix>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
 		<version>2.4.3</version>
         <note>
             <item>Update : 2025-09-03</item>

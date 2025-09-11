@@ -342,7 +342,7 @@ if ($this->columns['rob']) {
 				        //$page = HTMLHelper::_('image', 'admin/' . 'publish_r.png', Text::_('JT_FILTER_VAL_NOPAGE'), null, true);
 				    }
 
-				    $map		 = '<select id="map'.$row->app_id.'!'.$row->id.'" name="map'.$row->app_id.'!'.$row->id.'" class="inputbox" onchange="javascript:jtsaveaccess(\'cb'.$i.'\')">';
+				    $map		 = '<select id="map'.$row->app_id.'!'.$row->id.'" name="map'.$row->app_id.'!'.$row->id.'" class="inputbox" onchange="return Joomla.listItemTask(\'cb'.$i.'\', \'changeMap\')">';
 				    $map		.= HTMLHelper::_('select.options', $this->map, 'value', 'text', ((int) $row->map + 1));
 				    $map		.= '</select>';
 
