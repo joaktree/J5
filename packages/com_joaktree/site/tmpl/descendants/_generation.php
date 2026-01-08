@@ -49,7 +49,7 @@ while ($continue == true) {
 	
 	$nextGenerationCounter = 0;
 	$html .= '<div class="jt-clearfix"><div class="jt-h3">'.Text::_($displayGenerationNum).'&nbsp;'.Text::_('JT_GENERATION').'</div></div>';
-	
+	$person_displayed = [];
 	foreach ($thisGeneration as $gen_i => $generation) {
 		$genPerson = explode('|', $generation);
 		
@@ -62,7 +62,7 @@ while ($continue == true) {
 		
 		$html .= '<div class="jt-clearfix jt-high-row">';
 		$html .= '<a name="P'. $person->id .'"></a>';
-
+		$person_displayed[$person->id] = $person->fullName; // save it 
 		if ( !(($generationNumber == 1) and ($genPerson[1] == 1)) ) {
 			$html .= '<a href="#P' . $genPerson[2] . '">';			
 		} 
@@ -227,107 +227,98 @@ while ($continue == true) {
 				
 				if ($counter > 0) {
 					// children with this partner
-					$html .= '<div><span class="jt-desc-num-label">&nbsp;</span><em>' . Text::_('JT_CHILDREN') . '</em></div>';
-					
-					// loop through the children and filter on the correct parent 
-					foreach ($children as $child) {
-						if ( $child->secondParent_id == $partner->id ) {
-							$nextGenerationCounter++;
-							$html .= '<div class="jt-clearfix">';
-							$html .= '<span class="jt-desc-num-label">&nbsp;</span>';	
-							
-							// name of person
-							$html .= '<span class="jt-low-row">';
-							if ($child->indHasChild) { 
-								$nextGeneration[] = ($child->relationtype) 
-													? $child->id
-													  .'|'.$nextGenerationCounter
-													  .'|'.$person->id
-													  .'|'.$child->relationtype
-													: $child->id
-													  .'|'.$nextGenerationCounter
-													  .'|'.$person->id;
-								$html .= '<a name="C'. $child->id .'"></a>'; 
-							}
-							
-							if ($child->indHasChild) { 
-								$html .= '<a href="#P' . $child->id . '">'; 
-							} 							
-							$html .= '<span class="jt-desc-num-label">';
-							$html .= $displayNextGenNumber.'-'.$nextGenerationCounter;
-							$html .= '</span>';
-							if ($child->indHasChild) { 
-								$html .= '</a>'; 
-							}
-							
-							if ($child->indHasPage) {
-								$html .= '<a href="' . Route::_($linkbase.$this->lists[ 'app_id' ].'!'.$child->id) . '" '.$robot.' >';
-							}			
-							$html .= $child->fullName;
-							if ($child->indHasPage) {
-								$html .= '</a>';
-							} 
-							if ($child->relationtype) {
-								// show type of relation
-								$html .= '&nbsp;|&nbsp;'.Text::_(strtoupper($child->relationtype));
-							}
-							
-							$html .= '</span>';
-													
-							// basic information
-							if ($child->birthDate != null) {
-								$html .= ',&nbsp;';
-								if ($child->birthDate != Text::_('JT_ALTERNATIVE') ) {
-									$html .= Text::_('JT_BORN').'&nbsp;';
-								}
-								$html .= $child->birthDate;
-							}
-							if ($child->deathDate != null) {
-								$html .= ',&nbsp;'.Text::_('JT_DIED').'&nbsp;'.$child->deathDate;
-							}
-							
-							$html .= '</div>';
-							
-							// no children but partners
-							if ( (!$child->indHasChild) and ($child->indHasPartner) ) {
-								$id[ 'person_id' ] 	= $child->id;	
-								$person2   = new Person($id, 'basic');
-								$partners2 = $person2->getPartners('basic');
-								
-								foreach ($partners2 as $partner2) {
-									$html .= '<div class="jt-clearfix">';
-									$html .= '<span class="jt-desc-num-label">&nbsp;</span>';	
-									$html .= '<span class="jt-desc-num-label">&nbsp;</span>';	
-									$html .= '<span class="jt-desc-num-label">&nbsp;</span>';	
-									if ($person2->sex == 'M') {
-										$html .= ucfirst( Text::_('JT_HE') );
-									} else if ($person2->sex == 'F') {
-										$html .= ucfirst( Text::_('JT_SHE') );
-									} else {
-										$html .= ucfirst( Text::_('JT_HE').'/'.Text::_('JT_SHE') );
-									}
-								
-									$html .= '&nbsp;'.Text::_('JT_MARRIED').'&nbsp;';
-									$html .= $partner2->fullName.'</div>';
-								} // end loop through partners of children with no children
-							} // end: children with no children					
-						} // end: children for this partner
-					} // end loop through children
-				} // end: check for children for this partner
-				
-				// empty line before next partner
-				$html .= '<div class="jt-clearfix">&nbsp;</div>';
-				
-			} // end loop through partners
-		} // end: check for children in general
-		
-		// empty line before next person in generation
-		$html .= '<div class="jt-clearfix">&nbsp;</div>';
-	} // end loop through this generation
+					if (array_key_exists($partner->id,$person_displayed)) { // partner already displayed, don't display children again
+						$html .= '<div><a href="#P'. $partner->id.'"><span class="jt-desc-num-label">&nbsp;</span><em>' . Text::_('JT_LABEL_FAMILY3').' '.$person_displayed[$partner->id].'</em></a></div>';
+					} else { 
+						$html .= '<div><span class="jt-desc-num-label">&nbsp;</span><em>' . Text::_('JT_CHILDREN') . '</em></div>';
+						// loop through the children and filter on the correct parent 
+						foreach ($children as $child) {
+                            if ( $child->secondParent_id == $partner->id ) {
+                                $nextGenerationCounter++;
+                                $html .= '<div class="jt-clearfix">';
+                                $html .= '<span class="jt-desc-num-label">&nbsp;</span>';	
+                                // name of person
+                                $html .= '<span class="jt-low-row">';
+                                if ($child->indHasChild) { 
+                                    $nextGeneration[] = ($child->relationtype) 
+                                                        ? $child->id
+                                                        .'|'.$nextGenerationCounter
+                                                        .'|'.$person->id
+                                                        .'|'.$child->relationtype
+                                                        : $child->id
+                                                        .'|'.$nextGenerationCounter
+                                                        .'|'.$person->id;
+                                    $html .= '<a name="C'. $child->id .'"></a>'; 
+                                }
+                                if ($child->indHasChild) { 
+                                    $html .= '<a href="#P' . $child->id . '">'; 
+                                }
+                                $html .= '<span class="jt-desc-num-label">';
+                                $html .= $displayNextGenNumber.'-'.$nextGenerationCounter;
+                                $html .= '</span>';
+                                if ($child->indHasChild) { 
+                                    $html .= '</a>'; 
+                                }
+                                if ($child->indHasPage) {
+                                    $html .= '<a href="' . Route::_($linkbase.$this->lists[ 'app_id' ].'!'.$child->id) . '" '.$robot.' >';
+                                }
+                                $html .= $child->fullName;
+                                if ($child->indHasPage) {
+                                    $html .= '</a>';
+                                }
+                                if ($child->relationtype) {
+                                    // show type of relation
+                                    $html .= '&nbsp;|&nbsp;'.Text::_(strtoupper($child->relationtype));
+                                }
+                                $html .= '</span>';
+                                // basic information
+                                if ($child->birthDate != null) {
+                                    $html .= ',&nbsp;';
+                                    if ($child->birthDate != Text::_('JT_ALTERNATIVE') ) {
+                                        $html .= Text::_('JT_BORN').'&nbsp;';
+                                    }
+                                    $html .= $child->birthDate;
+                                }
+                                if ($child->deathDate != null) {
+                                    $html .= ',&nbsp;'.Text::_('JT_DIED').'&nbsp;'.$child->deathDate;
+                                }
+                                $html .= '</div>';
+                                // no children but partners
+                                if ( (!$child->indHasChild) and ($child->indHasPartner) ) {
+                                    $id[ 'person_id' ] 	= $child->id;	
+                                    $person2   = new Person($id, 'basic');
+                                    $partners2 = $person2->getPartners('basic');
+                                    foreach ($partners2 as $partner2) {
+                                        $html .= '<div class="jt-clearfix">';
+                                        $html .= '<span class="jt-desc-num-label">&nbsp;</span>';	
+                                        $html .= '<span class="jt-desc-num-label">&nbsp;</span>';	
+                                        $html .= '<span class="jt-desc-num-label">&nbsp;</span>';	
+                                        if ($person2->sex == 'M') {
+                                            $html .= ucfirst( Text::_('JT_HE') );
+                                        } else if ($person2->sex == 'F') {
+                                            $html .= ucfirst( Text::_('JT_SHE') );
+                                        } else {
+                                            $html .= ucfirst( Text::_('JT_HE').'/'.Text::_('JT_SHE') );
+                                        }
+                                        $html .= '&nbsp;'.Text::_('JT_MARRIED').'&nbsp;';
+                                        $html .= $partner2->fullName.'</div>';
+                                    } // end loop through partners of children with no children
+                                } // end: children with no children	
+                            } // end: children for this partner
+                        } // end loop through children
+                    } // end of check for partner already displayed
+                } // end: check for children for this partner
+                // empty line before next partner
+                $html .= '<div class="jt-clearfix">&nbsp;</div>';
+            } // end loop through partners
+        } // end: check for children in general
+        // empty line before next person in generation
+        $html .= '<div class="jt-clearfix">&nbsp;</div>';
+    } // end loop through this generation
 	
 	array_splice($thisGeneration, 0);
 	$thisGeneration = $nextGeneration;
-	array_splice($nextGeneration, 0);	
+	array_splice($nextGeneration, 0);
 
 	$generationNumber++;
 	if (count($thisGeneration) > 0) {
@@ -341,6 +332,6 @@ while ($continue == true) {
 	}
 }
 
-echo $html;		
+echo $html;	
 ?>
 
