@@ -228,9 +228,9 @@ while ($continue == true) {
 				if ($counter > 0) {
 					// children with this partner
 					if (array_key_exists($partner->id,$person_displayed)) { // partner already displayed, don't display children again
-						$html .= '<div><a href="#CP'. $partner->id.'"><span class="jt-desc-num-label">&nbsp;</span><em>' . Text::_('JT_LABEL_FAMILY3').' '.$person_displayed[$partner->id].'</em></a></div>';
+						$html .= '<div><a href="#CP'. $partner->id.'"><span class="jt-desc-num-label">&nbsp;</span><em>' . Text::_('JT_CHILDREN_WITH').' '.$person_displayed[$partner->id].'</em></a></div>';
 					} else { 
-						$html .= '<div><a name="CP'. $person->id.'" title="' . Text::_('JT_LABEL_FAMILY3').' '.$partner->fullName.'"><span class="jt-desc-num-label">&nbsp;</span><em>' . Text::_('JT_CHILDREN_WITH') . '</em></a></div>';
+						$html .= '<div><a name="CP'. $person->id.'" title="' . Text::_('JT_CHILDREN_WITH').' '.$partner->fullName.'"><span class="jt-desc-num-label">&nbsp;</span><em>' . Text::_('JT_CHILDREN') . '</em></a></div>';
 						// loop through the children and filter on the correct parent 
 						foreach ($children as $child) {
                             if ( $child->secondParent_id == $partner->id ) {
