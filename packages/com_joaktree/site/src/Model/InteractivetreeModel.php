@@ -46,7 +46,7 @@ class InteractivetreeModel extends BaseDatabaseModel
 
         if (!isset($_access)) {
             $params = JoaktreeHelper::getJTParams();
-            $descendantEnabled = $params->get('interactivetree', 0);
+            $descendantEnabled = $params->get('descendantchart', 0);
 
             if ($descendantEnabled != 1) {
                 // chart is not enabled
