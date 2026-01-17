@@ -32,7 +32,7 @@ $wa->registerAndUSeScript('descendantgraph', $comfield.'js/joaktree_interactive_
 
 $params = JoaktreeHelper::getJTParams();
 
-$css = ".f3 .link {stroke:".$params->get('link', 'white')."; stroke-width:".$params->get('linkwidth', 1)."}";
+$css = ".f3 .link {stroke:".$params->get('link', 'white')."; stroke-width:".(int)$params->get('linksize', 1)."}";
 $wa->addInlineStyle($css);
 
 Factory::getApplication()->getDocument()->addScriptOptions(
