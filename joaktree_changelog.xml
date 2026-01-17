@@ -2,6 +2,17 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
+		<version>2.5.0</version>
+        <note>
+            <item>Update : 2026-01-17</item>
+        </note>
+        <addition>
+            <item>New descendants graph view (Donatso family-chart library) </item> 
+        </addition>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
 		<version>2.4.5</version>
         <note>
             <item>Update : 2026-01-08</item>
