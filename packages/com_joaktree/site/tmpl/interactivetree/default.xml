@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE metadata>
 <metadata>
-	<layout title="Chart">
+	<layout title="COM_JOAKTREE_INTERACTIVE_FAMILY_TREE_VIEWInteractive family tree">
 		<message>
-			<![CDATA[COM_JOAKTREE_DESCENDANTS_VIEW_DESC]]>
+			<![CDATA[COM_JOAKTREE_INTERACTIVE_FAMILY_TREE_VIEW_DESC]]>
 		</message>
 	</layout>
 	<fields name="params">

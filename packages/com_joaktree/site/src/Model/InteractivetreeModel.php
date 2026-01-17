@@ -23,7 +23,7 @@ use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joaktree\Component\Joaktree\Site\Helper\JoaktreeHelper;
 use Joaktree\Component\Joaktree\Site\Helper\Person;
 
-class DescendantsGraphModel extends BaseDatabaseModel
+class InteractivetreeModel extends BaseDatabaseModel
 {
     public function getUserAccess()
     {
@@ -46,7 +46,7 @@ class DescendantsGraphModel extends BaseDatabaseModel
 
         if (!isset($_access)) {
             $params = JoaktreeHelper::getJTParams();
-            $descendantEnabled = $params->get('descendantchart', 0);
+            $descendantEnabled = $params->get('interactivetree', 0);
 
             if ($descendantEnabled != 1) {
                 // chart is not enabled

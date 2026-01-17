@@ -28,7 +28,7 @@ $wa->registerAndUseStyle('joaktree', $comfield.'css/joaktree.css');
 $wa->registerAndUseScript('d3', 'https://unpkg.com/d3@7');
 $wa->registerAndUseStyle('family', 'https://unpkg.com/family-chart@latest/dist/styles/family-chart.css');
 $wa->registerAndUSeScript('family', 'https://unpkg.com/family-chart@latest', ['type' => 'module']);
-$wa->registerAndUSeScript('descendantgraph', $comfield.'js/joaktree_descendants_graph.js');
+$wa->registerAndUSeScript('descendantgraph', $comfield.'js/joaktree_interactive_tree.js');
 
 $params = JoaktreeHelper::getJTParams();
 
@@ -36,7 +36,7 @@ $css = ".f3 .link {stroke:".$params->get('link', 'white')."; stroke-width:".$par
 $wa->addInlineStyle($css);
 
 Factory::getApplication()->getDocument()->addScriptOptions(
-    'joaktree_descendant_graph',
+    'joaktree_interactive_tree',
     array(  'background' => $params->get('background', '#e0e0e0'),'color' => $params->get('color', '#737272'),
             'link' => $params->get('link'), 'linksize' => (int)$params->get('linksize', 1),
             'ancestors' => (int)$params->get('ancestors', 3),'descendants' => (int)$params->get('descendants', 1),
@@ -54,10 +54,10 @@ Factory::getApplication()->getDocument()->addScriptOptions(
 		<?php
             $link = Route::_(
                 'index.php?option=com_joaktree&view=joaktree'
-                                                                                        .'&tech='.$this->lists['technology']
-                                                                                        .'&Itemid='.$this->person->menuItemId
-                                                                                        .'&treeId='.$this->lists['treeId']
-                                                                                        .'&personId='.$this->person->app_id.'!'.$this->person->id
+                .'&tech='.$this->lists['technology']
+                .'&Itemid='.$this->person->menuItemId
+                .'&treeId='.$this->lists['treeId']
+                .'&personId='.$this->person->app_id.'!'.$this->person->id
             );
     $robot = ($this->lists['technology'] == 'a') ? '' : 'rel="noindex, nofollow"';
     ?>

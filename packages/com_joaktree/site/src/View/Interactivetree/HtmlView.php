@@ -14,7 +14,7 @@
  *
  */
 
-namespace Joaktree\Component\Joaktree\Site\View\DescendantsGraph;
+namespace Joaktree\Component\Joaktree\Site\View\Interactivetree;
 
 // no direct access
 defined('_JEXEC') or die('Restricted access');

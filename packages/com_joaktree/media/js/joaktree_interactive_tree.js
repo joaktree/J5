@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		console.error('Joomla.getOptions not found!\nThe Joomla core.js file is not being loaded.');
 		return false;
 	}
-	options_graph = Joomla.getOptions('joaktree_descendant_graph');
+	options_graph = Joomla.getOptions('joaktree_interactive_tree');
 	if (typeof options_graph === 'undefined' ) {return false}
 
     let logs = [];
