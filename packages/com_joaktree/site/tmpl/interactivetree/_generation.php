@@ -17,7 +17,6 @@
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joaktree\Component\Joaktree\Site\Helper\JoaktreeHelper;
 use Joaktree\Component\Joaktree\Site\Helper\Person;
@@ -63,19 +62,10 @@ function create_tree(&$list_tree, $person, $url, $fathers, $mothers, $partners, 
         }
     }
     $rels['children'] = $childs;
-    /*
-    if ($count > 1) { // only on level for parents in another tree
-        $rels['parents'] = [];
-    }
-    */
+
     $obj->rels = $rels;
     $list_tree[$person->id] = $obj;
-    // check if all keys exist, if not, just create them
-    /*
-    if ($count > 1 && count($partners) <= 1) {
-        return;
-    }
-    */
+
     if ($fathers && !array_key_exists($fathers[0]->id, $list_tree)) {
         $onef = $fathers[0];
         $onef_children	= $onef->getChildren('basic');

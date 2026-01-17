@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
   	}
     if (options_graph.latest == 'true') {
     //---------- log selected boxes -----------
-    let prevsbtn = d3.select(document.querySelector("#FamilyChart")).append("button").text('latest selections')
+    let prevsbtn = d3.select(document.querySelector("#FamilyChart")).append("button").text(options_graph.latesttext)
     .attr('id','logprevsbtn')
     .attr("style", "position: absolute; top: 10px; right: 20px; width: 150px;z-index: 1000;display:none")
     .attr('data-bs-toggle','collapse')
@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const search_input = search_cont.append("input")
         .attr("style", "width: 100%;")
         .attr("type", "text")
-        .attr("placeholder", "Search")
+        .attr("placeholder", options_graph.searchtext)
         .on("focus", activateDropdown)
         .on("input", activateDropdown)
 
