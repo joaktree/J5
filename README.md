@@ -18,5 +18,5 @@ All screenshots were taken using the default Joomla templates:
 Jayson Dayman
 
 In Joaktree 2.4 and more, 2 new views have been introduced : 
-- Isotope View : see [joaktree-iso](https://www.conseilgouz.com/joaktree-iso) <a href="https://www.conseilgouz.com/joaktree-iso" target="_blank" rel="noopener">joaktree-iso</a>
+- Isotope View : see [joaktree-iso](https://www.conseilgouz.com/joaktree-iso)
 - Interactive family tree view : see [joaktree-graph](https://www.conseilgouz.com/joaktree-graph)
