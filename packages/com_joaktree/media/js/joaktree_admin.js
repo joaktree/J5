@@ -445,8 +445,8 @@ function checkenter(event) {
 document.addEventListener('DOMContentLoaded', function() {
 
     sel = document.querySelector('#fieldset-basic');
-    sel = sel.querySelector('.form-grid');
     if (!sel) { return; }
+    sel = sel.querySelector('.form-grid');
     sel.classList.remove('form-grid');
     sels = sel.querySelectorAll('.control-group .control-label');
     sels.forEach(function (element) {

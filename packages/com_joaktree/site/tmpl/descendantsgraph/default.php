@@ -28,6 +28,13 @@ $wa->registerAndUseStyle('joaktree', $comfield.'css/joaktree.css');
 $wa->registerAndUseScript('d3', 'https://unpkg.com/d3@7');
 $wa->registerAndUseStyle('family', 'https://unpkg.com/family-chart@latest/dist/styles/family-chart.css');
 $wa->registerAndUSeScript('family', 'https://unpkg.com/family-chart@latest', ['type' => 'module']);
+
+$params = JoaktreeHelper::getJTParams();
+
+$css = ".f3 .link {stroke:".$params->get('link', 'white')."; stroke-width:".$params->get('linkwidth', 1)."}";
+$wa->addInlineStyle($css);
+
+
 ?>
 <div id="jt-content">
 
@@ -38,10 +45,10 @@ $wa->registerAndUSeScript('family', 'https://unpkg.com/family-chart@latest', ['t
 		<?php
             $link = Route::_(
                 'index.php?option=com_joaktree&view=joaktree'
-                                                                                                                                                                                                                                                     .'&tech='.$this->lists['technology']
-                                                                                                                                                                                                                                                     .'&Itemid='.$this->person->menuItemId
-                                                                                                                                                                                                                                                     .'&treeId='.$this->lists['treeId']
-                                                                                                                                                                                                                                                     .'&personId='.$this->person->app_id.'!'.$this->person->id
+                                                                                                                                                                                                                                                                                                                             .'&tech='.$this->lists['technology']
+                                                                                                                                                                                                                                                                                                                             .'&Itemid='.$this->person->menuItemId
+                                                                                                                                                                                                                                                                                                                             .'&treeId='.$this->lists['treeId']
+                                                                                                                                                                                                                                                                                                                             .'&personId='.$this->person->app_id.'!'.$this->person->id
             );
     $robot = ($this->lists['technology'] == 'a') ? '' : 'rel="noindex, nofollow"';
     ?>

@@ -39,6 +39,16 @@
 				label="JTBACKGROUND_LABEL" description="JTBACKGROUND_DESC" 
                 class="half"
                 />
+			<field  name="link" type="color" 
+				default="#fff"
+				label="JTLINK_LABEL" description="JTLINK_DESC" 
+                class="clear left half"
+                />
+			<field  name="linksize" type="number" 
+				default="1"
+				label="JTLINKSIZE_LABEL" description="JTLINKSIZE_DESC" 
+                class="half"
+                />
 			<field name="search" type="radio" class="btn-group third left" default="true"
 				label="JTSEARCH_LABEL" 	description="JTSEARCH_DESC" >
                 <option value="false">JNO</option> 

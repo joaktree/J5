@@ -260,7 +260,7 @@ $list .= ']';
 HTMLHelper::_('bootstrap.collapse', '#logprevsbtn');
 ?>
 
-<div id="FamilyChart" class="f3" style="width:100%;height:90vh;margin:auto;background-color:<?php echo $params->get('background');?>;color:<?php echo $params->get('color');?>;"></div>
+<div id="FamilyChart" class="f3" style="width:100%;height:90vh;margin:auto;background-color:<?php echo $params->get('background', '#e0e0e0');?>;color:<?php echo $params->get('color', '#737272');?>;"></div>
 
 <script>
    <?php echo $list;?>;
@@ -269,8 +269,8 @@ HTMLHelper::_('bootstrap.collapse', '#logprevsbtn');
 			    	.setTransitionTime(1000)
    				 	.setCardXSpacing(230)
     				.setCardYSpacing(150)
-    				.setAncestryDepth(<?php echo $params->get('ancestors');?>)
-   					.setProgenyDepth(<?php echo $params->get('descendants');?>)
+    				.setAncestryDepth(<?php echo $params->get('ancestors', 3);?>)
+   					.setProgenyDepth(<?php echo $params->get('descendants', 1);?>)
 					.setSingleParentEmptyCard(false)
                     .setShowSiblingsOfMain(false) // show brothers/sisters on main
  
@@ -284,13 +284,13 @@ HTMLHelper::_('bootstrap.collapse', '#logprevsbtn');
       </div>`
     	})
 		.setMiniTree(true)
-        <?php if ($params->get('latest') == 'true') { ?> 
+        <?php if ($params->get('latest', 'true') == 'true') { ?> 
         .setOnCardClick(function (e) {
             element = { id:e.currentTarget.getAttribute('data-id'),
                         fullname:e.currentTarget.parentNode.__data__.data.data.fullname
                     }
             logs.push(element)
-            if (logs.length > <?php echo $params->get('latestsize');?>) { // keep 5 latest clicks 
+            if (logs.length > <?php echo $params->get('latestsize', 5);?>) {
                 logs.shift()
             }
             updateLogDropdown(logs)
@@ -298,6 +298,7 @@ HTMLHelper::_('bootstrap.collapse', '#logprevsbtn');
     	    f3Chart.updateTree({initial: false})
         })
         <?php } ?>
+    
 	f3Chart.updateTree({initial: true})
 
     // with person_id this function will update the tree
@@ -305,7 +306,7 @@ HTMLHelper::_('bootstrap.collapse', '#logprevsbtn');
     	f3Chart.updateMainId(person_id)
     	f3Chart.updateTree({initial: animation_initial})
   	}
-    <?php if ($params->get('latest') == 'true') { ?>
+    <?php if ($params->get('latest', 'true') == 'true') { ?>
     //---------- log selected boxes -----------
     let logs = [];
     let prevsbtn = d3.select(document.querySelector("#FamilyChart")).append("button").text('latest selections')
@@ -340,7 +341,7 @@ HTMLHelper::_('bootstrap.collapse', '#logprevsbtn');
       e.stopPropagation()
     })
     <?php } ?>
-    <?php if ($params->get('search') == 'true') { ?>
+    <?php if ($params->get('search', 'true') == 'true') { ?>
   //------------ setup search dropdown -----------
     const all_select_options = []
     data.forEach(d => {
@@ -379,11 +380,11 @@ HTMLHelper::_('bootstrap.collapse', '#logprevsbtn');
         dropdown.selectAll("div").data(filtered_options).join("div")
         .attr("style", "padding: 5px;cursor: pointer;border-bottom: .5px solid currentColor;")
         .on("click", (e, d) => {
-    <?php if ($params->get('latest') == 'true') { ?>
+    <?php if ($params->get('latest', 'true') == 'true') { ?>
         // store in latest selected items list
             element = { id:d.value,fullname:d.label}
             logs.push(element)
-            if (logs.length > <?php echo $params->get('latestsize');?>) { // keep 5 latest clicks 
+            if (logs.length > <?php echo $params->get('latestsize', 5);?>) { // keep 5 latest clicks 
                 logs.shift()
             }
             updateLogDropdown(logs)
