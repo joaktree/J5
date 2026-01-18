@@ -77,14 +77,15 @@ document.addEventListener('DOMContentLoaded', function() {
     	    f3Chart.updateTree({initial: false})
         })
     // ----------- user details
+    
     const f3EditTree = f3Chart.editTree()
-        .setFields([{type:"text",label:options_graph.nametext,id:"fullname"},
+         .setFields([{type:"text",label:"",id:"fullname"},
                     {type:"text",label:options_graph.birthtext,id:"birthday"},
                     {type:"text",label:options_graph.deathtext,id:"deathday"},
                     {type:"text",label:"",id:"url"},
                     ]) 
         .setNoEdit()  //just see info form
-        
+
 	f3Chart.updateTree({initial: true})
 
     // with person_id this function will update the tree
