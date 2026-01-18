@@ -2,6 +2,17 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
+		<version>2.5.2</version>
+        <note>
+            <item>Update : 2026-01-19</item>
+        </note>
+        <fix>
+            <item>Interactive family tree view : missing some EN translations</item> 
+        </fix>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
 		<version>2.5.1</version>
         <note>
             <item>Update : 2026-01-18</item>
