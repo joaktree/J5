@@ -2,6 +2,17 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
+		<version>2.5.1</version>
+        <note>
+            <item>Update : 2026-01-18</item>
+        </note>
+        <change>
+            <item>Interactive family tree view : info icon + info box </item> 
+        </change>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
 		<version>2.5.0</version>
         <note>
             <item>Update : 2026-01-17</item>

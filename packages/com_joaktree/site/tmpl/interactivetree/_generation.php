@@ -17,6 +17,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joaktree\Component\Joaktree\Site\Helper\JoaktreeHelper;
 use Joaktree\Component\Joaktree\Site\Helper\Person;
@@ -36,6 +37,7 @@ function create_tree(&$list_tree, $person, $url, $fathers, $mothers, $partners, 
     $data['fullname'] =  str_replace("'", "\'", $person->fullName);
     $data['gender'] = $person->sex;
     $data['birthday'] = $person->birthDate;
+    $data['deathday'] = $person->deathDate;
     if ($url) {
         $data['url'] = $url;
     }
@@ -211,6 +213,7 @@ foreach ($list_tree as $key => $one) {
         if ($oned) {
             if ($keyd == 'url') {
                 $oned = Route::_($linkbase.$this->lists[ 'app_id' ].'!'.$oned);
+                $oned = '<a href="'.$oned.'" target="_blank">'.Text::_('JT_TREE_MORE').'</a>';
             }
             $datainfo .= "'".$keyd."':'".$oned."',";
         }
