@@ -20,3 +20,5 @@ Jayson Dayman
 In <b>Joaktree 2.4 and more</b>, <b>2 new views</b> have been introduced : 
 - Isotope View : see [joaktree-iso](https://www.conseilgouz.com/joaktree-iso)
 - Interactive family tree view : see [joaktree-graph](https://www.conseilgouz.com/joaktree-graph)
+
+Find some information about joaktree on [its wiki](https://github.com/joaktree/J5/wiki).
