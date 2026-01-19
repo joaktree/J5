@@ -92,7 +92,7 @@ class PersonField extends FormField	//JFormField
                 </div>
             </div>
         </div>';
-        $html .= '</div>'
+        $html .= '</div>';
         $html .= "\n".'<input type="hidden" id="jform_personId" name="'.$this->name.'" value="'.$this->value.'" />';
 
         return $html;
