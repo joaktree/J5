@@ -53,6 +53,19 @@ document.addEventListener('DOMContentLoaded', function() {
             .style('padding', '0')
             .on('click', (e) => {
                 e.stopPropagation()
+                // display fields with information
+                fields = [];
+                fields.push({type:"text",label:"",id:"fullname"})
+                if (d.data.data["birthday"]) {
+                    fields.push({type:"text",label:options_graph.birthtext,id:"birthday"})
+                }
+                if (d.data.data["deathday"]) {
+                    fields.push({type:"text",label:options_graph.deathtext,id:"deathday"})
+                }
+                if (d.data.data["url"]) {
+                    fields.push({type:"text",label:'',id:"url"})
+                }
+                f3EditTree.setFields(fields);
                 f3EditTree.open(d.data)
             })
         })
@@ -79,11 +92,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // ----------- user details
     
     const f3EditTree = f3Chart.editTree()
-         .setFields([{type:"text",label:"",id:"fullname"},
-                    {type:"text",label:options_graph.birthtext,id:"birthday"},
-                    {type:"text",label:options_graph.deathtext,id:"deathday"},
-                    {type:"text",label:"",id:"url"},
-                    ]) 
         .setNoEdit()  //just see info form
 
 	f3Chart.updateTree({initial: true})

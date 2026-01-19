@@ -2,6 +2,17 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
+		<version>2.5.3</version>
+        <note>
+            <item>Update : 2026-01-20</item>
+        </note>
+        <fix>
+            <item>Interactive family tree view : hide empty fields in info box</item> 
+        </fix>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
 		<version>2.5.2</version>
         <note>
             <item>Update : 2026-01-19</item>
