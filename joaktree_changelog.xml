@@ -8,6 +8,7 @@
         </note>
         <fix>
             <item>Interactive family tree view : missing some EN translations</item> 
+            <item>Person field : missing closing div</item> 
         </fix>
     </changelog>
 	<changelog>
