@@ -104,7 +104,7 @@ class RawView extends BaseHtmlView
             $data = [];
             $rels = [];
         }
-        $data['fullname'] =  str_replace("'", "\'", $person->fullName);
+        $data['fullname'] =  $person->fullName;
         $data['gender'] = $person->sex;
         $data['birthday'] = $person->birthDate;
         $data['deathday'] = $person->deathDate;
