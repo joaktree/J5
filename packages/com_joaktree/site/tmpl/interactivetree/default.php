@@ -17,6 +17,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
 use Joaktree\Component\Joaktree\Site\Helper\JoaktreeHelper;
@@ -36,9 +37,11 @@ $css = ".f3 .link {stroke:".$params->get('link', 'white')."; stroke-width:".(int
 $css .= ".f3-form-cont {background-color: ".$params->get('background', '#e0e0e0')."}";
 $wa->addInlineStyle($css);
 
+$personId = $this->person->app_id.'!'.$this->person->id;
+
 Factory::getApplication()->getDocument()->addScriptOptions(
     'joaktree_interactive_tree',
-    array(  'background' => $params->get('background', '#e0e0e0'),'color' => $params->get('color', '#737272'),
+    array(  'personid' => $personId,'background' => $params->get('background', '#e0e0e0'),'color' => $params->get('color', '#737272'),
             'link' => $params->get('link'), 'linksize' => (int)$params->get('linksize', 1),
             'ancestors' => (int)$params->get('ancestors', 3),'descendants' => (int)$params->get('descendants', 1),
             'search' => $params->get('search', 'true'),'latest' => $params->get('latest', 'true'),
@@ -47,20 +50,22 @@ Factory::getApplication()->getDocument()->addScriptOptions(
             'nametext' => Text::_('JT_TREE_NAME'), 'birthtext' => Text::_('JT_TREE_BIRTH'), 'deathtext' => Text::_('JT_TREE_DEATH'),
         )
 );
+HTMLHelper::_('bootstrap.collapse', '#logprevsbtn');
+
 ?>
 <div id="jt-content">
 
 <?php if ($this->lists['userAccess']) { ?> 
 <!-- user has access to information -->
 	<div class="jt-h1">
-		<?php echo Text::_('JT_DESCENDANTS').'&nbsp;'.Text::_('JT_OF') ?>
+		<?php echo Text::_('JT_INTERACTIVE_TREE').'&nbsp;'.Text::_('JT_OF') ?>
 		<?php
             $link = Route::_(
                 'index.php?option=com_joaktree&view=joaktree'
-                                                                            .'&tech='.$this->lists['technology']
-                                                                            .'&Itemid='.$this->person->menuItemId
-                                                                            .'&treeId='.$this->lists['treeId']
-                                                                            .'&personId='.$this->person->app_id.'!'.$this->person->id
+                                        .'&tech='.$this->lists['technology']
+                                        .'&Itemid='.$this->person->menuItemId
+                                        .'&treeId='.$this->lists['treeId']
+                                        .'&personId='.$this->person->app_id.'!'.$this->person->id
             );
     $robot = ($this->lists['technology'] == 'a') ? '' : 'rel="noindex, nofollow"';
     ?>
@@ -69,9 +74,16 @@ Factory::getApplication()->getDocument()->addScriptOptions(
 	<hr width="100%" size="2" />
 		
 	<?php
-    $layout = $this->setLayout('');
-    $this->display('generation');
-    $this->setLayout($layout);
+    echo '<div id="FamilyChart" class="f3" style="width:100%;height:90vh;margin:auto;background-color:'.$params->get("background", "#e0e0e0").';color:'.$params->get("color", "#737272").';">
+        <div id="page-load-base">
+            <div class="loader-ellips infinite-scroll-request">
+                <span class="loader-ellips__dot"></span>
+                <span class="loader-ellips__dot"></span>
+                <span class="loader-ellips__dot"></span>
+                <span class="loader-ellips__dot"></span>
+            </div>
+        </div>
+        </div>'
     ?>
 			
 <?php } else { ?>

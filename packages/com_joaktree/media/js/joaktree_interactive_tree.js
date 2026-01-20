@@ -12,14 +12,49 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
-document.addEventListener('DOMContentLoaded', function() {
-	
+var options_graph;
+window.addEventListener('DOMContentLoaded', function() {
 	if (typeof Joomla === 'undefined' || typeof Joomla.getOptions === 'undefined') {
 		console.error('Joomla.getOptions not found!\nThe Joomla core.js file is not being loaded.');
 		return false;
 	}
 	options_graph = Joomla.getOptions('joaktree_interactive_tree');
 	if (typeof options_graph === 'undefined' ) {return false}
+    
+	treeLoad(options_graph.personid);
+})
+
+function treeLoad(personid) {
+    var url = 'index.php?option=com_joaktree&view=interactivetree&format=raw&tmpl=component&personId='+personid;
+
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+                wait = document.getElementById('page-load-base');
+                wait.style.display = "none";
+            }
+            return response.text();
+        })
+        .then(responseText => {
+            wait = document.getElementById('page-load-base');
+            const dots = wait.querySelectorAll('.loader-ellips__dot');
+            dots.forEach(function(el) {
+                 el.style.background = 'blue'
+            })
+            let resp = JSON.parse(responseText);
+            tree = resp.data;
+            showTree(tree);
+            wait.style.display = "none";
+        })
+        .catch(error => {
+            wait = document.getElementById('page-load-base');
+            wait.style.display = "none";
+            console.log('Error occurred for url: ' + url);
+
+        });
+}
+function showTree(data) {
 
     let logs = [];
 
@@ -191,4 +226,4 @@ document.addEventListener('DOMContentLoaded', function() {
         .text(d => d.label)
     }	
     }// options_graph.search = true
-}) // end of ready --------------
+} 
