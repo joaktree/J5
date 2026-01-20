@@ -42,7 +42,7 @@ class RawView extends BaseHtmlView
         $this->personId = $input->get('personId');
 
         $model = $this->getModel();
-
+        $this->isRaw = true;
         $params			= JoaktreeHelper::getJTParams();
         $document		= Factory::getApplication()->getDocument();
 
@@ -275,11 +275,6 @@ class RawView extends BaseHtmlView
                     $datainfo[$keyd] = $oned;
                 }
             }
-            $parentslist = [];
-            if ($parents) {
-                $tmp  = implode("','", $parents);
-                $parentslist[] = $tmp;
-            }
             $childrenlist = [];
             if ($children) {
                 foreach ($children as $child) {
@@ -288,7 +283,7 @@ class RawView extends BaseHtmlView
                     }
                 }
             }
-            $rels = ['parents' => $parentslist, 'spouses' => $spouses, 'children' => $childrenlist];
+            $rels = ['parents' => $parents, 'spouses' => $spouses, 'children' => $childrenlist];
             $list[] = ['id' => $key,'data' => $datainfo,'rels' => $rels];
         }
         return $list;

@@ -164,7 +164,7 @@ function showTree(data) {
         .text(d => d.fullname)
         options.reverse() //remet le tableau dans l'ordre
     }	
-    const dropdownlog = log_cont.append("div").attr("style", "overflow-y: auto; max-height: 300px; background-color: options_graph.background;z-index:3")
+    const dropdownlog = log_cont.append("div").attr("style", "overflow-y: auto; max-height: 300px; background-color: "+options_graph.background+";z-index:3")
     .attr("tabindex", "0")
     .on("wheel", (e) => {
       e.stopPropagation()
@@ -193,7 +193,7 @@ function showTree(data) {
         .on("focus", activateDropdown)
         .on("input", activateDropdown)
 
-    const dropdown = search_cont.append("div").attr("style", "overflow-y: auto; max-height: 300px; background-color: options_graph.background")
+    const dropdown = search_cont.append("div").attr("style", "overflow-y: auto; max-height: 300px; background-color: "+options_graph.background+";")
         .attr("tabindex", "0")
         .on("wheel", (e) => {
         e.stopPropagation()

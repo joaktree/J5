@@ -9,6 +9,9 @@
         <fix>
             <item>Interactive family tree view : hide empty fields in info box</item> 
         </fix>
+        <change>
+            <item>Interactive Family Tree : add a wait page while loading tree</item>
+        </change>
     </changelog>
 	<changelog>
 		<element>com_joaktree</element>
