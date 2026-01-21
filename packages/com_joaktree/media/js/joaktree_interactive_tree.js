@@ -25,7 +25,9 @@ window.addEventListener('DOMContentLoaded', function() {
 })
 
 function treeLoad(personid) {
-    var url = 'index.php?option=com_joaktree&view=interactivetree&format=raw&tmpl=component&personId='+personid;
+    
+    var csrf = Joomla.getOptions("csrf.token", "");
+    var url = 'index.php?option=com_joaktree&view=interactivetree&format=raw&tmpl=component&personId='+personid+'&'+csrf+'=1';
 
     fetch(url)
         .then(response => {
@@ -61,7 +63,7 @@ function showTree(data) {
     const f3Chart = f3.createChart('#FamilyChart', data)
 			    	.setTransitionTime(1000)
    				 	.setCardXSpacing(230)
-    				.setCardYSpacing(150)
+    				.setCardYSpacing(125)
     				.setAncestryDepth(parseInt(options_graph.ancestors))
    					.setProgenyDepth(parseInt(options_graph.descendants))
 					.setSingleParentEmptyCard(false)
@@ -84,6 +86,7 @@ function showTree(data) {
             .attr('class', 'f3-svg-circle-hover')
             .attr('style', 'cursor: pointer; width: 20px; height: 20px;position: absolute; top: 0; right: 0;')
             .html(f3.icons.userSvgIcon())
+            .attr('title',options_graph.detailtext)
             .select('svg')
             .style('padding', '0')
             .on('click', (e) => {

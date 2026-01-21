@@ -19,12 +19,12 @@ namespace Joaktree\Component\Joaktree\Site\View\Interactivetree;
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Response\JsonResponse;
+use Joomla\CMS\Session\Session;
 use Joaktree\Component\Joaktree\Site\Helper\JoaktreeHelper;
 use Joaktree\Component\Joaktree\Site\Helper\Person;
 
@@ -35,6 +35,10 @@ class RawView extends BaseHtmlView
      */
     public function display($tpl = null)
     {
+        if (!Session::checkToken('get')) {
+            echo new JsonResponse(null, Text::_('JINVALID_TOKEN'), true);
+            exit;
+        }
         $lang 	= Factory::getApplication()->getLanguage();
         $lang->load('com_joaktree.gedcom', JPATH_ADMINISTRATOR);
 
@@ -59,36 +63,10 @@ class RawView extends BaseHtmlView
         $lists[ 'endGenNum' ]	= (int) $params->get('descendantlevel', 20);
         $lists[ 'app_id' ]		= $this->person->app_id;
 
-        // last update
-        $lists[ 'lastUpdate' ]	= JoaktreeHelper::lastUpdateDateTimePerson($this->person->lastUpdateDate);
-
-        // copyright
-        $lists[ 'CR' ]		= JoaktreeHelper::getJoaktreeCR();
-
         $this->personId = $personId;
 
         $this->lists = $lists;
-        if ($lists['userAccess']) {
-            // set title, meta title
-            $document->setTitle($this->person->fullName);
-            $document->setMetadata('title', $this->person->fullName);
 
-            // set additional meta tags
-            if ($params->get('menu-meta_description')) {
-                $document->setDescription($params->get('menu-meta_description'));
-            }
-
-            if ($params->get('menu-meta_keywords')) {
-                $document->setMetadata('keywords', $params->get('menu-meta_keywords'));
-            }
-
-            // robots
-            if ($this->person->robots > 0) {
-                $document->setMetadata('robots', JoaktreeHelper::stringRobots($this->person->robots));
-            } elseif ($params->get('robots')) {
-                $document->setMetadata('robots', $params->get('robots'));
-            }
-        }
         $tree =  $this->build_tree();
         echo new JsonResponse($tree);
     }
@@ -196,68 +174,43 @@ class RawView extends BaseHtmlView
     }
     public function build_tree()
     {
-        $params = JoaktreeHelper::getJTParams();
         $linkbase = 'index.php?option=com_joaktree&view=joaktree'
                 .'&tech='.$this->lists['technology']
                 .'&Itemid='.$this->person->menuItemId
                 .'&treeId='.$this->lists['treeId']
                 .'&personId=';
-        $robot = ($this->lists['technology'] == 'a') ? '' : 'rel="noindex, nofollow"';
 
-        $startGenNum 	= $this->lists[ 'startGenNum' ];
-        $endGenNum		= $this->lists[ 'endGenNum' ];
         $personIdArray	= $this->personId;
         $id				= array();
         $id[ 'app_id' ] = $this->lists[ 'app_id' ];
-        $generationNumber = $startGenNum;
         $thisGeneration = array();
-        $nextGeneration = array();
 
         foreach ($personIdArray as $personId) {
             $thisGeneration[] = $personId;
         }
-        $continue = true;
 
         $list_tree = [];
 
-        while ($continue == true) {
-            $displayGenerationNum = JoaktreeHelper::displayEnglishCounter($generationNumber);
-            $displayThisGenNumber = JoaktreeHelper::arabicToRomanNumeral($generationNumber);
-            $displayNextGenNumber = JoaktreeHelper::arabicToRomanNumeral($generationNumber + 1);
-            $nextGenerationCounter = 0;
-            $url = "";
-            foreach ($thisGeneration as $gen_i => $generation) {
-                $genPerson = explode('|', $generation);
-                $id[ 'person_id' ] 	= $genPerson[0] ;
-                $person	    		= new Person($id, 'basic');
-                if (isset($genPerson[3])) {
-                    // This is relationtype
-                    $person->relationtype = $genPerson[3];
-                }
-                $children	= $person->getChildren('basic');
-                $partners	= $person->getPartners('basic');
-                $fathers	= $person->getFathers();
-                $mothers	= $person->getMothers();
-                $url = "";
-                if ($person->indHasPage) {
-                    $url = $person->id;
-                }
-                $this->create_tree($list_tree, $person, $url, $fathers, $mothers, $partners, $children);
-            } // end loop through this generation
-            array_splice($thisGeneration, 0);
-            $thisGeneration = $nextGeneration;
-            array_splice($nextGeneration, 0);
-            $generationNumber++;
-            if (count($thisGeneration) > 0) {
-                if ($generationNumber <= $endGenNum) {
-                    $continue = true;
-                } else {
-                    $continue = false;
-                }
-            } else {
-                $continue = false;
+        $url = "";
+        foreach ($thisGeneration as $gen_i => $generation) {
+            $genPerson = explode('|', $generation);
+            $id[ 'person_id' ] 	= $genPerson[0] ;
+            $person	    		= new Person($id, 'basic');
+            if (isset($genPerson[3])) {
+                // This is relationtype
+                $person->relationtype = $genPerson[3];
             }
+            $children	= $person->getChildren('basic');
+            $partners	= $person->getPartners('basic');
+            $fathers	= $person->getFathers();
+            $mothers	= $person->getMothers();
+            $url = "";
+            if ($person->indHasPage) {
+                $url = $person->id;
+            }
+            $this->create_tree($list_tree, $person, $url, $fathers, $mothers, $partners, $children);
         }
+        // build list to send to js library
         $list = [];
         foreach ($list_tree as $key => $one) {
             $data = $one->data;

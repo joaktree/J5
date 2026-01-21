@@ -35,6 +35,7 @@ $params = JoaktreeHelper::getJTParams();
 
 $css = ".f3 .link {stroke:".$params->get('link', 'white')."; stroke-width:".(int)$params->get('linksize', 1)."}";
 $css .= ".f3-form-cont {background-color: ".$params->get('background', '#e0e0e0')."}";
+$css .= ".f3-close-btn{left:inherit;right:10px;color: ".$params->get('color', '#737272')."}";
 $wa->addInlineStyle($css);
 
 $personId = $this->person->app_id.'!'.$this->person->id;
@@ -48,6 +49,7 @@ Factory::getApplication()->getDocument()->addScriptOptions(
             'latestsize' => (int)$params->get('latestsize', 5),
             'searchtext' => Text::_('JT_TREE_SEARCH'),'latesttext' => Text::_('JT_TREE_LATEST'),
             'nametext' => Text::_('JT_TREE_NAME'), 'birthtext' => Text::_('JT_TREE_BIRTH'), 'deathtext' => Text::_('JT_TREE_DEATH'),
+            'detailtext' => Text::_('JT_TREE_DETAIL')
         )
 );
 HTMLHelper::_('bootstrap.collapse', '#logprevsbtn');
@@ -101,3 +103,6 @@ HTMLHelper::_('bootstrap.collapse', '#logprevsbtn');
 </div>
 
 </div><!-- jt-content -->
+
+<?php echo HtmlHelper::_('form.token'); ?>
+

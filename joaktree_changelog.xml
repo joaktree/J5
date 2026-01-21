@@ -2,6 +2,18 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
+		<version>2.5.4</version>
+        <note>
+            <item>Update : 2026-01-21</item>
+        </note>
+        <fix>
+            <item>Interactive family tree : add session token, add title to user icon, detail popup : move close icon to right side</item>
+            <item>Interactive family tree : clean up code in src/view/Interactivetree/RawView.php</item>
+        </fix>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
 		<version>2.5.3</version>
         <note>
             <item>Update : 2026-01-20</item>
