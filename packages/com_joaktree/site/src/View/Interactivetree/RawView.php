@@ -44,31 +44,42 @@ class RawView extends BaseHtmlView
 
         $input = Factory::getApplication()->getInput();
         $this->personId = $input->get('personId');
-
+        $what = $input->get('what');
         $model = $this->getModel();
-        $this->isRaw = true;
-        $params			= JoaktreeHelper::getJTParams();
-        $document		= Factory::getApplication()->getDocument();
-
-        // Access
         $lists['userAccess'] 	= $model->getAccess();
         $lists['treeId'] 		= $model->getTreeId();
         $lists['technology'] 	= $model->getTechnology();
-
-        // Person + generations
-        $personId	 			= array();
         $this->person			= $model->getPerson();
-        $personId[]		 		= $this->person->id.'|1';
-        $lists[ 'startGenNum' ]	= 1;
-        $lists[ 'endGenNum' ]	= (int) $params->get('descendantlevel', 20);
         $lists[ 'app_id' ]		= $this->person->app_id;
+        $params			= JoaktreeHelper::getJTParams();
+        if ($what == 'full') {
+            // Access
+            // Person + generations
+            $personId	 			= array();
+            $personId[]		 		= $this->person->id.'|1';
+            $lists[ 'startGenNum' ]	= 1;
+            $lists[ 'endGenNum' ]	= (int) $params->get('descendantlevel', 20);
+            $this->personId = $personId;
+            $this->lists = $lists;
+            $tree =  $this->build_tree();
+            echo new JsonResponse($tree);
+            return true;
+        } elseif ($what == "more") {
+            $data = [];
+            $picArray = $this->person->getPictures(false);
 
-        $this->personId = $personId;
+            if (count($picArray)) {
+                $picture = $picArray[0];
 
-        $this->lists = $lists;
-
-        $tree =  $this->build_tree();
-        echo new JsonResponse($tree);
+                $img = $this->getPictureHtml($picture, $params->get('pxHeight', 0), $params->get('pxWidth', 0));
+                $pictureName = (empty($picture->title)) ? $params->get('TitleSlideshow') : $picture->title;
+                $data['img'] = '<img style="float: right;" '.$img.' title="'.$pictureName.'" alt="'.$pictureName.'" />';
+            }
+            $list[] = ['id' => $this->person->id,'data' => $data];
+            echo new JsonResponse($list);
+            return true;
+        }
+        return false;
     }
     public function create_tree(&$list_tree, $person, $url, $fathers, $mothers, $partners, $children, $count = 0)
     {
@@ -240,5 +251,40 @@ class RawView extends BaseHtmlView
             $list[] = ['id' => $key,'data' => $datainfo,'rels' => $rels];
         }
         return $list;
+    }
+    private function getPictureHtml(&$picture, $picHeight, $picWidth)
+    {
+        $html = '';
+        // retrieve size of picture
+        if (realpath($picture->file)) {
+            $imagedata   = GetImageSize($picture->file);
+        } else {
+            $imagedata = [$picWidth,$picHeight]; // default size for remote images
+        }
+        $imageWidth  = $imagedata[0];
+        $imageHeight = $imagedata[1];
+        // if heigth is larger than set heigth, picture has to be shrunk
+        if ($imageHeight > $picHeight) {
+            $ratioH = $picHeight / $imageHeight;
+        } else {
+            $ratioH = 1;
+        }
+        // if width is larger than set width, picture has to be shrunk
+        if ($imageWidth > $picWidth) {
+            $ratioW = $picWidth / $imageWidth;
+        } else {
+            $ratioW = 1;
+        }
+        // pick the smallest ratio of the two
+        if ($ratioH < $ratioW) {
+            $ratio = $ratioH;
+        } else {
+            $ratio = $ratioW;
+        }
+        // new sizes are
+        $showWidth  = $ratio * $imageWidth;
+        $showHeigth = $ratio * $imageHeight;
+        $html .= ' src="'.$picture->file.'" height="'.$showHeigth.'" width="'. $showWidth.'" ';
+        return $html;
     }
 }

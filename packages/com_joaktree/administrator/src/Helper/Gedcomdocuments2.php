@@ -53,6 +53,10 @@ class Gedcomdocuments2 extends \StdClass
                     break;
 
                 case "FILE":	$this->documents->set('file', $row_line['value']);
+                    if (!realpath($row_line['value'])) { // remote file
+                        $filetype = explode('?', pathinfo($row_line['value'], PATHINFO_EXTENSION))[0];
+                        $this->documents->set('fileformat', $filetype);
+                    }
                     break;
 
                 case "TITL":	$this->documents->set('title', $row_line['value']);

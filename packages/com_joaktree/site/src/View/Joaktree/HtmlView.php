@@ -52,24 +52,24 @@ class HtmlView extends BaseHtmlView
         $technology		= $model->getTechnology();
         // set up style sheets and javascript files
         $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-        $wa->registerAndUseStyle('jtcss',JoaktreeHelper::joaktreecss());
-        $wa->registerAndUseStyle('jtthemecss',JoaktreeHelper::joaktreecss($this->params->get('theme')));
+        $wa->registerAndUseStyle('jtcss', JoaktreeHelper::joaktreecss());
+        $wa->registerAndUseStyle('jtthemecss', JoaktreeHelper::joaktreecss($this->params->get('theme')));
         // Set up shadowbox
-        $wa->registerAndUseStyle('jtshadowcss',JoaktreeHelper::shadowboxcss());
-        $wa->registerAndUseScript('jtshadowjs',JoaktreeHelper::shadowboxjs());
+        $wa->registerAndUseStyle('jtshadowcss', JoaktreeHelper::shadowboxcss());
+        $wa->registerAndUseScript('jtshadowjs', JoaktreeHelper::shadowboxjs());
 
         // Set up modal behavior
         HTMLHelper::_('bootstrap.modal', 'a.modal');
         if ($technology != 'b') {
             // javascript template - no ajax
             // default template includes ajax
-            $wa->registerAndUseStyle('briaskcss',JoaktreeHelper::briaskcss());
-            $wa->registerAndUseScript('briaskjs',JoaktreeHelper::joaktreejs('mod_briaskISS.js'));
-            $wa->registerAndUseScript('togglejs',JoaktreeHelper::joaktreejs('toggle.js'));
+            $wa->registerAndUseStyle('briaskcss', JoaktreeHelper::briaskcss());
+            $wa->registerAndUseScript('briaskjs', JoaktreeHelper::joaktreejs('mod_briaskISS.js'));
+            $wa->registerAndUseScript('togglejs', JoaktreeHelper::joaktreejs('toggle.js'));
         }
         if (($technology != 'b') and ($technology != 'j')) {
             // default template includes ajax
-            $wa->registerAndUseScript('jtajaxjs',JoaktreeHelper::joaktreejs('jtajax.js'));
+            $wa->registerAndUseScript('jtajaxjs', JoaktreeHelper::joaktreejs('jtajax.js'));
         }
         // Access
         $lists['userAccess'] 	= $model->getAccess();
@@ -307,7 +307,11 @@ class HtmlView extends BaseHtmlView
     {
         $html = '';
         // retrieve size of picture
-        $imagedata   = GetImageSize($picture->file);
+        if (realpath($picture->file)) {
+            $imagedata   = GetImageSize($picture->file);
+        } else {
+            $imagedata = [$this->params->get('pxWidth', 0),$this->params->get('pxHeight', 0)]; // default size for remote images
+        }
         $imageWidth  = $imagedata[0];
         $imageHeight = $imagedata[1];
         // if heigth is larger than set heigth, picture has to be shrunk

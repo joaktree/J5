@@ -27,7 +27,7 @@ window.addEventListener('DOMContentLoaded', function() {
 function treeLoad(personid) {
     
     var csrf = Joomla.getOptions("csrf.token", "");
-    var url = 'index.php?option=com_joaktree&view=interactivetree&format=raw&tmpl=component&personId='+personid+'&'+csrf+'=1';
+    var url = 'index.php?option=com_joaktree&view=interactivetree&format=raw&tmpl=component&personId='+personid+'&'+csrf+'=1&what=full';
 
     fetch(url)
         .then(response => {
@@ -40,10 +40,6 @@ function treeLoad(personid) {
         })
         .then(responseText => {
             wait = document.getElementById('page-load-base');
-            const dots = wait.querySelectorAll('.loader-ellips__dot');
-            dots.forEach(function(el) {
-                 el.style.background = 'blue'
-            })
             let resp = JSON.parse(responseText);
             tree = resp.data;
             showTree(tree);
@@ -56,6 +52,68 @@ function treeLoad(personid) {
 
         });
 }
+function loadMore(f3Chart,f3EditTree, personid) {
+    
+    var csrf = Joomla.getOptions("csrf.token", "");
+    var person = options_graph.appid +'!'+personid;
+    var url = 'index.php?option=com_joaktree&view=interactivetree&format=raw&tmpl=component&personId='+person+'&'+csrf+'=1&what=more';
+
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+                wait = document.getElementById('page-load-base');
+                wait.style.display = "none";
+            }
+            return response.text();
+        })
+        .then(responseText => {
+            let resp = JSON.parse(responseText);
+            updates = resp.data[0].data;
+            data = f3EditTree.exportData();
+            let obj = data.find((o, i) => {
+                if (o.id === personid) { // some updates
+                    info = data[i].data;
+                    plus = updates;
+                    data[i].data = Object.assign(info, plus);
+                    updated = data[i]; // use it later
+                    return true; // stop searching
+                }
+            });
+            f3Chart.updateData(data);
+                // display fields with information
+            fields = [];
+            fields.push({type:"text",label:"",id:"fullname"})
+            if (updated.data.img) {
+                fields.push({type:"text",label:'',id:'img'})
+            }
+            if (updated.data.birthday) {
+                fields.push({type:"text",label:options_graph.birthtext,id:"birthday"})
+            }
+            if (updated.data.deathday) {
+               fields.push({type:"text",label:options_graph.deathtext,id:"deathday"})
+            }
+            // display updates
+            keys = Object.keys(updates)
+            for (var j=0; j < keys.length; j++) {
+                if (keys[j] != 'img') { // img already processed
+                    fields.push({type:"text",label:keys[j],id:keys[j]})
+                }
+            }
+            if (updated.data.url) {
+               fields.push({type:"text",label:'',id:"url"})
+            }
+            f3EditTree.setFields(fields);
+            f3EditTree.open(updated)
+        })
+        .catch(error => {
+            wait = document.getElementById('page-load-base');
+            wait.style.display = "none";
+            console.log('Error occurred for url: ' + url);
+
+        });
+}
+
 function showTree(data) {
 
     let logs = [];
@@ -91,20 +149,9 @@ function showTree(data) {
             .style('padding', '0')
             .on('click', (e) => {
                 e.stopPropagation()
-                // display fields with information
-                fields = [];
-                fields.push({type:"text",label:"",id:"fullname"})
-                if (d.data.data["birthday"]) {
-                    fields.push({type:"text",label:options_graph.birthtext,id:"birthday"})
-                }
-                if (d.data.data["deathday"]) {
-                    fields.push({type:"text",label:options_graph.deathtext,id:"deathday"})
-                }
-                if (d.data.data["url"]) {
-                    fields.push({type:"text",label:'',id:"url"})
-                }
-                f3EditTree.setFields(fields);
-                f3EditTree.open(d.data)
+                e.currentTarget.style.display = "none" // hide button while asking to the host
+                loadMore(f3Chart,f3EditTree,d.data["id"]);
+                e.currentTarget.style.display = "block" // show button again
             })
         })
         f3Card.setOnCardClick(function (e) {
@@ -229,4 +276,4 @@ function showTree(data) {
         .text(d => d.label)
     }	
     }// options_graph.search = true
-} 
+} // showTree end

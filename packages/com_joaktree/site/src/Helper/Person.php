@@ -1720,7 +1720,6 @@ class Person extends \StdClass
                     );
                     $query->bind(':appid', $this->app_id, \Joomla\Database\ParameterType::INTEGER);
                     $query->bind(':personid', $this->id, \Joomla\Database\ParameterType::STRING);
-
                     $this->_db->setquery($query);
                     $result = $this->_db->loadObjectList();
                     foreach ($result as $pic_i => $picture) {
@@ -1746,8 +1745,16 @@ class Person extends \StdClass
                         if ($all) {
                             array_push($picArray, $picture);
                         } else {
-                            if (@is_file($picture->file)) {
-                                array_push($picArray, $picture);
+                            if (realpath($picture->file)) {
+                                if (@is_file($picture->file)) {
+                                    array_push($picArray, $picture);
+                                }
+                            } else {
+                                $headers = @get_headers($picture->file);
+                                if ($headers !== false) { // check that remote file exists
+                                    $picture->file = str_ireplace('http://', 'https://', $picture->file);
+                                    array_push($picArray, $picture);
+                                }
                             }
                         }
                     }

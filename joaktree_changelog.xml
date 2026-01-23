@@ -2,6 +2,21 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
+		<version>2.5.5</version>
+        <note>
+            <item>Update : 2026-01-25</item>
+        </note>
+        <fix>
+            <item>Gedcom import : create fileformat if absent in GED file</item>
+            <item>Person : handle external images</item>
+        </fix>
+        <change>
+            <item>Interactive Family Tree : add image in detail popup</item>
+        </change>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
 		<version>2.5.4</version>
         <note>
             <item>Update : 2026-01-21</item>

@@ -42,7 +42,7 @@ $personId = $this->person->app_id.'!'.$this->person->id;
 
 Factory::getApplication()->getDocument()->addScriptOptions(
     'joaktree_interactive_tree',
-    array(  'personid' => $personId,'background' => $params->get('background', '#e0e0e0'),'color' => $params->get('color', '#737272'),
+    array(  'appid' => $this->person->app_id, 'personid' => $personId,'background' => $params->get('background', '#e0e0e0'),'color' => $params->get('color', '#737272'),
             'link' => $params->get('link'), 'linksize' => (int)$params->get('linksize', 1),
             'ancestors' => (int)$params->get('ancestors', 3),'descendants' => (int)$params->get('descendants', 1),
             'search' => $params->get('search', 'true'),'latest' => $params->get('latest', 'true'),
@@ -64,10 +64,10 @@ HTMLHelper::_('bootstrap.collapse', '#logprevsbtn');
 		<?php
             $link = Route::_(
                 'index.php?option=com_joaktree&view=joaktree'
-                                        .'&tech='.$this->lists['technology']
-                                        .'&Itemid='.$this->person->menuItemId
-                                        .'&treeId='.$this->lists['treeId']
-                                        .'&personId='.$this->person->app_id.'!'.$this->person->id
+                                                    .'&tech='.$this->lists['technology']
+                                                    .'&Itemid='.$this->person->menuItemId
+                                                    .'&treeId='.$this->lists['treeId']
+                                                    .'&personId='.$this->person->app_id.'!'.$this->person->id
             );
     $robot = ($this->lists['technology'] == 'a') ? '' : 'rel="noindex, nofollow"';
     ?>
