@@ -83,7 +83,7 @@ function loadMore(f3Chart,f3EditTree, personid,btn) {
                 }
             });
             f3Chart.updateData(data);
-                // display fields with information
+            // display fields with information
             fields = [];
             fields.push({type:"text",label:"",id:"fullname"})
             if (updated.data.img) {
@@ -99,6 +99,7 @@ function loadMore(f3Chart,f3EditTree, personid,btn) {
             }
             if (updated.data.deathday) {
                fields.push({type:"text",label:options_graph.deathtext,id:"deathday"})
+               delete updates.deathday;
                 if (updated.data.deathlocation) {
                     fields.push({type:"text",label:"",id:"deathlocation"})
                     delete updates.deathlocation;
@@ -109,7 +110,7 @@ function loadMore(f3Chart,f3EditTree, personid,btn) {
             for (var j=0; j < keys.length; j++) {
                 fields.push({type:"text",label:keys[j],id:keys[j]})
             }
-            if (updated.data.url) {
+            if (updated.data.url) { // See more url
                fields.push({type:"text",label:'',id:"url"})
             }
             f3EditTree.setFields(fields);

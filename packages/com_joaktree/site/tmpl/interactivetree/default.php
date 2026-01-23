@@ -37,6 +37,8 @@ $css = ".f3 .link {stroke:".$params->get('link', 'white')."; stroke-width:".(int
 $css .= ".f3-form-cont {background-color: ".$params->get('background', '#e0e0e0')."}";
 $css .= ".f3-close-btn{left:inherit;right:10px;color: ".$params->get('color', '#737272')."}";
 $css .= ".f3-info-field-value {min-height: 0px; margin-bottom:5px}";
+$css .= ".f3-info-field-label {font-size:1em}";
+$css .= ".f3-close-btn + div {display:none !important}";
 $wa->addInlineStyle($css);
 
 $personId = $this->person->app_id.'!'.$this->person->id;
@@ -65,10 +67,10 @@ HTMLHelper::_('bootstrap.collapse', '#logprevsbtn');
 		<?php
             $link = Route::_(
                 'index.php?option=com_joaktree&view=joaktree'
-                                                    .'&tech='.$this->lists['technology']
-                                                    .'&Itemid='.$this->person->menuItemId
-                                                    .'&treeId='.$this->lists['treeId']
-                                                    .'&personId='.$this->person->app_id.'!'.$this->person->id
+                                                                                        .'&tech='.$this->lists['technology']
+                                                                                        .'&Itemid='.$this->person->menuItemId
+                                                                                        .'&treeId='.$this->lists['treeId']
+                                                                                        .'&personId='.$this->person->app_id.'!'.$this->person->id
             );
     $robot = ($this->lists['technology'] == 'a') ? '' : 'rel="noindex, nofollow"';
     ?>

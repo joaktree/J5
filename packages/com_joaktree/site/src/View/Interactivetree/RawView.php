@@ -50,7 +50,9 @@ class RawView extends BaseHtmlView
         $lists['treeId'] 		= $model->getTreeId();
         $lists['technology'] 	= $model->getTechnology();
         $this->person			= $model->getPerson();
+
         $lists[ 'app_id' ]		= $this->person->app_id;
+
         $params			= JoaktreeHelper::getJTParams();
         if ($what == 'full') {
             // Access
@@ -65,20 +67,27 @@ class RawView extends BaseHtmlView
             echo new JsonResponse($tree);
             return true;
         } elseif ($what == "more") {
+            // need more information
+            $id['app_id']           = $this->person->app_id;
+            $id[ 'person_id' ]      = $this->person->id;
+            $person                 = new Person($id, 'ancestor');
+            $picArray               = $this->person->getPictures(false);
+            $events                 = $this->person->getPersonEvents();
             $data = [];
-            $picArray = $this->person->getPictures(false);
+            if ($person->deathDate) {
+                $data['deathday'] = $person->deathDate;
+            }
             if (count($picArray)) {
-                $picture = $picArray[0]; // take 1st image
+                $picture = $picArray[0]; // take1st image
                 $img = $this->getPictureHtml($picture, $params->get('pxHeight', 0), $params->get('pxWidth', 0));
                 $pictureName = (empty($picture->title)) ? $params->get('TitleSlideshow') : $picture->title;
                 $data['img'] = '<img style="float: right;" '.$img.' title="'.$pictureName.'" alt="'.$pictureName.'" />';
             }
-            $events = $this->person->getPersonEvents();
             foreach ($events as $event) {
-                if (($event->code == 'BIRT') && $event->location) {
+                if (($event->code == 'BIRT') && $event->location && $person->birthDate) {
                     $data['birthlocation'] = $event->location;
                 }
-                if (($event->code == 'DEAT') && $event->location) {
+                if (($event->code == 'DEAT') && $event->location && $person->deathDate) {
                     $data['deathlocation'] = $event->location;
                 }
             }
@@ -103,7 +112,6 @@ class RawView extends BaseHtmlView
         $data['fullname'] =  $person->fullName;
         $data['gender'] = $person->sex;
         $data['birthday'] = $person->birthDate;
-        $data['deathday'] = $person->deathDate;
         if ($url) {
             $data['url'] = $url;
         }
