@@ -36,6 +36,7 @@ $params = JoaktreeHelper::getJTParams();
 $css = ".f3 .link {stroke:".$params->get('link', 'white')."; stroke-width:".(int)$params->get('linksize', 1)."}";
 $css .= ".f3-form-cont {background-color: ".$params->get('background', '#e0e0e0')."}";
 $css .= ".f3-close-btn{left:inherit;right:10px;color: ".$params->get('color', '#737272')."}";
+$css .= ".f3-info-field-value {min-height: 0px; margin-bottom:5px}";
 $wa->addInlineStyle($css);
 
 $personId = $this->person->app_id.'!'.$this->person->id;

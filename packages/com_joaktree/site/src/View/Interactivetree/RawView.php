@@ -67,13 +67,20 @@ class RawView extends BaseHtmlView
         } elseif ($what == "more") {
             $data = [];
             $picArray = $this->person->getPictures(false);
-
             if (count($picArray)) {
-                $picture = $picArray[0];
-
+                $picture = $picArray[0]; // take 1st image
                 $img = $this->getPictureHtml($picture, $params->get('pxHeight', 0), $params->get('pxWidth', 0));
                 $pictureName = (empty($picture->title)) ? $params->get('TitleSlideshow') : $picture->title;
                 $data['img'] = '<img style="float: right;" '.$img.' title="'.$pictureName.'" alt="'.$pictureName.'" />';
+            }
+            $events = $this->person->getPersonEvents();
+            foreach ($events as $event) {
+                if (($event->code == 'BIRT') && $event->location) {
+                    $data['birthlocation'] = $event->location;
+                }
+                if (($event->code == 'DEAT') && $event->location) {
+                    $data['deathlocation'] = $event->location;
+                }
             }
             $list[] = ['id' => $this->person->id,'data' => $data];
             echo new JsonResponse($list);

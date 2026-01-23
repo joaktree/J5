@@ -23,7 +23,7 @@ window.addEventListener('DOMContentLoaded', function() {
     
 	treeLoad(options_graph.personid);
 })
-
+// Ask for tree data
 function treeLoad(personid) {
     
     var csrf = Joomla.getOptions("csrf.token", "");
@@ -52,7 +52,8 @@ function treeLoad(personid) {
 
         });
 }
-function loadMore(f3Chart,f3EditTree, personid) {
+// Ask for more information 
+function loadMore(f3Chart,f3EditTree, personid,btn) {
     
     var csrf = Joomla.getOptions("csrf.token", "");
     var person = options_graph.appid +'!'+personid;
@@ -64,6 +65,7 @@ function loadMore(f3Chart,f3EditTree, personid) {
                 throw new Error('Network response was not ok');
                 wait = document.getElementById('page-load-base');
                 wait.style.display = "none";
+                btn.style.display = "block" // show button again
             }
             return response.text();
         })
@@ -86,29 +88,38 @@ function loadMore(f3Chart,f3EditTree, personid) {
             fields.push({type:"text",label:"",id:"fullname"})
             if (updated.data.img) {
                 fields.push({type:"text",label:'',id:'img'})
+                delete updates.img;
             }
             if (updated.data.birthday) {
                 fields.push({type:"text",label:options_graph.birthtext,id:"birthday"})
+                if (updated.data.birthlocation) {
+                    fields.push({type:"text",label:"",id:"birthlocation"})
+                    delete updates.birthlocation;
+                }
             }
             if (updated.data.deathday) {
                fields.push({type:"text",label:options_graph.deathtext,id:"deathday"})
+                if (updated.data.deathlocation) {
+                    fields.push({type:"text",label:"",id:"deathlocation"})
+                    delete updates.deathlocation;
+                }
             }
-            // display updates
+            // display other updates if any
             keys = Object.keys(updates)
             for (var j=0; j < keys.length; j++) {
-                if (keys[j] != 'img') { // img already processed
-                    fields.push({type:"text",label:keys[j],id:keys[j]})
-                }
+                fields.push({type:"text",label:keys[j],id:keys[j]})
             }
             if (updated.data.url) {
                fields.push({type:"text",label:'',id:"url"})
             }
             f3EditTree.setFields(fields);
             f3EditTree.open(updated)
+            btn.style.display = "block" // show button again
         })
         .catch(error => {
             wait = document.getElementById('page-load-base');
             wait.style.display = "none";
+            btn.style.display = "block" // show button again
             console.log('Error occurred for url: ' + url);
 
         });
@@ -150,8 +161,7 @@ function showTree(data) {
             .on('click', (e) => {
                 e.stopPropagation()
                 e.currentTarget.style.display = "none" // hide button while asking to the host
-                loadMore(f3Chart,f3EditTree,d.data["id"]);
-                e.currentTarget.style.display = "block" // show button again
+                loadMore(f3Chart,f3EditTree,d.data["id"],e.currentTarget);
             })
         })
         f3Card.setOnCardClick(function (e) {
