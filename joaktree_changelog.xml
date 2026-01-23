@@ -9,6 +9,7 @@
         <fix>
             <item>Gedcom import : create fileformat if absent in GED file</item>
             <item>Person : handle external images</item>
+            <item>Interactive Family Tree : handle multilanguage addresses</item>
         </fix>
         <change>
             <item>Interactive Family Tree : add image in detail popup</item>

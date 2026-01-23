@@ -20,6 +20,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 use Joaktree\Component\Joaktree\Site\Helper\JoaktreeHelper;
 
 $app = Factory::getApplication();
@@ -36,16 +37,18 @@ $params = JoaktreeHelper::getJTParams();
 $css = ".f3 .link {stroke:".$params->get('link', 'white')."; stroke-width:".(int)$params->get('linksize', 1)."}";
 $css .= ".f3-form-cont {background-color: ".$params->get('background', '#e0e0e0')."}";
 $css .= ".f3-close-btn{left:inherit;right:10px;color: ".$params->get('color', '#737272')."}";
-$css .= ".f3-info-field-value {min-height: 0px; margin-bottom:5px}";
+$css .= ".f3-info-field-value {min-height: 0px; margin-bottom:5px; border-bottom: none}";
 $css .= ".f3-info-field-label {font-size:1em}";
 $css .= ".f3-close-btn + div {display:none !important}";
 $wa->addInlineStyle($css);
 
 $personId = $this->person->app_id.'!'.$this->person->id;
 
+$uri = Uri::getInstance();
+
 Factory::getApplication()->getDocument()->addScriptOptions(
     'joaktree_interactive_tree',
-    array(  'appid' => $this->person->app_id, 'personid' => $personId,'background' => $params->get('background', '#e0e0e0'),'color' => $params->get('color', '#737272'),
+    array(  'host' => $uri::root(),'appid' => $this->person->app_id, 'personid' => $personId,'background' => $params->get('background', '#e0e0e0'),'color' => $params->get('color', '#737272'),
             'link' => $params->get('link'), 'linksize' => (int)$params->get('linksize', 1),
             'ancestors' => (int)$params->get('ancestors', 3),'descendants' => (int)$params->get('descendants', 1),
             'search' => $params->get('search', 'true'),'latest' => $params->get('latest', 'true'),
@@ -67,10 +70,10 @@ HTMLHelper::_('bootstrap.collapse', '#logprevsbtn');
 		<?php
             $link = Route::_(
                 'index.php?option=com_joaktree&view=joaktree'
-                                                                                        .'&tech='.$this->lists['technology']
-                                                                                        .'&Itemid='.$this->person->menuItemId
-                                                                                        .'&treeId='.$this->lists['treeId']
-                                                                                        .'&personId='.$this->person->app_id.'!'.$this->person->id
+                                                                                                                            .'&tech='.$this->lists['technology']
+                                                                                                                            .'&Itemid='.$this->person->menuItemId
+                                                                                                                            .'&treeId='.$this->lists['treeId']
+                                                                                                                            .'&personId='.$this->person->app_id.'!'.$this->person->id
             );
     $robot = ($this->lists['technology'] == 'a') ? '' : 'rel="noindex, nofollow"';
     ?>
