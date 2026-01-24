@@ -27,7 +27,7 @@ window.addEventListener('DOMContentLoaded', function() {
 function treeLoad(personid) {
     
     var csrf = Joomla.getOptions("csrf.token", "");
-    var url =  options_graph.host+'index.php?option=com_joaktree&view=interactivetree&format=raw&tmpl=component&personId='+personid+'&'+csrf+'=1&what=full';
+    var url =  options_graph.host+'index.php?option=com_joaktree&view=interactivetree&format=raw&tmpl=component&personId='+personid+'&'+csrf+'=1&what=full&lang='+options_graph.lang;
 
     fetch(url)
         .then(response => {
@@ -57,7 +57,7 @@ function loadMore(f3Chart,f3EditTree, personid,btn) {
     
     var csrf = Joomla.getOptions("csrf.token", "");
     var person = options_graph.appid +'!'+personid;
-    var url = options_graph.host+'index.php?option=com_joaktree&view=interactivetree&format=raw&tmpl=component&personId='+person+'&'+csrf+'=1&what=more';
+    var url = options_graph.host+'index.php?option=com_joaktree&view=interactivetree&format=raw&tmpl=component&personId='+person+'&'+csrf+'=1&what=more&lang='+options_graph.lang;
 
     fetch(url)
         .then(response => {

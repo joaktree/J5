@@ -40,12 +40,16 @@ class RawView extends BaseHtmlView
             echo new JsonResponse(null, Text::_('JINVALID_TOKEN'), true);
             exit;
         }
-        $lang 	= Factory::getApplication()->getLanguage();
-        $lang->load('com_joaktree.gedcom', JPATH_ADMINISTRATOR);
 
-        $input = Factory::getApplication()->getInput();
+        $app = Factory::getApplication();
+
+        $input = $app->getInput();
         $this->personId = $input->get('personId');
         $what = $input->get('what');
+        $menulang = $input->get('lang');
+        $lang 	= $app->getLanguage();
+        $lang->load('com_joaktree.gedcom', JPATH_ADMINISTRATOR, $menulang);
+
         $model = $this->getModel();
         $lists['userAccess'] 	= $model->getAccess();
         $lists['treeId'] 		= $model->getTreeId();
@@ -82,7 +86,8 @@ class RawView extends BaseHtmlView
                 $picture = $picArray[0]; // take1st image
                 $img = $this->getPictureHtml($picture, $params->get('pxHeight', 0), $params->get('pxWidth', 0));
                 $pictureName = (empty($picture->title)) ? $params->get('TitleSlideshow') : $picture->title;
-                $data['img'] = '<img style="float: right;max-width:100px;" '.$img.' title="'.$pictureName.'" alt="'.$pictureName.'" />';
+                // note : popup width = 350px, so limit img width to 100px
+                $data['img'] = '<img style="float: right;max-width:100px" '.$img.' title="'.$pictureName.'" alt="'.$pictureName.'" />';
             }
             foreach ($events as $event) {
                 if (($event->code == 'BIRT') && $event->location && $person->birthDate) {
@@ -112,6 +117,8 @@ class RawView extends BaseHtmlView
         }
         $data['fullname'] =  $person->fullName;
         $data['gender'] = $person->sex;
+        $events         = $this->person->getPersonEvents();
+
         $data['birthday'] = $person->birthDate;
         if ($url) {
             $data['url'] = $url;
