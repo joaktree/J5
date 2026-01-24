@@ -25,6 +25,7 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Response\JsonResponse;
 use Joomla\CMS\Session\Session;
+use Joomla\CMS\Uri\Uri;
 use Joaktree\Component\Joaktree\Site\Helper\JoaktreeHelper;
 use Joaktree\Component\Joaktree\Site\Helper\Person;
 
@@ -271,35 +272,15 @@ class RawView extends BaseHtmlView
     {
         $html = '';
         // retrieve size of picture
-        if (realpath($picture->file)) {
+        $uri = Uri::getInstance($picture->file);
+        $scheme = $uri->getScheme();
+        if (!$scheme) { // local file
+            $picturefile = Uri::root().$picture->file;
             $imagedata   = GetImageSize($picture->file);
-        } else {
-            $imagedata = [$picWidth,$picHeight]; // default size for remote images
+        } else { // remote file
+            $picturefile = $picture->file;
         }
-        $imageWidth  = $imagedata[0];
-        $imageHeight = $imagedata[1];
-        // if heigth is larger than set heigth, picture has to be shrunk
-        if ($imageHeight > $picHeight) {
-            $ratioH = $picHeight / $imageHeight;
-        } else {
-            $ratioH = 1;
-        }
-        // if width is larger than set width, picture has to be shrunk
-        if ($imageWidth > $picWidth) {
-            $ratioW = $picWidth / $imageWidth;
-        } else {
-            $ratioW = 1;
-        }
-        // pick the smallest ratio of the two
-        if ($ratioH < $ratioW) {
-            $ratio = $ratioH;
-        } else {
-            $ratio = $ratioW;
-        }
-        // new sizes are
-        $showWidth  = $ratio * $imageWidth;
-        $showHeigth = $ratio * $imageHeight;
-        $html .= ' src="'.$picture->file.'" height="'.$showHeigth.'" width="'. $showWidth.'" ';
+        $html .= ' src="'.$picturefile.'" height="'.$picHeight.'" width="'. $picWidth.'" ';
         return $html;
     }
 }

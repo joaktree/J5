@@ -80,10 +80,10 @@ HTMLHelper::_('bootstrap.collapse', '#logprevsbtn');
 		<?php
             $link = Route::_(
                 'index.php?option=com_joaktree&view=joaktree'
-                                                                            .'&tech='.$this->lists['technology']
-                                                                            .'&Itemid='.$this->person->menuItemId
-                                                                            .'&treeId='.$this->lists['treeId']
-                                                                            .'&personId='.$this->person->app_id.'!'.$this->person->id
+                .'&tech='.$this->lists['technology']
+                .'&Itemid='.$this->person->menuItemId
+                .'&treeId='.$this->lists['treeId']
+                .'&personId='.$this->person->app_id.'!'.$this->person->id
             );
     $robot = ($this->lists['technology'] == 'a') ? '' : 'rel="noindex, nofollow"';
     ?>
