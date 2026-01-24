@@ -82,7 +82,7 @@ class RawView extends BaseHtmlView
                 $picture = $picArray[0]; // take1st image
                 $img = $this->getPictureHtml($picture, $params->get('pxHeight', 0), $params->get('pxWidth', 0));
                 $pictureName = (empty($picture->title)) ? $params->get('TitleSlideshow') : $picture->title;
-                $data['img'] = '<img style="float: right;" '.$img.' title="'.$pictureName.'" alt="'.$pictureName.'" />';
+                $data['img'] = '<img style="float: right;max-width:100px;" '.$img.' title="'.$pictureName.'" alt="'.$pictureName.'" />';
             }
             foreach ($events as $event) {
                 if (($event->code == 'BIRT') && $event->location && $person->birthDate) {
