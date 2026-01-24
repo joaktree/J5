@@ -34,9 +34,19 @@ $wa->registerAndUSeScript('descendantgraph', $comfield.'js/joaktree_interactive_
 
 $params = JoaktreeHelper::getJTParams();
 
-$css = ".f3 .link {stroke:".$params->get('link', 'white')."; stroke-width:".(int)$params->get('linksize', 1)."}";
-$css .= ".f3-form-cont {background-color: ".$params->get('background', '#e0e0e0')."}";
-$css .= ".f3-close-btn{left:inherit;right:10px;color: ".$params->get('color', '#737272')."}";
+if ($params->get('color-type', 'pick') == 'pick') { // color piker
+    $background = $params->get('background', '#e0e0e0');
+    $color = $params->get('color', '#737272');
+    $linkcolor = $params->get('link', '#737272');
+} else { // variable colors
+    $background = "var(".$params->get('vbackground', '--body-bg').")";
+    $color = "var(".$params->get('vcolor', '--bs-primary').")";
+    $linkcolor = "var(".$params->get('vlink', '--bs-link-color').")";
+}
+$css = ".f3 .link {stroke:".$linkcolor."; stroke-width:".(int)$params->get('linksize', 1)."}";
+$css .= ".f3-form-cont {background-color: ".$background."}";
+$css .= ".f3-close-btn{left:inherit;right:10px;color: ".$color."}";
+
 $css .= ".f3-info-field-value {min-height: 0px; margin-bottom:5px; border-bottom: none}";
 $css .= ".f3-info-field-label {font-size:1em}";
 $css .= ".f3-close-btn + div {display:none !important}";
@@ -48,8 +58,8 @@ $uri = Uri::getInstance();
 
 Factory::getApplication()->getDocument()->addScriptOptions(
     'joaktree_interactive_tree',
-    array(  'host' => $uri::root(),'appid' => $this->person->app_id, 'personid' => $personId,'background' => $params->get('background', '#e0e0e0'),'color' => $params->get('color', '#737272'),
-            'link' => $params->get('link'), 'linksize' => (int)$params->get('linksize', 1),
+    array(  'host' => $uri::root(),'appid' => $this->person->app_id, 'personid' => $personId,'background' => $background,'color' => $color,
+            'link' => $linkcolor, 'linksize' => (int)$params->get('linksize', 1),
             'ancestors' => (int)$params->get('ancestors', 3),'descendants' => (int)$params->get('descendants', 1),
             'search' => $params->get('search', 'true'),'latest' => $params->get('latest', 'true'),
             'latestsize' => (int)$params->get('latestsize', 5),
@@ -70,10 +80,10 @@ HTMLHelper::_('bootstrap.collapse', '#logprevsbtn');
 		<?php
             $link = Route::_(
                 'index.php?option=com_joaktree&view=joaktree'
-                                                                                                                            .'&tech='.$this->lists['technology']
-                                                                                                                            .'&Itemid='.$this->person->menuItemId
-                                                                                                                            .'&treeId='.$this->lists['treeId']
-                                                                                                                            .'&personId='.$this->person->app_id.'!'.$this->person->id
+                                                                            .'&tech='.$this->lists['technology']
+                                                                            .'&Itemid='.$this->person->menuItemId
+                                                                            .'&treeId='.$this->lists['treeId']
+                                                                            .'&personId='.$this->person->app_id.'!'.$this->person->id
             );
     $robot = ($this->lists['technology'] == 'a') ? '' : 'rel="noindex, nofollow"';
     ?>
@@ -82,7 +92,7 @@ HTMLHelper::_('bootstrap.collapse', '#logprevsbtn');
 	<hr width="100%" size="2" />
 		
 	<?php
-    echo '<div id="FamilyChart" class="f3" style="width:100%;height:90vh;margin:auto;background-color:'.$params->get("background", "#e0e0e0").';color:'.$params->get("color", "#737272").';">
+    echo '<div id="FamilyChart" class="f3" style="width:100%;height:90vh;margin:auto;background-color:'.$background.';color:'.$color.';">
         <div id="page-load-base">
             <div class="loader-ellips infinite-scroll-request">
                 <span class="loader-ellips__dot"></span>

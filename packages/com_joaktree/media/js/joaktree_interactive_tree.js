@@ -239,7 +239,7 @@ function showTree(data) {
     all_select_options.push({label: `${d.data["fullname"]}`, value: d["id"]})
     })
     const search_cont = d3.select(document.querySelector("#FamilyChart")).append("div")
-    .attr("style", "position: absolute; top: 10px; left: 10px; width: 150px; z-index: 1000;")
+    .attr("style", "position: absolute; top: 10px; left: 10px; width: 150px; z-index: 3;")
     .on("focusout", () => {
       setTimeout(() => {
         if (!search_cont.node().contains(document.activeElement)) {

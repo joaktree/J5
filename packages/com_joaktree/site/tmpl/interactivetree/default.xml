@@ -12,6 +12,7 @@
 			name="basic" 
 			label="JTSTART_BASIC_FIELDSET_LABEL"
 			addfieldprefix="Joaktree\Component\Joaktree\Administrator\Field"
+            addruleprefix="Joaktree\Component\Joaktree\Administrator\Rule" 
 		>
 			
 			<field  name="personId" type="person" 
@@ -29,27 +30,43 @@
 				label="JTDESCENDANTS_LABEL" description="JTDESCENDANTS_DESC" 
                 class="half"
 			/>
-			<field  name="color" type="color" 
+            <field name="color-type" type="radio" class="btn-group"  label="JT_TYPE_COLOR" description="JT_TYPE_COLOR_DESC" default="pick">
+                <option value="pick">JT_COLOR_PICK</option>
+                <option value="var">JT_COLOR_VAR</option>
+			</field>
+            
+			<field  name="color" type="color" showon="color-type:pick"
 				default="#737272"
 				label="JTCOLOR_LABEL" description="JTCOLOR_DESC" 
                 class="clear half left"
                 />
-			<field  name="background" type="color" 
+			<field  name="background" type="color" showon="color-type:pick"
 				default="#e0e0e0"
 				label="JTBACKGROUND_LABEL" description="JTBACKGROUND_DESC" 
-                class="half"
+                class="half left"
                 />
-			<field  name="link" type="color" 
+			<field  name="link" type="color" showon="color-type:pick"
 				default="#fff"
 				label="JTLINK_LABEL" description="JTLINK_DESC" 
                 class="clear left half"
                 />
+			<field  name="vcolor" type="jtvariable" showon="color-type:var"
+				default=""  label="JTCOLOR_LABEL" description="JTVCOLOR_DESC" 
+                validate="variable"
+                />
+			<field  name="vbackground" type="jtvariable" showon="color-type:var"
+				default="" label="JTBACKGROUND_LABEL" description="JTVBACKGROUND_DESC" 
+                validate="variable"/>
+			<field  name="vlink" type="jtvariable" showon="color-type:var"
+				default="" label="JTLINK_LABEL" description="JTVLINK_DESC" 
+                validate="variable"
+                />
 			<field  name="linksize" type="number" 
 				default="1"
 				label="JTLINKSIZE_LABEL" description="JTLINKSIZE_DESC" 
-                class="half"
+                class="clear half"
                 />
-			<field name="search" type="radio" class="btn-group third left" default="true"
+			<field name="search" type="radio" class="btn-group clear third left" default="true"
 				label="JTSEARCH_LABEL" 	description="JTSEARCH_DESC" >
                 <option value="false">JNO</option> 
                 <option value="true">JYES</option> 
