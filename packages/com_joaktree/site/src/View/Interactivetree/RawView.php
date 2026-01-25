@@ -22,7 +22,6 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
-use Joomla\CMS\Router\Route;
 use Joomla\CMS\Response\JsonResponse;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
@@ -46,9 +45,10 @@ class RawView extends BaseHtmlView
         $input = $app->getInput();
         $this->personId = $input->get('personId');
         $what = $input->get('what');
+        // rawview : lang might be wrong, reload it using original menu language
         $menulang = $input->get('lang');
         $lang 	= $app->getLanguage();
-        $lang->load('com_joaktree.gedcom', JPATH_ADMINISTRATOR, $menulang);
+        $lang->load('com_joaktree', JPATH_BASE, $menulang, true);
 
         $model = $this->getModel();
         $lists['userAccess'] 	= $model->getAccess();
