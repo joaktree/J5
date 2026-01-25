@@ -48,6 +48,7 @@ class RawView extends BaseHtmlView
         // rawview : lang might be wrong, reload it using original menu language
         $menulang = $input->get('lang');
         $lang 	= $app->getLanguage();
+        $lang->load('com_joaktree.gedcom', JPATH_ADMINISTRATOR, $menulang);
         $lang->load('com_joaktree', JPATH_BASE, $menulang, true);
 
         $model = $this->getModel();
