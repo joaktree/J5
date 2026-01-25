@@ -15,6 +15,7 @@
         <change>
             <item>Interactive Family Tree : add image in detail popup</item>
             <item>Interactive Family Tree : variable colors</item>
+            <item>Interactive Family Tree : use cache</item>
         </change>
     </changelog>
 	<changelog>
