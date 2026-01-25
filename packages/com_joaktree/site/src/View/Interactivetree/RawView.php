@@ -104,7 +104,7 @@ class RawView extends BaseHtmlView
                     .'&Itemid='.$this->person->menuItemId
                     .'&treeId='.$lists['treeId']
                     .'&personId='.$lists[ 'app_id' ].'!'.$person->id;
-                $data['url'] = '<a href="'.$url.'" target="_blank">'.Text::_('JT_TREE_MORE').'</a>';
+                $data['url'] = '<a href="'.Uri::root().$url.'" target="_blank">'.Text::_('JT_TREE_MORE').'</a>';
             }
             $list[] = ['id' => $this->person->id,'data' => $data];
             echo new JsonResponse($list);
