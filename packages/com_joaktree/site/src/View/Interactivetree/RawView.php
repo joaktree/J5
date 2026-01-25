@@ -97,15 +97,24 @@ class RawView extends BaseHtmlView
                     $data['deathlocation'] = $event->location;
                 }
             }
+            if ($person->indHasPage) {
+                $url = 'index.php?option=com_joaktree&view=joaktree'
+                    .'&tech='.$lists['technology']
+                    .'&Itemid='.$this->person->menuItemId
+                    .'&treeId='.$lists['treeId']
+                    .'&personId='.$lists[ 'app_id' ].'!'.$person->id;
+                $data['url'] = '<a href="'.$url.'" target="_blank">'.Text::_('JT_TREE_MORE').'</a>';
+            }
             $list[] = ['id' => $this->person->id,'data' => $data];
             echo new JsonResponse($list);
             return true;
         }
         return false;
     }
-    public function create_tree(&$list_tree, $person, $url, $fathers, $mothers, $partners, $children, $count = 0)
+    public function create_tree(&$list_tree, $person, $fathers, $mothers, $partners, $children, $count = 0)
     {
         $count += 1;
+        //if ($count > 2) return;
         if (array_key_exists($person->id, $list_tree)) {
             $obj = $list_tree[$person->id];
             $data = $obj->data;
@@ -117,12 +126,7 @@ class RawView extends BaseHtmlView
         }
         $data['fullname'] =  $person->fullName;
         $data['gender'] = $person->sex;
-        $events         = $this->person->getPersonEvents();
-
         $data['birthday'] = $person->birthDate;
-        if ($url) {
-            $data['url'] = $url;
-        }
         $obj->data = $data;
         $parents = [];
         if ($fathers) {
@@ -156,11 +160,7 @@ class RawView extends BaseHtmlView
             $onef_partners	= $onef->getPartners('basic');
             $onef_fathers	= $onef->getFathers();
             $onef_mothers	= $onef->getMothers();
-            $child_url = "";
-            if ($onef->indHasPage) {
-                $child_url = $onef->id;
-            }
-            $this->create_tree($list_tree, $onef, $child_url, $onef_fathers, $onef_mothers, $onef_partners, $onef_children, $count);
+            $this->create_tree($list_tree, $onef, $onef_fathers, $onef_mothers, $onef_partners, $onef_children);
         }
 
         if ($mothers && !array_key_exists($mothers[0]->id, $list_tree)) {
@@ -169,11 +169,7 @@ class RawView extends BaseHtmlView
             $onem_partners	= $onem->getPartners('basic');
             $onem_fathers	= $onem->getFathers();
             $onem_mothers	= $onem->getMothers();
-            $child_url = "";
-            if ($onem->indHasPage) {
-                $child_url = $onem->id;
-            }
-            $this->create_tree($list_tree, $onem, $child_url, $onem_fathers, $onem_mothers, $onem_partners, $onem_children, $count);
+            $this->create_tree($list_tree, $onem, $onem_fathers, $onem_mothers, $onem_partners, $onem_children);
         }
         if ($partners) {
             foreach ($partners as $onep) {
@@ -182,11 +178,7 @@ class RawView extends BaseHtmlView
                     $onep_partners	= $onep->getPartners('basic');
                     $onep_fathers	= $onep->getFathers();
                     $onep_mothers	= $onep->getMothers();
-                    $child_url = "";
-                    if ($onep->indHasPage) {
-                        $child_url = $onep->id;
-                    }
-                    $this->create_tree($list_tree, $onep, $child_url, $onep_fathers, $onep_mothers, $onep_partners, $onep_children);
+                    $this->create_tree($list_tree, $onep, $onep_fathers, $onep_mothers, $onep_partners, $onep_children);
                 }
             }
         }
@@ -197,23 +189,13 @@ class RawView extends BaseHtmlView
                     $onec_partners	= $onec->getPartners('basic');
                     $onec_fathers	= $onec->getFathers();
                     $onec_mothers	= $onec->getMothers();
-                    $child_url = "";
-                    if ($onec->indHasPage) {
-                        $child_url = $onec->id;
-                    }
-                    $this->create_tree($list_tree, $onec, $child_url, $onec_fathers, $onec_mothers, $onec_partners, $onec_children);
+                    $this->create_tree($list_tree, $onec, $onec_fathers, $onec_mothers, $onec_partners, $onec_children);
                 }
             }
         }
     }
     public function build_tree()
     {
-        $linkbase = 'index.php?option=com_joaktree&view=joaktree'
-                .'&tech='.$this->lists['technology']
-                .'&Itemid='.$this->person->menuItemId
-                .'&treeId='.$this->lists['treeId']
-                .'&personId=';
-
         $personIdArray	= $this->personId;
         $id				= array();
         $id[ 'app_id' ] = $this->lists[ 'app_id' ];
@@ -238,11 +220,7 @@ class RawView extends BaseHtmlView
             $partners	= $person->getPartners('basic');
             $fathers	= $person->getFathers();
             $mothers	= $person->getMothers();
-            $url = "";
-            if ($person->indHasPage) {
-                $url = $person->id;
-            }
-            $this->create_tree($list_tree, $person, $url, $fathers, $mothers, $partners, $children);
+            $this->create_tree($list_tree, $person, $fathers, $mothers, $partners, $children);
         }
         // build list to send to js library
         $list = [];
@@ -255,10 +233,6 @@ class RawView extends BaseHtmlView
             $datainfo = [];
             foreach ($data as $keyd => $oned) {
                 if ($oned) {
-                    if ($keyd == 'url') {
-                        $oned = Route::_($linkbase.$this->lists[ 'app_id' ].'!'.$oned);
-                        $oned = '<a href="'.$oned.'" target="_blank">'.Text::_('JT_TREE_MORE').'</a>';
-                    }
                     $datainfo[$keyd] = $oned;
                 }
             }

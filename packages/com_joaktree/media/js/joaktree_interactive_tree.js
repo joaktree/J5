@@ -105,6 +105,9 @@ function loadMore(f3Chart,f3EditTree, personid,btn) {
                     delete updates.deathlocation;
                 }
             }
+            if (updated.data.url) { // delete url from updates, we'll use updated infos
+               delete updates.url;
+            }
             // display other updates if any
             keys = Object.keys(updates)
             for (var j=0; j < keys.length; j++) {
