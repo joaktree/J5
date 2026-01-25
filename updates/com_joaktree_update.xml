@@ -5,7 +5,7 @@
 		<description>Joaktree J5 package</description>
 		<element>com_joaktree</element>
 		<type>component</type>
-		<version>2.5.6</version>
+		<version>2.5.5</version>
         <client>administrator</client>
 		<changelogurl>https://raw.githubusercontent.com/joaktree/J5/master/joaktree_changelog.xml</changelogurl>
 		<downloads>
