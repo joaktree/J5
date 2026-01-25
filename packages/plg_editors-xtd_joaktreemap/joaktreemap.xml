@@ -13,7 +13,7 @@
 	<copyright>(C) 2017 - 2020 JoomXtensions.com</copyright>
 	<authorEmail>rg-consultant@robertg-conseil.fr</authorEmail>
 	<authorUrl>www.joomxtensions.com</authorUrl>	
-   <version>2.5.6</version>
+   <version>2.5.7</version>
 	<description>PLG_EDITOR-XTD_JOAKTREE_MAP_XML_DESCRIPTION</description>
     <namespace path="src">Joaktree\Plugin\EditorsXtd\Joaktreemap</namespace>
 	<files>

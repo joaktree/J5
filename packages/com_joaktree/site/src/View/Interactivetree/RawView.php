@@ -23,6 +23,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Response\JsonResponse;
+use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Joaktree\Component\Joaktree\Site\Helper\JoaktreeHelper;
@@ -99,12 +100,12 @@ class RawView extends BaseHtmlView
                 }
             }
             if ($person->indHasPage) {
-                $url = 'index.php?option=com_joaktree&view=joaktree'
+                $url = Route::_('index.php?option=com_joaktree&view=joaktree'
                     .'&tech='.$lists['technology']
                     .'&Itemid='.$this->person->menuItemId
                     .'&treeId='.$lists['treeId']
-                    .'&personId='.$lists[ 'app_id' ].'!'.$person->id;
-                $data['url'] = '<a href="'.Uri::root().$url.'" target="_blank">'.Text::_('JT_TREE_MORE').'</a>';
+                    .'&personId='.$lists[ 'app_id' ].'!'.$person->id.'&lang='.$menulang);
+                $data['url'] = '<a href="'.$url.'" target="_blank">'.Text::_('JT_TREE_MORE').'</a>';
             }
             $list[] = ['id' => $this->person->id,'data' => $data];
             echo new JsonResponse($list);
