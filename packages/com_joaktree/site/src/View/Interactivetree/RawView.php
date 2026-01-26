@@ -171,7 +171,14 @@ class RawView extends BaseHtmlView
         }
         $data['fullname'] =  $person->fullName;
         $data['gender'] = $person->sex;
-        $data['birthday'] = $person->birthDate;
+        if ($person->birthDate) {
+            $data['birthday'] = $person->birthDate;
+        } else {
+            $id['app_id']           = $person->app_id;
+            $id[ 'person_id' ]      = $person->id;
+            $newperson              = new Person($id, 'ancestor');
+            $data['birthday']       = $newperson->birthDate;
+        }
         $obj->data = $data;
         $parents = [];
         if ($fathers) {
@@ -252,7 +259,6 @@ class RawView extends BaseHtmlView
 
         $list_tree = [];
 
-        $url = "";
         foreach ($thisGeneration as $gen_i => $generation) {
             $genPerson = explode('|', $generation);
             $id[ 'person_id' ] 	= $genPerson[0] ;

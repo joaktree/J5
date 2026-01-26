@@ -6,6 +6,9 @@
         <note>
             <item>Update : 2026-01-26</item>
         </note>
+        <fix>
+            <item>Interactive Family Tree : get birthday in new person object if not found</item>
+        </fix>
         <addition>
             <item>Interactive Family Tree : add marriage in detail popup</item>
         </addition>
