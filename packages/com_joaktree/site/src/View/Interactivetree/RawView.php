@@ -21,6 +21,7 @@ defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Response\JsonResponse;
 use Joomla\CMS\Router\Route;
@@ -80,6 +81,7 @@ class RawView extends BaseHtmlView
             $person                 = new Person($id, 'ancestor');
             $picArray               = $this->person->getPictures(false);
             $events                 = $this->person->getPersonEvents();
+            $partners	            = $person->getPartners('basic');
             $data = [];
             if ($person->deathDate) {
                 $data['deathday'] = $person->deathDate;
@@ -106,6 +108,47 @@ class RawView extends BaseHtmlView
                     .'&treeId='.$lists['treeId']
                     .'&personId='.$lists[ 'app_id' ].'!'.$person->id.'&lang='.$menulang);
                 $data['url'] = '<a href="'.$url.'" target="_blank">'.Text::_('JT_TREE_MORE').'</a>';
+            }
+            // sort partners by marriage dates
+            $partnersbymarr = array();
+            $partnerevents = [];
+            foreach ($partners as $partner) {
+                $partnerevents[$partner->id] = $this->person->getPartnerEvents($partner->id, $partner->living);
+                $marr = "";
+                foreach ($partnerevents[$partner->id] as $event) {
+                    if ($event->code == 'MARR') {
+                        if (!isset($event->eventDate)) {
+                            continue;
+                        }
+                        if (is_numeric(strtotime($event->eventDate))) {
+                            $marr = HtmlHelper::date($event->eventDate, 'Y-m-d');
+                        } else {
+                            preg_match_all('!\d+!', $event->eventDate, $matches);
+                            foreach ($matches as $match) {
+                                foreach ($match as $one) {
+                                    if ($one > 1000 and $one < date("Y")) {
+                                        $marr = $one.'-01-01';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                if ($marr) {
+                    $partnersbymarr[$marr] = $partner;
+                } else {
+                    $partnersbymarr[] = $partner;
+                }
+            }
+            ksort($partnersbymarr);
+            $partners = $partnersbymarr;
+
+            foreach ($partners as $partner) {
+                $events = $this->person->getPartnerEvents($partner->id, $partner->living);
+                foreach ($events as $event) {
+                    $loc = ($event->location) ? '&nbsp;'.Text::_('JT_IN') . '&nbsp;'.$event->location : '';
+                    $data[Text::_($event->code).' : '.$partner->fullName] = JoaktreeHelper::displayDate($event->eventDate).$loc;
+                }
             }
             $list[] = ['id' => $this->person->id,'data' => $data];
             echo new JsonResponse($list);

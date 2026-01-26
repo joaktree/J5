@@ -2,7 +2,18 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
-		<version>2.5.7</version>
+		<version>2.5.8</version>
+        <note>
+            <item>Update : 2026-01-26</item>
+        </note>
+        <addition>
+            <item>Interactive Family Tree : add marriage in detail popup</item>
+        </addition>
+    </changelog>
+    <changelog>
+        <element>com_joaktree</element>
+        <type>package</type>
+        <version>2.5.7</version>
         <note>
             <item>Update : 2026-01-25</item>
         </note>
@@ -10,10 +21,10 @@
             <item>Interactive Family Tree : wrong multilanguage url</item>
         </fix>
     </changelog>
-	<changelog>
-		<element>com_joaktree</element>
-		<type>package</type>
-		<version>2.5.5</version>
+    <changelog>
+        <element>com_joaktree</element>
+        <type>package</type>
+        <version>2.5.5</version>
         <note>
             <item>Update : 2026-01-25</item>
         </note>
