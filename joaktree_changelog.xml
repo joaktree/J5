@@ -7,7 +7,7 @@
             <item>Update : 2026-01-27</item>
         </note>
         <fix>
-            <item>Admininstration : handle dark mode in control panel page</item>
+            <item>Administration : handle dark mode in control panel page</item>
             <item>Interactive Family Tree : get birthday in new person object if not found</item>
         </fix>
         <addition>
