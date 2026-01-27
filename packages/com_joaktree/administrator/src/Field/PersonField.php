@@ -55,7 +55,7 @@ class PersonField extends FormField	//JFormField
         $linkTree   = 'index.php?option=com_joaktree&amp;view=trees&amp;layout=element&amp;task=element&amp;tmpl=component&amp;object='.$this->fieldname;
         $linkPerson = 'index.php?option=com_joaktree&amp;view=persons&amp;layout=element&amp;task=element&amp;tmpl=component&amp;object='.$this->fieldname;
 
-        $html  = "\n".'<br /><br /><div style="clear: both;">';
+        $html  = "\n".'<div style="clear: both;">';
         $html .= '<input style="background: #ffffff;" type="text" size="50" id="jform_personName" value="'.htmlspecialchars($person->firstName.' '.$person->familyName, ENT_QUOTES, 'UTF-8').'" disabled="disabled" title="'.Text::_('JTFIELD_PERSON_DESC_PERSON').'" />';
 
         $html .= '<select class="inputbox" id="jform_appTitle" name="apptitle" disabled="disabled">';

@@ -132,7 +132,6 @@ function loadMore(f3Chart,f3EditTree, personid,btn) {
 function showTree(data) {
 
     let logs = [];
-
     const f3Chart = f3.createChart('#FamilyChart', data)
 			    	.setTransitionTime(1000)
    				 	.setCardXSpacing(230)
@@ -141,7 +140,14 @@ function showTree(data) {
    					.setProgenyDepth(parseInt(options_graph.descendants))
 					.setSingleParentEmptyCard(false)
                     .setShowSiblingsOfMain(false) // show brothers/sisters on main
- 
+
+    let horizontal = false;
+    let orientationtext = options_graph.horizontaltext;
+    if (options_graph.orientation == 'horizontal') {
+        horizontal = true
+        orientationtext = options_graph.verticaltext
+        f3Chart.setOrientationHorizontal()
+    }
     const f3Card = f3Chart.setCardHtml()
         .setMiniTree(true)
 	    .setCardInnerHtmlCreator(d => {
@@ -200,94 +206,110 @@ function showTree(data) {
     	f3Chart.updateMainId(person_id)
     	f3Chart.updateTree({initial: animation_initial})
   	}
+    //------ rotate button -----------
+    let rotatebtn = d3.select(document.querySelector("#FamilyChart")).append("button")
+    .attr('id','rotatebtn')
+    .attr("style", "position: absolute; bottom: 10px; left: 20px; width:2.5em;height:2em;z-index:3")
+    .attr("title", orientationtext)
+    .attr('class','fas fa-rotate')
+    .on('click', (e) => {
+        if (!horizontal) {
+            horizontal = true;
+            f3Chart.setOrientationHorizontal()
+            f3Chart.updateTree({initial: true})
+            e.currentTarget.title = options_graph.verticaltext
+        } else {
+            horizontal = false;
+            f3Chart.setOrientationVertical()
+            f3Chart.updateTree({initial: true})
+            e.currentTarget.title =options_graph.horizontaltext
+        }
+    })
     if (options_graph.latest == 'true') {
     //---------- log selected boxes -----------
-    let prevsbtn = d3.select(document.querySelector("#FamilyChart")).append("button").text(options_graph.latesttext)
-    .attr('id','logprevsbtn')
-    .attr("style", "position: absolute; top: 10px; right: 20px; width: 150px;display:none")
-    .attr('data-bs-toggle','collapse')
-    .attr('data-bs-target','#logprevs')
-    .on("focusout", () => {
-        setTimeout( () => {
+        let prevsbtn = d3.select(document.querySelector("#FamilyChart")).append("button").text(options_graph.latesttext)
+        .attr('id','logprevsbtn')
+        .attr("style", "position: absolute; top: 10px; right: 20px; width: 150px;display:none")
+        .attr('data-bs-toggle','collapse')
+        .attr('data-bs-target','#logprevs')
+        .on("focusout", () => {
+            setTimeout( () => {
                         log_cont.attr('class','collapse')
                     }, 200);
-    })
-    const log_cont = d3.select(document.querySelector("#FamilyChart")).append("div")
-    .attr("style", "position: absolute; top: 40px; right: 20px; width: 150px; z-index:3")
-    .attr('class','collapse')
-    .attr('id','logprevs')
-
-    function updateLogDropdown(options) {
-        prevsbtn.attr("style", "position: absolute; top: 10px; right: 20px; width: 150px;z-index:3;display:block")
-        options.reverse() // inverse le tableau
-        dropdownlog.selectAll("div").data(options).join("div")
-        .attr("style", "padding: 5px;cursor: pointer;border-bottom: .5px solid currentColor;")
-        .on("click", (e, d) => {
-            updateTreeWithNewMainPerson(d.id, true)
         })
-        .text(d => d.fullname)
-        options.reverse() //remet le tableau dans l'ordre
-    }	
-    const dropdownlog = log_cont.append("div").attr("style", "overflow-y: auto; max-height: 300px; background-color: "+options_graph.background+";z-index:3")
-    .attr("tabindex", "0")
-    .on("wheel", (e) => {
-      e.stopPropagation()
-    })
+        const log_cont = d3.select(document.querySelector("#FamilyChart")).append("div")
+        .attr("style", "position: absolute; top: 40px; right: 20px; width: 150px; z-index:3")
+        .attr('class','collapse')
+        .attr('id','logprevs')
+
+        function updateLogDropdown(options) {
+            prevsbtn.attr("style", "position: absolute; top: 10px; right: 20px; width: 150px;z-index:3;display:block")
+            options.reverse() // inverse le tableau
+            dropdownlog.selectAll("div").data(options).join("div")
+            .attr("style", "padding: 5px;cursor: pointer;border-bottom: .5px solid currentColor;")
+            .on("click", (e, d) => {
+                updateTreeWithNewMainPerson(d.id, true)
+            })
+            .text(d => d.fullname)
+            options.reverse() //remet le tableau dans l'ordre
+        }
+        const dropdownlog = log_cont.append("div").attr("style", "overflow-y: auto; max-height: 300px; background-color: "+options_graph.background+";z-index:3")
+        .attr("tabindex", "0")
+        .on("wheel", (e) => {
+            e.stopPropagation()
+        })
     } // options_graph.latest = true
     if (options_graph.search == 'true') { 
   //------------ setup search dropdown -----------
-    const all_select_options = []
-    data.forEach(d => {
-    if (all_select_options.find(d0 => d0.value === d["id"])) return
-    all_select_options.push({label: `${d.data["fullname"]}`, value: d["id"]})
-    })
-    const search_cont = d3.select(document.querySelector("#FamilyChart")).append("div")
-    .attr("style", "position: absolute; top: 10px; left: 10px; width: 150px; z-index: 3;")
-    .on("focusout", () => {
-      setTimeout(() => {
-        if (!search_cont.node().contains(document.activeElement)) {
-          updateDropdown([]);
+        const all_select_options = []
+        data.forEach(d => {
+            if (all_select_options.find(d0 => d0.value === d["id"])) return
+            all_select_options.push({label: `${d.data["fullname"]}`, value: d["id"]})
+        })
+        const search_cont = d3.select(document.querySelector("#FamilyChart")).append("div")
+            .attr("style", "position: absolute; top: 10px; left: 10px; width: 150px; z-index: 3;")
+            .on("focusout", () => {
+                setTimeout(() => {
+                    if (!search_cont.node().contains(document.activeElement)) {
+                        updateDropdown([]);
+                    }
+                }, 200);
+        })
+        const search_input = search_cont.append("input")
+                .attr("style", "width: 100%;")
+                .attr("type", "text")
+                .attr("placeholder", options_graph.searchtext)
+                .on("focus", activateDropdown)
+                .on("input", activateDropdown)
+        const dropdown = search_cont.append("div").attr("style", "overflow-y: auto; max-height: 300px; background-color: "+options_graph.background+";")
+            .attr("tabindex", "0")
+            .on("wheel", (e) => {
+            e.stopPropagation()
+        })
+        function activateDropdown() {
+            const search_input_value = search_input.property("value")
+            const filtered_options = all_select_options.filter(d => d.label.toLowerCase().includes(search_input_value.toLowerCase()))
+            updateDropdown(filtered_options)
         }
-      }, 200);
-    })
-    const search_input = search_cont.append("input")
-        .attr("style", "width: 100%;")
-        .attr("type", "text")
-        .attr("placeholder", options_graph.searchtext)
-        .on("focus", activateDropdown)
-        .on("input", activateDropdown)
-
-    const dropdown = search_cont.append("div").attr("style", "overflow-y: auto; max-height: 300px; background-color: "+options_graph.background+";")
-        .attr("tabindex", "0")
-        .on("wheel", (e) => {
-        e.stopPropagation()
-    })
-
-    function activateDropdown() {
-        const search_input_value = search_input.property("value")
-        const filtered_options = all_select_options.filter(d => d.label.toLowerCase().includes(search_input_value.toLowerCase()))
-        updateDropdown(filtered_options)
-    }
-
-    function updateDropdown(filtered_options) {
-        dropdown.selectAll("div").data(filtered_options).join("div")
-        .attr("style", "padding: 5px;cursor: pointer;border-bottom: .5px solid currentColor;")
-        .on("click", (e, d) => {
-            if (options_graph.latest == 'true') { // store in latest selected items list
-                element = { id:d.value,fullname:d.label}
-                logs.push(element)
-                if (logs.length > parseInt(options_graph.latestsize)) { // keep 5 latest clicks 
-                    logs.shift()
-                }
-                updateLogDropdown(logs)
-            } // options_graph.latest = true
-            let info = document.querySelector('.f3-form-cont'); // info box
-            if (info) {
-               info.classList.remove('opened');
-            }
-            updateTreeWithNewMainPerson(d.value, true)
-         })
-        .text(d => d.label)
-    }	
+        function updateDropdown(filtered_options) {
+            dropdown.selectAll("div").data(filtered_options).join("div")
+                .attr("style", "padding: 5px;cursor: pointer;border-bottom: .5px solid currentColor;")
+                .on("click", (e, d) => {
+                    if (options_graph.latest == 'true') { // store in latest selected items list
+                        element = { id:d.value,fullname:d.label}
+                        logs.push(element)
+                        if (logs.length > parseInt(options_graph.latestsize)) { // keep 5 latest clicks 
+                            logs.shift()
+                        }
+                    updateLogDropdown(logs)
+                    } // options_graph.latest = true
+                    let info = document.querySelector('.f3-form-cont'); // info box
+                    if (info) {
+                        info.classList.remove('opened');
+                    }
+                    updateTreeWithNewMainPerson(d.value, true)
+                })
+                .text(d => d.label)
+        }
     }// options_graph.search = true
 } // showTree end

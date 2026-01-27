@@ -67,7 +67,8 @@ Factory::getApplication()->getDocument()->addScriptOptions(
             'latestsize' => (int)$params->get('latestsize', 5),
             'searchtext' => Text::_('JT_TREE_SEARCH'),'latesttext' => Text::_('JT_TREE_LATEST'),
             'nametext' => Text::_('JT_TREE_NAME'), 'birthtext' => Text::_('JT_TREE_BIRTH'), 'deathtext' => Text::_('JT_TREE_DEATH'),
-            'detailtext' => Text::_('JT_TREE_DETAIL')
+            'detailtext' => Text::_('JT_TREE_DETAIL'),
+            'orientation' => $params->get('orientation', 'vertical'),'horizontaltext' => Text::_('JT_TREE_HORIZONTAL'), 'verticaltext' => Text::_('JT_TREE_VERTICAL')
         )
 );
 HTMLHelper::_('bootstrap.collapse', '#logprevsbtn');

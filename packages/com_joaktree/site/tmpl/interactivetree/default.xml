@@ -80,6 +80,13 @@
 			<field  name="latestsize" type="number" showon="latest:true"
 				default="5" class="third left"
 				label="JTLATESTSIZE_LABEL" description="JTLATESTSIZE_DESC" />
+			<field  name="orientation" type="radio" 
+                class="btn-group clear" default="vertical"
+				label="JTORIENTATION_LABEL" description="JTORIENTATION_DESC">
+                <option value="vertical">JT_TREE_VERTICAL</option> 
+                <option value="horizontal">JT_TREE_HORIZONTAL</option> 
+            </field>
+                
 		</fieldset>
 	</fields>
 </metadata>

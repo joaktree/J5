@@ -2,6 +2,21 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
+		<version>2.5.9</version>
+        <note>
+            <item>Update : 2026-01-27</item>
+        </note>
+        <fix>
+            <item>Person field : remove extra blank lines</item>
+        </fix>
+        <addition>
+            <item>Interactive Family Tree : horizontal/vertical orientation button</item>
+            <item>Interactive Family Tree : select horizontal/vertical orientation default view</item>
+        </addition>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
 		<version>2.5.8</version>
         <note>
             <item>Update : 2026-01-27</item>
