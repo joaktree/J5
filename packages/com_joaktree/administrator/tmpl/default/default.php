@@ -35,11 +35,11 @@ use Joomla\CMS\HTML\HTMLHelper;
 
 	<table class="adminform">
 		<tr>
-			<td width="30%" valign="top">
+			<td width="30%" valign="top" >
 				<div id="cpanel">
 					
 					<div style="float: left;">
-						<div class="jt-icon">
+						<div class="jt-icon" > 
 							<a href="index.php?option=com_joaktree&view=applications">
 								<img src="../media/com_joaktree/images/icon-48-app.png" />
 								<br />
@@ -130,8 +130,8 @@ use Joomla\CMS\HTML\HTMLHelper;
 				</div>
 			</td>
 			<td width="60%" valign="top">
-				<div style="300px;border:1px solid #ccc;background:#fff;margin:15px;padding:15px">
-					<div style="float: right; margin:10px;">
+				<div style="300px;border:1px solid #ccc;background:var(--body-bg);margin:15px;padding:15px">
+					<div style="float: right; margin:10px;background:#fff">
 						<img src="../media/com_joaktree/images/logo-100x60-joaktree.png" alt="logo-joaktree" />
 					</div>
 					<h1 style="margin: 0;"><?php echo Text::_('COM_JOAKTREE'); ?></h1>

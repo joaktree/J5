@@ -12,11 +12,11 @@ span.jt-default {
 	text-align: center;
 }
 .jt-icon a {
-    background-color: #FFFFFF;
+    background-color: var(--body-bg);
     background-position: -30px center;
     border: 1px solid #CCCCCC;
     border-radius: 5px 5px 5px 5px;
-    color: #565656;
+    color: var(--body-color);
     display: block;
     float: left;
     height: 82px;
@@ -27,7 +27,9 @@ span.jt-default {
     width: 148px;
     padding-top: 15px;
 }
-
+.jt-icon a img {
+    background:#fff;
+}
 /* toggle columns */
 .jt-hide-app, .jt-hide-pat, .jt-hide-per, .jt-hide-tree, .jt-hide-rob, .jt-hide-map, .jt-hide {
 	display: none;
