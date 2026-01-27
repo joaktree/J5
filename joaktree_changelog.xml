@@ -4,7 +4,7 @@
 		<type>package</type>
 		<version>2.5.8</version>
         <note>
-            <item>Update : 2026-01-26</item>
+            <item>Update : 2026-01-27</item>
         </note>
         <fix>
             <item>Admininstration : handle dark mode in control panel page</item>
