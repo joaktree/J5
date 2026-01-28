@@ -448,7 +448,7 @@ iframe {
 	height:32px !important;
 	}
 #jt-content input {
-	background-color:#CCCCCC !important;
+	/* background-color:#CCCCCC !important;*/
 	display:inline-block;
 }
 #jt-content input[type="submit"] {
