@@ -67,7 +67,23 @@ class LocationsTable extends JoaktreeTable implements VersionableTableInterface
 
         return $settings;
     }
+    public function checkLocationExists($value)
+    {
+        if (!isset($value) || empty($value)) {
+            // no location -> no location id
+            return 0; // pascal
+        }
+        // check for locations
+        $query = $this->_db->getQuery(true);
+        $query->select('*');
+        $query->from(' #__joaktree_locations jln ');
+        $query->where(' jln.value       = :value');
+        $query->bind(':value', $value, \Joomla\Database\ParameterType::STRING);
 
+        $this->_db->setQuery($query);
+        $result = $this->_db->loadObject();
+        return $result;
+    }
     public function checkLocation($value)
     {
         if (!isset($value) || empty($value)) {
