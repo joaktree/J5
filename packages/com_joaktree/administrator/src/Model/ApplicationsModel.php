@@ -352,5 +352,6 @@ class processObject
     public $japp_ids	= null;
     public $status		= 'new';
     public $msg		= null;
+    public $ansel = false;
 }
 

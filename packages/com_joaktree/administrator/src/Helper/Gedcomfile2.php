@@ -334,16 +334,17 @@ class Gedcomfile2
     /*
     ** Check BOM file
     */
-    function check_BOM($filename) { 
-        $file = @fopen($filename, "r"); 
-        $bom = fread($file, 3); 
+    public function check_BOM($filename)
+    {
+        $file = @fopen($filename, "r");
+        $bom = fread($file, 3);
         fclose($file);
-        if ($bom != b"\xEF\xBB\xBF") { 
-            return false; 
-        } else { 
-            return true; 
-        } 
-    } 
+        if ($bom != b"\xEF\xBB\xBF") {
+            return false;
+        } else {
+            return true;
+        }
+    }
     /*
     ** Main function to import the gedcom file.
     */
@@ -354,7 +355,7 @@ class Gedcomfile2
         $conversion_type 	= $params->get('unicode2utf');
         $config             = ComponentHelper::getParams('com_joaktree') ;
         $defpath            = $config->get('gedcomfile_path', 'files/com_joaktree/gedfiles');
-        $path  				= JPATH_ROOT.'/'.$params->get('gedcomfile_path',$defpath);
+        $path  				= JPATH_ROOT.'/'.$params->get('gedcomfile_path', $defpath);
         $filename			= $path.'/'.$params->get('gedcomfile_name');
         $patronymSetting	= (int) $params->get('patronym');
         $truncate_rel_value	= (int) $params->get('truncrelations');
@@ -407,7 +408,7 @@ class Gedcomfile2
         $tellert = 0; // counter for total number of lines in file
 
         // Loop through the array looking for header info.
-        $ansel = false;
+        // $ansel = false;
         $char_done = false;
         $vers_done = false;
         $ind_header = 0;
@@ -462,7 +463,7 @@ class Gedcomfile2
                     if ($elements[1] == 'CHAR') {
                         $char_done = true;
                         if ($elements[2] == 'ANSEL') {
-                            $ansel = true;
+                            $this->procObject->ansel = true;
                         }
                     }
 
@@ -492,7 +493,7 @@ class Gedcomfile2
         }
 
         // if charcter set is ANSEL
-        if (($conversion == true) and ($ansel == true)) {
+        if (($conversion == true) and ($this->procObject->ansel == true)) {
             $result = $this->prepareANSEL();
             if ($result) {
                 $this->procObject->msg = (isset($this->procObject->msg) ? $this->procObject->msg : '') . $result;
@@ -572,7 +573,7 @@ class Gedcomfile2
                 $line      = rtrim($line, "\r\n");
 
                 // if ANSEL convert the line
-                if (($conversion == true) and ($ansel == true)) {
+                if (($conversion == true) and ($this->procObject->ansel == true)) {
                     $line = $this->convertANSEL($line);
                 }
 
