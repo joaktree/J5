@@ -120,7 +120,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 					
 					<div style="float: left;">
 						<div class="jt-icon">
-							<a href="https://www.joomxtensions.com/download/JoaktreeManuelv<?php echo $this->lists['version']; ?>.pdf" target="_manual">
+							<a href="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/joaktree/J5/master/doc/JoaktreeManualv2.4.1-Rev1.pdf" target="_blank">
 								<img src="../media/com_joaktree/images/icon-48-help.png" />
 								<br />
 								<span><?php echo Text::_('JHELP'); ?></span>

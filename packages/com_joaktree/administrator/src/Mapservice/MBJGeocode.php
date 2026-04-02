@@ -133,8 +133,22 @@ class MBJGeocode extends MBJService
             // no object
             return false;
         }
-
-
+        $table	= Factory::getApplication()->bootComponent('com_joaktree')->getMVCFactory()->createTable('Locations');
+        // check if address already in locations table
+        if ($info = $table->checkLocationExists($data->value) && $info->longitude) {
+            $data->longitude = $info->longitude;
+            $data->latitude  = $info->latitude;
+            $data->results   = 1;
+            $data->result_address = $info->resultAddress;
+            $resultSet  = array();
+            $object		 = new \stdClass();
+            $object->lon = (float)  $info->longitude;
+            $object->lat = (float)  $info->latitude;
+            $object->adr = (string) $info->resultAddress;
+            $resultSet[] = $object;
+            $this->resultSet = $resultSet;
+            return "found";
+        }
         // set the parameters
         static $delay 		= 0;
         $geocode_pending = true;
@@ -144,12 +158,15 @@ class MBJGeocode extends MBJService
                 $request_url = $this->getUrl($data);
             }
             // Try to fetch a response from the service.
-            if (!($xml = simplexml_load_file($request_url))) {
-                // it is not a file - perhaps a string
-                if (!($xml = simplexml_load_string($request_url))) {
-                    // it is not a string ... we stop
-                    throw new \Exception(Text::sprintf('MBJ_SERVICE_URL_NOT_LOADING', $this->provider->provider, $request_url));
-                }
+            if (strpos($request_url, 'openstreetmap')) {
+                $xml = $this->get_xml($request_url);
+            } else { // google
+                $xml = simplexml_load_file($request_url);
+            }
+            if (!($xml = simplexml_load_string($xml))) {
+                // it is not a string ... we stop
+                $geocode_pending = false;
+                // throw new \Exception(Text::sprintf('MBJ_SERVICE_URL_NOT_LOADING', $this->provider->provider, $request_url));
             }
             //$this->count++;		/// RRG 25/07/2024
 
@@ -266,5 +283,22 @@ class MBJGeocode extends MBJService
     public static function getIndSubdiv()
     {
         return self::$indSubdiv;
+    }
+    public static function get_xml($url)
+    {
+        $agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.3";
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_USERAGENT, $agent);
+        curl_setopt($ch, CURLOPT_NOBODY, 0);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+
+        // Exécuter la requête et obtenir la réponse
+        $response = curl_exec($ch);
+        return $response;
     }
 }

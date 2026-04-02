@@ -97,16 +97,8 @@ class HtmlView extends BaseHtmlView
             ToolbarHelper::save('save', Text::_('JTSETTINGS_HEADING_SAVE'), 'title');
         }
 
-        if ($layout == 'personevent') {
-            ToolbarHelper::help('JoaktreeManuel', true, 'https://www.joomxtensions.com/download/');
-        } elseif ($layout == 'personname') {
-            ToolbarHelper::help('JoaktreeManuel', true, 'https://www.joomxtensions.com/download/');
-        } elseif ($layout == 'relationevent') {
-            ToolbarHelper::help('JoaktreeManuel', true, 'https://www.joomxtensions.com/download/');
-        } else {
-            ToolbarHelper::help('JoaktreeManuel', true, 'https://www.joomxtensions.com/download/');
-        }
-
+        //ToolbarHelper::help('JoaktreeManuel', true, 'https://www.joomxtensions.com/download/');
+        ToolbarHelper::help('JoaktreeManual', true, 'https://docs.google.com/viewer?url=https://raw.githubusercontent.com/joaktree/J5/master/doc/JoaktreeManualv2.4.1-Rev1.pdf');
         // Sidebar
         Sidebar::setAction('index.php?option=com_joaktree&view=settings&layout='.$layout);
     }

@@ -79,6 +79,6 @@ class HtmlView extends BaseHtmlView
         ToolBarHelper::cancel('application.cancel', 'JTOOLBAR_CANCEL');
         ToolbarHelper::inlinehelp();
         ToolBarHelper::divider();
-        ToolBarHelper::help('JoaktreeManuel', true, 'https://www.joomxtensions.com/download/');
+        ToolbarHelper::help('JoaktreeManual', true, 'https://docs.google.com/viewer?url=https://raw.githubusercontent.com/joaktree/J5/master/doc/JoaktreeManualv2.4.1-Rev1.pdf');//ToolBarHelper::help('JoaktreeManuel', true, 'https://www.joomxtensions.com/download/');
     }
 }
