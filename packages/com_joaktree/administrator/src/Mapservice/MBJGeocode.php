@@ -135,16 +135,17 @@ class MBJGeocode extends MBJService
         }
         $table	= Factory::getApplication()->bootComponent('com_joaktree')->getMVCFactory()->createTable('Locations');
         // check if address already in locations table
-        if ($info = $table->checkLocationExists($data->value) && $info->longitude) {
+        $info = $table->checkLocationExists($data->value);
+        if ($info && property_exists($info, 'longitude') && $info->longitude) {
             $data->longitude = $info->longitude;
             $data->latitude  = $info->latitude;
             $data->results   = 1;
-            $data->result_address = $info->resultAddress;
+            $data->result_address = $info->resultValue;
             $resultSet  = array();
             $object		 = new \stdClass();
             $object->lon = (float)  $info->longitude;
             $object->lat = (float)  $info->latitude;
-            $object->adr = (string) $info->resultAddress;
+            $object->adr = (string) $info->resultValue;
             $resultSet[] = $object;
             $this->resultSet = $resultSet;
             return "found";
@@ -157,19 +158,26 @@ class MBJGeocode extends MBJService
             if (!$subdiv) {
                 $request_url = $this->getUrl($data);
             }
+            libxml_use_internal_errors(true);
             // Try to fetch a response from the service.
             if (strpos($request_url, 'openstreetmap')) {
                 $xml = $this->get_xml($request_url);
             } else { // google
                 $xml = simplexml_load_file($request_url);
             }
-            if (!($xml = simplexml_load_string($xml))) {
-                // it is not a string ... we stop
+            if ($xml) {
+                $xml = simplexml_load_string($xml);
+            }
+            libxml_clear_errors();
+            if (!$xml) {
                 $geocode_pending = false;
-                // throw new \Exception(Text::sprintf('MBJ_SERVICE_URL_NOT_LOADING', $this->provider->provider, $request_url));
+                $status = 'notfound';
+                JoaktreeHelper::addLog(Text::sprintf('JT_GEOCODE_FAILED', $data->value, $status), 'joaktreemap');
+                $data->results   = 0;
+                $data->result_address = null;
+                continue;
             }
             //$this->count++;		/// RRG 25/07/2024
-
             $status = $this->getStatus($xml);
             if (strcmp($status, "found") == 0) {
                 // Successful geocode
