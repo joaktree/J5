@@ -222,6 +222,7 @@ class MBJGeocode extends MBJService
                 if (!$subdiv) { // not found, try to remove subdivision
                     $subdiv = true;// retry it once if $indSubdiv = 0
                     $retry = 0;
+                    $save_request_url = $request_url;
                     if (self::$indSubdiv == 0 && strpos($request_url, 'google')) {
                         $key_url = explode("&", $request_url);
                         $googlekey = '&' . $key_url[count($key_url) - 1]; // google key
@@ -244,7 +245,9 @@ class MBJGeocode extends MBJService
                                 $i++;
                             };
                             $request_url .= $googlekey;
-                            continue; // try again
+                            if ($request_url != $save_request_url) { 
+                                continue; // try again
+                            }
                         }
                     }
                     if (self::$indSubdiv == 0 && strpos($request_url, 'openstreetmap')) {
@@ -271,7 +274,9 @@ class MBJGeocode extends MBJService
                                 $request_url .= $key_url[$i];
                             }
                             $request_url .= '&'.$url;
-                            continue; // try again
+                            if ($request_url != $save_request_url) { 
+                                continue; // try again
+                            }
                         }
                     }
                 }

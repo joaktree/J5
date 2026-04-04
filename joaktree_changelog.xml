@@ -16,7 +16,8 @@
             <item>GeoCode OpenStreetMap : use curl instead of simplexml_load_file</item>
             <item>GeoCode : log service error instead of killing process</item>
             <item>GED import : Ansel conversion not working for the full file</item>
-            <item>GeoCode :handle service errors</item>
+            <item>GeoCode : handle service errors</item>
+            <item>GeoCode : handle not found in ANSEL table</item>
         </fix>
     </changelog>
 	<changelog>

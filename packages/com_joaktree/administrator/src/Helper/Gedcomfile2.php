@@ -159,7 +159,9 @@ class Gedcomfile2
             } else {
                 // conversion is needed
                 // check whether the character itself is in conversion table
-                if ($ANSELtable[$hex1] == "+") {
+                if (!array_key_exists($hex1,ANSELtable)) { // not found in ANSELTable
+                    $UNICODE = $ANSELtable[20]; // force to space
+                } elseif ($ANSELtable[$hex1] == "+") {
                     // character is NOT independently in conversion table
                     // extract next character, and convert to hexadecimal string (2 positions)
                     $chr2 = substr($instring, $counter, 1);
