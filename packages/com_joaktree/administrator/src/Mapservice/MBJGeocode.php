@@ -136,18 +136,7 @@ class MBJGeocode extends MBJService
         $table	= Factory::getApplication()->bootComponent('com_joaktree')->getMVCFactory()->createTable('Locations');
         // check if address already in locations table
         $info = $table->checkLocationExists($data->value);
-        if ($info && property_exists($info, 'longitude') && $info->longitude) {
-            $data->longitude = $info->longitude;
-            $data->latitude  = $info->latitude;
-            $data->results   = 1;
-            $data->result_address = $info->resultValue;
-            $resultSet  = array();
-            $object		 = new \stdClass();
-            $object->lon = (float)  $info->longitude;
-            $object->lat = (float)  $info->latitude;
-            $object->adr = (string) $info->resultValue;
-            $resultSet[] = $object;
-            $this->resultSet = $resultSet;
+        if ($info && property_exists($info, 'longitude')) {
             return "found";
         }
         // set the parameters
