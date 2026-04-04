@@ -10,6 +10,7 @@
             <item>Use bootstrap colors to enable light/dark mode</item>
             <item>Help file on github</item>
             <item>GeoCode : check if location already exists in db</item>
+            <item>GeoCode : add OpenStreetMap errors in log + one retry</item>
         </change>
         <fix>
             <item>GeoCode OpenStreetMap : use curl instead of simplexml_load_file</item>

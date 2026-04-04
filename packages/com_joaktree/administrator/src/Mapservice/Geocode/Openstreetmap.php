@@ -79,7 +79,7 @@ class Openstreetmap extends MBJGeocode
 
             $base_url .= '&polygon=0';
 
-            $base_url .= '&addressdetails=0';
+            $base_url .= '&addressdetails=0'; 
 
             $email     = (isset($keys->email)) ? $keys->email : $params['email']['value'];
             $base_url .= ($email) ? '&email='.$email : '';
