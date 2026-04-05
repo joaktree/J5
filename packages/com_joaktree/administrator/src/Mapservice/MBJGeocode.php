@@ -133,53 +133,52 @@ class MBJGeocode extends MBJService
             // no object
             return false;
         }
-        $table	= Factory::getApplication()->bootComponent('com_joaktree')->getMVCFactory()->createTable('Locations');
-        // check if address already in locations table
-        $info = $table->checkLocationExists($data->value);
-        if ($info && property_exists($info, 'longitude')) {
-            return "found";
-        }
         // set the parameters
         static $delay 		= 0;
+        static $time_last;
+
         $geocode_pending = true;
         $response = "";
         $subdiv = false;
-        $retry = 0;
         while ($geocode_pending) {
             if (!$subdiv) {
                 $request_url = $this->getUrl($data);
             }
+            if (strpos($request_url, 'openstreetmap')) {
+                // openstreetmap : 1 req per sec. max.
+                if ($time_last) {
+                    $time_next = microtime(true);
+                    $diff = ($time_next - $time_last) * 1000000;
+                    $sleep = 999999 - (int)$diff;
+                    if ($sleep > 0) { // too fast : wait a bit
+                        usleep($sleep);
+                    }
+                }
+            }
             libxml_use_internal_errors(true);
             // Try to fetch a response from the service.
             if (strpos($request_url, 'openstreetmap')) {
+                $time_last =  microtime(true);
                 $xml = $this->get_xml($request_url);
                 $response = $xml;
+                if ($xml) {
+                    $xml = simplexml_load_string($xml);
+                }
             } else { // google
                 $xml = simplexml_load_file($request_url);
-            }
-            if ($xml) {
-                $xml = simplexml_load_string($xml);
             }
             libxml_clear_errors();
             if (!$xml) {
                 JoaktreeHelper::addLog(Text::sprintf('JT_GEOCODE_FAILED', $data->value, $status), 'joaktreemap');
                 if (strpos($request_url, 'openstreetmap')) {
                     $titleerror = "";
-                    if (strpos($response,'title')) {
-                        $titlepos = strpos($response,'title') + 6;
-                        $endtitle = strpos($response,'</title>');
+                    if (strpos($response, 'title')) {
+                        $titlepos = strpos($response, 'title') + 6;
+                        $endtitle = strpos($response, '</title>');
                         $titlelength = $endtitle - $titlepos;
-                        $titleerror = substr($response,$titlepos,$titlelength);
+                        $titleerror = substr($response, $titlepos, $titlelength);
                     }
-                    if ($titleerror == "429 Too many requests") {
-                        if (!$retry) { // retry once
-                            $retry += 1; 
-                            JoaktreeHelper::addLog(Text::sprintf('JT_GEOCODE_FAILED', $titleerror, "Retry openstreetmap"), 'joaktreemap');
-                            sleep(2);
-                            continue; // retry
-                        }
-                    }
-                    JoaktreeHelper::addLog(Text::sprintf('JT_GEOCODE_FAILED', $titleerror, "other error openstreetmap"), 'joaktreemap');
+                    JoaktreeHelper::addLog(Text::sprintf('JT_GEOCODE_FAILED', $titleerror, "Error on openstreetmap search"), 'joaktreemap');
                 }
                 $geocode_pending = false;
                 $status = 'notfound';
@@ -210,7 +209,6 @@ class MBJGeocode extends MBJService
                 // indsubdiv est dans les paramètres du composant sous forme 0 ou 1
                 if (!$subdiv) { // not found, try to remove subdivision
                     $subdiv = true;// retry it once if $indSubdiv = 0
-                    $retry = 0;
                     $save_request_url = $request_url;
                     if (self::$indSubdiv == 0 && strpos($request_url, 'google')) {
                         $key_url = explode("&", $request_url);
@@ -234,7 +232,7 @@ class MBJGeocode extends MBJService
                                 $i++;
                             };
                             $request_url .= $googlekey;
-                            if ($request_url != $save_request_url) { 
+                            if ($request_url != $save_request_url) {
                                 continue; // try again
                             }
                         }
@@ -263,7 +261,7 @@ class MBJGeocode extends MBJService
                                 $request_url .= $key_url[$i];
                             }
                             $request_url .= '&'.$url;
-                            if ($request_url != $save_request_url) { 
+                            if ($request_url != $save_request_url) {
                                 continue; // try again
                             }
                         }
