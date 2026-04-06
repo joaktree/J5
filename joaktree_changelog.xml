@@ -10,6 +10,7 @@
             <item>Use bootstrap colors to enable light/dark mode</item>
             <item>Help file on github</item>
             <item>GeoCode : OpenStreetMap : 1 req per second maxi</item>
+            <item>InteractiveMap : OpenStreetMap : add title to marker</item>
         </change>
         <fix>
             <item>GeoCode OpenStreetMap : use curl instead of simplexml_load_file</item>
@@ -17,7 +18,7 @@
             <item>GED import : Ansel conversion not working for the full file</item>
             <item>GeoCode : handle service errors</item>
             <item>GeoCode : handle not found in ANSEL table</item>
-            <item>GeoCode : GoogleMap error if location title contains a double quote</item>
+            <item>Interactive GoogleMap error if location title contains a double quote</item>
         </fix>
     </changelog>
 	<changelog>

@@ -150,6 +150,7 @@ class Openstreetmap extends MBJInteractivemap
                     $marker['color'] = $color;
                     $marker['longitude'] = $item->longitude;
                     $marker ['latitude'] = $item->latitude;
+                    $marker['title'] = $item->value;
                     // label
                     if (isset($item->label) && !empty($item->label)) {
                         $marker['label']    = ((is_numeric($item->label)) ? (int)$item->label : '');

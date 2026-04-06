@@ -73,9 +73,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     markerColor: marker.color,
                     // shape: 'square',
                     // prefix: 'fa',
-                    number: marker.label
-            });                
-            let jtmarker = L.marker([marker.latitude, marker.longitude],{icon: myMarker}).addTo(jtmap[mapix]);
+                    number: marker.label}
+            );
+            let jtmarker = L.marker([marker.latitude, marker.longitude],{icon: myMarker,title : marker.title}).addTo(jtmap[mapix]);
             popup = null;
             if (marker.text) {
                 popup = createPopup(mapix,jtmarker, jtlat[mapix], jtlong[mapix],marker.text);
