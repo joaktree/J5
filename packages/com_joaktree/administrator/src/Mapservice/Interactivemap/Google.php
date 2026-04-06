@@ -178,7 +178,9 @@ class Google extends MBJInteractivemap {
 				$script[] = '      position: new google.maps.LatLng('.$item->latitude.','.$item->longitude.'), ';
 				$script[] = '      map: myMap, ';
 				$script[] = '      icon: img'.(((int)$item->label < 21) ? (int)$item->label : 21).', '; 
-				$script[] = '      title: "'.$item->value.'" ';
+                $title = htmlspecialchars($item->value,ENT_COMPAT);
+                $title = str_replace('&quot;','\"',$title);
+				$script[] = '      title: "'.$title.'" ';
 				$script[] = '   }); ';
 				
 				$script[] = '  google.maps.event.addListener(mrk'.$item->id.', \'click\', function() { ';

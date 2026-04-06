@@ -17,6 +17,7 @@
             <item>GED import : Ansel conversion not working for the full file</item>
             <item>GeoCode : handle service errors</item>
             <item>GeoCode : handle not found in ANSEL table</item>
+            <item>GeoCode : GoogleMap error if location title contains a double quote</item>
         </fix>
     </changelog>
 	<changelog>
