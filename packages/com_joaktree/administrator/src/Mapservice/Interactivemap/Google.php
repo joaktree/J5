@@ -215,19 +215,19 @@ class Google extends MBJInteractivemap {
 		if (!isset($baseUrl)) {
 			$keys   = self::getKeys();
 			$params = self::parameters(); 	
-			$base_url = '';
+			$baseUrl = '';
 			
 			$indHttps  = (isset($keys->indHttps)) ? $keys->indHttps : $params['indHttps']['value'];
-			$base_url .= (($indHttps) ? 'https' : 'http').'://';
+			$baseUrl .= (($indHttps) ? 'https' : 'http').'://';
 			
-			$base_url  .= 'maps.googleapis.com/maps/api/js';
+			$baseUrl  .= 'maps.googleapis.com/maps/api/js';
 			//$base_url  = 'http://maps.googleapis.com/maps/api/js';
-			$base_url .= '?key='.$this->provider->getAPIkey();
-			$base_url .= '&sensor=false'; 
-			$base_url .= (isset($keys->language)) ? '&language='.$keys->language : '';
+			$baseUrl .= '?key='.$this->provider->getAPIkey();
+			$baseUrl .= '&sensor=false'; 
+			$baseUrl .= (isset($keys->language)) ? '&language='.$keys->language : '';
 			
 		}
-		return $base_url;
+		return $baseUrl;
 	}
 		
 	

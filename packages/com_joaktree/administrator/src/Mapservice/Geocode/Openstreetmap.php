@@ -67,25 +67,25 @@ class Openstreetmap extends MBJGeocode
         if (!isset($baseUrl)) {
             $keys   = $this->getKeys();
             $params = self::parameters();
-            $base_url = '';
+            $baseUrl = '';
 
             $indHttps  = (isset($keys->indHttps)) ? $keys->indHttps : $params['indHttps']['value'];
-            $base_url .= (($indHttps) ? 'https' : 'http').'://';
+            $baseUrl .= (($indHttps) ? 'https' : 'http').'://';
 
-            $base_url .= 'nominatim.openstreetmap.org/search';
+            $baseUrl .= 'nominatim.openstreetmap.org/search';
 
             $format    = (isset($keys->format)) ? $keys->format : $params['format']['value'];
-            $base_url .= '?format='.$format;
+            $baseUrl .= '?format='.$format;
 
-            $base_url .= '&polygon=0';
+            $baseUrl .= '&polygon=0';
 
-            $base_url .= '&addressdetails=0'; 
+            $baseUrl .= '&addressdetails=0';
 
             $email     = (isset($keys->email)) ? $keys->email : $params['email']['value'];
-            $base_url .= ($email) ? '&email='.$email : '';
+            $baseUrl .= ($email) ? '&email='.$email : '';
 
         }
-        return $base_url;
+        return $baseUrl;
 
     }
 

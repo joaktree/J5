@@ -71,17 +71,17 @@ class Openstreetmap extends MBJInteractivemap
         if (!isset($baseUrl)) {
             $keys   = self::getKeys();
             $params = self::parameters();
-            $base_url = '';
+            $baseUrl = '';
 
             $indHttps  = (isset($keys->indHttps)) ? $keys->indHttps : $params['indHttps']['value'];
-            $base_url .= (($indHttps) ? 'https' : 'http').'://';
+            $baseUrl .= (($indHttps) ? 'https' : 'http').'://';
             //$base_url .= 'http://';
-            $base_url .= 'open.mapquestapi.com/staticmap/'.self::$version.'/getmap';
+            $baseUrl .= 'open.mapquestapi.com/staticmap/'.self::$version.'/getmap';
 
-            $base_url .= '?imagetype='.$params['imagetype']['value'];
+            $baseUrl .= '?imagetype='.$params['imagetype']['value'];
 
         }
-        return $base_url;
+        return $baseUrl;
     }
 
     public function fetch($data, $options = array())

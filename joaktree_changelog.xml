@@ -10,6 +10,7 @@
             <item>Use bootstrap colors to enable light/dark mode</item>
             <item>Help file on github</item>
             <item>GeoCode : OpenStreetMap : 1 req per second maxi</item>
+            <item>Geocode : Cleanup subdivision </item>
             <item>InteractiveMap : OpenStreetMap : add title to marker</item>
         </change>
         <fix>

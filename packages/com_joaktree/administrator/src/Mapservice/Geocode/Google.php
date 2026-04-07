@@ -73,25 +73,25 @@ class Google extends MBJGeocode
             $keys   = self::getKeys();
 
             $params = self::parameters();
-            $base_url = '';
+            $baseUrl = '';
 
             $indHttps  = (isset($keys->indHttps)) ? $keys->indHttps : $params['indHttps']['value'];
-            $base_url .= (($indHttps) ? 'https' : 'http').'://';
+            $baseUrl .= (($indHttps) ? 'https' : 'http').'://';
 
-            $base_url .= 'maps.googleapis.com/maps/api/geocode/xml';
+            $baseUrl .= 'maps.googleapis.com/maps/api/geocode/xml';
 
             $country   = (isset($keys->country)) ? $keys->country : $params['country']['value'];
-            $base_url .= ($country) ? '?region='.$country : '';
+            $baseUrl .= ($country) ? '?region='.$country : '';
 
             $car = "&";
-            if (strpos($base_url, '?') === false) { // no ? in URL
+            if (strpos($baseUrl, '?') === false) { // no ? in URL
                 $car = "?";
             }
             $language  = (isset($keys->language)) ? $keys->language : $params['language']['value'];
-            $base_url .= ($language) ? $car.'language='.$language : '';
+            $baseUrl .= ($language) ? $car.'language='.$language : '';
 
         }
-        return $base_url;
+        return $baseUrl;
 
     }
 
