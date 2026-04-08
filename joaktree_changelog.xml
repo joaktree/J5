@@ -4,7 +4,7 @@
 		<type>package</type>
 		<version>2.5.10</version>
         <note>
-            <item>Update : 2026-04-02</item>
+            <item>Update : 2026-04-08</item>
         </note>
         <change>
             <item>Use bootstrap colors to enable light/dark mode</item>
