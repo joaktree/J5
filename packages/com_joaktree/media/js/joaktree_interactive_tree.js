@@ -160,7 +160,7 @@ function showTree(data) {
         .setMiniTree(true)
 	    .setCardInnerHtmlCreator(d => {
 			url = '',birth = '',more = ''
-            if (d.data.data["needmore"]) more = "<div class='mini-tree'><i class='fa-solid fa-tower-broadcast'></i></div>"
+            if (d.data.data["needmore"]) more = "<div class='mini-tree' title='server req'><i class='fa-solid fa-tower-broadcast'></i></div>"
 			if (d.data.data["birthday"]) birth = "<br>"+d.data.data["birthday"];
       return `<div class="card-inner" style="width: 200px; height: auto; padding: 15px; border-radius: 5px; text-align: center;">
         <div>${d.data.data["fullname"]}${birth}${url}${more}</div>
