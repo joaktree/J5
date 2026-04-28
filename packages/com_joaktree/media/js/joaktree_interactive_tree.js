@@ -12,7 +12,7 @@
  * Joomla! 5.x conversion by Conseilgouz
  *
  */
-var options_graph;
+var options_graph, personid_wait;
 window.addEventListener('DOMContentLoaded', function() {
 	if (typeof Joomla === 'undefined' || typeof Joomla.getOptions === 'undefined') {
 		console.error('Joomla.getOptions not found!\nThe Joomla core.js file is not being loaded.');
@@ -21,13 +21,14 @@ window.addEventListener('DOMContentLoaded', function() {
 	options_graph = Joomla.getOptions('joaktree_interactive_tree');
 	if (typeof options_graph === 'undefined' ) {return false}
     
-	treeLoad(options_graph.personid);
+	treeLoad(options_graph.personid,'full',false);
 })
 // Ask for tree data
-function treeLoad(personid) {
+function treeLoad(personid,msg,chart) {
     
     var csrf = Joomla.getOptions("csrf.token", "");
-    var url =  options_graph.host+'index.php?option=com_joaktree&view=interactivetree&format=raw&tmpl=component&personId='+personid+'&'+csrf+'=1&what=full&lang='+options_graph.lang;
+    var url =  options_graph.host+'index.php?option=com_joaktree&view=interactivetree&format=raw&tmpl=component&personId='+personid+'&'+csrf+'=1&what='+msg+'&lang='+options_graph.lang+'&generations='+options_graph.generations;
+    personid_wait = personid;
 
     fetch(url)
         .then(response => {
@@ -42,8 +43,15 @@ function treeLoad(personid) {
             wait = document.getElementById('page-load-base');
             let resp = JSON.parse(responseText);
             tree = resp.data;
-            showTree(tree);
             wait.style.display = "none";
+            spl = personid_wait.split('!');
+            if (chart) {
+                chart.updateData(tree);
+                chart.updateMainId(spl[1]);
+                chart.updateTree({initial: true});
+            } else {
+                showTree(tree);
+            }
         })
         .catch(error => {
             wait = document.getElementById('page-load-base');
@@ -52,12 +60,12 @@ function treeLoad(personid) {
 
         });
 }
-// Ask for more information 
+// Ask for more information about one person
 function loadMore(f3Chart,f3EditTree, personid,btn) {
     
     var csrf = Joomla.getOptions("csrf.token", "");
     var person = options_graph.appid +'!'+personid;
-    var url = options_graph.host+'index.php?option=com_joaktree&view=interactivetree&format=raw&tmpl=component&personId='+person+'&'+csrf+'=1&what=more&lang='+options_graph.lang;
+    var url = options_graph.host+'index.php?option=com_joaktree&view=interactivetree&format=raw&tmpl=component&personId='+person+'&'+csrf+'=1&what=info&lang='+options_graph.lang;
 
     fetch(url)
         .then(response => {
@@ -175,6 +183,15 @@ function showTree(data) {
             })
         })
         f3Card.setOnCardClick(function (e) {
+            if (e.currentTarget.__data__.data.data.needmore) {
+                personid = e.currentTarget.__data__.data.data.needmore;
+                treeLoad(personid,'more',f3Chart);
+                e.stopPropagation();
+                wait = document.getElementById('page-load-base');
+                wait.style.display = "block";
+                return;
+            }
+            
             // if latest selected items, store click information
             if (options_graph.latest == 'true') { 
                 element = { id:e.currentTarget.getAttribute('data-id'),

@@ -2,6 +2,17 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
+		<version>2.5.11</version>
+        <note>
+            <item>Update : 2026-04-28</item>
+        </note>
+        <fix>
+            <item>Interactive Tree : add generations limit</item>
+        </fix>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
 		<version>2.5.10</version>
         <note>
             <item>Update : 2026-04-08</item>

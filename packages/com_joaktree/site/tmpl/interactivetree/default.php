@@ -61,7 +61,7 @@ $uri = Uri::getInstance();
 Factory::getApplication()->getDocument()->addScriptOptions(
     'joaktree_interactive_tree',
     array(  'host' => $uri::root(),'lang' => $lang,'appid' => $this->person->app_id, 'personid' => $personId,'background' => $background,'color' => $color,
-            'link' => $linkcolor, 'linksize' => (int)$params->get('linksize', 1),
+            'link' => $linkcolor, 'linksize' => (int)$params->get('linksize', 1),'generations' => (int)$params->get('generations', 3),
             'ancestors' => (int)$params->get('ancestors', 3),'descendants' => (int)$params->get('descendants', 1),
             'search' => $params->get('search', 'true'),'latest' => $params->get('latest', 'true'),
             'latestsize' => (int)$params->get('latestsize', 5),

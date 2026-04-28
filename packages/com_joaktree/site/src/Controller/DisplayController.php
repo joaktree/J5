@@ -35,7 +35,7 @@ class DisplayController extends BaseController
         if ($input->get('view') == '') {
             $input->set('view', 'joaktreestart');
         }
-        if (($input->get('view') == 'interactivetree') && ($input->get('what') != null) && ($input->get('what') == 'full')) {
+        if (($input->get('view') == 'interactivetree') && ($input->get('what') != null) && (($input->get('what') == 'full') || ($input->get('what') == 'more'))) {
             // cache only interactive tree full information
             $urlparams = [];
             $urlparams = ['personId' => $input->get('personId'),

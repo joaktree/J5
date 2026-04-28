@@ -20,6 +20,11 @@
 				label="JTPERSON_LABEL" 	description="JTPERSON_DESC" 
 			/>
 
+			<field  name="generations" type="number" 
+				default="3"
+                label="JT_TREE_GENERATIONS_LABEL" description="JT_TREE_GENERATIONS_DESC" 
+                class="clear half left"
+			/>
 			<field  name="ancestors" type="number" 
 				default="3"
                 label="JTANCESTORS_LABEL" description="JTANCESTORS_DESC" 
@@ -28,9 +33,9 @@
 			<field  name="descendants" type="number" 
 				default="1"
 				label="JTDESCENDANTS_LABEL" description="JTDESCENDANTS_DESC" 
-                class="half"
+                class="half right"
 			/>
-            <field name="color-type" type="radio" class="btn-group"  label="JT_TYPE_COLOR" description="JT_TYPE_COLOR_DESC" default="pick">
+            <field name="color-type" type="radio" class="btn-group clear"  label="JT_TYPE_COLOR" description="JT_TYPE_COLOR_DESC" default="pick">
                 <option value="pick">JT_COLOR_PICK</option>
                 <option value="var">JT_COLOR_VAR</option>
 			</field>

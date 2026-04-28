@@ -43,12 +43,14 @@ class RawView extends BaseHtmlView
         }
 
         $app = Factory::getApplication();
+        $params			= JoaktreeHelper::getJTParams();
 
         $input = $app->getInput();
         $this->personId = $input->get('personId');
         $what = $input->get('what');
         // rawview : lang might be wrong, reload it using original menu language
         $menulang = $input->get('lang');
+        $generations = $input->getInt('generations');
         $lang 	= $app->getLanguage();
         $lang->load('com_joaktree.gedcom', JPATH_ADMINISTRATOR, $menulang);
         $lang->load('com_joaktree', JPATH_BASE, $menulang, true);
@@ -61,105 +63,118 @@ class RawView extends BaseHtmlView
 
         $lists[ 'app_id' ]		= $this->person->app_id;
 
-        $params			= JoaktreeHelper::getJTParams();
         if ($what == 'full') {
             // Access
             // Person + generations
             $personId	 			= array();
             $personId[]		 		= $this->person->id.'|1';
             $lists[ 'startGenNum' ]	= 1;
-            $lists[ 'endGenNum' ]	= (int) $params->get('descendantlevel', 20);
+            $lists[ 'endGenNum' ]	= $generations;
             $this->personId = $personId;
             $this->lists = $lists;
             $tree =  $this->build_tree();
             echo new JsonResponse($tree);
             return true;
-        } elseif ($what == "more") {
-            // need more information
-            $id['app_id']           = $this->person->app_id;
-            $id[ 'person_id' ]      = $this->person->id;
-            $person                 = new Person($id, 'ancestor');
-            $picArray               = $this->person->getPictures(false);
-            $events                 = $this->person->getPersonEvents();
-            $partners	            = $person->getPartners('basic');
-            $data = [];
-            if ($person->deathDate) {
-                $data['deathday'] = $person->deathDate;
+        }
+        if ($what == "more") { // need more descendants/ancestors
+            $personId	 			= array();
+            $personId[]		 		= $this->person->id.'|1';
+            $lists[ 'startGenNum' ]	= 1;
+            $lists[ 'endGenNum' ]	= $generations;
+            $this->personId = $personId;
+            $this->lists = $lists;
+            $tree =  $this->build_tree();
+            echo new JsonResponse($tree);
+            return true;
+        }
+        if ($what != "info") { // wrong message
+            return false;
+        }
+        // $what == info => need more information about one person
+        $id['app_id']           = $this->person->app_id;
+        $id[ 'person_id' ]      = $this->person->id;
+        $person                 = new Person($id, 'ancestor');
+        $picArray               = $this->person->getPictures(false);
+        $events                 = $this->person->getPersonEvents();
+        $partners	            = $person->getPartners('basic');
+        $data = [];
+        if ($person->deathDate) {
+            $data['deathday'] = $person->deathDate;
+        }
+        if (count($picArray)) {
+            $picture = $picArray[0]; // take1st image
+            $img = $this->getPictureHtml($picture, $params->get('pxHeight', 0), $params->get('pxWidth', 0));
+            $pictureName = (empty($picture->title)) ? $params->get('TitleSlideshow') : $picture->title;
+            // note : popup width = 350px, so limit img width to 100px
+            $data['img'] = '<img style="float: right;max-width:100px" '.$img.' title="'.$pictureName.'" alt="'.$pictureName.'" />';
+        }
+        foreach ($events as $event) {
+            if (($event->code == 'BIRT') && $event->location && $person->birthDate) {
+                $data['birthlocation'] = $event->location;
             }
-            if (count($picArray)) {
-                $picture = $picArray[0]; // take1st image
-                $img = $this->getPictureHtml($picture, $params->get('pxHeight', 0), $params->get('pxWidth', 0));
-                $pictureName = (empty($picture->title)) ? $params->get('TitleSlideshow') : $picture->title;
-                // note : popup width = 350px, so limit img width to 100px
-                $data['img'] = '<img style="float: right;max-width:100px" '.$img.' title="'.$pictureName.'" alt="'.$pictureName.'" />';
+            if (($event->code == 'DEAT') && $event->location && $person->deathDate) {
+                $data['deathlocation'] = $event->location;
             }
-            foreach ($events as $event) {
-                if (($event->code == 'BIRT') && $event->location && $person->birthDate) {
-                    $data['birthlocation'] = $event->location;
-                }
-                if (($event->code == 'DEAT') && $event->location && $person->deathDate) {
-                    $data['deathlocation'] = $event->location;
-                }
-            }
-            if ($person->indHasPage) {
-                $url = Route::_('index.php?option=com_joaktree&view=joaktree'
-                    .'&tech='.$lists['technology']
-                    .'&Itemid='.$this->person->menuItemId
-                    .'&treeId='.$lists['treeId']
-                    .'&personId='.$lists[ 'app_id' ].'!'.$person->id.'&lang='.$menulang);
-                $data['url'] = '<a href="'.$url.'" target="_blank">'.Text::_('JT_TREE_MORE').'</a>';
-            }
-            // sort partners by marriage dates
-            $partnersbymarr = array();
-            $partnerevents = [];
-            foreach ($partners as $partner) {
-                $partnerevents[$partner->id] = $this->person->getPartnerEvents($partner->id, $partner->living);
-                $marr = "";
-                foreach ($partnerevents[$partner->id] as $event) {
-                    if ($event->code == 'MARR') {
-                        if (!isset($event->eventDate)) {
-                            continue;
-                        }
-                        if (is_numeric(strtotime($event->eventDate))) {
-                            $marr = HtmlHelper::date($event->eventDate, 'Y-m-d');
-                        } else {
-                            preg_match_all('!\d+!', $event->eventDate, $matches);
-                            foreach ($matches as $match) {
-                                foreach ($match as $one) {
-                                    if ($one > 1000 and $one < date("Y")) {
-                                        $marr = $one.'-01-01';
-                                    }
+        }
+        if ($person->indHasPage) {
+            $url = Route::_('index.php?option=com_joaktree&view=joaktree'
+                .'&tech='.$lists['technology']
+                .'&Itemid='.$this->person->menuItemId
+                .'&treeId='.$lists['treeId']
+                .'&personId='.$lists[ 'app_id' ].'!'.$person->id.'&lang='.$menulang);
+            $data['url'] = '<a href="'.$url.'" target="_blank">'.Text::_('JT_TREE_MORE').'</a>';
+        }
+        // sort partners by marriage dates
+        $partnersbymarr = array();
+        $partnerevents = [];
+        foreach ($partners as $partner) {
+            $partnerevents[$partner->id] = $this->person->getPartnerEvents($partner->id, $partner->living);
+            $marr = "";
+            foreach ($partnerevents[$partner->id] as $event) {
+                if ($event->code == 'MARR') {
+                    if (!isset($event->eventDate)) {
+                        continue;
+                    }
+                    if (is_numeric(strtotime($event->eventDate))) {
+                        $marr = HtmlHelper::date($event->eventDate, 'Y-m-d');
+                    } else {
+                        preg_match_all('!\d+!', $event->eventDate, $matches);
+                        foreach ($matches as $match) {
+                            foreach ($match as $one) {
+                                if ($one > 1000 and $one < date("Y")) {
+                                    $marr = $one.'-01-01';
                                 }
                             }
                         }
                     }
                 }
-                if ($marr) {
-                    $partnersbymarr[$marr] = $partner;
-                } else {
-                    $partnersbymarr[] = $partner;
-                }
             }
-            ksort($partnersbymarr);
-            $partners = $partnersbymarr;
-
-            foreach ($partners as $partner) {
-                $events = $this->person->getPartnerEvents($partner->id, $partner->living);
-                foreach ($events as $event) {
-                    $loc = ($event->location) ? '&nbsp;'.Text::_('JT_IN') . '&nbsp;'.$event->location : '';
-                    $data[Text::_($event->code).' : '.$partner->fullName] = JoaktreeHelper::displayDate($event->eventDate).$loc;
-                }
+            if ($marr) {
+                $partnersbymarr[$marr] = $partner;
+            } else {
+                $partnersbymarr[] = $partner;
             }
-            $list[] = ['id' => $this->person->id,'data' => $data];
-            echo new JsonResponse($list);
-            return true;
         }
-        return false;
+        ksort($partnersbymarr);
+        $partners = $partnersbymarr;
+
+        foreach ($partners as $partner) {
+            $events = $this->person->getPartnerEvents($partner->id, $partner->living);
+            foreach ($events as $event) {
+                $loc = ($event->location) ? '&nbsp;'.Text::_('JT_IN') . '&nbsp;'.$event->location : '';
+                $data[Text::_($event->code).' : '.$partner->fullName] = JoaktreeHelper::displayDate($event->eventDate).$loc;
+            }
+        }
+        $list[] = ['id' => $this->person->id,'data' => $data];
+        echo new JsonResponse($list);
+        return true;
     }
-    public function create_tree(&$list_tree, $person, $fathers, $mothers, $partners, $children, $count = 0)
+    private function add_person(&$list_tree, $person_id, $once = false)
     {
-        $count += 1;
-        //if ($count > 2) return;
+        $id				    = array();
+        $id[ 'app_id' ]     = $this->lists[ 'app_id' ];
+        $id[ 'person_id' ]  = $person_id;
+        $person	    		= new Person($id, 'basic');
         if (array_key_exists($person->id, $list_tree)) {
             $obj = $list_tree[$person->id];
             $data = $obj->data;
@@ -171,6 +186,7 @@ class RawView extends BaseHtmlView
         }
         $data['fullname'] =  $person->fullName;
         $data['gender'] = $person->sex;
+        $person_displayed[$person->id] = $person->fullName; // save it
         if ($person->birthDate) {
             $data['birthday'] = $person->birthDate;
         } else {
@@ -179,70 +195,67 @@ class RawView extends BaseHtmlView
             $newperson              = new Person($id, 'ancestor');
             $data['birthday']       = $newperson->birthDate;
         }
-        $obj->data = $data;
+        $data['needmore'] = '';
         $parents = [];
-        if ($fathers) {
-            $parents[] = $fathers[0]->id;
-        }
-        if ($mothers) {
-            $parents[] = $mothers[0]->id;
+        $spouses = [];
+        $childs = [];
+        $children	= $person->getChildren('basic');
+        $partners	= $person->getPartners('basic');
+        $fathers	= $person->getFathers();
+        $mothers	= $person->getMothers();
+        if ($once) {
+            if ($fathers) {
+                $parents[] = $fathers[0]->id;
+            }
+            if ($mothers) {
+                $parents[] = $mothers[0]->id;
+            }
+            if ($partners) {
+                foreach ($partners as $partner) {
+                    $spouses[] = $partner->id;
+                }
+            }
+            if ($children) {
+                foreach ($children as $child) {
+                    $childs[] = $child->id;
+                }
+            }
+        } else {
+            if ($children || $partners || $fathers || $mothers) {
+                $data['needmore'] = $id[ 'app_id' ] .'!'.$person_id;
+            }
         }
         $rels['parents'] = $parents;
-        $spouses = [];
-        if ($partners) {
-            foreach ($partners as $partner) {
-                $spouses[] = $partner->id;
-            }
-        }
         $rels['spouses'] = $spouses;
-        $childs = [];
-        if ($children) {
-            foreach ($children as $child) {
-                $childs[] = $child->id;
-            }
-        }
         $rels['children'] = $childs;
-
         $obj->rels = $rels;
+        $obj->data = $data;
         $list_tree[$person->id] = $obj;
-
-        if ($fathers && !array_key_exists($fathers[0]->id, $list_tree)) {
-            $onef = $fathers[0];
-            $onef_children	= $onef->getChildren('basic');
-            $onef_partners	= $onef->getPartners('basic');
-            $onef_fathers	= $onef->getFathers();
-            $onef_mothers	= $onef->getMothers();
-            $this->create_tree($list_tree, $onef, $onef_fathers, $onef_mothers, $onef_partners, $onef_children);
-        }
-
-        if ($mothers && !array_key_exists($mothers[0]->id, $list_tree)) {
-            $onem = $mothers[0];
-            $onem_children	= $onem->getChildren('basic');
-            $onem_partners	= $onem->getPartners('basic');
-            $onem_fathers	= $onem->getFathers();
-            $onem_mothers	= $onem->getMothers();
-            $this->create_tree($list_tree, $onem, $onem_fathers, $onem_mothers, $onem_partners, $onem_children);
-        }
-        if ($partners) {
-            foreach ($partners as $onep) {
-                if (!array_key_exists($onep->id, $list_tree)) {
-                    $onep_children	= $onep->getChildren('basic');
-                    $onep_partners	= $onep->getPartners('basic');
-                    $onep_fathers	= $onep->getFathers();
-                    $onep_mothers	= $onep->getMothers();
-                    $this->create_tree($list_tree, $onep, $onep_fathers, $onep_mothers, $onep_partners, $onep_children);
-                }
+        // fill missing keys
+        if ($fathers) {
+            if (!array_key_exists($fathers[0]->id, $list_tree)) {
+                $this->add_person($list_tree, $fathers[0]->id);
             }
         }
-        if ($children) {
-            foreach ($children as $onec) {
-                if (!array_key_exists($onec->id, $list_tree)) {
-                    $onec_children	= $onec->getChildren('basic');
-                    $onec_partners	= $onec->getPartners('basic');
-                    $onec_fathers	= $onec->getFathers();
-                    $onec_mothers	= $onec->getMothers();
-                    $this->create_tree($list_tree, $onec, $onec_fathers, $onec_mothers, $onec_partners, $onec_children);
+        if ($mothers) {
+            if (!array_key_exists($mothers[0]->id, $list_tree)) {
+                $this->add_person($list_tree, $mothers[0]->id);
+            }
+        }
+        if ($once) {
+            foreach ($partners as $partner) {
+                if (array_key_exists($partner->id, $list_tree)) {
+                    continue;
                 }
+                $this->add_person($list_tree, $partner->id);
+            }
+        }
+        if ($once) {
+            foreach ($children as $child) {
+                if (array_key_exists($child->id, $list_tree)) {
+                    continue;
+                }
+                $this->add_person($list_tree, $child->id);
             }
         }
     }
@@ -252,26 +265,152 @@ class RawView extends BaseHtmlView
         $id				= array();
         $id[ 'app_id' ] = $this->lists[ 'app_id' ];
         $thisGeneration = array();
+        $nextGeneration = array();
 
         foreach ($personIdArray as $personId) {
             $thisGeneration[] = $personId;
         }
-
+        $generationNumber = $this->lists[ 'startGenNum' ];
+        $endGenNum = $this->lists[ 'endGenNum' ];
         $list_tree = [];
+        // get children
+        $continue = true;
+        while ($continue == true) {
+            $person_displayed = [];
+            $nextGenerationCounter = 0;
 
-        foreach ($thisGeneration as $gen_i => $generation) {
-            $genPerson = explode('|', $generation);
-            $id[ 'person_id' ] 	= $genPerson[0] ;
-            $person	    		= new Person($id, 'basic');
-            if (isset($genPerson[3])) {
-                // This is relationtype
-                $person->relationtype = $genPerson[3];
+            foreach ($thisGeneration as $gen_i => $generation) {
+                $genPerson = explode('|', $generation);
+                $id[ 'person_id' ] 	= $genPerson[0] ;
+                $person	    		= new Person($id, 'basic');
+                if (isset($genPerson[3])) {
+                    // This is relationtype
+                    $person->relationtype = $genPerson[3];
+                }
+
+                if (array_key_exists($person->id, $list_tree)) {
+                    $obj = $list_tree[$person->id];
+                    $data = $obj->data;
+                    $rels = $obj->rels;
+                } else {
+                    $obj = new \StdClass();
+                    $data = [];
+                    $rels = [];
+                }
+                $data['fullname'] =  $person->fullName;
+                $data['gender'] = $person->sex;
+                $person_displayed[$person->id] = $person->fullName; // save it
+                if ($person->birthDate) {
+                    $data['birthday'] = $person->birthDate;
+                } else {
+                    $id['app_id']           = $person->app_id;
+                    $id[ 'person_id' ]      = $person->id;
+                    $newperson              = new Person($id, 'ancestor');
+                    $data['birthday']       = $newperson->birthDate;
+                }
+                $obj->data = $data;
+                $children	= $person->getChildren('basic');
+                $partners	= $person->getPartners('basic');
+                $fathers	= $person->getFathers();
+                $mothers	= $person->getMothers();
+                $parents = [];
+                if ($fathers) {
+                    $parents[] = $fathers[0]->id;
+                    $this->add_person($list_tree, $fathers[0]->id, true);
+                }
+                if ($mothers) {
+                    $parents[] = $mothers[0]->id;
+                    $this->add_person($list_tree, $mothers[0]->id, true);
+                }
+                $rels['parents'] = $parents;
+                $spouses = [];
+                if ($partners) {
+                    foreach ($partners as $partner) {
+                        $spouses[] = $partner->id;
+                        $this->add_person($list_tree, $partner->id, true);
+                    }
+                }
+                $rels['spouses'] = $spouses;
+                $childs = [];
+                if ($children) {
+                    foreach ($children as $child) {
+                        $childs[] = $child->id;
+                    }
+                }
+                $rels['children'] = $childs;
+                $obj->rels = $rels;
+                $list_tree[$person->id] = $obj;
+
+                if (count($children) > 0) {
+                    // check for children with only one parent
+                    $counter_1 = 0;
+                    foreach ($children as $child) {
+                        if ($child->secondParent_id == null) {
+                            $counter_1++;
+                        }
+                    }
+                    if ($counter_1 > 0) {
+                        foreach ($children as $child) {
+                            if ($child->secondParent_id == null) {
+                                $nextGenerationCounter++;
+                                if ($child->indHasChild) {
+                                    $nextGeneration[] = ($child->relationtype)
+                                                ? $child->id
+                                                  .'|'.$nextGenerationCounter
+                                                  .'|'.$person->id
+                                                  .'|'.$child->relationtype
+                                                : $child->id
+                                                  .'|'.$nextGenerationCounter
+                                                  .'|'.$person->id;
+                                }
+                            }
+                        }
+                    }
+                }
+                foreach ($partners as $partner) {
+                    // count children for this partner
+                    $counter = 0;
+                    foreach ($children as $child) {
+                        if ($child->secondParent_id == $partner->id) {
+                            $counter++;
+                        }
+                    }
+                    if ($counter > 0) {
+                        // children with this partner
+                        if (!array_key_exists($partner->id, $person_displayed)) { // partner already displayed, don't display children again
+                            foreach ($children as $child) {
+                                if ($child->secondParent_id == $partner->id) {
+                                    $nextGenerationCounter++;
+                                    if ($child->indHasChild) {
+                                        $nextGeneration[] = ($child->relationtype)
+                                                        ? $child->id
+                                                        .'|'.$nextGenerationCounter
+                                                        .'|'.$person->id
+                                                        .'|'.$child->relationtype
+                                                        : $child->id
+                                                        .'|'.$nextGenerationCounter
+                                                        .'|'.$person->id;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
-            $children	= $person->getChildren('basic');
-            $partners	= $person->getPartners('basic');
-            $fathers	= $person->getFathers();
-            $mothers	= $person->getMothers();
-            $this->create_tree($list_tree, $person, $fathers, $mothers, $partners, $children);
+            array_splice($thisGeneration, 0);
+            $thisGeneration = $nextGeneration;
+            array_splice($nextGeneration, 0);
+
+            $generationNumber++;
+            if (count($thisGeneration) > 0) {
+                if ($generationNumber <= $endGenNum) {
+                    $continue = true;
+                } else {
+                    $continue = false;
+                }
+            } else {
+                $continue = false;
+            }
         }
         // build list to send to js library
         $list = [];
