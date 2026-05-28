@@ -232,12 +232,12 @@ class RawView extends BaseHtmlView
         $obj->data = $data;
         $list_tree[$person->id] = $obj;
         // fill missing keys
-        if ($fathers) {
+        if ($fathers && isset($fathers[0])) {
             if (!array_key_exists($fathers[0]->id, $list_tree)) {
                 $this->add_person($list_tree, $fathers[0]->id);
             }
         }
-        if ($mothers) {
+        if ($mothers && isset($mothers[0])) {
             if (!array_key_exists($mothers[0]->id, $list_tree)) {
                 $this->add_person($list_tree, $mothers[0]->id);
             }
