@@ -204,7 +204,7 @@
 			
 					<field 	name="code" 
 							multiple="true"
-							type="gedcomList"
+							type="gedcomlist"
 							gedcom="name"
 							class="inputbox"
 							size="1"
