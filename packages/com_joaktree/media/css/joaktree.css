@@ -233,7 +233,7 @@ div.jt-index-size {
 .jt-edit-2 a, .jt-edit-2 a:link, .jt-edit-2 a:visited,
 .jt-edit-2 a:hover, .jt-edit-2 a:active, .jt-edit-2 a:focus {
 	font-size: 85%;
-	color: red;
+	color: var(--jt-edit-color, red);
 	text-decoration: none;
 }
 
@@ -280,8 +280,8 @@ ul.joaktreeformlist input.input-small {
 	width: 280px;
 }
 
-fieldset label,
-fieldset span.faux-label {
+fieldset.joaktreeform label,
+fieldset.joaktreeform span.faux-label {
 	float: left;
 	clear: left;
 	display:block;
@@ -289,21 +289,21 @@ fieldset span.faux-label {
 	min-width: 140px;
 }
 
-fieldset ul {
+fieldset.joaktreeform ul {
 	margin: 0;
 	padding: 0;
 }
 
-form label,
-form span.faux-label {
+fieldset.joaktreeform label,
+fieldset.joaktreeform span.faux-label {
 	font-size: 1.091em;
 }
 
-fieldset input,
-fieldset textarea,
-fieldset select,
-fieldset img,
-fieldset button {
+fieldset.joaktreeform input,
+fieldset.joaktreeform textarea,
+fieldset.joaktreeform select,
+fieldset.joaktreeform img,
+fieldset.joaktreeform button {
 	float: left;
 	width: auto;
 	margin: 5px 5px 5px 0px;
@@ -313,14 +313,13 @@ fieldset.joaktreeform textarea {
 	width: 355px;
 }
 
-fieldset ul.checklist input {
+fieldset.joaktreeform ul.checklist input {
 	clear:left;
 	margin-right: 10px;
 }
 
-fieldset ul.checklist label,
-fieldset ul.menu-links label,
-fieldset#filter-bar label {
+fieldset.joaktreeform ul.checklist label,
+fieldset.joaktreeform ul.menu-links label {
 	clear:none;
 }
 fieldset.joaktreeform ul.checklist li {
@@ -337,8 +336,8 @@ fieldset.joaktreeform table {
 	margin: 20px 0 0 15px;
 }
 
-input.readonly {
-	font-family: Arial, Helvetica, sans-serif;
+fieldset.joaktreeform input.readonly {
+	font-family: inherit;
 	font-size: 1.091em;
 	padding-top: 1px;
 	border: 0;
@@ -346,9 +345,9 @@ input.readonly {
 	color: #666;
 }
 
-#jform_id,
-span.readonly {
-	font-family: Arial, Helvetica, sans-serif;
+fieldset.joaktreeform #jform_id,
+fieldset.joaktreeform span.readonly {
+	font-family: inherit;
 	font-size: 1.091em;
 	margin:5px 5px 5px 0;
 	font-weight: bold;
@@ -366,9 +365,8 @@ span.readonly {
 	width: 70px;
 }
 
-.mod-desc { margin-left: 135px !important; float: none !important;}
 
-input.readonly {
+fieldset.joaktreeform input.readonly {
 	background-color: #ffffff;
 }
 
@@ -380,7 +378,7 @@ input.readonly {
 	width: 50px;
 }
 
-#jform_id {
+fieldset.joaktreeform #jform_id {
 	width: 50px;
 	background-color:#FFFFFF;
 	border: 0 none;
@@ -398,31 +396,31 @@ label#jform_grouptitle-lbl {
 	padding-top: 3px;
 }
 
-div#content-pane fieldset {
+#jt-form div#content-pane fieldset {
 	border: 0;
 	padding: 10px 15px 0 15px;
 }
 
-div.panel fieldset {
+#jt-form div.panel fieldset {
 	border: 0;
 }
 
 /* Required elements */
-input.required {
+fieldset.joaktreeform input.required {
 	background-color: #d5eeff;
 }
 
-.star {
+fieldset.joaktreeform .star {
 	color:#EB8207;
 	font-size:1.2em;
 }
 
 /* media */
-iframe#imageframe {
+#jt-content iframe#imageframe, #jt-form iframe#imageframe {
     height: 150px;
 }
 
-iframe {
+#jt-content iframe, #jt-form iframe {
     border: 0 none;
     margin: 0 10px 0 0.5em;
     padding: 0;
@@ -434,7 +432,7 @@ iframe {
 	width: 220px;
 }
 
-.media-preview input.input-small {
+fieldset.joaktreeform .media-preview input.input-small {
 	width: 100px;
 }
 .button_search {
