@@ -850,6 +850,18 @@ class Gedcompersons2 extends \StdClass
         $this->eventRelationCounter = 0;
         $this->noteRelationCounter = 0;
         $this->citationRelationCounter = 0;
+
+        // clear pending note/citation and persons of the previous family; otherwise they are
+        // stored again for this family, and a family with only one parent would get the
+        // persons (and notes) of the previous couple
+        $this->relation_notes->set('note_id', null);
+        $this->relation_notes->set('value', null);
+        $this->relation_notes->set('eventOrderNumber', null);
+        $this->relation_notes->set('person_id_1', null);
+        $this->relation_notes->set('person_id_2', null);
+        $this->relation_citations->set('source_id', null);
+        $this->relation_citations->set('person_id_1', null);
+        $this->relation_citations->set('person_id_2', null);
         $event1Type = 'none';
         $event2Type = 'none';
         $event3Type = 'none';
@@ -1286,6 +1298,12 @@ class Gedcompersons2 extends \StdClass
 
         // notes
         $retdelete = $this->person_notes->deleteNotes($person_id);
+        // clear the pending note of the previous person, otherwise its note_id/value
+        // is stored again for this person by the next setPersonNote() call
+        $this->person_notes->set('note_id', null);
+        $this->person_notes->set('value', null);
+        $this->person_notes->set('nameOrderNumber', null);
+        $this->person_notes->set('eventOrderNumber', null);
         $this->person_notes->set('app_id', $this->app_id);
         $this->person_notes->set('person_id', $person_id);
         $this->notePersonCounter = 0;
@@ -1296,6 +1314,8 @@ class Gedcompersons2 extends \StdClass
 
         // sources
         $retdelete = $this->person_citations->deletePersonCitations($person_id);
+        // clear the pending citation of the previous person (same reason as for notes)
+        $this->person_citations->set('source_id', null);
         $this->person_citations->set('app_id', $this->app_id);
         $this->person_citations->set('person_id_1', $person_id);
         $this->person_citations->set('person_id_2', 'EMPTY');
