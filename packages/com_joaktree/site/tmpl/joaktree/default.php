@@ -26,7 +26,7 @@ HtmlHelper::_('bootstrap.framework', true);
 ?>
 <script>
 //window.addEvent('domready', function() {
-	window.addEventListener('domready',function() {
+	document.addEventListener('DOMContentLoaded', function() {
     set_jtTabs();
 });
 </script>
@@ -44,7 +44,7 @@ HtmlHelper::_('bootstrap.framework', true);
       $script = array();
       $script[] = '<script>';
       //$script[] = 'window.addEvent(\'domready\', function() {';
-      $script[] = 'window.addEventListener(\'domready\',function(){';
+      $script[] = 'document.addEventListener(\'DOMContentLoaded\', function(){';
       $script[] = 'toggleAjaxTabs(5, \'0\'); return false;';
       $script[] = '});';
       $script[] = '</script>';
