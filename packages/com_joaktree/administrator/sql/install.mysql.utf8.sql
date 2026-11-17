@@ -9,7 +9,7 @@ page             tinyint(1)            NULL  default 0,
 robots           tinyint(2)            NOT NULL default 0,
 map              tinyint(1)            NOT NULL default 0 ,
 PRIMARY KEY  (app_id, id) 
-)  ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Joaktree Admin person';
+)  ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Joaktree Admin person';
 
 CREATE TABLE IF NOT EXISTS #__joaktree_applications ( 
 id               tinyint(4)  unsigned  NOT NULL auto_increment,
@@ -19,7 +19,7 @@ description      varchar(100)          NOT NULL,
 programName      varchar(30)           NOT NULL,
 params           varchar(2048)         NOT NULL,
 PRIMARY KEY  (id)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Joaktree Application';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Joaktree Application';
 
 CREATE TABLE IF NOT EXISTS #__joaktree_citations ( 
 objectType       enum( 'person' , 'personName', 'personEvent',
@@ -37,7 +37,7 @@ quotation        varchar(250)  default     NULL,
 note             varchar(250)  default     NULL,
 PRIMARY KEY  (objectType,objectOrderNumber,app_id,person_id_1,person_id_2,source_id,orderNumber),
         KEY person_id (app_id,person_id_1) 
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Joaktree Citations';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Joaktree Citations';
 
 CREATE TABLE IF NOT EXISTS #__joaktree_display_settings( 
 id               int(11)      unsigned NOT NULL auto_increment,
@@ -50,7 +50,7 @@ accessLiving     tinyint(3)   unsigned NOT NULL default 0,
 altLiving        tinyint(3)            NOT NULL default 0,
 PRIMARY KEY  (id),
 UNIQUE KEY UK_CODE_LEVEL (code, level) 
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Joaktree Display Setting';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Joaktree Display Setting';
 
 INSERT IGNORE INTO #__joaktree_display_settings (code, level, ordering, published, access, accessLiving, altLiving ) VALUES ("ENGA", "relation", 1, 1, 1, 3, 0);
 INSERT IGNORE INTO #__joaktree_display_settings (code, level, ordering, published, access, accessLiving, altLiving ) VALUES ("MARB", "relation", 2, 1, 1, 3, 0);
@@ -126,7 +126,7 @@ note_id          varchar(20)               NULL,
 title            varchar(100)              NULL,
 note             text         default      NULL,
 PRIMARY KEY  (app_id,id)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Joaktree Documents';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Joaktree Documents';
 
 CREATE TABLE IF NOT EXISTS #__joaktree_gedcom_objectlines(
 id               int(11)      unsigned NOT NULL auto_increment,
@@ -138,14 +138,14 @@ value            text         default      NULL ,
 subtype          enum( 'spouse','partner','natural','adopted',
                         'step','foster','legal')     NULL,
 PRIMARY KEY  (id)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Joaktree Gedcom Objectlines';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Joaktree Gedcom Objectlines';
 
 CREATE TABLE IF NOT EXISTS #__joaktree_gedcom_objects (
 id               int(11)      unsigned NOT NULL auto_increment,
 tag              varchar(4)            NOT NULL,
 value            varchar(50)  default  NULL,
 PRIMARY KEY  (id)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Joaktree Gedcom Objects';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Joaktree Gedcom Objects';
 
 CREATE TABLE IF NOT EXISTS #__joaktree_locations (
 id               int(11)      unsigned NOT NULL AUTO_INCREMENT ,
@@ -159,7 +159,7 @@ results          tinyint(2)   unsigned     NULL ,
 resultValue      varchar(300)              NULL,
 PRIMARY KEY  (id),
 KEY indexLoc (indexLoc) 
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Joaktree Locations';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Joaktree Locations';
 
 CREATE TABLE IF NOT EXISTS #__joaktree_logremovals (
 id               int(10)      unsigned NOT NULL AUTO_INCREMENT ,
@@ -169,7 +169,7 @@ object           enum('prsn','sour','repo','docu','note') NOT NULL ,
 description      varchar(100)          NOT NULL ,
 PRIMARY KEY  (id) ,
 KEY objectIndex2 (app_id,object_id)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Joaktree Logremovals';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Joaktree Logremovals';
 
 CREATE TABLE IF NOT EXISTS #__joaktree_logs (
 id               int(10)      unsigned NOT NULL AUTO_INCREMENT ,
@@ -181,7 +181,7 @@ logevent         varchar(9)            NOT NULL ,
 user_id          int(11)               NOT NULL ,
 PRIMARY KEY  (id) ,
 KEY objectIndex1 (app_id,object_id) 
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Joaktree Logs';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Joaktree Logs';
 
 CREATE TABLE IF NOT EXISTS #__joaktree_maps (
 id              int(11)      unsigned NOT NULL AUTO_INCREMENT ,
@@ -199,14 +199,14 @@ period_end      int(11)      unsigned     NULL ,
 excludePersonEvents   varchar(200)         NULL ,
 excludeRelationEvents varchar(200)         NULL ,
 PRIMARY KEY  (id) 
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Joaktree Maps';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Joaktree Maps';
 
 CREATE TABLE IF NOT EXISTS #__joaktree_notes (
 app_id           tinyint(4)            NOT NULL ,
 id               varchar(20)           NOT NULL ,
 value            text                      NULL ,
 PRIMARY KEY  (app_id,id) 
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Joaktree Notes';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Joaktree Notes';
 
 CREATE TABLE IF NOT EXISTS #__joaktree_persons (
 app_id           tinyint(4)            NOT NULL ,
@@ -229,14 +229,14 @@ prefix           varchar(20)               NULL ,
 suffix           varchar(20)               NULL ,
 PRIMARY KEY  (app_id,id) ,
 KEY IndexNam (indexNam) 
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Joaktree Persons';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Joaktree Persons';
 
 CREATE TABLE IF NOT EXISTS #__joaktree_person_documents (
 app_id           tinyint(4)            NOT NULL ,
 person_id        varchar(20)           NOT NULL ,
 document_id      varchar(20)           NOT NULL ,
 PRIMARY KEY  (app_id,person_id,document_id) 
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Joaktree Persons Documents';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Joaktree Persons Documents';
 
 CREATE TABLE IF NOT EXISTS #__joaktree_person_events (
 app_id           tinyint(4)            NOT NULL ,
@@ -251,9 +251,9 @@ loc_id           int(11)      default      NULL ,
 location         varchar(300)  default  	  NULL ,
 value            varchar(300) default      NULL ,
 PRIMARY KEY  (app_id,person_id,orderNumber) ,
-KEY LOC1     (location) ,
+KEY LOC1     (location(191)) ,
 KEY LOI1     (loc_id) 
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Joaktree Persons Events';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Joaktree Persons Events';
 
 CREATE TABLE IF NOT EXISTS #__joaktree_person_names ( 
 app_id           tinyint(4)            NOT NULL ,
@@ -265,7 +265,7 @@ indCitation      tinyint(1)   unsigned default 0 ,
 eventDate        varchar(40)  default      NULL ,
 value            varchar(100) default      NULL ,
 PRIMARY KEY  (app_id,person_id,orderNumber) 
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Joaktree Persons Names';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Joaktree Persons Names';
 
 CREATE TABLE IF NOT EXISTS #__joaktree_person_notes (
 app_id           tinyint(4)            NOT NULL ,
@@ -277,15 +277,15 @@ eventOrderNumber smallint(2)  default      NULL ,
 note_id          varchar(20)               NULL ,
 value            text ,
 PRIMARY KEY  (app_id,person_id,orderNumber) 
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Joaktree Persons Notes';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Joaktree Persons Notes';
 
 CREATE TABLE IF NOT EXISTS #__joaktree_registry_items (
 id               int(11)      unsigned NOT NULL auto_increment ,
 regkey           varchar(255)          NOT NULL ,
 value            varchar(2048)         NOT NULL ,
 PRIMARY KEY  (id) ,
-UNIQUE KEY UK_KEY (regkey)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Joaktree Registry Items';
+UNIQUE KEY UK_KEY (regkey(191))
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Joaktree Registry Items';
 
 INSERT IGNORE INTO #__joaktree_registry_items (regkey, value) VALUES ("LAST_UPDATE_DATETIME", NOW() );
 INSERT IGNORE INTO #__joaktree_registry_items (regkey, value) VALUES ("INITIAL_CHAR", "0" );
@@ -305,7 +305,7 @@ orderNumber_2    smallint(2)  default      NULL ,
 PRIMARY KEY  (app_id,person_id_1,person_id_2) ,
 KEY person_id (app_id,person_id_1) ,
 KEY to_person_id (app_id,person_id_2) 
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Joaktree Relations';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Joaktree Relations';
 
 CREATE TABLE IF NOT EXISTS #__joaktree_relation_events (
 app_id           tinyint(4)            NOT NULL ,
@@ -321,9 +321,9 @@ loc_id           int(11)      default      NULL ,
 location         varchar(300) default     NULL ,
 value            varchar(100) default      NULL ,
 PRIMARY KEY  (app_id,person_id_1,person_id_2,orderNumber) ,
-KEY LOC2     (location) ,
+KEY LOC2     (location(191)) ,
 KEY LOI2     (loc_id) 
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Joaktree Relation Events';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Joaktree Relation Events';
 
 CREATE TABLE IF NOT EXISTS #__joaktree_relation_notes (
 app_id           tinyint(4)            NOT NULL ,
@@ -335,7 +335,7 @@ eventOrderNumber smallint(2)  default      NULL ,
 note_id          varchar(20)               NULL ,
 value            text ,
 PRIMARY KEY  (app_id,person_id_1,person_id_2,orderNumber)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Joaktree Relation Notes';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Joaktree Relation Notes';
 
 CREATE TABLE IF NOT EXISTS #__joaktree_repositories (
 app_id           tinyint(4)            NOT NULL ,
@@ -343,7 +343,7 @@ id               varchar(20)           NOT NULL ,
 name             varchar(50)           NOT NULL ,
 website          varchar(100) default  NULL ,
 PRIMARY KEY  (app_id,id) 
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Joaktree Repositories';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Joaktree Repositories';
 
 CREATE TABLE IF NOT EXISTS #__joaktree_sources (
 app_id           tinyint(4)            NOT NULL ,
@@ -358,7 +358,7 @@ author           varchar(250) default  NULL ,
 publication      varchar(250) default  NULL ,
 information      text         default  NULL ,
 PRIMARY KEY  (app_id,id) 
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Joaktree Sources';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Joaktree Sources';
 
 CREATE TABLE IF NOT EXISTS #__joaktree_themes (
 id               smallint(6)  unsigned NOT NULL auto_increment ,
@@ -367,7 +367,7 @@ home             tinyint(1)   unsigned NOT NULL default 0 ,
 params           varchar(2048)         NOT NULL ,
 PRIMARY KEY  (id) ,
 UNIQUE KEY UKNAME (name) 
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Joaktree Themes';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Joaktree Themes';
 
 INSERT IGNORE INTO `#__joaktree_themes` (`id`, `name`, `home`, `params`) VALUES
 (1, 'Joaktree', 1, '{\"search_width\":\"120\",\"show_update\":\"Y\",\"columns\":\"3\",\"groupCount\":\"3\",\"abbreviation\":\"\",\"lineage\":\"3\",\"Directory\":\"images/joaktree\",\"pxHeight\":\"135\",\"pxWidth\":\"325\",\"transDelay\":\"50\",\"nextDelay\":\"5000\",\"TitleSlideshow\":\"A Genealogy Slideshow\",\"Sequence\":\"3\",\"pxMapWidth\":\"700\",\"statMarkerColor\":\"\",\"descendantchart\":\"1\",\"descendantlevel\":\"20\",\"ancestorchart\":\"1\",\"ancestorlevel\":\"1\",\"ancestordates\":\"1\",\"indTabBehavior\":\"1\",\"notetitlelength\":\"30\"}'),
@@ -392,7 +392,7 @@ robots           tinyint(2)            NOT NULL default 0 ,
 root_person_id   varchar(20)               NULL ,
 catid            int(11)                   NULL ,
 PRIMARY KEY  (id) 
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Joaktree Trees';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Joaktree Trees';
 
 CREATE TABLE IF NOT EXISTS #__joaktree_tree_persons (
 id               varchar(31)           NOT NULL ,
@@ -403,4 +403,4 @@ type             enum( 'R','P','C')    NOT NULL ,
 lineage          varchar(250) default  NULL ,
 PRIMARY KEY  (id) ,
 KEY person_id (app_id,person_id) 
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Joaktree Tree persons';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Joaktree Tree persons';
