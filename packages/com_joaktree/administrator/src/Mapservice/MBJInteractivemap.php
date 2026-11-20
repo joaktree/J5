@@ -73,20 +73,17 @@ class MBJInteractivemap extends MBJService
     public static function isActivated()
     {
         $settings = MBJService::getKeys();
-        if (!empty($settings)) {
-            $interactivemapAPIkey = $settings->interactivemap.'APIkey';
-        }
-        if ((empty($settings->interactivemap))
-           || ((!empty($settings->interactivemap))
-              && isset($settings->$interactivemapAPIkey)
-              && empty($settings->$interactivemapAPIkey))
-        ) {
-            // Interactive maps is not correctly activated
+        if (empty($settings) || empty($settings->interactivemap)) {
+            // Interactive maps is not activated
             return false;
-        } else {
-            // everything seems to be ok
-            return true;
         }
+        $interactivemapAPIkey = $settings->interactivemap.'APIkey';
+        if (isset($settings->$interactivemapAPIkey) && empty($settings->$interactivemapAPIkey)) {
+            // Interactive maps is not correctly activated (API key missing)
+            return false;
+        }
+        // everything seems to be ok
+        return true;
     }
 
 }
