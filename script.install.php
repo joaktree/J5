@@ -298,6 +298,20 @@ class PlgSystemJoaktreeInstallerInstallerScript
         $destination = JPATH_ROOT . '/files/com_joaktree/gedfiles';
         Folder::create($destination);
         File::copy($this->dir . '/index.html',$destination . '/index.html');
+        // 2.5.17 : PR #59 : repair indexNam in joaktree_persons table
+        $conditions = array(
+            $db->qn('indexNam') . ' = ""',
+            $db->qn('familyName') . ' <> ""'
+        );
+        $fields = array($db->qn('indexNam') . ' = UPPER(LEFT('.$db->qn(familyName).', 1))');
+
+        $query = $db->getQuery(true);
+        $query->update($db->quoteName('#__joaktree_persons'))->set($fields)->where($conditions);
+        $db->setQuery($query);
+        try {
+            $db->execute();
+        } catch (\RuntimeException $e) {
+        }
     }
 
     // Check if Joomla version passes minimum requirement
