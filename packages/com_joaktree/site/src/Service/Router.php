@@ -17,6 +17,7 @@
 namespace Joaktree\Component\Joaktree\Site\Service;
 
 \defined('_JEXEC') or die;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Component\Router\RouterBase;
 
 class Router extends RouterBase
