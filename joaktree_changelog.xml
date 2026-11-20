@@ -2,7 +2,27 @@
 	<changelog>
 		<element>com_joaktree</element>
 		<type>package</type>
-		<version>2.5.16</version>
+		<version>2.5.17</version>
+        <note>
+            <item>Update : 2026-11-20</item>
+        </note>
+        <fix>
+            <item>Persons: don't wipe the index letter on partial saves by @Pinkeltje in #59</item>
+            <item>Personform: fix name type dropdown rendering as text input on Linux by @Pinkeltje in #52</item>
+            <item>Locations: avoid PHP warnings when no map service is configured by @Pinkeltje in #57</item>
+            <item>Personform: always render name prefix/suffix inputs by @Pinkeltje in #53</item>
+            <item>Scope joaktree.css form/iframe rules to Joaktree markup by @Pinkeltje in #56</item>
+            <item>Create and convert Joaktree tables as utf8mb4 by @Pinkeltje in #58</item>
+            <item>nl-NL: clearer labels for name prefix/suffix and surname preposition by @Pinkeltje in #54</item>
+            <item>Fix person view scripts never running: 'domready' is a MooTools event by @Pinkeltje in #51</item>
+            <item>Fix GEDCOM import: notes and citations leaking to following persons/families by @Pinkeltje in #55</item>
+            <item>GeoCode : update CURLOPT_SSL_VERIFYHOST and CURLOPT_SSL_VERIFYPEER</item>
+        </fix>
+    </changelog>
+	<changelog>
+		<element>com_joaktree</element>
+		<type>package</type>
+		<version>2.5.17</version>
         <note>
             <item>Update : 2026-07-17</item>
         </note>
