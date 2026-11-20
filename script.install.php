@@ -303,7 +303,7 @@ class PlgSystemJoaktreeInstallerInstallerScript
             $db->qn('indexNam') . ' = ""',
             $db->qn('familyName') . ' <> ""'
         );
-        $fields = array($db->qn('indexNam') . ' = UPPER(LEFT('.$db->qn(familyName).', 1))');
+        $fields = array($db->qn('indexNam') . ' = UPPER(LEFT('.$db->qn("familyName").', 1))');
 
         $query = $db->getQuery(true);
         $query->update($db->quoteName('#__joaktree_persons'))->set($fields)->where($conditions);
