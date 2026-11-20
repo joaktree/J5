@@ -17,6 +17,7 @@
             <item>Fix person view scripts never running: 'domready' is a MooTools event by @Pinkeltje in #51</item>
             <item>Fix GEDCOM import: notes and citations leaking to following persons/families by @Pinkeltje in #55</item>
             <item>GeoCode : update CURLOPT_SSL_VERIFYHOST and CURLOPT_SSL_VERIFYPEER</item>
+            <item>Issue #50 : update router.php</item>
         </fix>
     </changelog>
 	<changelog>

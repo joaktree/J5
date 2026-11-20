@@ -39,11 +39,28 @@ class Router extends RouterBase
         */
         $segments	= array();
         $view 		= null;
-
+        $app = Factory::getApplication();
+        $menu = $app->getMenu();
+        $active = $menu->getActive();
+        $input = $app->getInput();
+        // 1. Retrieve the current view or fall back to active menu/input
         if (isset($query['view'])) {
             $view = $query['view'];
             unset($query['view']);
-
+        } elseif ($active && isset($active->query['view'])) {
+            $view = $active->query['view'];
+        } else {
+            $view = $input->getCmd('view', null);
+        }
+        // 2. Preserve or inject personId if missing during language switching
+        if (!isset($query['personId'])) {
+            $currentPersonId = $input->get('personId', null, 'STRING');
+            if ($currentPersonId) {
+                $query['personId'] = $currentPersonId;
+            }
+        }
+        // 3. Process common view parameters
+        if ($view) {
             if (isset($query['appId'])) {
                 $appId = $query['appId'];
                 unset($query['appId']);
@@ -127,7 +144,7 @@ class Router extends RouterBase
                 $layout = 0;
             }
 
-            // setting segments
+            // 4. setting segments
             if ($view == 'joaktree') {
                 if ($action) {
                     $segments[] = 'jt-'.$layout.'-'.$tech.'-'.$treeId.'-'.$action;
@@ -208,52 +225,41 @@ class Router extends RouterBase
                     $segments[] = $retId;
                 }
             }
+        }
 
-            if (($view == 'joaktree')
-               || ($view == 'personform')
-               || ($view == 'ancestors')
-               || ($view == 'descendants')
-               || ($view == 'map')
-               || ($view == 'interactivemap')
-            ) {
-                if (isset($query['personId'])) {
-                    $segments[] = $query['personId'];
-                    unset($query['personId']);
-                }
+        // 5. Append personId segment if present
+        if (isset($query['personId'])) {
+             $segments[] = $query['personId'];
+             unset($query['personId']);
+        }
+
+        if ($view == 'personform') {
+            if (isset($query['relationId'])) {
+                $segments[] = $query['relationId'];
+                unset($query['relationId']);
             }
-
-            if ($view == 'personform') {
-                if (isset($query['relationId'])) {
-                    $segments[] = $query['relationId'];
-                    unset($query['relationId']);
-                }
+            if (isset($query['picture'])) {
+                $segments[] = $query['picture'];
+                unset($query['picture']);
             }
-
-            if ($view == 'personform') {
-                if (isset($query['picture'])) {
-                    $segments[] = $query['picture'];
-                    unset($query['picture']);
-                }
+        }
+        // 6. searches for joaktreelist
+        if (isset($view) && $view == 'list') {
+            if (isset($query['search1'])) {
+                $segments[] = 'f-'.str_replace('-', '!', $query['search1']);
+                unset($query['search1']);
             }
-
-            // searches for joaktreelist
-            if ($view == 'list') {
-                if (isset($query['search1'])) {
-                    $segments[] = 'f-'.str_replace('-', '!', $query['search1']);
-                    unset($query['search1']);
-                }
-                if (isset($query['search2'])) {
-                    $segments[] = 's-'.str_replace('-', '!', $query['search2']);
-                    unset($query['search3']);
-                }
-                if (isset($query['search3'])) {
-                    $segments[] = 'n-'.str_replace('-', '!', $query['search3']);
-                    unset($query['search3']);
-                }
-                if (isset($query['search4'])) {
-                    $segments[] = 'p-'.$query['search4'];
-                    unset($query['search4']);
-                }
+            if (isset($query['search2'])) {
+                $segments[] = 's-'.str_replace('-', '!', $query['search2']);
+                unset($query['search3']);
+            }
+            if (isset($query['search3'])) {
+                $segments[] = 'n-'.str_replace('-', '!', $query['search3']);
+                unset($query['search3']);
+            }
+            if (isset($query['search4'])) {
+                $segments[] = 'p-'.$query['search4'];
+                unset($query['search4']);
             }
         }
         foreach ($segments as &$segment) {
@@ -390,8 +396,12 @@ class Router extends RouterBase
                 if ($subelements[0]) {
                     $vars['layout'] = $subelements[0];
                 }
-                $vars['technology']   = $subelements[1];
-                $vars['treeId'] = $subelements[2];
+                if (isset($subelements[1])) {
+                    $vars['technology']   = $subelements[1];
+                }
+                if (isset($subelements[2])) {
+                    $vars['treeId'] = $subelements[2];
+                }
 
                 if (isset($segments[1])) {
                     $count++;
@@ -412,8 +422,12 @@ class Router extends RouterBase
                 if ($subelements[0]) {
                     $vars['layout'] = $subelements[0];
                 }
-                $vars['tech']   = $subelements[1];
-                $vars['treeId'] = $subelements[2];
+                if (isset($subelements[1])) {
+                    $vars['tech']   = $subelements[1];
+                }
+                if (isset($subelements[2])) {
+                    $vars['treeId'] = $subelements[2];
+                }
                 if ($subelements[3]) {
                     $vars['filter'] = $subelements[3];
                 }
@@ -424,7 +438,9 @@ class Router extends RouterBase
                 if ($subelements[0]) {
                     $vars['layout'] = $subelements[0];
                 }
-                $vars['treeId']   = $subelements[1];
+                if (isset($subelements[1])) {
+                    $vars['treeId']   = $subelements[1];
+                }
                 if (isset($segments[1])) {
                     $count++;
                     $vars['personId'] = $segments[1];
@@ -436,7 +452,9 @@ class Router extends RouterBase
                 if ($subelements[0]) {
                     $vars['layout'] = $subelements[0];
                 }
-                $vars['treeId']   = $subelements[1];
+                if (isset($subelements[1])) {
+                    $vars['treeId']   = $subelements[1];
+                }
                 if (isset($segments[1])) {
                     $count++;
                     $vars['personId'] = $segments[1];
@@ -448,7 +466,9 @@ class Router extends RouterBase
                 if ($subelements[0]) {
                     $vars['layout'] = $subelements[0];
                 }
-                $vars['appId']    = $subelements[1];
+                if (isset($subelements[1])) {
+                    $vars['appId']    = $subelements[1];
+                }
                 if (isset($segments[1])) {
                     $count++;
                     $tmp = explode('!', $segments[1]);
@@ -475,8 +495,12 @@ class Router extends RouterBase
                 if ($subelements[0]) {
                     $vars['layout'] = $subelements[0];
                 }
-                $vars['appId']    = $subelements[1];
-                $vars['sourceId'] = $subelements[2];
+                if (isset($subelements[1])) {
+                    $vars['appId']    = $subelements[1];
+                }
+                if (isset($subelements[2])) {
+                    $vars['sourceId'] = $subelements[2];
+                }
                 if (isset($segments[1])) {
                     $count++;
                     $tmp = explode('!', $segments[1]);
@@ -496,7 +520,9 @@ class Router extends RouterBase
                 if ($subelements[0]) {
                     $vars['layout'] = $subelements[0];
                 }
-                $vars['appId']    = $subelements[1];
+                if (isset($subelements[1])) {
+                    $vars['appId']    = $subelements[1];
+                }
                 if (isset($segments[1])) {
                     $count++;
                     $tmp = explode('!', $segments[1]);
@@ -516,8 +542,12 @@ class Router extends RouterBase
                 if ($subelements[0]) {
                     $vars['layout'] = $subelements[0];
                 }
-                $vars['appId']    = $subelements[1];
-                $vars['repoId']   = $subelements[2];
+                if (isset($subelements[1])) {
+                    $vars['appId']    = $subelements[1];
+                }
+                if (isset($subelements[2])) {
+                    $vars['repoId']   = $subelements[2];
+                }
                 if (isset($segments[1])) {
                     $count++;
                     $tmp = explode('!', $segments[1]);
