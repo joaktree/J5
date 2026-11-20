@@ -123,13 +123,13 @@ HTMLHelper::_('bootstrap.modal');
 			</li>
 			<li>
 				<?php echo $this->form->getLabel('prefix', 'person'); ?>
-				<?php if (!is_null($this->item->prefix)) echo $this->form->getInput('prefix', 'person', ((is_object($this->item)) ? htmlspecialchars_decode($this->item->prefix, ENT_QUOTES) 
+				<?php echo $this->form->getInput('prefix', 'person', ((is_object($this->item)) ? htmlspecialchars_decode((string) $this->item->prefix, ENT_QUOTES) 
 																  : null
 																	 )); ?>			
 			</li>
 			<li>
 				<?php echo $this->form->getLabel('suffix', 'person'); ?>
-				<?php if (!is_null($this->item->suffix)) echo $this->form->getInput('suffix', 'person', ((is_object($this->item)) ? htmlspecialchars_decode($this->item->suffix, ENT_QUOTES) 
+				<?php echo $this->form->getInput('suffix', 'person', ((is_object($this->item)) ? htmlspecialchars_decode((string) $this->item->suffix, ENT_QUOTES) 
 																	 : null
 																	 )); ?>			
 			</li>
