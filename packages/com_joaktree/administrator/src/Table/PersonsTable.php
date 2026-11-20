@@ -108,10 +108,15 @@ class PersonsTable extends JoaktreeTable implements VersionableTableInterface
 
     public function insert()
     {
-        if (!empty($this->familyName)) {
-            $this->indexNam = mb_strtoupper(mb_substr($this->familyName, 0, 1));
-        } else {
-            $this->indexNam = "";
+        // Only (re)calculate the index letter when the family name is part of this save.
+        // Partial saves (e.g. sex/state only) leave familyName null; resetting indexNam
+        // to "" there wiped the index letter of existing persons.
+        if ($this->familyName !== null) {
+            $this->indexNam = ($this->familyName !== '') ? mb_strtoupper(mb_substr($this->familyName, 0, 1)) : '';
+        }
+        if ($this->indexNam === null) {
+            // indexNam is NOT NULL
+            $this->indexNam = '';
         }
         if (!isset($this->sex)) {
             $this->sex= "";
@@ -128,10 +133,11 @@ class PersonsTable extends JoaktreeTable implements VersionableTableInterface
 
     public function update()
     {
-        if (!empty($this->familyName)) {
-            $this->indexNam = mb_strtoupper(mb_substr($this->familyName, 0, 1));
-        } else {
-            $this->indexNam = "";
+        // Only (re)calculate the index letter when the family name is part of this save.
+        // Partial saves (e.g. sex/state only) leave familyName null; resetting indexNam
+        // to "" there wiped the index letter of existing persons.
+        if ($this->familyName !== null) {
+            $this->indexNam = ($this->familyName !== '') ? mb_strtoupper(mb_substr($this->familyName, 0, 1)) : '';
         }
         if (!isset($this->sex)) {
             $this->sex= "";
@@ -149,10 +155,11 @@ class PersonsTable extends JoaktreeTable implements VersionableTableInterface
 
     public function store($updateNulls = false)
     {
-        if (!empty($this->familyName)) {
-            $this->indexNam = mb_strtoupper(mb_substr($this->familyName, 0, 1));
-        } else {
-            $this->indexNam = "";
+        // Only (re)calculate the index letter when the family name is part of this save.
+        // Partial saves (e.g. sex/state only) leave familyName null; resetting indexNam
+        // to "" there wiped the index letter of existing persons.
+        if ($this->familyName !== null) {
+            $this->indexNam = ($this->familyName !== '') ? mb_strtoupper(mb_substr($this->familyName, 0, 1)) : '';
         }
         if (!isset($this->sex)) {
             $this->sex = "";
