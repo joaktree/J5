@@ -389,7 +389,7 @@
 		
 					<field	name="location" 
 							multiple="true"
-							type="jttext" 
+							type="jtlocation" 
 							class="inputbox"
 							size="40"
 							maxlength="300"
