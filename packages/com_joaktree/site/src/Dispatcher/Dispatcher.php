@@ -45,15 +45,26 @@ class Dispatcher extends ComponentDispatcher
         $authorized = true;
         $user = $this->app->getIdentity();
         $levels = $user->getAuthorisedViewLevels();
-        // check if access for request
-        foreach ($items as $item) {
-            $personId = str_replace('!', '', $item->getParams()->get('personId', ''));
-            if ($item->query['option'] == $this->input->get('option')
-            && $item->query['view'] == $this->input->get('view')
-            && $personId == $this->input->get('personId')
-            && !in_array($item->access, $levels)
-            ) {
-                $authorized = false;
+        // A person linked to a menu item the user may not see must not be
+        // reachable through another (public) link either.
+        // Menu items without a person (lists, search, ...) are generic entry
+        // points: Joomla core already checks the access of the active menu item,
+        // so they must not block other pages with the same view.
+        $reqPersonId = (string) $this->input->get('personId', '');
+        if ($reqPersonId !== '') {
+            foreach ($items as $item) {
+                if (in_array($item->access, $levels)) {
+                    continue;
+                }
+                $personId = str_replace('!', '', (string) $item->getParams()->get('personId', ''));
+                if ($personId !== ''
+                && $personId === $reqPersonId
+                && ($item->query['option'] ?? '') === $this->input->get('option')
+                && ($item->query['view'] ?? '') === $this->input->get('view')
+                ) {
+                    $authorized = false;
+                    break;
+                }
             }
         }
 
