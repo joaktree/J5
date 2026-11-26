@@ -53,11 +53,24 @@ class Router extends RouterBase
         } else {
             $view = $input->getCmd('view', null);
         }
+        // views whose first segment is followed by a personId segment in parse()
+        $personViews = ['joaktree', 'personform', 'ancestors', 'descendants', 'map', 'interactivemap'];
         // 2. Preserve or inject personId if missing during language switching
-        if (!isset($query['personId'])) {
-            $currentPersonId = $input->get('personId', null, 'STRING');
-            if ($currentPersonId) {
-                $query['personId'] = $currentPersonId;
+        //    (only for views that use it: other views would get an extra segment
+        //    that parse() doesn't consume, resulting in a 404)
+        //    Only for a link to the same view, and never for a menu item that has
+        //    its own person (e.g. a descendants chart of a fixed ancestor): that
+        //    menu link must keep showing its own person, not the current one.
+        if (!isset($query['personId'])
+            && \in_array($view, $personViews, true)
+            && $view === $input->getCmd('view')
+        ) {
+            $target = isset($query['Itemid']) ? $menu->getItem((int) $query['Itemid']) : null;
+            if (!$target || (string) $target->getParams()->get('personId', '') === '') {
+                $currentPersonId = $input->get('personId', null, 'STRING');
+                if ($currentPersonId) {
+                    $query['personId'] = $currentPersonId;
+                }
             }
         }
         // 3. Process common view parameters
@@ -228,8 +241,8 @@ class Router extends RouterBase
             }
         }
 
-        // 5. Append personId segment if present
-        if (isset($query['personId'])) {
+        // 5. Append personId segment if present (person views only, see above)
+        if (isset($query['personId']) && \in_array($view, $personViews, true)) {
              $segments[] = $query['personId'];
              unset($query['personId']);
         }
