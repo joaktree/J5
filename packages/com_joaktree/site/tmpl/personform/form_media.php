@@ -19,6 +19,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joaktree\Component\Joaktree\Site\Helper\FormHelper;
+use Joomla\Filesystem\Folder;
 
 HTMLHelper::_('bootstrap.tooltip');
 HTMLHelper::_('behavior.formvalidator');
@@ -102,6 +103,22 @@ HTMLHelper::_('behavior.formvalidator');
 				// retrieve pictures
 				$pictures  = $this->item->getPictures(true);	
 				$directory = (count($pictures)) ? $pictures[0]->directory: $pictureroot.$ds.$this->item->id;
+
+				// Create the person's picture folder if it doesn't exist yet and open the
+				// media selector in it, so pictures can be uploaded straight away.
+				if (!count($pictures) && preg_match('/^[A-Za-z0-9_]+$/', (string) $this->item->id)) {
+					if (!is_dir(JPATH_ROOT.'/'.$directory)) {
+						try {
+							Folder::create(JPATH_ROOT.'/'.$directory);
+						} catch (\Exception $e) {
+							// no rights: the user can still create the folder in the media manager
+						}
+					}
+				}
+				$mediaDir = preg_replace('#^images/#', '', str_replace('\\', '/', $directory));
+				if (is_dir(JPATH_ROOT.'/images/'.$mediaDir)) {
+					$this->form->setFieldAttribute('path_file', 'directory', $mediaDir, 'person.media');
+				}
 				// Tell the user in which directory the pictures should be placed.
 		?>		
 				<div class="jt-high-row" style="margin-left: 10px;">
