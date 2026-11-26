@@ -58,10 +58,19 @@ class Router extends RouterBase
         // 2. Preserve or inject personId if missing during language switching
         //    (only for views that use it: other views would get an extra segment
         //    that parse() doesn't consume, resulting in a 404)
-        if (!isset($query['personId']) && \in_array($view, $personViews, true)) {
-            $currentPersonId = $input->get('personId', null, 'STRING');
-            if ($currentPersonId) {
-                $query['personId'] = $currentPersonId;
+        //    Only for a link to the same view, and never for a menu item that has
+        //    its own person (e.g. a descendants chart of a fixed ancestor): that
+        //    menu link must keep showing its own person, not the current one.
+        if (!isset($query['personId'])
+            && \in_array($view, $personViews, true)
+            && $view === $input->getCmd('view')
+        ) {
+            $target = isset($query['Itemid']) ? $menu->getItem((int) $query['Itemid']) : null;
+            if (!$target || (string) $target->getParams()->get('personId', '') === '') {
+                $currentPersonId = $input->get('personId', null, 'STRING');
+                if ($currentPersonId) {
+                    $query['personId'] = $currentPersonId;
+                }
             }
         }
         // 3. Process common view parameters
