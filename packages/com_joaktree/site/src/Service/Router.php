@@ -53,8 +53,12 @@ class Router extends RouterBase
         } else {
             $view = $input->getCmd('view', null);
         }
+        // views whose first segment is followed by a personId segment in parse()
+        $personViews = ['joaktree', 'personform', 'ancestors', 'descendants', 'map', 'interactivemap'];
         // 2. Preserve or inject personId if missing during language switching
-        if (!isset($query['personId'])) {
+        //    (only for views that use it: other views would get an extra segment
+        //    that parse() doesn't consume, resulting in a 404)
+        if (!isset($query['personId']) && \in_array($view, $personViews, true)) {
             $currentPersonId = $input->get('personId', null, 'STRING');
             if ($currentPersonId) {
                 $query['personId'] = $currentPersonId;
@@ -228,8 +232,8 @@ class Router extends RouterBase
             }
         }
 
-        // 5. Append personId segment if present
-        if (isset($query['personId'])) {
+        // 5. Append personId segment if present (person views only, see above)
+        if (isset($query['personId']) && \in_array($view, $personViews, true)) {
              $segments[] = $query['personId'];
              unset($query['personId']);
         }
